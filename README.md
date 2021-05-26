@@ -4,7 +4,7 @@
   </a>
 </p>
 <h1 align="center">
-  Welcome to my new home on web <br/> <a href='https://MominBinShahid.github.io/' target='_blank'>MominBinShahid.github.io</a> 👨‍💻
+  Welcome to my new home on the web <br/> <a href='https://MominBinShahid.github.io/' target='_blank'>MominBinShahid.github.io</a> 👨‍💻
 </h1>
 <h3 align="center" style="margin-top: -10px; margin-bottom: 10px">Created with ❤️ Using Gatsby.js ⚡️</h3>
 
