@@ -3,8 +3,7 @@
     <img alt="man technologist smiley" src="https://github.com/MominBinShahid/MominBinShahid.github.io/blob/main/src/images/man-technologist.png" width="60" />
   </a>
 </p>
-<h1 align="center">
-  👋 Welcome to my new home on the web <br/> <a href='https://MominBinShahid.github.io/' target='_blank'>MominBinShahid.github.io</a> 👨‍💻
+<h1 align="center">Welcome 👋 to my new home on the web 🕸<br/> <a href='https://MominBinShahid.github.io/' target='_blank'>MominBinShahid.github.io</a> 👨‍💻
 </h1>
 <h3 align="center" style="margin-top: -10px; margin-bottom: 10px">Created with ❤️ Using Gatsby.js ⚡️</h3>
 
