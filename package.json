@@ -1,0 +1,94 @@
+{
+  "name": "mominbinshahid.github.io",
+  "version": "1.0.0",
+  "description": "Momin Bin Shahid's website",
+  "keywords": [
+    "MominBinShahid",
+    "Momin",
+    "Bin",
+    "Shahid"
+  ],
+  "homepage": "https://MominBinShahid.github.io",
+  "bugs": {
+    "url": "https://github.com/MominBinShahid/MominBinShahid.github.io/issues",
+    "email": "MominBinShahid@gmail.com"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Momin Bin Shahid",
+    "email": "MominBinShahid@gmail.com",
+    "url": "http://MominBinShahid.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MominBinShahid/MominBinShahid.github.io"
+  },
+  "engines": {
+    "node": ">=14.16.1",
+    "npm": "~6.14.12"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "private": true,
+  "scripts": {
+    "build": "gatsby build",
+    "gh-pages-help": "gh-pages --help",
+    "publish": "npm run build && gh-pages -d public -m 'Updates for v1.0'",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "preinstall": "rm -rf node_modules",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "dependencies": {
+    "antd": "^4.0.1",
+    "font-awesome": "^4.7.0",
+    "gatsby": "^2.29.2",
+    "gatsby-image": "^2.3.1",
+    "gatsby-plugin-antd": "^2.2.0",
+    "gatsby-plugin-google-gtag": "^3.5.0",
+    "gatsby-plugin-i18n": "^1.0.1",
+    "gatsby-plugin-less": "^3.0.19",
+    "gatsby-plugin-manifest": "^2.9.1",
+    "gatsby-plugin-nprogress": "^2.2.1",
+    "gatsby-plugin-offline": "^3.1.2",
+    "gatsby-plugin-react-helmet": "^3.1.22",
+    "gatsby-plugin-robots-txt": "^1.5.5",
+    "gatsby-plugin-sharp": "^2.11.2",
+    "gatsby-plugin-sitemap": "^2.2.27",
+    "gatsby-remark-external-links": "0.0.4",
+    "gatsby-remark-images": "^3.1.44",
+    "gatsby-remark-prismjs": "^3.3.31",
+    "gatsby-source-filesystem": "^2.1.48",
+    "gatsby-transformer-remark": "^2.6.50",
+    "gatsby-transformer-sharp": "^2.4.2",
+    "less": "^3.11.1",
+    "moment": "^2.24.0",
+    "prismjs": "^1.19.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-fontawesome": "^1.7.1",
+    "react-helmet": "^5.2.1",
+    "react-pdf": "^4.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-loader": "^3.0.3",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "gatsby-plugin-eslint-v2": "^2.0.0-beta.0",
+    "gh-pages": "^3.2.0",
+    "prettier": "^1.19.1"
+  }
+}

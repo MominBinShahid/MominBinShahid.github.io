@@ -1,0 +1,42 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Dev - Launch via NPM",
+        "type": "node",
+        "request": "launch",
+        "runtimeVersion": "14.16.1",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": [
+          "run-script",
+          "start"
+        ],
+        "console": "integratedTerminal", 
+        // "outputCapture": "std", // to show logs when "console": "internalConsole" i.e. Debug Console
+        "skipFiles": [
+          "<node_internals>/**"
+        ],
+        "trace": true,
+      },
+      {
+        "name": "Prod - Launch via NPM",
+        "type": "node",
+        "request": "launch",
+        "runtimeVersion": "14.16.1",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": [
+          "run-script",
+          "serve"
+        ],
+        // "env": {
+        //   "NODE_ENV": "production"
+        // },
+        "console": "integratedTerminal", 
+        // "outputCapture": "std", // to show logs when "console": "internalConsole" i.e. Debug Console
+        "skipFiles": [
+          "<node_internals>/**"
+        ],
+        "trace": true,
+      }
+    ]
+  }
