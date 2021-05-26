@@ -60,7 +60,7 @@ const DomContent = () => (
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
             <span className={`${style.fixSidebarSmiley}`}>📞</span>
             {/* can also use `callto` instead of tel or do this https://stackoverflow.com/questions/24349340/mailto-link-equivalent-for-phone-calls */}
-            <a href="tel:+923342526270"><span className={`${style.fixSideBarRefText} ${style.unsetFontWeight}`}>+92 334 3526270</span></a>
+            <a href="tel:+923343526270"><span className={`${style.fixSideBarRefText} ${style.unsetFontWeight}`}>+92 334 3526270</span></a>
           </Space>
         </li>
 
