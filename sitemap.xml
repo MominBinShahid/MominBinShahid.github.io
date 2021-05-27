@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://MominBinShahid.github.io/blog/react17-new-features</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/blog/center-align-things-with-css</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/blog/promises-in-javascript</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/blog/why-i-migrated-my-website-from-wordpress-to-gatsby</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/blog/how-to-build-your-own-compiler</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/blog/django-the-widely-used-python-framework-for-web-development</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/blog/react–the-future-of-web-frontend</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/blog/hello-world-rolwins-first-blog</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/tags/reactjs</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/tags/html</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/tags/css</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/tags/javascript</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/tags/typescript</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/tags/nodejs</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/tags/gatsby</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/tags/python</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://MominBinShahid.github.io/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://MominBinShahid.github.io/resume/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
-<url> <loc>https://MominBinShahid.github.io/contact/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://MominBinShahid.github.io/blog/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://MominBinShahid.github.io/contact/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://MominBinShahid.github.io/tags/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>
