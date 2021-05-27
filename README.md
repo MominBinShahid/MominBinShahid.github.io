@@ -5,7 +5,7 @@
 </p>
 <h1 align="center">Welcome 👋 to my new home on the web 🕸<br/> <a href='https://MominBinShahid.github.io/' target='_blank'>MominBinShahid.github.io</a> 👨‍💻
 </h1>
-<h3 align="center" style="margin-top: -10px; margin-bottom: 10px">Created with ❤️ Using Gatsby.js ⚡️</h3>
+<h3 align="center">Created with ❤️ Using React.js via Gatsby.js ⚡️</h3>
 
 This project was built on new standard architecture for the web [Jamstack](https://jamstack.org/) 🤩 using React.js with Gatsby.js
 
