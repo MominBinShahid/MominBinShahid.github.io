@@ -44,7 +44,7 @@
             }
             .badgeGray {
                 background-color: #E9EDF0;
-                color: #44566C;
+                color: @text-color;
                 text-align: center;
                 z-index: 1; /* to make this above below tile */
             }
@@ -84,7 +84,7 @@
             }
             // this class .contactBlock is not applied see markup
             .contactBlock {
-                color: #44566C;
+                color: @text-color;
                 font-size: .937rem;
                 padding-left: 0;
                 margin-bottom: 1.3rem;
@@ -93,6 +93,8 @@
                 }
             }
             .contactBlockItem {
+                color: @text-color; // as above .class is not working so, have to apply the color here
+
                 display: -webkit-flex;
                 display: -ms-flexbox;
                 display: -moz-box;

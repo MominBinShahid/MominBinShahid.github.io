@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import { Layout } from 'antd';
 import 'font-awesome/less/font-awesome.less';
-import style from './header.module.less';
 import '../../../styles/global.less';
 import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
+import style from './header.module.less';
+import DarkModeToggler from '../../ThemeToggler';
 
 export default () => {
   const [menu, setMenu] = useState(false);
@@ -30,8 +31,9 @@ export default () => {
 
       if (hide) return;
 
-      const addedSlashBefore = '/';
-      const to = `${addedSlashBefore}${path}`;
+      const addedSlash = '/';
+      const to = `${addedSlash}${path}${path && addedSlash}`;
+      //  if you wanted to know the reason of making such urls, see this - https://github.com/gatsbyjs/gatsby/issues/10586#issuecomment-449134665
 
       links.push(
         <li className={style.navItem} key={`${path}-${name}`}>
@@ -42,12 +44,18 @@ export default () => {
       );
     });
 
+    links.push(
+      <li className={style.navItem} key="DarkMode">
+        <DarkModeToggler />
+      </li>,
+    );
+
     return links;
   };
 
   return (
     <>
-      <div className={style.circleMenu} role="button" tabIndex="0" onKeyDown={toggleMenu} onClick={toggleMenu}>
+      <div className={style.circleMenu} role="button" tabIndex="0" onClick={toggleMenu} onKeyDown={toggleMenu}>
         <div className={`${style.hamburger} ${menu ? style.menuIcon : null}`}>
           <div className={style.line} />
           <div className={style.line} />
@@ -56,7 +64,7 @@ export default () => {
       </div>
       <Layout className={`${style.navWrap} ${menu ? null : style.hidden} ${menu ? style.openMenu : null}`}>
         <div className={style.backgroundDiv}>
-          <ul className={style.nav}>
+          <ul className={`${style.nav} text-center`}>
             { generateLinks() }
           </ul>
         </div>

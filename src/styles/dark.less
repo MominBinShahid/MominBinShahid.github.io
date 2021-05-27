@@ -1,0 +1,58 @@
+.enableDarkMode() {
+  -webkit-filter: invert(95%) hue-rotate(180deg) !important;
+  filter: invert(95%) hue-rotate(180deg) !important;
+}
+
+.invertDarkMode() {
+  -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+.applyTransitions() {
+  @transitionSpeed: 0.25s;
+  @transitionTimingFunction: ease;
+
+  -webkit-transition: -webkit-filter @transitionSpeed @transitionTimingFunction;
+  transition: -webkit-filter @transitionSpeed @transitionTimingFunction;
+  -o-transition: filter @transitionSpeed @transitionTimingFunction;
+  transition: filter @transitionSpeed @transitionTimingFunction;
+  transition: filter @transitionSpeed @transitionTimingFunction, -webkit-filter @transitionSpeed @transitionTimingFunction;
+}
+
+html {
+  /* for extra space shown when user scroll */
+
+  // background: @white-bg;
+  background: @black-bg;
+}
+
+body {
+  /* for extra space shown below about page (or any shorter page) */
+  background: @white-bg;
+
+  .applyTransitions()
+}
+
+body.dark {
+  // below code makes text-seeing harder
+  // -webkit-font-smoothing: antialiased;
+
+  .enableDarkMode();
+
+  video, img, // picture, // comment 'picture' to show 'img' properly in blog
+  .gatsby-highlight, // for code highlighted snippets in markdown
+  [style^="background-image:"], // for tag card images
+  emoji, // for emojis in markdown
+  .invert // use better word then invert
+  {
+    .invertDarkMode();
+  }
+
+  /* 
+    Test a white line below the screen after screen-up
+    it is exists on production then un-comment code below 
+  */
+  // .gatsby-portal {
+  //   display: none;
+  // }
+}

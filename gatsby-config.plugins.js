@@ -6,6 +6,7 @@ const gatsbyConfig = [
   'gatsby-plugin-sharp',
   'gatsby-plugin-less',
   'gatsby-plugin-offline',
+  'gatsby-plugin-dark-mode',
   {
     resolve: 'gatsby-source-filesystem',
     options: {

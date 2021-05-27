@@ -33,10 +33,10 @@ export default ({ data }) => (
           </div>
           <div className={`textCenter ${style.boxContent}`}>
             <h1>This page was lost</h1>
-            <p>
+            <h4>
               The Page You are looking for isn’t available. Try to search again or use
               the Go Back button below.
-            </p>
+            </h4>
             <Link to="/">
               <div className={`centerAlign ${style.textHover}`}>
                 <div className={`${style.goBackBtn}`}>

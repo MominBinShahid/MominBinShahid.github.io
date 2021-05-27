@@ -30,13 +30,13 @@ const socialLinks = () => {
 
 const DomContent = () => (
   <aside>
-    <div className={style.profileAvatar} />
+    <div className={`${style.profileAvatar} invert`} />
     <div className={`${style.name} centerAlign`}>
       <div className={`${style.boxName} centerAlign`}>
         <h2>
           <span>Momin </span>
           <span className={`${style.unsetFontWeight}`}> Bin Shahid </span>
-          <span>👨‍💻</span>
+          <span><emoji>👨‍💻</emoji></span>
         </h2>
       </div>
       <div className={`${style.badge} ${style.badgeGray}`}>
@@ -58,7 +58,7 @@ const DomContent = () => (
 
         <li className={`${style.contactBlockItem}`}>
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
-            <span className={`${style.fixSidebarSmiley}`}>📞</span>
+            <span className={`${style.fixSidebarSmiley}`}><emoji>📞</emoji></span>
             {/* can also use `callto` instead of tel or do this https://stackoverflow.com/questions/24349340/mailto-link-equivalent-for-phone-calls */}
             <a href="tel:+923343526270"><span className={`${style.fixSideBarRefText} ${style.unsetFontWeight}`}>+92 334 3526270</span></a>
           </Space>
@@ -66,7 +66,7 @@ const DomContent = () => (
 
         <li className={`${style.contactBlockItem}`}>
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
-            <span className={`${style.fixSidebarSmiley}`}>🎂</span>
+            <span className={`${style.fixSidebarSmiley}`}><emoji>🎂</emoji></span>
             <a href="https://en.wikipedia.org/wiki/December_13" target="_blank" rel="noreferrer">
               <span className={`${style.unsetFontWeight} ${style.fixSideBarRefText}`}>Dec 13, 1995</span>
             </a>
@@ -75,7 +75,7 @@ const DomContent = () => (
 
         <li className={`${style.contactBlockItem}`}>
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
-            <span className={`${style.fixSidebarSmiley}`}>📍</span>
+            <span className={`${style.fixSidebarSmiley}`}><emoji>📍</emoji></span>
             <a href="https://en.wikipedia.org/wiki/Karachi" target="_blank" rel="noreferrer">
               <span className={`${style.unsetFontWeight} ${style.fixSideBarRefText}`}>Karachi, Pakistan</span>
             </a>
@@ -84,7 +84,7 @@ const DomContent = () => (
 
         <li className={`${style.contactBlockItem}`}>
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
-            <span className={`${style.fixSidebarSmiley}`}>📧</span>
+            <span className={`${style.fixSidebarSmiley}`}><emoji>📧</emoji></span>
             <a
               href="mailto:&#77;&#111;&#109;&#105;&#110;&#66;&#105;&#110;&#83;&#104;&#97;&#104;&#105;&#100;&#64;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;"
               target="_top"

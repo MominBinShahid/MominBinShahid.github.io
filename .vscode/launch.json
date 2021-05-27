@@ -16,7 +16,7 @@
         "skipFiles": [
           "<node_internals>/**"
         ],
-        "trace": true,
+        // "trace": true,
       },
       {
         "name": "Prod - Launch via NPM",
@@ -31,12 +31,28 @@
         // "env": {
         //   "NODE_ENV": "production"
         // },
-        "console": "integratedTerminal", 
-        // "outputCapture": "std", // to show logs when "console": "internalConsole" i.e. Debug Console
+        "console": "integratedTerminal",
         "skipFiles": [
           "<node_internals>/**"
         ],
-        "trace": true,
+        // "trace": true,
+      },
+      {
+        "name": "Publish",
+        "type": "node",
+        "request": "launch",
+        "runtimeVersion": "14.16.1",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": [
+          "run-script",
+          "publish"
+        ],
+        "console": "integratedTerminal", 
+        "skipFiles": [
+          "<node_internals>/**"
+        ],
+        // "trace": true,
+        "stopOnEntry": true
       }
     ]
   }

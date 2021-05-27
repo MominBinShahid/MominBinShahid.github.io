@@ -20,8 +20,8 @@ const PostCard = (props) => {
           <p>
             <span className={style.dateHolder}>{frontmatter ? moment(frontmatter.date).format('MMM Do YYYY') : ''}</span>
           </p>
-          <h3>{frontmatter ? frontmatter.title : ''}</h3>
-          <p>{frontmatter ? frontmatter.excerpt : ''}</p>
+          <h3 dangerouslySetInnerHTML={{ __html: frontmatter.title }} />
+          <p dangerouslySetInnerHTML={{ __html: frontmatter.excerpt }} />
           <p style={{ color: '#ce6d96', wordSpacing: '10px' }}>
             {
                 `#${frontmatter.tags.join(' #')}`

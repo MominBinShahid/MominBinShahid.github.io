@@ -1,4 +1,6 @@
 ---
+published: false
+
 title: How to build your own compiler ? ( The Worlds smallest compiler )
 tags: [ javascript ]
 date: 2020-04-01T05:25:44.226Z

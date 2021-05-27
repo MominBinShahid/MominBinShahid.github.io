@@ -116,6 +116,7 @@ export default class Resume extends Component {
                 <Page
                   pageNumber={pageNumber}
                   loading={loader}
+                  renderAnnotationLayer={false} // causes weird space below the pdf
                 />
               </Document>
 

@@ -1,4 +1,6 @@
 ---
+published: false
+
 title: Why I migrated my website from wordpress to gatsby? (gatsby vs wordpress)
 tags: [ javascript, gatsby, typescript ]
 date: 2020-04-08T05:25:44.226Z

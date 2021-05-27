@@ -3,18 +3,29 @@ import {
 } from 'antd';
 import React, { useState } from 'react';
 import Config from '../../../../config';
+import style from './contact.module.less';
 
 const openNotification = () => {
   const description = (
     <>
-      However I noticed you have not sent your email address 😢,
-      though I can understand but it would be great if I can reply you back.
+      However I noticed you have not sent your email address
+      {' '}
+      <emoji>😢</emoji>
+      , though I can understand but it would be great if I can reply you back.
       <br />
-      Try reaching me again if you ever wanted to have a chat. 🤙
+      Try reaching me again if you ever wanted to have a chat
+      {' '}
+      <emoji>🤙</emoji>
     </>
   );
   notification.info({
-    message: 'Thanks for reaching out! 🙇‍♂️',
+    message: (
+      <>
+        Thanks for reaching out!
+        {' '}
+        <emoji>🙇‍♂️</emoji>
+      </>
+    ),
     description,
     duration: 0,
   });
@@ -61,7 +72,14 @@ export default () => {
       .then((res) => {
         if (!res.ok) throw new Error('Error Occurred in success callback');
 
-        message.success('Thank you for your kind response 🙂. Will get back to you.');
+        message.success(
+          <>
+            Thank you for your kind response
+            {' '}
+            <emoji>🙂</emoji>
+            Will get back to you.
+          </>,
+        );
         if (!email) {
           const seconds = 4 * 1000; // 4 seconds: 4 * 1000 milliseconds
           setTimeout(() => {
@@ -72,7 +90,15 @@ export default () => {
         form.resetFields();
       })
       .catch((error) => {
-        message.error('😢 Pardon me. Can not contact right now, please use any social media to reach me. 🙏');
+        message.error(
+          <>
+            <emoji>😢</emoji>
+            {' '}
+            Pardon me. Can not contact right now, please use any social media to reach me
+            {' '}
+            <emoji>🙏</emoji>
+          </>,
+        );
 
         // eslint-disable-next-line no-console
         console.error('Error:', error);
@@ -101,7 +127,7 @@ export default () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" shape="round" size="large" htmlType="submit" style={{ background: '#304CFD' }} loading={isLoading}>
+          <Button type="primary" shape="round" size="large" htmlType="submit" className={`${style.submitButton}`} loading={isLoading}>
             SUBMIT
           </Button>
         </Form.Item>

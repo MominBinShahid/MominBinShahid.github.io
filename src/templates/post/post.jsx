@@ -8,6 +8,7 @@ import SEO from '../../components/Seo';
 import Comment from '../../components/Comment';
 import Config from '../../../config';
 import Utils from '../../utils/pageUtils';
+import { removeTagsFromBlogContent } from '../../utils/stripTags';
 
 import 'prismjs/themes/prism-solarizedlight.css';
 import './highlight-syntax.less';
@@ -28,21 +29,26 @@ const Post = ({ data }) => {
     <Layout className="outerPadding">
       <Layout className="container">
         <SEO
-          title={title}
-          description={excerpt}
+          title={removeTagsFromBlogContent(title)}
+          description={removeTagsFromBlogContent(excerpt)}
           path={path}
           keywords={['@MominBinShahid', 'MominBinShahid', 'Momin', 'Bin', 'Shahid', 'Software Engineer', 'FullStack Developer', 'Javascript', 'ReactJS', 'NodeJS', 'VueJS', 'Technology']}
         />
         <Header />
         <SidebarWrapper>
           <div className="marginTopTitle">
-            <h1>{title}</h1>
+            <h1 dangerouslySetInnerHTML={{ __html: title }} />
             <div className={style.bannerImgContainer}>
-              <Img className={style.bannerImg} fluid={fluid} title={excerpt} alt={title} />
+              <Img
+                className={style.bannerImg}
+                fluid={fluid}
+                title={removeTagsFromBlogContent(excerpt)}
+                alt={removeTagsFromBlogContent(title)}
+              />
             </div>
             <article className={style.blogArticle} dangerouslySetInnerHTML={{ __html: html }} />
             {
-              Config.disqusScript && <Comment pageCanonicalUrl={canonicalUrl} pageId={title} />
+              Config.disqusScript && <Comment pageCanonicalUrl={canonicalUrl} pageId={removeTagsFromBlogContent(title)} />
             }
           </div>
         </SidebarWrapper>

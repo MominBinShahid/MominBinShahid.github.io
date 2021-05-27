@@ -1,6 +1,6 @@
 {
   "name": "mominbinshahid.github.io",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Momin Bin Shahid's website",
   "keywords": [
     "MominBinShahid",
@@ -37,9 +37,10 @@
   ],
   "private": true,
   "scripts": {
+    "prebuild": "rm -rf public",
     "build": "gatsby build",
     "gh-pages-help": "gh-pages --help",
-    "publish": "npm run build && gh-pages -d public -m 'Updates for v1.0'",
+    "publish": "npm run build && gh-pages -d public -m 'Updated deployment'",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
@@ -54,6 +55,7 @@
     "gatsby": "^2.29.2",
     "gatsby-image": "^2.3.1",
     "gatsby-plugin-antd": "^2.2.0",
+    "gatsby-plugin-dark-mode": "^1.1.2",
     "gatsby-plugin-google-gtag": "^3.5.0",
     "gatsby-plugin-i18n": "^1.0.1",
     "gatsby-plugin-less": "^3.0.19",
