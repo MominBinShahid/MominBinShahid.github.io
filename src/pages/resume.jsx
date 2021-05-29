@@ -50,6 +50,7 @@ export default class Resume extends Component {
           I'm good for any position in your organization. I'm open to various challenges that come
           in the way of building various web applications. - Momin Bin Shahid"
           path="resume"
+          keywords={['@MominBinShahid', 'MominBinShahid', 'Momin', 'Bin', 'Shahid', 'Resume', 'CV', 'C.V.']}
         />
 
         <Row justify="center" className="pt-1">

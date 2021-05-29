@@ -15,7 +15,13 @@ const Utils = {
           += (resolvedUrl === '' ? '' : '/') + urlPath.replace(/^\/|\/$/g, '');
     }
 
-    resolvedUrl = resolvedUrl[0] !== '/' ? `/${resolvedUrl}` : resolvedUrl;
+    // below validation is used to fix the URL where siteUrl is committing
+    // as https://... so, this code makes it /https://... which won`t work
+    const starting4Letters = resolvedUrl.slice(0, 4);
+    if (starting4Letters !== 'http') {
+      resolvedUrl = resolvedUrl[0] !== '/' ? `/${resolvedUrl}` : resolvedUrl;
+    }
+
     return resolvedUrl;
   }, ''),
   /**
