@@ -5,6 +5,7 @@ import {
 } from 'antd';
 import SEO from '../components/Seo';
 import Config from '../../config';
+import DarkModeToggler from '../components/ThemeToggler';
 
 const {
   resumeDownloadLink, resumePrintableDownloadLink,
@@ -54,6 +55,12 @@ export default class Resume extends Component {
         <Row justify="center" className="pt-1">
           <Col>
             <Space direction="vertical" size="middle">
+
+              <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
+                <Col>
+                  <DarkModeToggler />
+                </Col>
+              </Row>
 
               <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
                 <Col>
