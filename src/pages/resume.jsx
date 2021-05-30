@@ -59,7 +59,7 @@ export default class Resume extends Component {
 
               <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
                 <Col>
-                  <DarkModeToggler />
+                  <DarkModeToggler fixBackgroundHTML />
                 </Col>
               </Row>
 
