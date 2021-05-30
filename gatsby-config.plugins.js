@@ -5,7 +5,6 @@ const gatsbyConfig = [
   'gatsby-transformer-sharp',
   'gatsby-plugin-sharp',
   'gatsby-plugin-less',
-  'gatsby-plugin-offline',
   'gatsby-plugin-dark-mode',
   {
     resolve: 'gatsby-source-filesystem',
@@ -30,6 +29,7 @@ const gatsbyConfig = [
       // versions prior to iOS 11.3.
     },
   },
+  'gatsby-plugin-offline', // read plugin placement. ref: https://www.gatsbyjs.com/docs/how-to/performance/add-offline-support-with-a-service-worker/#using-service-workers-in-gatsby-with-gatsby-plugin-offline
   {
     resolve: 'gatsby-source-filesystem',
     options: {
