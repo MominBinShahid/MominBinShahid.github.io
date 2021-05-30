@@ -106,7 +106,7 @@ if (process.env.NODE_ENV === 'production' && config.googleAnalyticTrackingId) {
   // first we were using this https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics/
   // but now, google recommends new approach so, using new v4
   // watch this for details: https://www.youtube.com/watch?v=kO_GMfC1LHA
-  gatsbyConfig.push(
+  gatsbyConfig.unshift(
     {
       // see: https://www.gatsbyjs.com/plugins/gatsby-plugin-google-gtag/
       resolve: 'gatsby-plugin-google-gtag',
