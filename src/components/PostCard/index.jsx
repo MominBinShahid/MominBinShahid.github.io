@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import { Link } from 'gatsby';
-import style from './postCard.module.less';
 import Utils from '../../utils/pageUtils';
+import style from './postCard.module.less';
 
 const PostCard = (props) => {
   const { data: { node: { frontmatter } } } = props;

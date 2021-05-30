@@ -5,9 +5,9 @@ import {
 import FontAwesome from 'react-fontawesome';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { globalHistory } from '@reach/router';
-import style from './sidebar.module.less';
 import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
+import style from './sidebar.module.less';
 
 const { Content } = Layout;
 const { social, resumeDownloadLink, resumePrintableDownloadLink } = Config;

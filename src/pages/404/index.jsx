@@ -2,9 +2,8 @@ import React from 'react';
 import { Layout } from 'antd';
 import { Link, graphql } from 'gatsby';
 import Header from '../../components/PageLayout/Header';
-import style from './404.module.less';
-
 import { Sidebar404 } from '../../components/PageLayout/Sidebar';
+import style from './404.module.less';
 
 export const query = graphql`
   {

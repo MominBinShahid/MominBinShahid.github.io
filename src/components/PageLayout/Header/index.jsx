@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import { Layout } from 'antd';
-import 'font-awesome/less/font-awesome.less';
-import '../../../styles/global.less';
 import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
-import style from './header.module.less';
 import DarkModeToggler from '../../ThemeToggler';
+
+import 'font-awesome/less/font-awesome.less';
+import '../../../styles/global.less';
+import style from './header.module.less';
 
 export default () => {
   const [menu, setMenu] = useState(false);
