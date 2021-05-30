@@ -60,7 +60,11 @@ const DomContent = () => (
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
             <span className={`${style.fixSidebarSmiley}`}><emoji>📞</emoji></span>
             {/* can also use `callto` instead of tel or do this https://stackoverflow.com/questions/24349340/mailto-link-equivalent-for-phone-calls */}
-            <a href="tel:+923343526270"><span className={`${style.fixSideBarRefText} ${style.unsetFontWeight}`}>+92 334 3526270</span></a>
+            {/* Should I hide phone number as I did with email? */}
+            {/* and if what I did with email is correct */}
+            <a href="tel:+923343526270">
+              <span className={`${style.fixSideBarRefText} ${style.unsetFontWeight} ${style.phoneHider}`}>+</span>
+            </a>
           </Space>
         </li>
 
