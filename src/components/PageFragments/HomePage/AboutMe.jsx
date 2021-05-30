@@ -7,17 +7,17 @@ import SEO from '../../Seo';
 
 const pageText = {
   paraOne: `Hey there <emoji>👋</emoji> My name is <span class="devName">Momin Bin Shahid</span>.
-    I'm a <strong>full stack developer</strong> who is passionate about various Web technologies, specially <strong>JavaScript</strong> and it's derived ones.
+    I'm a <strong>full-stack developer</strong> who is passionate about various Web technologies, especially <strong>JavaScript</strong> and its derived ones.
     I like to experiment with different web technologies. 
-    I have an <strong>industry experience of 3+ years</strong> working with services and product based companies as well as with my own clients usually using <strong>MERN</strong>/<strong>MEVN</strong>/<strong>MEAN</strong> stack.
+    I have <strong>industry experience of 3+ years</strong> working with services and product-based companies as well as with my own clients usually using <strong>MERN</strong>/<strong>MEVN</strong>/<strong>MEAN</strong> stack.
     You will usually find me building and experimenting with web, mobile and desktop apps using JavaScript <emoji>🚀</emoji> and other exciting technologies <emoji>🤩</emoji>`,
-  paraTwo: `Currently, at work I mostly utilize Javascript-based technologies 🛠 like <strong>VueJS, ReactJS, NodeJS, and more</strong>.
+  paraTwo: `Currently, at work, I mostly utilize Javascript-based technologies 🛠 like <strong>VueJS, ReactJS, NodeJS, and more</strong>.
     I also have hands-on experience working with cloud infrastructures like <strong>AWS</strong>/<strong>Azure</strong>/<strong>GCP</strong>
     and have deployed applications keeping scalability in mind
     and I also worked on serverless applications.
     Docker and Kubernetes are some of the tools I use for CI/CD.
-    I'm always a quick learner and a self taught programmer.
-    Till now, I have only <strong>worked on closed-source projects</strong> but now I am getting into contributing to <strong>open-source softwares</strong> <emoji>🍀</emoji>
+    I'm always a quick learner and a self-taught programmer.
+    Till now, I have only <strong>worked on closed-source projects</strong> but now I am getting into contributing to <strong>open-source software</strong> <emoji>🍀</emoji>
 
     <br/>
     <br/>
