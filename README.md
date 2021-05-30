@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://rolwinreevan.com">
-    <img alt="man technologist smiley" src="https://github.com/MominBinShahid/MominBinShahid.github.io/blob/main/src/images/momin.png" width="60" />
+    <img alt="man technologist smiley" src="./src/images/momin.png" width="60" />
   </a>
 </p>
 <h1 align="center">Welcome 👋 to my new home on the web 🕸<br/> <a href='https://MominBinShahid.github.io/' target='_blank'>MominBinShahid.github.io</a> 👨‍💻
