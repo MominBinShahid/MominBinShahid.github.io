@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://MominBinShahid.github.io.com">
+  <a href="https://MominBinShahid.github.io">
     <img alt="man technologist smiley" src="./src/images/momin.png" width="60" />
   </a>
 </p>
