@@ -1,40 +1,65 @@
 import React, { Component } from 'react';
 import { Document, Page } from 'react-pdf';
 import {
-  Button, Row, Col, Alert, Space, Spin,
+  Button, Row, Col, Alert, Space, Spin, Tooltip,
 } from 'antd';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  ZoomInOutlined, ZoomOutOutlined,
+} from '@ant-design/icons';
 import SEO from '../components/Seo';
 import Config from '../../config';
 import DarkModeToggler from '../components/ThemeToggler';
+import { isPortableDeviceScreen } from '../utils/common';
 
 const {
   resumeDownloadLink, resumePrintableDownloadLink,
 } = Config;
 
+const zoomOperatorEnum = {
+  zoomIn: '+', zoomOut: '-',
+};
 export default class Resume extends Component {
   constructor() {
     super();
+    const pageScale = isPortableDeviceScreen() ? 1.3 : 1.6;
     this.state = {
       numPages: null,
       pageNumber: 1,
+      pageScale,
     };
     this.onDocumentLoadSuccess = this.onDocumentLoadSuccess.bind(this);
+    this.pageToggle = this.pageToggle.bind(this);
+    this.zoom = this.zoom.bind(this);
   }
 
   onDocumentLoadSuccess({ numPages }) {
     this.setState({ numPages });
   }
 
+  pageToggle(pageNumber) {
+    if (pageNumber === 1) {
+      this.setState({ pageNumber: 2 });
+    } else {
+      this.setState({ pageNumber: 1 });
+    }
+    return 1;
+  }
+
+  zoom(op) {
+    const zoomFactor = 0.3;
+    const { pageScale } = this.state;
+
+    if (op === zoomOperatorEnum.zoomIn) {
+      return this.setState({ pageScale: pageScale + zoomFactor });
+    }
+    return this.setState({ pageScale: pageScale - zoomFactor });
+  }
+
   render() {
-    const { pageNumber, numPages } = this.state;
-    const pageToggle = () => {
-      if (pageNumber === 1) {
-        this.setState({ pageNumber: 2 });
-      } else {
-        this.setState({ pageNumber: 1 });
-      }
-      return 1;
-    };
+    const {
+      pageNumber, numPages, pageScale,
+    } = this.state;
 
     const loader = (
       <div className="text-center">
@@ -86,7 +111,6 @@ export default class Resume extends Component {
                         </Button>
                         <Button
                           size="small"
-                          type="dashed"
                           href={resumePrintableDownloadLink}
                           download
                           target="_blank"
@@ -100,6 +124,37 @@ export default class Resume extends Component {
                 </Col>
               </Row>
 
+              <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
+                <Col>
+                  <Tooltip title="Increase the size of the page">
+                    <Button
+                      type="dashed"
+                      shape="round"
+                      icon={<ZoomInOutlined />}
+                      size="large"
+                      onClick={() => this.zoom(zoomOperatorEnum.zoomIn)}
+                    >
+                      Zoom In
+                    </Button>
+                  </Tooltip>
+                </Col>
+                <Col className="pl-0_5">
+                  <Tooltip title="Decrease the size of the page">
+                    <Button
+                      danger
+                      type="dashed"
+                      shape="round"
+                      icon={<ZoomOutOutlined />}
+                      size="large"
+                      onClick={() => this.zoom(zoomOperatorEnum.zoomOut)}
+                    >
+                      Zoom Out
+                    </Button>
+                  </Tooltip>
+                </Col>
+
+              </Row>
+
               {
                 numPages > 1
                 && (
@@ -109,7 +164,7 @@ export default class Resume extends Component {
                       <span>{`Page ${pageNumber} of ${numPages}`}</span>
                     </Col>
                     <Col>
-                      <Button type="primary" size="small" onClick={pageToggle}>{pageNumber === 1 ? 'Next Page' : 'Previous Page'}</Button>
+                      <Button type="primary" size="small" onClick={() => this.pageToggle(pageNumber)}>{pageNumber === 1 ? 'Next Page' : 'Previous Page'}</Button>
                     </Col>
                   </Space>
                 </Row>
@@ -120,9 +175,11 @@ export default class Resume extends Component {
                 file={resumeDownloadLink}
                 onLoadSuccess={this.onDocumentLoadSuccess}
                 loading={loader}
+                className="pb-2"
               >
                 <Page
                   pageNumber={pageNumber}
+                  scale={pageScale}
                   loading={loader}
                   renderAnnotationLayer={false} // causes weird space below the pdf
                 />

@@ -3,20 +3,27 @@ import { ThemeToggler } from 'gatsby-plugin-dark-mode';
 // import FontAwesome from 'react-fontawesome';
 import { Switch } from 'antd';
 import { useWindowSize } from '../../utils/hooks';
+import { isBrowser } from '../../utils/common';
 import style from './toggler.module.less';
 
 export default ({ fixBackgroundHTML }) => (
   <ThemeToggler>
     {({ theme, toggleTheme }) => {
       const isDark = theme === 'dark';
-      const [screenWidth] = useWindowSize();
-      const isPortableDeviceScreen = screenWidth !== 0 && screenWidth <= 768;
 
-      if (fixBackgroundHTML && isPortableDeviceScreen) {
+      const [screenWidth] = useWindowSize();
+
+      // eslint-disable-next-line no-unused-vars
+      const isPortableDeviceScreen = screenWidth !== 0 && screenWidth <= 768;
+      // if (fixBackgroundHTML && isPortableDeviceScreen) {
+
+      if (fixBackgroundHTML) {
         // accessing HTML main tag using document
 
-        // eslint-disable-next-line no-undef
-        document.documentElement.style.background = isDark ? 'var(--background-dark)' : 'var(--background-light)';
+        if (isBrowser) {
+          // eslint-disable-next-line no-undef
+          document.documentElement.style.background = isDark ? 'var(--background-dark)' : 'var(--background-light)';
+        }
       }
 
       return (

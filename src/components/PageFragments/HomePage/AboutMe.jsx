@@ -6,23 +6,23 @@ import { stripTags, domHtml } from '../../../utils/stripTags';
 import SEO from '../../Seo';
 
 const pageText = {
-  paraOne: `Hey there <emoji>👋</emoji> My name is <span class="devName">Momin Bin Shahid</span>.
-    I'm a <strong>full-stack developer</strong> who is passionate about software engineering and Web technologies, especially <strong>JavaScript</strong> and its derived ones.
-    I like to experiment with different web technologies. 
-    I have <strong>industry experience of 3+ years</strong> working with services and product-based companies as well as with my own clients usually using <strong>MERN</strong>/<strong>MEVN</strong>/<strong>MEAN</strong> stack.
-    You will usually find me building and experimenting with web, mobile and desktop apps using JavaScript <emoji>🚀</emoji> and other exciting technologies <emoji>🤩</emoji>`,
-  paraTwo: `Currently, at work, I mostly utilize Javascript-based technologies 🛠 like <strong>VueJS, ReactJS, NodeJS, and more</strong>.
-    I also have hands-on experience working with cloud infrastructures like <strong>AWS</strong>/<strong>Azure</strong>/<strong>GCP</strong>
-    and have deployed applications keeping scalability in mind
-    and I also worked on serverless applications.
-    Docker and Kubernetes are some of the tools I use for CI/CD.
-    I'm always a quick learner and a self-taught programmer.
-    Till now, I have only <strong>worked on closed-source projects</strong> but now I am getting into contributing to <strong>open-source software</strong> <emoji>🍀</emoji>
+  paraOne: `Hey there <emoji>👋</emoji> My name is <span class="devName">Momin Bin Shahid</span> <emoji>👨‍💻</emoji>.
+    I'm a <strong>Full-Stack JavaScript</strong> developer who is passionate about <strong>software engineering</strong> and <strong>web</strong>.
+    I love to learn and experiment with different technologies. 
+    I have <strong>industry experience of 4+ years</strong> working with <strong>service-based</strong> and <strong>product-based</strong> companies as well as with clients from U.S., Middle East and also other parts of the world usually building solutions using <strong>MERN</strong>/<strong>MEVN</strong>/<strong>MEAN</strong> stack.
+    You will usually find me building and experimenting with web, mobile and desktop apps using <strong>JavaScript</strong> <emoji>🚀</emoji> and other exciting <emoji>🤩</emoji> technologies.`,
+  paraTwo: `Currently, at work, I mostly utilize <strong>JavaScript</strong>-based technologies 🛠 like <strong>VueJS, ReactJS, NodeJS, and more</strong>.
+    I also have hands-on experience working with cloud infrastructures <emoji>☁️</emoji> like <strong>AWS</strong>/<strong>Azure</strong>/<strong>GCP</strong>/<strong>Firebase</strong>.
+    I have build and maintained <strong>serverless</strong> applications as well.
+    While developing and deploying apps I do keep <strong>scalability</strong> in mind while utilizing industry <strong>best practices</strong>.
+    I utilize <strong>Docker</strong> <emoji>🐳</emoji> and <strong>Kubernetes</strong> <emoji>☸️</emoji> for development as well as for CI/CD.
+    I'm always a quick learner <emoji>⚡️</emoji> and a self-taught <emoji>💻</emoji> programmer.
+    As of now, I have only <strong>worked on closed-source</strong> projects but lately I am getting into the <strong>open-source software</strong> <emoji>🍀</emoji> as well.
 
     <br/>
     <br/>
     
-    Let's get in touch <emoji>😇</emoji> and feel free to reach out for any opportunities or project collaboration or just to say hi <emoji>🙋‍♂️</emoji>`,
+    Let's get in touch <emoji>🤙</emoji> and feel free to reach out for any opportunities or project collaboration <emoji>😇</emoji> or just to say hi <emoji>🙋‍♂️</emoji>`,
 };
 
 const AboutMe = () => {
@@ -60,7 +60,7 @@ const AboutMe = () => {
             <AboutTile
               img="javascript.png"
               alt="javascript logo image"
-              textH4="Love JavaScript"
+              textH4="Love JavaScript ♥️"
               textH3="Learn Once, Deploy Everywhere!"
             />
           </Col>
