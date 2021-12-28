@@ -48,6 +48,7 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "preinstall": "rm -rf node_modules",
+    "init": "npm install && npm start",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
