@@ -24,8 +24,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        # with:
-          # persist-credentials: false
+        with:
+          persist-credentials: false
 
       - name: Reconfigure git to use HTTP authentication
         run: >
@@ -49,8 +49,8 @@ jobs:
           node-version: 14.x
       
       # Install project deps
-      - run: npm i
-      # - run: npm ci
+      # - run: npm i
+      - run: npm ci
       
       # Build the site to /public folder
       - run: npm run build --if-present
