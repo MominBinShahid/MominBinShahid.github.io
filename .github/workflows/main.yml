@@ -7,8 +7,12 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
+    paths-ignore:
+      - '.github/**'
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - '.github/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,8 +37,8 @@ jobs:
           node-version: 14.x
       
       # Install project deps
-      - run: npm i --production
-      # - run: npm ci # this is not working as of now, fix this on local first
+      # - run: npm i --production
+      - run: npm ci # this is not working as of now, fix this on local first
       
       # Build the site to /public folder
       - run: npm run build --if-present
