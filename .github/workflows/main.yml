@@ -24,6 +24,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        # with:
+          # persist-credentials: false
+
+      - name: Reconfigure git to use HTTP authentication
+        run: >
+          git config --global url."https://github.com/".insteadOf
+          ssh://git@github.com/
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
@@ -42,7 +49,8 @@ jobs:
           node-version: 14.x
       
       # Install project deps
-      - run: npm i # npm ci
+      # - run: npm i
+      - run: npm ci
       
       # Build the site to /public folder
       - run: npm run build --if-present
@@ -52,7 +60,9 @@ jobs:
       
       - name: GitHub Pages action
         uses: peaceiris/actions-gh-pages@v3.7.3
-        # with:
+        with:
+          # Set a generated GITHUB_TOKEN for pushing to the remote branch.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           # Set Git user.name
           # user_name: github-actions-bot
           # Set Git user.email
