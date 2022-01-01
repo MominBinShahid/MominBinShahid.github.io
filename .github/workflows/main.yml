@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: CI/CD
 
 # Controls when the workflow will run
 on:
@@ -42,7 +42,7 @@ jobs:
           node-version: 14.x
       
       # Install project deps
-      - run: npm ci
+      - run: npm i # npm ci
       
       # Build the site to /public folder
       - run: npm run build --if-present
