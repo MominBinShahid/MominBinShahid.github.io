@@ -18,30 +18,14 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: macos-latest # ubuntu-latest
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
 
-      - name: Reconfigure git to use HTTP authentication
-        run: >
-          git config --global url."https://github.com/".insteadOf
-          ssh://git@github.com/
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world! We are deploying the website to github pages
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-          
+      # Using Node.js
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.1
         with:
@@ -49,8 +33,8 @@ jobs:
           node-version: 14.x
       
       # Install project deps
-      # - run: npm i
-      - run: npm ci
+      - run: npm i
+      # - run: npm ci
       
       # Build the site to /public folder
       - run: npm run build --if-present
