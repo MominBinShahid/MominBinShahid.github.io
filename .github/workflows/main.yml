@@ -36,13 +36,17 @@ jobs:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: 14.x
           
-      # generate production env file    
+      # Generate production env file
+      # Setting env vars in .env.production because using on `env` in workflow `run` command
+      # `npm run build` as in later phases of building env vars gets undefined
+      # refs: 
+      # - https://stackoverflow.com/questions/61117865/how-to-set-environment-variable-in-node-js-process-when-deploying-with-github-ac#comment117711331_61485186
+      # - https://docs.github.com/en/actions/learn-github-actions/environment-variables#:~:text=to%20the%20runner.-,You%20can%20also%20use,-the%20GITHUB_ENV%20environment
       - name: create env file
         run: |
           touch .env.production
-          echo CONTACT_FORM_ENDPOINT=${{ secrets.CONTACT_FORM_ENDPOINT }} >> .env.production
-          echo GA_TRACKING_ID=${{ secrets.GA_TRACKING_ID }} >> .env.production
-          cat .env.production
+          echo CONTACT_FORM_ENDPOINT=$CONTACT_FORM_ENDPOINT >> .env.production
+          echo GA_TRACKING_ID=$GA_TRACKING_ID >> .env.production
         env: # Or as an environment variable
           CONTACT_FORM_ENDPOINT: ${{ secrets.CONTACT_FORM_ENDPOINT }}
           GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
