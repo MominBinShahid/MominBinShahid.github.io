@@ -1,10 +1,10 @@
 if (process.env.NODE_ENV === 'production') {
   if (!process.env.CONTACT_FORM_ENDPOINT) {
-    throw new Error('Error: Contact form endpoint is not defined. `WARN` Contact form will not work');
+    throw new Error('Contact form endpoint is not defined. `WARN` Contact form will not work');
   }
 
   if (!process.env.GA_TRACKING_ID) {
-    throw new Error('Error: Google Analytics Tracking ID is not defined. `WARN` Google Analytics will not work');
+    throw new Error('Google Analytics Tracking ID is not defined. `WARN` Google Analytics will not work');
   }
 }
 
