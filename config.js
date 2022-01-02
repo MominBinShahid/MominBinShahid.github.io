@@ -1,12 +1,21 @@
-if (process.env.NODE_ENV === 'production') {
-  if (!process.env.CONTACT_FORM_ENDPOINT) {
-    throw new Error('Contact form endpoint is not defined. `WARN` Contact form will not work');
-  }
+(function checkEnvVars() {
+  if (process.env.NODE_ENV === 'production') {
+    /**
+     * only check for Environment Variables in the initial run
+     * and ignore these checks in gatsby build stages
+     */
+    if (process.env.GATSBY_BUILD_STAGE) {
+      return;
+    }
 
-  if (!process.env.GA_TRACKING_ID) {
-    throw new Error('Google Analytics Tracking ID is not defined. `WARN` Google Analytics will not work');
+    if (!process.env.CONTACT_FORM_ENDPOINT) {
+      throw new Error('Contact Form Endpoint is not defined. `WARN` Contact Form will not work');
+    }
+    if (!process.env.GA_TRACKING_ID) {
+      throw new Error('Google Analytics Tracking ID is not defined. `WARN` Google Analytics will not work');
+    }
   }
-}
+}());
 
 module.exports = {
   pathPrefix: '',
