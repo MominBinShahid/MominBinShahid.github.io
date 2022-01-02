@@ -42,6 +42,9 @@ jobs:
       
       # Build the site to /public folder
       - run: npm run build --if-present
+        env: # Or as an environment variable
+          CONTACT_FORM_ENDPOINT: ${{ secrets.CONTACT_FORM_ENDPOINT }}
+          GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
       
       # Test the app
       # - run: npm test
