@@ -2,29 +2,28 @@ import React from 'react';
 import { ThemeToggler } from 'gatsby-plugin-dark-mode';
 // import FontAwesome from 'react-fontawesome';
 import { Switch } from 'antd';
-import { useWindowSize } from '../../utils/hooks';
-import { isBrowser } from '../../utils/common';
+// import { useWindowSize } from '../../utils/hooks';
+// import { isBrowser } from '../../utils/common';
 import style from './toggler.module.less';
 
-export default ({ fixBackgroundHTML }) => (
+export default () => (
   <ThemeToggler>
     {({ theme, toggleTheme }) => {
       const isDark = theme === 'dark';
 
-      const [screenWidth] = useWindowSize();
-
-      // eslint-disable-next-line no-unused-vars
-      const isPortableDeviceScreen = screenWidth !== 0 && screenWidth <= 768;
-      // if (fixBackgroundHTML && isPortableDeviceScreen) {
-
-      if (fixBackgroundHTML) {
-        // accessing HTML main tag using document
-
-        if (isBrowser) {
-          // eslint-disable-next-line no-undef
-          document.documentElement.style.background = isDark ? 'var(--background-dark)' : 'var(--background-light)';
-        }
-      }
+      // const [screenWidth] = useWindowSize();
+      // const setClassesBasedOnDevice = (appliedTheme) => {
+      //   const isNotPortableDevice = screenWidth > 997;
+      //   if (isNotPortableDevice) {
+      //     if (isBrowser) {
+      //       // eslint-disable-next-line no-undef
+      //       document.body.classList.remove(appliedTheme);
+      //       // eslint-disable-next-line no-undef
+      //       document.documentElement.classList.toggle(appliedTheme);
+      //     }
+      //   }
+      // };
+      // setClassesBasedOnDevice(theme);
 
       return (
         <>

@@ -68,7 +68,7 @@ const gatsbyConfig = [
     },
   },
   'gatsby-plugin-sitemap',
-  'gatsby-plugin-robots-txt', /* <- convert it version inside package.json from ~^1.5.5 to ~1.5.5
+  'gatsby-plugin-robots-txt', /* <- convert it version inside package.json from ^1.5.5 to ~1.5.5
   because actual version installed (from package-lock.json) was 1.6.2 and after ~ is it 1.5.6
   Reason: in version 1.6 sitemap url in robots.txt set as ../sitemap/sitemap_index.xml
   and sitemap was actually generated as /sitemap.xml on root, not inside folder
@@ -77,18 +77,6 @@ const gatsbyConfig = [
     resolve: 'gatsby-plugin-antd',
     options: {
       javascriptEnabled: true,
-    },
-  },
-  {
-    resolve: 'gatsby-plugin-eslint-v2',
-    options: {
-      test: /\.js$|\.jsx$/,
-      exclude: /(node_modules|.cache|public)/,
-      stages: ['develop'],
-      options: {
-        emitWarning: true,
-        failOnError: false,
-      },
     },
   },
   {
@@ -101,6 +89,24 @@ const gatsbyConfig = [
     },
   },
 ];
+
+if (process.env.NODE_ENV !== 'production') {
+  // before this is installed in dev-deps (ref: https://www.gatsbyjs.com/plugins/gatsby-plugin-eslint-v2/)
+  gatsbyConfig.push(
+    {
+      resolve: 'gatsby-plugin-eslint-v2',
+      options: {
+        test: /\.js$|\.jsx$/,
+        exclude: /(node_modules|.cache|public)/,
+        stages: ['develop'],
+        options: {
+          emitWarning: true,
+          failOnError: false,
+        },
+      },
+    },
+  );
+}
 
 if (process.env.NODE_ENV === 'production' && config.googleAnalyticTrackingId) {
   // first we were using this https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics/

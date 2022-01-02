@@ -9,6 +9,8 @@
 
 This project was built on new standard architecture for the web [Jamstack](https://jamstack.org/) 🤩 using [React.js](https://reactjs.org/) via [Gatsby.js](https://www.gatsbyjs.com/)
 
+## Acknowledgements
+
 Mentioned below are some of the technologies and contributors how makes this possible and I wanted to present my tribute 🙏 and complete credit to all of them 👏
 
 [**`rolwinreevan_gatsby_blog`**](https://github.com/rolwin100/rolwinreevan_gatsby_blog): Before we talk about any technologies involved I wanted to give a gigantic shout-out to this awesome starter project for Gatsby.js. This also includes [ant.design](https://ant.design/), and [LESS](https://lesscss.org/) and many more. for more details: visit [this starter on gatsby.js site](https://www.gatsbyjs.com/starters/rolwin100/rolwinreevan_gatsby_blog) do visit this starter and star this project 👍 as this is probably one of the best starters for gatsby.js till now, check for yourself and to the contributor I am eternally grateful for the time and effort you put in to create this awesome starter ✊
@@ -22,5 +24,16 @@ Mentioned below are some of the technologies and contributors how makes this pos
 [**`VS Code`**](https://code.visualstudio.com/): Time for some biasness 😅 so, here it is "Best Code Editor of Milky Way and Andromeda" 😎
 
 With all these above, I would also like to mention ✍️ and show my eternal gratitude 🙇 to these awesome techs such as [**`Canva`**](https://canva.com) for stupendous resume, [**`icon8`**](https://icons8.com/) for astounding images, [**`fontawesome`**](https://fontawesome.com/v4.7/icons/) for incredible icons, even wanted to mentioned this subtle button [effect](https://www.fabriziovanmarciano.com/button-styles/#:~:text=this%20button%20below.-,Button%20E%20Preview,-ADD%20CALL%20TO) and definitely [**`Github`**](https://github.com) for everything ❤️
+
+## Development
+
+To start development, clone the repo and run command `npm run init` and you app will be running on localhost on default port i.e. [localhost:8000](https://localhost:8000)
+<br/>
+Just make sure **node >=14.16.1** is installed, see package.json for more details
+
+### Essentials
+
+- To setup github and bitbucket using ssh config follow [this](https://gist.github.com/rosswd/e1afd2b0b0d515517eac#gistcomment-1709305)
+- If you are looking to do some development make sure to setup git user name and email before commit anything (I have forgetten this step in past and tagged my work email in the personal website commits 😝) follow [this](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-user-account/managing-email-preferences/setting-your-commit-email-address#setting-your-email-address-for-a-single-repository)
 
 Visit the website at [MominBinShahid.github.io](https://MominBinShahid.github.io) and feel free to reach me out if you have any questions or suggestion or just wanted to have a chat 🤟

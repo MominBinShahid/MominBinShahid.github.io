@@ -4,6 +4,10 @@
 }
 
 .invertDarkMode() {
+  /*
+    100% invert filter here is intentional.
+    Reason: to give a sight vibrance in dark mode
+  */
   -webkit-filter: invert(100%) hue-rotate(180deg) !important;
   filter: invert(100%) hue-rotate(180deg) !important;
 }
@@ -19,15 +23,17 @@
   transition: filter @transitionSpeed @transitionTimingFunction, -webkit-filter @transitionSpeed @transitionTimingFunction;
 }
 
-html {
-  /* for extra space shown when user scroll */
-
-  // background: @white-bg;
-  background: @black-bg;
-
-  // css variables for fixing background color on resume
-  --background-light: @white-bg;
-  --background-dark: @black-bg;
+.reapplyFilterToFixedNegative(@rules) {
+  video, img, // picture, // comment 'picture' to show 'img' properly in blog
+  .gatsby-highlight, // for code highlighted snippets in markdown
+  [style^="background-image:"], // for tag card images
+  iframe, // embedded content
+  emoji, // for emojis in markdown
+  .invert // use better word then invert
+  // html // will have to test
+  {
+    @rules()
+  }
 }
 
 body {
@@ -38,22 +44,20 @@ body {
   // .applyTransitions()
 }
 
+// html.dark
 body.dark {
   // below code makes text-seeing harder
   // -webkit-font-smoothing: antialiased;
 
-  .enableDarkMode();
+  /* for extra space shown below about page (or any shorter page) */
+  background: @black-bg;
 
-  video, img, // picture, // comment 'picture' to show 'img' properly in blog
-  .gatsby-highlight, // for code highlighted snippets in markdown
-  [style^="background-image:"], // for tag card images
-  iframe, // embedded content
-  emoji, // for emojis in markdown
-  .invert // use better word then invert
-  // html // will have to test
-  {
-    .invertDarkMode();
-  }
+  .enableDarkMode();
+  .reapplyFilterToFixedNegative(
+    {
+      .invertDarkMode();
+    }
+  );
 
   /* 
     Test a white line below the screen after screen-up
@@ -62,4 +66,31 @@ body.dark {
   // .gatsby-portal {
   //   display: none;
   // }
+
+  /**
+   * FIXME: @MominBinShahid there is an issue here, in Dark Mode using `Affix` won't work
+   * even worse, it will give a jittery effect when we scroll the page on 100% zoom level
+   * Reason: as we are using `CSS filter` for dark mode and Affix use `position: fixed`,
+   * and applying CSS filters disturbs position: fixed
+   * This is a known issue in browsers - refs:
+   *    https://stackoverflow.com/questions/52937708/why-does-applying-a-css-filter-on-the-parent-break-the-child-positioning
+   *    https://developpaper.com/explain-the-reasons-and-solutions-of-the-conflict-between-filter-and-fixed-in-detail/
+   *    https://stackoverflow.com/questions/35780409/position-fixed-not-working-when-css-filters-applied-on-same-element-in-microsoft
+   *
+   * So, either we can remove the Affix - which won't give a fixed sidebar on longer scrollable
+   * screens for example on blogs
+   * Secondly, we can fix this issue of position: fixed being disturbed with CSS filters by
+   * applying class `dark` on HTML tag rather than BODY tag, BUT this will significantly reduce the
+   * rendering performance. This can be done by make edits in the plugin `gatsby-plugin-dark-mode`
+   * and apply dark class on HTML instead of BODY (but that also cause an issue where Affix removal takes a noticeable time
+   * if we are editing the plugin we can make HTML or BODY tag and using preferred theme optional using props
+   * ALSO, fix the error in plugin that sets `light` and `dark` both on BODY (not in light mode case) on initial load
+   * Or try other solution mentioned in the refs above 
+   *
+   * BUT it is an issue for now, so as a hot-fix
+   * I am removing the `position: fixed` effect from this Affix
+   */
+   .ant-affix {
+    position: absolute !important;
+  }
 }

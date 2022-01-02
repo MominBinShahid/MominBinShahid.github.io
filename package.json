@@ -47,7 +47,8 @@
     "preserve": "npm run build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "init": "npm install && npm start",
+    "init": "rm -rdf node_modules && npm install && npm start",
+    "clean-install": "rm -rdf node_modules && rm -f package-lock.json && npm i",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {

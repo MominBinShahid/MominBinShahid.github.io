@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'gatsby';
 import { Document, Page } from 'react-pdf';
 import {
   Button, Row, Col, Alert, Space, Spin, Tooltip,
 } from 'antd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {
-  ZoomInOutlined, ZoomOutOutlined,
+  ZoomInOutlined, ZoomOutOutlined, ArrowLeftOutlined, HomeTwoTone,
 } from '@ant-design/icons';
 import SEO from '../components/Seo';
 import Config from '../../config';
@@ -13,7 +14,7 @@ import DarkModeToggler from '../components/ThemeToggler';
 import { isPortableDeviceScreen } from '../utils/common';
 
 const {
-  resumeDownloadLink, resumePrintableDownloadLink,
+  resumeForWeb, resumeDownloadLink, resumePrintableDownloadLink,
 } = Config;
 
 const zoomOperatorEnum = {
@@ -84,7 +85,23 @@ export default class Resume extends Component {
 
               <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
                 <Col>
-                  <DarkModeToggler fixBackgroundHTML />
+                  <Link to="/">
+                    <Button
+                      type="dashed"
+                      shape="round"
+                      icon={<ArrowLeftOutlined />}
+                      size="small"
+                    >
+                      {/* onClick={() => navigate('/')} */}
+                      {/* href="/" */}
+
+                      {/* Back */}
+                      <HomeTwoTone />
+                    </Button>
+                  </Link>
+                </Col>
+                <Col className="pl-0_5">
+                  <DarkModeToggler />
                 </Col>
               </Row>
 
@@ -172,7 +189,7 @@ export default class Resume extends Component {
               }
 
               <Document
-                file={resumeDownloadLink}
+                file={resumeForWeb}
                 onLoadSuccess={this.onDocumentLoadSuccess}
                 loading={loader}
                 className="pb-2"
