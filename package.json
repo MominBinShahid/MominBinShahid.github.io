@@ -37,7 +37,7 @@
   ],
   "private": true,
   "scripts": {
-    "prebuild": "rm -rf public",
+    "prebuild": "rm -rdf public",
     "build": "gatsby build",
     "gh-pages-help": "gh-pages --help",
     "publish": "npm run build && gh-pages -d public -m 'Updated deployment'",

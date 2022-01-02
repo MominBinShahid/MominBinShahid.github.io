@@ -17,6 +17,9 @@
   }
 }());
 
+console.log({ process_env: process.env });
+console.log({ CONTACT_FORM_ENDPOINT: process.env.CONTACT_FORM_ENDPOINT });
+
 module.exports = {
   pathPrefix: '',
   siteUrl: 'https://MominBinShahid.github.io',

@@ -72,3 +72,11 @@ exports.createPages = ({ actions, graphql }) => {
     return 1;
   });
 };
+
+exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
+  if (getConfig().mode === 'production') {
+    actions.setWebpackConfig({
+      devtool: false,
+    });
+  }
+};
