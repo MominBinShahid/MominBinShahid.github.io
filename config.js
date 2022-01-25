@@ -46,12 +46,27 @@ module.exports = {
     resume: { name: 'Resume', path: 'resume' },
   },
   social: {
-    twitter: { link: 'https://twitter.com/MominBinShahid', icon: 'twitter' },
-    github: { link: 'https://github.com/MominBinShahid', icon: 'github' },
-    linkedin: { link: 'https://pk.linkedin.com/in/mominbinshahid', icon: 'linkedin-square' },
-    stackoverflow: { link: 'https://stackoverflow.com/users/9137804/MominBinShahid', icon: 'stack-overflow' },
-    instagram: { link: 'https://www.instagram.com/MominBinShahid', icon: 'instagram', hide: true },
-    facebook: { link: 'https://www.facebook.com/MominBinShahid', icon: 'facebook-official' },
+    twitter: {
+      link: 'https://twitter.com/MominBinShahid', icon: 'twitter', 'icon-square': 'twitter-square', color: '#1da1f2',
+    },
+    github: {
+      link: 'https://github.com/MominBinShahid', icon: 'github', 'icon-square': 'github-square', color: '#333',
+    },
+    linkedin: {
+      link: 'https://linkedin.com/in/mominbinshahid', icon: 'linkedin', 'icon-square': 'linkedin-square', color: '#0a66c2',
+    },
+    stackoverflow: {
+      link: 'https://stackoverflow.com/users/9137804/MominBinShahid', icon: 'stack-overflow', color: '#f48024',
+    },
+    instagram: {
+      link: 'https://www.instagram.com/MominBinShahid', icon: 'instagram', hide: true, color: '#c32aa3',
+    },
+    youtube: {
+      link: 'https://www.youtube.com/channel/UCJ4AYMZ3jV0Fpw862C4DDXg', icon: 'youtube-play', 'icon-square': 'youtube-square', hide: true, color: '#ff0000',
+    },
+    facebook: {
+      link: 'https://www.facebook.com/MominBinShahid', icon: 'facebook', 'icon-square': 'facebook-square', color: '#1877f2',
+    },
     rss: { link: '/rss.xml', hide: true }, // TODO: @Momin see this
   },
 

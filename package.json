@@ -37,19 +37,19 @@
   ],
   "private": true,
   "scripts": {
-    "prebuild": "rm -rdf public",
+    "prebuild": "rm -rf public",
     "build": "gatsby build",
     "gh-pages-help": "gh-pages --help",
     "publish": "npm run build && gh-pages -d public -m 'Updated deployment'",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "preserve": "npm run build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "init": "rm -rdf node_modules && npm install && npm start",
-    "clean-install": "rm -rdf node_modules && rm -f package-lock.json && npm i",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "init": "rm -rf node_modules && npm install && npm start",
+    "clean-install": "rm -rf node_modules && rm -f package-lock.json && npm i",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\""
   },
   "dependencies": {
     "antd": "^4.0.1",

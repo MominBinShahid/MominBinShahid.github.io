@@ -5,9 +5,11 @@ import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
 import DarkModeToggler from '../../ThemeToggler';
 
+import style from './header.module.less';
+
+// find out a better place to import these [globals]
 import 'font-awesome/less/font-awesome.less';
 import '../../../styles/global.less';
-import style from './header.module.less';
 
 export default () => {
   const [menu, setMenu] = useState(false);

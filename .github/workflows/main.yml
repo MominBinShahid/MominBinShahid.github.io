@@ -61,6 +61,8 @@ jobs:
       # Test the app
       # - run: npm test
       
+      # Deploy to Github Pages (defaults branch is `gh-pages`, and folder is `./public`)
+      # for first deployment follow: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-first-deployment-with-github_token
       - name: GitHub Pages action
         uses: peaceiris/actions-gh-pages@v3.7.3
         with:

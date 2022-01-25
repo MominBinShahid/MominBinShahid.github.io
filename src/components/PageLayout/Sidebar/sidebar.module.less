@@ -30,10 +30,11 @@
             h2{
                 font-weight: 200;
                 letter-spacing: 2px;
-            }
-            span{
-                font-weight: 600;
-                letter-spacing: 0px;
+                
+                span {
+                    font-weight: 600;
+                    letter-spacing: 0px;
+                }
             }
             .badge {
                 margin-top: 0.5rem;
@@ -102,7 +103,11 @@
                 -webkit-align-items: center;
                 -ms-flex-align: center;
                 align-items: center;
-                margin-bottom: .75rem;
+                
+                &:not(:last-of-type) {
+                    // these rules will apply to all the elements except the last one
+                    margin-bottom: .75rem;
+                }
             }
             .resumeDownload, .resumePrintableDownload {
                 margin-top: 1rem;
@@ -137,19 +142,6 @@
             }
             .fixSidebarSmiley {
                 font-size: 1.3rem;
-            }
-            .socialLinks {
-                a {
-                    span {
-                        font-size: 1.5rem;
-                        -webkit-transition: color 0.25s;
-                        -o-transition: color 0.25s;
-                        transition: color 0.25s;
-                        &:hover {
-                            color: #111;
-                        }
-                    }
-                }
             }
         }
     }

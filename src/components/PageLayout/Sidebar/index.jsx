@@ -2,31 +2,15 @@ import React from 'react';
 import {
   Affix, Layout, Row, Col, Space,
 } from 'antd';
-import FontAwesome from 'react-fontawesome';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { globalHistory } from '@reach/router';
 import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
 import style from './sidebar.module.less';
+import Socials from '../../Socials';
 
 const { Content } = Layout;
-const { social, resumeDownloadLink, resumePrintableDownloadLink } = Config;
-
-const socialLinks = () => {
-  const links = [];
-  Object.keys(social).forEach((key) => {
-    const { link, icon, hide } = social[key];
-
-    if (!hide) {
-      links.push(
-        <a key={link} href={link} target="_blank" label="button" rel="noopener noreferrer">
-          <FontAwesome name={icon} />
-        </a>,
-      );
-    }
-  });
-  return links;
-};
+const { resumeDownloadLink /* , resumePrintableDownloadLink  */ } = Config;
 
 const DomContent = () => (
   <aside>
@@ -49,8 +33,8 @@ const DomContent = () => (
         @&nbsp;
         <a href="https://Securiti.ai" target="_blank" rel="noreferrer">Securiti.ai</a>
       </div>
-      <div className={`centerAlign box ${style.socialLinks}`}>
-        { socialLinks() }
+      <div className="centerAlign box">
+        <Socials useSidebar />
       </div>
 
       {/* below mentioned class: contactBlock is not working because it's in style.contactBlock */}
@@ -102,9 +86,18 @@ const DomContent = () => (
       <div className={style.resumeDownload}>
         <a href={resumeDownloadLink} download target="_blank" rel="noreferrer">Download CV</a>
       </div>
-      <div className={style.resumePrintableDownload}>
-        <a href={resumePrintableDownloadLink} download target="_blank" rel="noreferrer">Printable CV</a>
-      </div>
+
+      {/* <div className={style.resumePrintableDownload}>
+        <a
+          href={resumePrintableDownloadLink}
+          download
+          target="_blank"
+          rel="noreferrer"
+        >
+          Printable CV
+        </a>
+      </div> */}
+
     </div>
   </aside>
 );

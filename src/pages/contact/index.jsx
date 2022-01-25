@@ -4,6 +4,7 @@ import Header from '../../components/PageLayout/Header';
 import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import ContactForm from '../../components/PageFragments/ContactForm';
 import SEO from '../../components/Seo';
+import Socials from '../../components/Socials';
 
 const Contact = () => (
   <Layout className="outerPadding">
@@ -30,7 +31,10 @@ const Contact = () => (
               className="widthFull contactImgBorder"
             />
           </Col>
+
           <ContactForm />
+          <Socials useSquareIcons useToolTip fontSize="3.5rem" />
+
         </Row>
       </SidebarWrapper>
     </Layout>
