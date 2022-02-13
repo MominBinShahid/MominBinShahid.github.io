@@ -9,4 +9,4 @@ Just make sure **node >=14.16.1** is installed, see package.json for more detail
 ### Essentials
 
 - To setup github and bitbucket using ssh config follow [this](https://gist.github.com/rosswd/e1afd2b0b0d515517eac#gistcomment-1709305)
-- If you are looking to do some development make sure to setup git user name and email before commit anything (I have forgetten this step in past and tagged my work email in the personal website commits 😝) follow [this](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-user-account/managing-email-preferences/setting-your-commit-email-address#setting-your-email-address-for-a-single-repository)
+- If you are looking to do some development make sure to setup git user name and email before commit anything (I have forgotten this step in past and tagged my work email in the personal website commits 😝) follow [this](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-user-account/managing-email-preferences/setting-your-commit-email-address#setting-your-email-address-for-a-single-repository)
