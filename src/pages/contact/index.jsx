@@ -33,7 +33,7 @@ const Contact = () => (
           </Col>
 
           <ContactForm />
-          <Socials useSquareIcons useToolTip fontSize="3.5rem" />
+          <Socials useSquareIcons useToolTip />
 
         </Row>
       </SidebarWrapper>

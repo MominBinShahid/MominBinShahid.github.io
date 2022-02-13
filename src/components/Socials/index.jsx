@@ -7,7 +7,7 @@ import styles from './socials.module.less';
 const { social } = Config;
 
 export default ({
-  useSidebar, useSquareIcons = false, useToolTip = false, fontSize = '2rem',
+  useSidebar, useSquareIcons = false, useToolTip = false,
 }) => {
   const links = [];
 
@@ -15,6 +15,11 @@ export default ({
     const {
       link, icon, hide, color, 'icon-square': iconSquared,
     } = social[key];
+
+    // if no icon is provided, then no need to render icons
+    if (!icon && !iconSquared) return;
+
+    const fontSize = useSquareIcons ? '4rem' : '2rem';
 
     const iconContent = (
       <FontAwesome
@@ -29,11 +34,19 @@ export default ({
       </Tooltip>
     );
 
+    /*
+      for stackoverflow specific CSS because
+      fontawesome v4.7 do not have squared icon for stackoverflow
+    */
+    const stackOverflowSquareIcon = useSquareIcons && icon === 'stack-overflow' ? styles.stackOverflowSquareIcon : '';
+
     if (!hide) {
       links.push(
-        <a key={link} href={link} target="_blank" label="button" rel="noopener noreferrer">
-          {iconWithToolTip}
-        </a>,
+        <span key={link} className={`${stackOverflowSquareIcon}`}>
+          <a href={link} target="_blank" label="button" rel="noopener noreferrer" aria-label={key}>
+            {iconWithToolTip}
+          </a>
+        </span>,
       );
     }
   });

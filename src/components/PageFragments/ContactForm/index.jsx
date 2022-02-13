@@ -113,17 +113,17 @@ export default () => {
       <Form form={form} name="nest-messages" validateMessages={validateMessages} onFinish={onFinish} autoComplete="off">
 
         <Form.Item name={['name']} rules={[{ required: true }]}>
-          <Input size="large" placeholder="Full Name *" />
+          <Input aria-label="name" size="large" placeholder="Full Name *" />
         </Form.Item>
         <Form.Item name={['email']} rules={[{ type: 'email' }]}>
-          <Input size="large" placeholder="Email" />
+          <Input aria-label="email" size="large" placeholder="Email" />
         </Form.Item>
         <Form.Item name={['description']} rules={[{ required: true }]}>
-          <Input.TextArea size="large" rows={7} placeholder="Description *" />
+          <Input.TextArea aria-label="description" size="large" rows={7} placeholder="Description *" />
         </Form.Item>
 
         <Form.Item name={['_honey']} hidden>
-          <Input />
+          <Input aria-label="honey form validator field" />
         </Form.Item>
 
         <Form.Item>

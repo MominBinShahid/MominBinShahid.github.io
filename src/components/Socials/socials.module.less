@@ -2,7 +2,8 @@
     a {
         span {
             &:hover {
-                filter: brightness(130%)
+                -webkit-filter: brightness(130%);
+                filter: brightness(130%);
             }
         }
     }
@@ -12,8 +13,26 @@
     a {
         span {
             &:hover {
-                filter: brightness(70%)
+                /* 
+                    remove `hoverDarker` because stackoverflow icon itself is getting highlighted
+                    but other icons do not because they are hollow (icon are squared) 
+                */
+                /* -
+                webkit-filter: brightness(70%);
+                filter: brightness(70%) 
+                */
             }
         }
     }
+}
+
+// stackoverflow specific CSS because fontawesome v4.7 do not have squared icon for stackoverflow
+.stackOverflowSquareIcon a span {
+    border-radius: 10px;
+    padding: 6px 10px 7px;
+    position: relative;
+    top: -9px;
+    background-color: #f48024;
+    font-size: 2.6rem !important;
+    color: whitesmoke !important;
 }

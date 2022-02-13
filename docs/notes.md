@@ -11,6 +11,12 @@
 - #hashtag font size on /tags
 - white-shadow on blog and tags cards
 - add a back to top for long pages
+- replace image plugin form `gatsby-image` to `gatsby-plugin-image` as prior is deprecated (check - https://www.gatsbyjs.com/docs/conceptual/using-gatsby-image/ and https://www.gatsbyjs.com/docs/preoptimizing-images/ and https://www.gatsbyjs.com/docs/working-with-images/)
+- fix React warning `The tag <emoji> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter.`
+- fix `h4` and some `h3` as it is used for styling which should not be the case [search `h4` globally] (Accessibility Issues: Heading elements are not in a sequentially-descending order)
+- Add `gatsby-plugin-csp` plugin for Content Security Policy (CSP)
+- Use `https://web.dev/measure` or lighthouse and fix all the issues mentioned
+- Document way to create .env.development and .env.production (and setup using github secrets)
 
 - warnings: gin gatsby-plugin-google-gtag is not compatible with your gatsby version 2.32.13 - It requires gatsby@^3.0.0-next.0
 - check for no-extraneous-dependencies in code
