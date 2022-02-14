@@ -17,4 +17,28 @@ const isPortableDeviceScreen = () => {
   return screenWidth !== 0 && screenWidth <= 768;
 };
 
-module.exports = { isBrowser, isPortableDeviceScreen };
+// Simple debounce function - ref: https://youmightnotneed.com/lodash#function
+const debounce = (func, delay, { leading } = {}) => {
+  let timerId;
+
+  return (...args) => {
+    if (!timerId && leading) {
+      func(...args);
+    }
+    clearTimeout(timerId);
+
+    timerId = setTimeout(() => func(...args), delay);
+  };
+};
+
+// Is App In Dark Mode
+const isInDarkMode = () => {
+  if (!isBrowser) return false;
+
+  const currentTheme = window.localStorage.getItem('theme');
+  return currentTheme === 'dark';
+};
+
+module.exports = {
+  isBrowser, isPortableDeviceScreen, debounce, isInDarkMode,
+};

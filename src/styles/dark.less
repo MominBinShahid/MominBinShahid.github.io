@@ -13,6 +13,8 @@
 }
 
 .applyTransitions() {
+  will-change: transform;
+  
   @transitionSpeed: 0.25s;
   @transitionTimingFunction: ease;
 
@@ -31,6 +33,7 @@
   emoji, // for emojis in markdown
   .invert // use better word then invert
   // html // will have to test
+  // input, textarea // all forms field should be included here
   {
     @rules()
   }
