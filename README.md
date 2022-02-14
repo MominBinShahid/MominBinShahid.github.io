@@ -9,8 +9,6 @@
 
 This project\* was built on new standard† architecture for the web [JAMstack](https://jamstack.org/) 🤩 using [React.js](https://reactjs.org/) via [Gatsby.js](https://www.gatsbyjs.com/)
 
----
-
 ## Acknowledgements
 
 Mentioned below are some of the technologies and contributors how makes this possible and I wanted to present my tribute 🙏 and complete credit to all of them 👏
@@ -27,12 +25,8 @@ Mentioned below are some of the technologies and contributors how makes this pos
 
 With all these above, I would also like to mention ✍️ and show my eternal gratitude 🙇 to these awesome techs such as [**`Canva`**](https://canva.com) for stupendous resume, [**`icon8`**](https://icons8.com/) for astounding icons, [**`fontawesome`**](https://fontawesome.com/v4.7/icons/) for incredible icons, even wanted to mentioned this subtle button [effect](https://www.fabriziovanmarciano.com/button-styles/#:~:text=this%20button%20below.-,Button%20E%20Preview,-ADD%20CALL%20TO) and definitely [**`Github`**](https://github.com) for everything ❤️
 
----
-
 ## Setup
 Follow [docs/setup.md](docs/setup.md) to setup for development
-
----
 
 ## Notes
 
