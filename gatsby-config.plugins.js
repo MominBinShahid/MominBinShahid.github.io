@@ -20,8 +20,9 @@ const gatsbyConfig = [
       short_name: 'Momin',
       description: 'Momin Bin Shahid`s website',
       start_url: '/',
-      background_color: '#304CFD',
-      theme_color: '#304CFD',
+      lang: 'en',
+      background_color: '#EEEEEE', // '#304CFD',
+      theme_color: '#2196F3', // '#304CFD',
       display: 'standalone',
       // icon: 'src/images/icon.png', // This path is relative to the root of the site.
       icon: 'src/images/momin.png', // This path is relative to the root of the site.
@@ -29,7 +30,6 @@ const gatsbyConfig = [
       // versions prior to iOS 11.3.
     },
   },
-  'gatsby-plugin-offline', // read plugin placement. ref: https://www.gatsbyjs.com/docs/how-to/performance/add-offline-support-with-a-service-worker/#using-service-workers-in-gatsby-with-gatsby-plugin-offline
   {
     resolve: 'gatsby-source-filesystem',
     options: {
@@ -83,11 +83,12 @@ const gatsbyConfig = [
     resolve: 'gatsby-plugin-nprogress',
     options: {
       // Setting a color is optional.
-      color: 'black',
+      color: 'tomato',
       // Disable the loading spinner.
       showSpinner: true,
     },
   },
+  'gatsby-plugin-offline', // read plugin placement. ref: https://www.gatsbyjs.com/docs/how-to/performance/add-offline-support-with-a-service-worker/#using-service-workers-in-gatsby-with-gatsby-plugin-offline
 ];
 
 if (process.env.NODE_ENV !== 'production') {
