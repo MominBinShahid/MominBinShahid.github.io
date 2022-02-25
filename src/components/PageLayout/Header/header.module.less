@@ -1,5 +1,22 @@
 @import (reference) '../../../styles/index.less';
 
+#lineCross() {
+    .line{
+        background-color: #fff;
+        border-radius: 4px;
+        display: block;
+        margin: 4px 20px;
+        height: 2px;
+        width: 20px;
+
+        -webkit-transition: opacity 0.3s ease-in-out, -webkit-transform 0.2s ease-in-out;
+        transition: opacity 0.3s ease-in-out, -webkit-transform 0.2s ease-in-out;
+        -o-transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
+        transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
+        transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out, -webkit-transform 0.2s ease-in-out;
+    }
+}
+
 .circleMenu {
     background: #304CFD;
     border-radius: 50% 0 50% 50%;
@@ -29,11 +46,7 @@
         color: #fff;
         text-align: center;
         .hamburgerText {
-            position: absolute;
-            width: 100%;
-            top: 33%;
-            left: 0;
-            font-size: .75rem;
+            #lineCross;
         }
     }
     &:focus{
@@ -41,22 +54,14 @@
     }
 }
 .menuIcon {
-    .hamburgerText {
-        opacity: 0;
-    }
-    .line{
-        background-color: #fff;
-        border-radius: 4px;
-        display: block;
-        margin: 4px 0;
-        height: 2px;
-        width: 18px;
-        transition: all 0.2s ease-in-out;
-    }
+    #lineCross;
     .line:nth-child(1) {
-        transform: translateY(0px) rotate(45deg);
+        transform: translateY(6px) rotate(45deg);
     }
     .line:nth-child(2) {
+        opacity: 0;
+    }
+    .line:nth-child(3) {
         transform: translateY(-6px) rotate(-45deg);
     }
 }
@@ -129,7 +134,9 @@
         left: 50%;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
-        transition: all 2s;
+        // -webkit-transition: all 2s;
+        // -o-transition: all 2s;
+        // transition: all 2s;
         li{
             margin-bottom: 1rem;
         }
@@ -148,7 +155,6 @@
                 border-radius: 14px;
                 background-color: whitesmoke;
                 color: #304CFD;
-
             }
         }
     }

@@ -59,13 +59,15 @@ export default () => {
   return (
     <>
       <div className={style.circleMenu} role="button" tabIndex="0" onClick={toggleMenu} onKeyDown={toggleMenu}>
-        <div className={`${style.hamburger} ${menu ? style.menuIcon : null}`}>
-          <div className={style.line} />
-          <div className={style.line} />
-          <div className={style.hamburgerText}>MENU</div>
+        <div className={`${style.hamburger} ${menu ? style.menuIcon : ''}`}>
+          <div className={style.hamburgerText}>
+            <div className={style.line} />
+            <div className={style.line} />
+            <div className={style.line} />
+          </div>
         </div>
       </div>
-      <Layout className={`${style.navWrap} ${menu ? null : style.hidden} ${menu ? style.openMenu : null}`}>
+      <Layout className={`${style.navWrap} ${menu ? '' : style.hidden} ${menu ? style.openMenu : ''}`}>
         <div className={style.backgroundDiv}>
           <ul className={`${style.nav} text-center`}>
             { generateLinks() }
