@@ -57,7 +57,7 @@ ul{
     &::before,
     &::after {
       content: '';
-	  background-color: #304CFD;
+	  background-color: @theme-color;
 	  border-radius: .5rem;
 	  height: 5px;
 	  position: absolute;
@@ -67,7 +67,7 @@ ul{
 	  z-index: 1;
     }
     &::after {
-        background-color: #FF965D;
+        background-color: @theme-color-accent;
         width: 1rem;
       }
 }

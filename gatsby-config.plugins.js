@@ -18,11 +18,11 @@ const gatsbyConfig = [
     options: {
       name: 'Momin Bin Shahid',
       short_name: 'Momin',
-      description: 'Momin Bin Shahid`s website',
+      description: 'Momin Bin Shahid`s home on web. Momin Bin Shahid is a curious software engineer 👨‍💻, let`s connect 🤙 @MominBinShahid',
       start_url: '/',
       lang: 'en',
-      background_color: '#EEEEEE', // '#304CFD',
-      theme_color: '#2196F3', // '#304CFD',
+      background_color: '#EEEEEE', // '#304CFD', // @theme-color
+      theme_color: '#333333', // '#304CFD', // @theme-color
       display: 'standalone',
       // icon: 'src/images/icon.png', // This path is relative to the root of the site.
       icon: 'src/images/momin.png', // This path is relative to the root of the site.

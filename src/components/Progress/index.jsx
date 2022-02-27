@@ -8,8 +8,8 @@ const ProgressBar = (props) => {
       <div>
         <Progress
           strokeColor={{
-            from: '#304CFD',
-            to: '#108ee9',
+            from: '#304CFD', // @theme-color
+            to: '#108ee9', // @theme-color accent
           }}
           percent={percent || 0}
           strokeWidth={22}

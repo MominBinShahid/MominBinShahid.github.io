@@ -21,7 +21,7 @@ module.exports = {
   pathPrefix: '',
   siteUrl: 'https://MominBinShahid.github.io',
   siteTitle: 'Momin Bin Shahid',
-  siteDescription: 'Logbook of a software engineer @MominBinShahid',
+  siteDescription: 'Momin Bin Shahid`s home on web. Momin Bin Shahid is a curious software engineer 👨‍💻, let`s connect 🤙 @MominBinShahid',
   author: 'Momin Bin Shahid',
   postsForArchivePage: 3,
   defaultLanguage: 'en',
@@ -29,6 +29,7 @@ module.exports = {
   disqusScript: process.env.DISQUS_SCRIPT,
   contactFormUrl: process.env.CONTACT_FORM_ENDPOINT,
   googleAnalyticTrackingId: process.env.GA_TRACKING_ID || '',
+
   resumeForWeb: '../Momin_Bin_Shahid-For_Web_Only.pdf',
   resumeDownloadLink: '../Momin_Bin_Shahid.pdf',
   resumePrintableDownloadLink: '../Momin_Bin_Shahid-For_Print_Only.pdf',

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 import { Layout } from 'antd';
 import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
 import DarkModeToggler from '../../ThemeToggler';
+import { switchThemeColor, showConsoleMessage } from '../../../utils/common';
 
 import style from './header.module.less';
 
@@ -12,6 +13,12 @@ import 'font-awesome/less/font-awesome.less';
 import '../../../styles/global.less';
 
 export default () => {
+  useEffect(() => {
+    // call on init only
+    switchThemeColor();
+    showConsoleMessage();
+  }, []);
+
   const [menu, setMenu] = useState(false);
   const [width] = useWindowSize();
   const { pages } = Config;

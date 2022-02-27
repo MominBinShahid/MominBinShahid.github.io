@@ -18,7 +18,7 @@
 }
 
 .circleMenu {
-    background: #304CFD;
+    background: @theme-color;
     border-radius: 50% 0 50% 50%;
     box-shadow: 0 24px 40px rgba(48, 76, 253, 0.1), 0 8px 16px rgba(48, 76, 253, 0.1);
     display: -webkit-flex;
@@ -114,11 +114,11 @@
             &:hover:not(.anchorActive) {
                 background-color: whitesmoke;
                 border-radius: 14px;
-                color: #304CFD;
+                color: @theme-color;
             }
         }
         .anchorActive{
-            background-color: #304CFD;
+            background-color: @theme-color;
             border-radius: 14px;
             color: #fff;
         }
@@ -143,7 +143,7 @@
         }
     }
     .nav{
-        background-color: #304CFD;
+        background-color: @theme-color;
         &:before {
             background-image: none;
         }
@@ -155,13 +155,13 @@
             .anchorActive{
                 border-radius: 14px;
                 background-color: whitesmoke;
-                color: #304CFD;
+                color: @theme-color;
             }
         }
     }
     .backgroundDiv{
         position: fixed;
-        background-color: #304CFD;
+        background-color: @theme-color;
         width: 100%;
         height: 100%;
         z-index: 100;
