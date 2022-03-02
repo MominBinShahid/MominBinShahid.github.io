@@ -42,7 +42,7 @@ jobs:
       # refs: 
       # - https://stackoverflow.com/questions/61117865/how-to-set-environment-variable-in-node-js-process-when-deploying-with-github-ac#comment117711331_61485186
       # - https://docs.github.com/en/actions/learn-github-actions/environment-variables#:~:text=to%20the%20runner.-,You%20can%20also%20use,-the%20GITHUB_ENV%20environment
-      - name: create env file
+      - name: Create ENV file
         run: |
           touch .env.production
           echo CONTACT_FORM_ENDPOINT=$CONTACT_FORM_ENDPOINT >> .env.production
@@ -53,16 +53,16 @@ jobs:
 
       # Install project deps
       # - run: npm i --production
-      - name: Installing production dependencies
+      - name: Installing Production dependencies
         run: npm ci
 
       # Wiping out the cache (.cache folder) and public directories
       # when to do gatsby clean (https://www.gatsbyjs.com/docs/build-caching/#clearing-cache)
-      - name: Clearing gatsby cache
+      - name: Clearing Gatsby cache
         run: npm run clean --if-present
       
       # Build the site to /public folder
-      - name: Generating the Static Site
+      - name: Generating The static site
         run: npm run build --if-present
 
       # Test the app
