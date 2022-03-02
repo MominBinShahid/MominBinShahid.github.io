@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import FontAwesome from 'react-fontawesome';
 import { Link } from 'gatsby';
 import { Layout } from 'antd';
-import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
 import DarkModeToggler from '../../ThemeToggler';
-import { switchThemeColor, showConsoleMessage } from '../../../utils/common';
+import { useWindowSize } from '../../../utils/hooks';
+import { showConsoleMessage } from '../../../utils/common';
+import { switchThemeColor } from '../../../utils/themeColor';
+import Drawer from './drawer';
 
 import style from './header.module.less';
 
@@ -12,12 +15,15 @@ import style from './header.module.less';
 import 'font-awesome/less/font-awesome.less';
 import '../../../styles/global.less';
 
+// call on init only
+switchThemeColor();
+showConsoleMessage();
+
 export default () => {
-  useEffect(() => {
-    // call on init only
-    switchThemeColor();
-    showConsoleMessage();
-  }, []);
+  const [showSettings, setSettingsVisibility] = useState(false);
+  const openSettings = () => {
+    setSettingsVisibility(true);
+  };
 
   const [menu, setMenu] = useState(false);
   const [width] = useWindowSize();
@@ -55,8 +61,18 @@ export default () => {
     });
 
     links.push(
-      <li className={style.navItem} key="DarkMode">
+      <li className={`${style.navItem} ${style.darkModeToggler}`} key="darkMode">
         <DarkModeToggler />
+      </li>,
+    );
+
+    links.push(
+      <li className={style.navItem} key="settings">
+        <FontAwesome
+          className={`cursor-pointer ${menu ? style.menuSettings : style.settings} ${showSettings ? `fa-spin ${style.settingsLoading}` : ''}`}
+          name={showSettings ? 'spinner' : 'wrench'}
+          onClick={openSettings}
+        />
       </li>,
     );
 
@@ -65,7 +81,13 @@ export default () => {
 
   return (
     <>
-      <div className={style.circleMenu} role="button" tabIndex="0" onClick={toggleMenu} onKeyDown={toggleMenu}>
+      <div
+        className={`${style.circleMenu} ${menu ? '' : style.circleMenuShadow}`}
+        role="button"
+        tabIndex="0"
+        onClick={toggleMenu}
+        onKeyDown={toggleMenu}
+      >
         <div className={`${style.hamburger} ${menu ? style.menuIcon : ''}`}>
           <div className={style.hamburgerText}>
             <div className={style.line} />
@@ -81,6 +103,8 @@ export default () => {
           </ul>
         </div>
       </Layout>
+
+      <Drawer showSettings={showSettings} setSettingsVisibility={setSettingsVisibility} />
     </>
   );
 };

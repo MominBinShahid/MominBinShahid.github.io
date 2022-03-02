@@ -41,80 +41,12 @@ const isInDarkMode = () => {
 
 const getRandomNumber = (max = 1, min = 0) => Math.floor(Math.random() * (max - min + 1) + min);
 
-const switchThemeColor = () => {
-  // start - no need to use this color switcher for now (remove this section if needed in future)
-  const deludeVariable = true;
-  if (deludeVariable) return;
-  // end
-
-  if (isBrowser) {
-    const colors = [
-      '#304CFD',
-
-      '#333333',
-
-      'tomato',
-      'coral',
-      'chocolate',
-      'cornflowerblue',
-      'cadetblue',
-      'dodgerblue',
-      'deepskyblue',
-      'forestgreen',
-      'indianred',
-      'indigo',
-      'limegreen',
-      'olivedrab',
-      'orangered',
-      'purple',
-      'rebeccapurple',
-      'royalblue',
-      'seagreen',
-
-      '#F44336',
-      '#E91E63',
-      '#9C27B0',
-      '#673AB7',
-      '#3F51B5',
-      '#2196F3',
-      '#03A9F4',
-      '#00ACC1',
-      '#009688',
-      '#43A047',
-      '#558B2F',
-      '#827717',
-      '#F57F17',
-      '#FF6F00',
-      '#E65100',
-      '#F4511E',
-      '#795548',
-      '#757575',
-      '#607D8B',
-    ];
-
-    const randomNumber = getRandomNumber(colors.length);
-
-    /**
-     * if you want to test colors in order, comment this line above and uncomment this section
-     */
-    // let randomNumber = window.localStorage.getItem('number') || 0;
-    // if (randomNumber >= colors.length) { randomNumber = 0; }
-    // window.localStorage.setItem('number', +randomNumber + 1);
-
-    const selectedColor = colors[randomNumber];
-
-    // eslint-disable-next-line no-undef
-    const root = document.querySelector(':root');
-    root.style.setProperty('--theme-color', selectedColor);
-  }
-};
-
 const showConsoleMessage = () => {
   if (isBrowser) {
     // eslint-disable-next-line no-console
     console.log(
       "%c🧑‍💻 Hello there 👋! \n%cSneaking around, uh? 😁 \n%c Excited to see you here, let's catch up on https://MominBinShahid.github.io/contact \n%c Thank you for visiting DevTools 🛠",
-      'color: var(--theme-color); font-size:2rem',
+      'color: var(--theme-color, @black-color); font-size:2rem',
       'color: #bada55; font-size:1rem',
       'background: #333; color: whitesmoke',
       'background: initial, color: initial',
@@ -127,7 +59,6 @@ module.exports = {
   isPortableDeviceScreen,
   debounce,
   isInDarkMode,
-  switchThemeColor,
   getRandomNumber,
   showConsoleMessage,
 };

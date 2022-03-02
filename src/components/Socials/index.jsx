@@ -25,6 +25,7 @@ export default ({
       <FontAwesome
         name={useSquareIcons ? (iconSquared || icon) : icon}
         style={{ color, fontSize }}
+        className="resetXMargin"
       />
     );
 
@@ -43,7 +44,15 @@ export default ({
     if (!hide) {
       links.push(
         <span key={link} className={`${stackOverflowSquareIcon}`}>
-          <a href={link} target="_blank" label="button" rel="noopener noreferrer" aria-label={key}>
+          <a
+            href={link}
+            className="setXMargin"
+            aria-label={key}
+            title={useToolTip ? undefined : key}
+            target="_blank"
+            label="button"
+            rel="noopener noreferrer"
+          >
             {iconWithToolTip}
           </a>
         </span>,

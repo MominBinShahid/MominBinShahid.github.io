@@ -48,7 +48,6 @@ export default () => (
             className={style.themeToggler}
             checkedChildren={(<emoji>🌙</emoji>)}
             unCheckedChildren={<emoji>🔆</emoji>}
-            // unCheckedChildren={<emoji>☀️</emoji>}
             onChange={(checked) => (checked ? toggleTheme('dark') : toggleTheme('light'))}
             checked={isDark}
           />

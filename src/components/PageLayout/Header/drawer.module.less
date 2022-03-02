@@ -1,0 +1,33 @@
+@import "../../../styles/theme.less";
+
+.refreshColor {
+    background-color: var(--theme-color, @black-color);
+    color: whitesmoke;
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    -webkit-transition: -webkit-transform 1s ease;
+    transition: -webkit-transform 1s ease;
+    -o-transition: transform 1s ease;
+    transition: transform 1s ease;
+    transition: transform 1s ease, -webkit-transform 1s ease;
+
+    &:hover {
+        -webkit-transform: rotate(80deg);
+            -ms-transform: rotate(80deg);
+                transform: rotate(80deg);
+    }
+    &:active {
+        -webkit-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+                transform: rotate(180deg);
+    }
+}
+
+.drawerContent {
+    p:not(p:first-child) {
+        border-top: 1px solid #e3e3e3;
+        padding-top: 8px;
+    }
+}

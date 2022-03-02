@@ -150,3 +150,31 @@ ul{
 .theme-text-color {
   color: @text-color;
 }
+
+// to fix .fa CSS rules above in this file (on place where it's required)
+.resetXMargin {
+  margin-right: 0;
+  margin-left: 0;
+}
+.setXMargin {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
+/* ---------------------------------------------------------------------------- */
+// Fixes ANT Design outline:none issue
+
+// for form fields
+// .ant-input:focus, .ant-input-focused, .ant-input:hover
+
+// for links
+a:focus, .ant-btn:focus, .ant-switch:focus {
+  outline: 2px dotted @black-color !important;
+  outline: 2px dotted var(--theme-color, @black-color) !important;
+}
+
+// for antd adding border on form fields
+// .ant-input:focus, .ant-input-focused, .ant-input:hover {
+//   border-color: transparent !important;
+// }

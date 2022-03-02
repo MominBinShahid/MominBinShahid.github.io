@@ -17,10 +17,13 @@
     }
 }
 
+.circleMenuShadow {
+    -webkit-box-shadow: 0 24px 40px rgba(48, 76, 253, 0.1), 0 8px 16px rgba(48, 76, 253, 0.1);
+        box-shadow: 0 24px 40px rgba(48, 76, 253, 0.1), 0 8px 16px rgba(48, 76, 253, 0.1);
+}
 .circleMenu {
     background: @theme-color;
     border-radius: 50% 0 50% 50%;
-    box-shadow: 0 24px 40px rgba(48, 76, 253, 0.1), 0 8px 16px rgba(48, 76, 253, 0.1);
     display: -webkit-flex;
     display: -ms-flexbox;
     display: -moz-box;
@@ -36,7 +39,7 @@
     top: 0;
     right: 0;
     width: 3.75rem;
-    z-index: 1101;
+    z-index: 999;
     @media only screen and (max-width: 768px){
         pointer-events: all;
         visibility: visible;
@@ -57,13 +60,17 @@
 .menuIcon {
     #lineCross;
     .line:nth-child(1) {
-        transform: translateY(6px) rotate(45deg);
+        -webkit-transform: translateY(6px) rotate(45deg);
+            -ms-transform: translateY(6px) rotate(45deg);
+                transform: translateY(6px) rotate(45deg);
     }
     .line:nth-child(2) {
         opacity: 0;
     }
     .line:nth-child(3) {
-        transform: translateY(-6px) rotate(-45deg);
+        -webkit-transform: translateY(-6px) rotate(-45deg);
+            -ms-transform: translateY(-6px) rotate(-45deg);
+                transform: translateY(-6px) rotate(-45deg);
     }
 }
 .content{
@@ -106,7 +113,9 @@
         z-index: -1;
     }
     .navItem{
-        margin-right: .4rem;
+        &:not(&:last-child) {
+            margin-right: .4rem;
+        }
         a{
             color: #5F6F81;
             padding: .6rem 1rem;
@@ -122,6 +131,32 @@
             border-radius: 14px;
             color: #fff;
         }
+        .menuSettings {
+            font-size: 2rem;
+            background-color: whitesmoke;
+            padding: 6px;
+            border-radius: 15px;
+            margin-top: 10px;
+            &:active, &:hover {
+                color: var(--theme-color, @black-color);
+            }
+        }
+        .settings {
+            padding: 6px;
+            &:active, &:hover {
+                color: var(--theme-color, @black-color);
+                background-color: whitesmoke;
+                border-radius: 50%;
+            }
+        }
+        .settingsLoading {
+            // fix the 1px shift when icon goes to loading state
+            padding-left: 5px;
+        }
+    }
+    .darkModeToggler {
+        margin-left: 10px;
+        margin-right: 10px;
     }
     
 }
@@ -133,11 +168,15 @@
         position: absolute;
         top: (50% - 5rem);
         left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+
+        -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+
         // -webkit-transition: all 2s;
         // -o-transition: all 2s;
         // transition: all 2s;
+
         li{
             margin-bottom: 1rem;
         }
