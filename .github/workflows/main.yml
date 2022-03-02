@@ -51,17 +51,19 @@ jobs:
           CONTACT_FORM_ENDPOINT: ${{ secrets.CONTACT_FORM_ENDPOINT }}
           GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
 
+      # Install project deps
+      # - run: npm i --production
+      - name: Installing production dependencies
+        run: npm ci
+
       # Wiping out the cache (.cache folder) and public directories
       # when to do gatsby clean (https://www.gatsbyjs.com/docs/build-caching/#clearing-cache)
       - name: Clearing gatsby cache
         run: npm run clean --if-present
       
-      # Install project deps
-      # - run: npm i --production
-      - run: npm ci # this is not working as of now, fix this on local first
-      
       # Build the site to /public folder
-      - run: npm run build --if-present
+      - name: Generating the Static Site
+        run: npm run build --if-present
 
       # Test the app
       # - run: npm test
