@@ -1,56 +1,16 @@
 /* eslint-disable no-console */
 const { isBrowser } = require('./common');
 
-// http://quotes.stormconsultancy.co.uk/
-const stormConsultancyRandomQuoteAPI = 'http://quotes.stormconsultancy.co.uk/random.json';
-// https://programming-quotes-api.herokuapp.com/
-const programmingRandomQuoteAPI = 'https://programming-quotes-api.herokuapp.com/quotes/random';
-
-const fetchRandomQuoteFromStormConsultancyQuoteAPI = async () => {
-  if (!isBrowser) return null;
-
-  let quote = null;
-  try {
-    const api = await fetch(stormConsultancyRandomQuoteAPI);
-    const json = await api.json();
-
-    const parsedQuote = {};
-    parsedQuote.author = json.author;
-    parsedQuote.text = json.quote;
-    parsedQuote.link = json.permalink;
-
-    quote = parsedQuote;
-  } catch (error) {
-    console.error('Can not fetch Quote for you from http://quotes.stormconsultancy.co.uk/, try in some time 😔');
-  }
-
-  return quote;
-};
-
-const fetchRandomQuoteFromProgrammingQuoteAPI = async () => {
-  if (!isBrowser) return null;
-
-  let quote = null;
-  try {
-    const api = await fetch(programmingRandomQuoteAPI);
-    const json = await api.json();
-
-    const parsedQuote = {};
-    parsedQuote.author = json.author;
-    parsedQuote.text = json.en;
-    parsedQuote.link = null;
-
-    quote = parsedQuote;
-  } catch (error) {
-    console.error('Can not fetch Quote for you from https://programming-quotes-api.herokuapp.com/ , try in some time 😔');
-  }
-
-  return quote;
-};
-
 const fetchRandomQuotes = async () => {
+  if (!isBrowser) return [];
+
   const fetchQuotes = () => Promise.allSettled(
-    [fetch(stormConsultancyRandomQuoteAPI), fetch(programmingRandomQuoteAPI)],
+    [
+      fetch('https://programming-quotes-api.herokuapp.com/quotes/random'),
+      fetch('https://free-quotes-api.herokuapp.com/'),
+      fetch('https://quote-generator-21.herokuapp.com/random'),
+      // fetch('http://quotes.stormconsultancy.co.uk/random.json'),
+    ],
   );
 
   const parseQuotes = (fulfilled) => Promise.all(
@@ -61,16 +21,25 @@ const fetchRandomQuotes = async () => {
 
   const rejected = promises.filter((promise) => promise.status === 'rejected').map((promise) => promise.reason);
   rejected.forEach((reason) => {
-    console.error('Can not fetch Quote for you, try in some time 😔', { reason });
+    console.error('Can not fetch quote for you right now, try again in a while 😔', { reason });
   });
 
   const fulfilled = promises.filter((promise) => promise.status === 'fulfilled').map((promise) => promise.value);
   const parsedData = await parseQuotes(fulfilled);
+
   const data = parsedData.map((quote) => {
+    if (quote.data) {
+      // eslint-disable-next-line no-param-reassign
+      quote = quote.data;
+    }
+
     const res = {};
-    res.author = quote.author;
-    res.text = quote.quote || quote.en;
+
+    res.author = quote.author || 'Anonymous';
+    res.text = quote.quote || quote.en || quote.content;
     res.link = quote.permalink;
+    res.category = quote.category;
+
     return res;
   });
 
@@ -78,7 +47,5 @@ const fetchRandomQuotes = async () => {
 };
 
 module.exports = {
-  fetchRandomQuoteFromStormConsultancyQuoteAPI,
-  fetchRandomQuoteFromProgrammingQuoteAPI,
   fetchRandomQuotes,
 };

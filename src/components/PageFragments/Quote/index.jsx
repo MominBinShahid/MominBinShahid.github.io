@@ -77,6 +77,17 @@ const Quote = () => {
                 —
                 {' '}
                 {quote.author}
+
+                {
+                  quote.category
+                    ? (
+                      <span className={styles.category}>
+                        &nbsp;(#
+                        {quote.category}
+                        )
+                      </span>
+                    ) : null
+                }
               </div>
             </div>
           ))
