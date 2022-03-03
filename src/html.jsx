@@ -24,7 +24,6 @@ export default class HTML extends React.Component {
 
           {/* Only added to make http Quote API work */}
           <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta>
-          {/* <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta> */}
 
           {this.props.headComponents}
         </head>
