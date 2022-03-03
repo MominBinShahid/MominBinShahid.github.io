@@ -7,9 +7,6 @@ import styles from './quote.module.less';
 
 const Quote = () => {
   const [quotes, setQuotes] = useState(null);
-  const [linkAvailable, setLinkAvailability] = useState(null);
-
-  const findQuoteWithLink = (data) => data.find((quote) => quote.link);
 
   useEffect(() => {
     // Reason of doing this instead of using async function in useEffect is here - https://reactjs.org/docs/hooks-faq.html#how-can-i-do-data-fetching-with-hooks
@@ -21,78 +18,72 @@ const Quote = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (!quotes || !quotes.length) return;
-
-    const quoteWithLink = findQuoteWithLink(quotes);
-    if (quoteWithLink) {
-      setLinkAvailability(quoteWithLink.link);
-    } else {
-      setLinkAvailability(null);
-    }
-  }, [quotes]);
-
-  const goToQuoteLink = () => {
-    if (!linkAvailable) return;
-
-    goToLink(linkAvailable);
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key !== 'Enter') return;
-
-    goToQuoteLink(quotes);
-  };
-
-  const divProps = {
-    onClick: goToQuoteLink,
-    onKeyPress: handleKeyPress,
-    role: 'button',
-    tabIndex: '0',
-  };
-
   if (!quotes) return <Spin style={{ paddingTop: '6px' }} />;
   if (!quotes.length) return null;
+
+  const goToQuoteLink = (link) => {
+    if (!link) return;
+
+    goToLink(link);
+  };
+
+  const handleKeyPress = (event, link) => {
+    if (event.key !== 'Enter') return;
+
+    goToQuoteLink(link);
+  };
+
+  const title = (
+    <>
+      {quotes.length > 1 ? 'Couple of ' : 'An '}
+      Insightful Quote
+      {quotes.length > 1 ? 's ' : ' '}
+      <emoji>💬</emoji>
+    </>
+  );
+
   return (
     <div className="mt-1">
-      <div
-        id="quotes"
-        className={`theme-text-color ${styles.container} ${linkAvailable ? 'cursor-pointer' : ''}`}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {... (linkAvailable && divProps)}
-      >
-        <div className={styles.title}>
-          {quotes.length > 1 ? 'Couple of ' : 'An '}
-          Insightful Quote
-          {quotes.length > 1 ? 's ' : ' '}
-          <emoji>💬</emoji>
-        </div>
-        {
-          quotes.map((quote) => (
-            <div key={quote.text} className={styles.quote}>
-              <div>
-                { quote.text }
-              </div>
-              <div className={styles.author}>
-                —
-                {' '}
-                {quote.author}
 
-                {
-                  quote.category
-                    ? (
-                      <span className={styles.category}>
-                        &nbsp;(#
-                        {quote.category}
-                        )
-                      </span>
-                    ) : null
-                }
-              </div>
+      <h2 id="quotes" className="titleSeparate">{title}</h2>
+      {
+        quotes.map((quote) => (
+
+          <div
+            key={quote.text}
+            className={`theme-text-color mt-0_5 ${styles.container} ${quote.link ? 'cursor-pointer' : ''}`}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {... (quote.link && {
+              onClick: () => goToQuoteLink(quote.link),
+              onKeyPress: (event) => handleKeyPress(event, quote.link),
+              role: 'button',
+              tabIndex: '0',
+            })}
+          >
+            <div>
+              { quote.text }
             </div>
-          ))
-        }
-      </div>
+            <div>
+              —&nbsp;
+              <span className={styles.author}>
+                {quote.author}
+              </span>
+
+              {
+                quote.category
+                  ? (
+                    <span className={styles.category}>
+                      &nbsp;(#
+                      {quote.category}
+                      )
+                    </span>
+                  ) : null
+              }
+            </div>
+          </div>
+        ))
+      }
+
     </div>
   );
 };
