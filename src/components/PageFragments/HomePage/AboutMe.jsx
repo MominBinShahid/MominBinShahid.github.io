@@ -8,20 +8,20 @@ import SEO from '../../Seo';
 const pageText = {
   paraOne: `
     It's <span class="devName">Momin Bin Shahid</span> <emoji>👨‍💻</emoji> here.
-    I'm a <strong>Full-Stack JavaScript Developer</strong> passionate about software engineering and technologies, mainly <strong>Web</strong> and <strong>JavaScript 🤟</strong>.
+    I'm a <strong>Full-Stack JavaScript Developer</strong> passionate about software engineering and technologies, mainly <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>.
     
     <br/>
     <br/>
     
-    With an <strong>industry experience</strong> of <strong>4+ years</strong> in <strong>software development </strong> and <strong>1+ years</strong> in <strong>sales</strong> and <strong>marketing</strong>, I love to learn the processes, build and sell solutions. 
+    With an <strong>industry experience</strong> of <strong>4+ years</strong> in <strong>software development</strong> and <strong>1+ years</strong> in <strong>sales</strong> and <strong>marketing</strong>, I love to learn the processes, build and sell solutions. 
     
     <br/>
     
-    Experienced in working with <strong>service-based</strong> and <strong>product-based</strong> companies as well as with clients from the U.S., Europe, Middle East and also other parts of the world usually building and maintaining solutions using <strong>MERN</strong>/<strong>MEVN</strong>/<strong>MEAN</strong> stack.
+    Experienced in working with <strong>service-based</strong> and <strong>product-based</strong> companies as well as with clients from the U.S., Europe, Middle East and also other parts of the world usually building and maintaining solutions using <strong>MERN</strong>, <strong>MEVN</strong> and <strong>MEAN</strong> stacks.
     
     <br/>
     
-    My working experiences comprise of diverse domains like <strong>Internet Privacy and Security</strong>, <strong>Enterprise Resource Planning (ERP)</strong>, <strong>Human Resource Management System (HRMS)</strong>, <strong>EdTech</strong> and many more.
+    My working experiences comprise diverse domains like <strong>Internet Privacy</strong> and <strong>Security</strong>, <strong>Enterprise Resource Planning (ERP)</strong>, <strong>Human Resource Management System (HRMS)</strong>, <strong>EdTech</strong> and more.
 
     <br/>
     <br/>
@@ -29,7 +29,7 @@ const pageText = {
     You will usually find me learning and experimenting with different technologies and concepts that encompass Web, Mobile and Desktop apps using <strong>JavaScript</strong> <emoji>🚀</emoji> and other exciting <emoji>🤩</emoji> technologies.
   `,
   paraTwo: `
-    Currently, at work, I mostly utilize JavaScript-based technologies 🛠 like <strong>VueJS, ReactJS, NodeJS, and more</strong>.
+    Currently, at work, I mostly utilize JavaScript-based technologies <emoji>🛠</emoji> like <strong>VueJS, ReactJS, NodeJS, and more</strong>.
     I also have hands-on experience working with <strong>On-Premise</strong> <emoji>⛰</emoji> and <strong>Cloud</strong> <emoji>☁️</emoji> infrastructures like <strong>AWS</strong>, <strong>Azure</strong>, <strong>Firebase</strong> (<strong>GCP</strong>).
     I have built and maintained <strong>serverless</strong> and <strong>micro-services</strong>-based applications as well.
     While developing and deploying apps, I do keep <strong>scalability</strong> in mind while utilizing industry <strong>best practices</strong>.
@@ -39,7 +39,7 @@ const pageText = {
     <br/>
 
     I'm always a quick learner <emoji>⚡️</emoji> and a self-taught <emoji>💻</emoji> programmer.
-    As of now, I have only <strong>worked on closed-source</strong> projects but lately, I am getting into the <strong>open-source software</strong> <emoji>🍀</emoji> as well.
+    As of now, I have only <strong>worked on closed-source</strong> <emoji>🔒</emoji> projects but lately, I am getting into the <strong>open-source software</strong> <emoji>🍀</emoji> as well.
 
     <br/>
     <br/>
