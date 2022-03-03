@@ -2,7 +2,7 @@
 const { isBrowser } = require('./common');
 
 // http://quotes.stormconsultancy.co.uk/
-const stormConsultancyQuoteAPI = 'http://quotes.stormconsultancy.co.uk/random.json';
+const stormConsultancyQuoteAPI = 'https://quotes.stormconsultancy.co.uk/random.json';
 // https://programming-quotes-api.herokuapp.com/
 const programmingQuotesAPI = 'https://programming-quotes-api.herokuapp.com/quotes/random';
 

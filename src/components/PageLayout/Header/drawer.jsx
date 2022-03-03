@@ -92,7 +92,7 @@ const DrawerContent = () => {
                     onChange={onUserThemeColorChange}
                     addonBefore={userThemeColor}
                     aria-label="Set color theme"
-                    style={{ width: '175px' }}
+                    style={{ width: '200px' }}
                   />
                   <Button
                     onClick={onUserThemeColorChange}
@@ -118,7 +118,7 @@ export default ({ showSettings, setSettingsVisibility }) => {
   return (
     <Drawer
       title={['Your Preferences ', <emoji key="emoji">⚙️</emoji>]}
-      placement="right"
+      placement="bottom"
       key="drawer"
       closable
       onClose={onSettingsClose}
