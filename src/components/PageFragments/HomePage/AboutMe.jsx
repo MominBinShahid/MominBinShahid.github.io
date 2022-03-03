@@ -60,7 +60,7 @@ const AboutMe = () => {
               img="javascript.png"
               alt="javascript logo image"
               textH4="Love JavaScript ♥️"
-              textH3="Learn Once, Deploy Everywhere!"
+              textH3="Learn Once, Ship Anywhere!"
             />
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
