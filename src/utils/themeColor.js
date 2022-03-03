@@ -51,11 +51,6 @@ const switchThemeColor = (preferredColor) => {
   const colors = [
     '#304CFD',
 
-    // increasing the probability of black
-    '#333333',
-    '#333333',
-    '#333333',
-    '#333333',
     '#333333',
 
     'tomato',

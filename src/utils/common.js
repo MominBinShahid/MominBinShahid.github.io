@@ -42,16 +42,24 @@ const isInDarkMode = () => {
 const getRandomNumber = (max = 1, min = 0) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const showConsoleMessage = () => {
-  if (isBrowser) {
-    // eslint-disable-next-line no-console
-    console.log(
-      "%c🧑‍💻 Hello there 👋! \n%cSneaking around, uh? 😁 \n%c Excited to see you here, let's catch up on https://MominBinShahid.github.io/contact \n%c Thank you for visiting DevTools 🛠",
-      'color: var(--theme-color, @black-color); font-size:2rem',
-      'color: #bada55; font-size:1rem',
-      'background: #333; color: whitesmoke',
-      'background: initial, color: initial',
-    );
-  }
+  if (!isBrowser) return;
+
+  // eslint-disable-next-line no-console
+  console.log(
+    "%c🧑‍💻 Hello there 👋! \n%cSneaking around, uh? 😁 \n%c Excited to see you here, let's catch up on https://MominBinShahid.github.io/contact \n%c Thank you for visiting DevTools 🛠",
+    'color: var(--theme-color, @black-color); font-size:2rem',
+    'color: #bada55; font-size:1rem',
+    'background: #333; color: whitesmoke',
+    'background: initial, color: initial',
+  );
+};
+
+const goToLink = (link) => {
+  if (!isBrowser) return;
+
+  if (!link) return;
+
+  window.open(link, '_blank').focus();
 };
 
 module.exports = {
@@ -61,4 +69,5 @@ module.exports = {
   isInDarkMode,
   getRandomNumber,
   showConsoleMessage,
+  goToLink,
 };
