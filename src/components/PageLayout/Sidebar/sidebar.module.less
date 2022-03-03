@@ -104,7 +104,13 @@
                 -webkit-align-items: center;
                 -ms-flex-align: center;
                 align-items: center;
-                
+
+                @media screen and ( max-width:767px ) {
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                }
+
                 &:not(:last-of-type) {
                     // these rules will apply to all the elements except the last one
                     margin-bottom: .75rem;
