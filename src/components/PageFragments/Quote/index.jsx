@@ -60,6 +60,10 @@ const Quote = () => {
               tabIndex: '0',
             })}
           >
+            {/* <div className={styles.title}>
+              { title }
+            </div> */}
+
             <div>
               { quote.text }
             </div>
