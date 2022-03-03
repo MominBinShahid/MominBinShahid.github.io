@@ -13,7 +13,7 @@ const pageText = {
     <br/>
     <br/>
     
-    With an <strong>industry experience</strong> of <strong>4+ years</strong> in <strong>software development</strong> and <strong>1+ years</strong> in <strong>sales</strong> and <strong>marketing</strong>, I love to learn the processes, build and sell solutions. 
+    With an <strong>industry experience</strong> of <strong>4+ years</strong> in <strong>software development</strong> <emoji>💻</emoji> and <strong>1+ years</strong> in <strong>sales</strong> and <strong>marketing</strong>, I love to learn the processes, build and sell solutions. 
     
     <br/>
     
@@ -38,7 +38,7 @@ const pageText = {
     <br/>
     <br/>
 
-    I'm always a quick learner <emoji>⚡️</emoji> and a self-taught <emoji>💻</emoji> programmer.
+    I'm always a quick learner <emoji>⚡️</emoji> and a self-taught <emoji>🧐</emoji> programmer.
     As of now, I have only <strong>worked on closed-source</strong> <emoji>🔒</emoji> projects but lately, I am getting into the <strong>open-source software</strong> <emoji>🍀</emoji> as well.
 
     <br/>
