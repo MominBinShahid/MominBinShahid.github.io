@@ -165,6 +165,43 @@ ul{
   background-color: var(--theme-color, @black-color) !important;
 }
 
+.heyAnimation {
+  // creds ref: https://codepen.io/jakejarvis/pen/pBZWZw
+    
+  -webkit-animation-name: wave-animation;
+          animation-name: wave-animation;       /* Refers to the name of your @keyframes element below */
+  -webkit-animation-duration: 2.5s;
+          animation-duration: 2.5s;             /* Change to speed up or slow down */
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;  /* Never stop waving :) */
+  -webkit-transform-origin: 70% 70%;
+      -ms-transform-origin: 70% 70%;
+          transform-origin: 70% 70%;            /* Pivot around the bottom-left palm */
+  display: inline-block;
+
+  @-webkit-keyframes wave-animation {
+    0% { -webkit-transform: rotate( 0.0deg); transform: rotate( 0.0deg) }
+    10% { -webkit-transform: rotate(14.0deg); transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
+    20% { -webkit-transform: rotate(-8.0deg); transform: rotate(-8.0deg) }
+    30% { -webkit-transform: rotate(14.0deg); transform: rotate(14.0deg) }
+    40% { -webkit-transform: rotate(-4.0deg); transform: rotate(-4.0deg) }
+    50% { -webkit-transform: rotate(10.0deg); transform: rotate(10.0deg) }
+    60% { -webkit-transform: rotate( 0.0deg); transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
+    100% { -webkit-transform: rotate( 0.0deg); transform: rotate( 0.0deg) }
+  }
+
+  @keyframes wave-animation {
+    0% { -webkit-transform: rotate( 0.0deg); transform: rotate( 0.0deg) }
+    10% { -webkit-transform: rotate(14.0deg); transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
+    20% { -webkit-transform: rotate(-8.0deg); transform: rotate(-8.0deg) }
+    30% { -webkit-transform: rotate(14.0deg); transform: rotate(14.0deg) }
+    40% { -webkit-transform: rotate(-4.0deg); transform: rotate(-4.0deg) }
+    50% { -webkit-transform: rotate(10.0deg); transform: rotate(10.0deg) }
+    60% { -webkit-transform: rotate( 0.0deg); transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
+    100% { -webkit-transform: rotate( 0.0deg); transform: rotate( 0.0deg) }
+  }
+}
+
 
 /* ---------------------------------------------------------------------------- */
 // Fixes ANT Design outline:none issue

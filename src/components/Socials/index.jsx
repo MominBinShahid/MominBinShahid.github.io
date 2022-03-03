@@ -67,7 +67,11 @@ export default ({
   );
   const socialsSection = (
     <div className={`${styles.hoverDarker}`}>
-      <h2 className="titleSeparate">Elsewhere</h2>
+      <h2 className="titleSeparate">
+        Elsewhere
+        {' '}
+        <emoji>📱</emoji>
+      </h2>
       {links}
     </div>
   );

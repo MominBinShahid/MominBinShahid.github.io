@@ -1,21 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import { Spin } from 'antd';
-import { fetchRandomQuotes } from '../../../utils/api';
+import {
+  // fetchRandomQuotes,
+  fetchQuote1, fetchQuote2, fetchQuote3, parseQuote,
+} from '../../../utils/api';
 import { goToLink } from '../../../utils/common';
 
 import styles from './quote.module.less';
 
 const Quote = () => {
-  const [quotes, setQuotes] = useState(null);
+  // const [quotes, setQuotes] = useState(null);
+
+  let quotes = null;
+  const [quote1, setQuote1] = useState(null);
+  const [quote2, setQuote2] = useState(null);
+  const [quote3, setQuote3] = useState(null);
+  if (quote1) quotes = quotes ? [...quotes, quote1] : [quote1];
+  if (quote2) quotes = quotes ? [...quotes, quote2] : [quote2];
+  if (quote3) quotes = quotes ? [...quotes, quote3] : [quote3];
+
+  const fetchQuoteIndependently = () => {
+    fetchQuote1().then((res) => {
+      if (!res) return;
+
+      const quote = parseQuote(res);
+      setQuote1(quote);
+    });
+
+    fetchQuote2().then((res) => {
+      if (!res) return;
+
+      const quote = parseQuote(res);
+      setQuote2(quote);
+    });
+
+    fetchQuote3().then((res) => {
+      if (!res) return;
+
+      const quote = parseQuote(res);
+      setQuote3(quote);
+    });
+  };
 
   useEffect(() => {
-    // Reason of doing this instead of using async function in useEffect is here - https://reactjs.org/docs/hooks-faq.html#how-can-i-do-data-fetching-with-hooks
-    // Article - https://www.robinwieruch.de/react-hooks-fetch-data/
-    const fetchData = async () => {
-      const data = await fetchRandomQuotes();
-      setQuotes(data);
-    };
-    fetchData();
+    // // Reason of doing this instead of using async function in useEffect is here - https://reactjs.org/docs/hooks-faq.html#how-can-i-do-data-fetching-with-hooks
+    // // Article - https://www.robinwieruch.de/react-hooks-fetch-data/
+    // const fetchData = async () => {
+    //   const data = await fetchRandomQuotes();
+    //   setQuotes(data);
+    // };
+    // fetchData();
+
+    fetchQuoteIndependently();
   }, []);
 
   if (!quotes) return <Spin style={{ paddingTop: '6px' }} />;

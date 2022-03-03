@@ -6,23 +6,46 @@ import { stripTags, domHtml } from '../../../utils/stripTags';
 import SEO from '../../Seo';
 
 const pageText = {
-  paraOne: `Hey there <emoji>👋</emoji> My name is <span class="devName">Momin Bin Shahid</span> <emoji>👨‍💻</emoji>.
-    I'm a <strong>Full-Stack JavaScript</strong> developer who is passionate about <strong>software engineering</strong> and <strong>web</strong>.
-    I love to learn and experiment with different technologies. 
-    I have <strong>industry experience of 4+ years</strong> working with <strong>service-based</strong> and <strong>product-based</strong> companies as well as with clients from U.S., Middle East and also other parts of the world usually building solutions using <strong>MERN</strong>/<strong>MEVN</strong>/<strong>MEAN</strong> stack.
-    You will usually find me building and experimenting with web, mobile and desktop apps using <strong>JavaScript</strong> <emoji>🚀</emoji> and other exciting <emoji>🤩</emoji> technologies.`,
-  paraTwo: `Currently, at work, I mostly utilize <strong>JavaScript</strong>-based technologies 🛠 like <strong>VueJS, ReactJS, NodeJS, and more</strong>.
-    I also have hands-on experience working with cloud infrastructures <emoji>☁️</emoji> like <strong>AWS</strong>/<strong>Azure</strong>/<strong>GCP</strong>/<strong>Firebase</strong>.
-    I have build and maintained <strong>serverless</strong> applications as well.
-    While developing and deploying apps I do keep <strong>scalability</strong> in mind while utilizing industry <strong>best practices</strong>.
-    I utilize <strong>Docker</strong> <emoji>🐳</emoji> and <strong>Kubernetes</strong> <emoji>☸️</emoji> for development as well as for CI/CD.
-    I'm always a quick learner <emoji>⚡️</emoji> and a self-taught <emoji>💻</emoji> programmer.
-    As of now, I have only <strong>worked on closed-source</strong> projects but lately I am getting into the <strong>open-source software</strong> <emoji>🍀</emoji> as well.
+  paraOne: `
+    It's <span class="devName">Momin Bin Shahid</span> <emoji>👨‍💻</emoji> here.
+    I'm a <strong>Full-Stack JavaScript Developer</strong> passionate about software engineering and technologies, mainly <strong>Web</strong> and <strong>JavaScript 🤟</strong>.
+    
+    <br/>
+    <br/>
+    
+    With an <strong>industry experience</strong> of <strong>4+ years</strong> in <strong>software development </strong> and <strong>1+ years</strong> in <strong>sales</strong> and <strong>marketing</strong>, I love to learn the processes, build and sell solutions. 
+    
+    <br/>
+    
+    Experienced in working with <strong>service-based</strong> and <strong>product-based</strong> companies as well as with clients from the U.S., Europe, Middle East and also other parts of the world usually building and maintaining solutions using <strong>MERN</strong>/<strong>MEVN</strong>/<strong>MEAN</strong> stack.
+    
+    <br/>
+    
+    My working experiences comprise of diverse domains like <strong>Internet Privacy and Security</strong>, <strong>Enterprise Resource Planning (ERP)</strong>, <strong>Human Resource Management System (HRMS)</strong>, <strong>EdTech</strong> and many more.
 
     <br/>
     <br/>
     
-    Let's get in touch <emoji>🤙</emoji> and feel free to reach out for any opportunities or project collaboration <emoji>😇</emoji> or just to say hi <emoji>🙋‍♂️</emoji>`,
+    You will usually find me learning and experimenting with different technologies and concepts that encompass Web, Mobile and Desktop apps using <strong>JavaScript</strong> <emoji>🚀</emoji> and other exciting <emoji>🤩</emoji> technologies.
+  `,
+  paraTwo: `
+    Currently, at work, I mostly utilize JavaScript-based technologies 🛠 like <strong>VueJS, ReactJS, NodeJS, and more</strong>.
+    I also have hands-on experience working with <strong>On-Premise</strong> <emoji>⛰</emoji> and <strong>Cloud</strong> <emoji>☁️</emoji> infrastructures like <strong>AWS</strong>, <strong>Azure</strong>, <strong>Firebase</strong> (<strong>GCP</strong>).
+    I have built and maintained <strong>serverless</strong> and <strong>micro-services</strong>-based applications as well.
+    While developing and deploying apps, I do keep <strong>scalability</strong> in mind while utilizing industry <strong>best practices</strong>.
+    I utilize <strong>Docker</strong> <emoji>🐳</emoji> and <strong>Kubernetes</strong> <emoji>☸️</emoji> for development as well as for CI/CD.
+    
+    <br/>
+    <br/>
+
+    I'm always a quick learner <emoji>⚡️</emoji> and a self-taught <emoji>💻</emoji> programmer.
+    As of now, I have only <strong>worked on closed-source</strong> projects but lately, I am getting into the <strong>open-source software</strong> <emoji>🍀</emoji> as well.
+
+    <br/>
+    <br/>
+    
+    Let's get in touch <emoji>🤙</emoji> and feel free to reach out for any opportunities or project collaboration <emoji>😇</emoji> or just to say hi <emoji>🙋‍♂️</emoji>
+  `,
 };
 
 const AboutMe = () => {
@@ -37,7 +60,11 @@ const AboutMe = () => {
             path=""
             keywords={['@MominBinShahid', 'MominBinShahid', 'Momin', 'Bin', 'Shahid', 'Software Engineer', 'FullStack Developer', 'Javascript', 'ReactJS', 'NodeJS', 'VueJS']}
           />
-          <h1 className="titleSeparate">About Me</h1>
+          <h1 className="titleSeparate">
+            About Me
+            {' '}
+            <emoji className="heyAnimation">👋</emoji>
+          </h1>
           {/*
           <p>
             {pageText.paraOne}
