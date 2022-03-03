@@ -30,6 +30,7 @@ const gatsbyConfig = [
       // versions prior to iOS 11.3.
     },
   },
+  'gatsby-plugin-offline', // read plugin placement. ref: https://www.gatsbyjs.com/docs/how-to/performance/add-offline-support-with-a-service-worker/#using-service-workers-in-gatsby-with-gatsby-plugin-offline
   {
     resolve: 'gatsby-source-filesystem',
     options: {
@@ -88,7 +89,6 @@ const gatsbyConfig = [
       showSpinner: true,
     },
   },
-  'gatsby-plugin-offline', // read plugin placement. ref: https://www.gatsbyjs.com/docs/how-to/performance/add-offline-support-with-a-service-worker/#using-service-workers-in-gatsby-with-gatsby-plugin-offline
 ];
 
 if (process.env.NODE_ENV !== 'production') {

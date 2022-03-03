@@ -2,16 +2,16 @@
 const { isBrowser } = require('./common');
 
 // http://quotes.stormconsultancy.co.uk/
-const stormConsultancyQuoteAPI = 'http://quotes.stormconsultancy.co.uk/random.json';
+const stormConsultancyRandomQuoteAPI = 'http://quotes.stormconsultancy.co.uk/random.json';
 // https://programming-quotes-api.herokuapp.com/
-const programmingQuotesAPI = 'https://programming-quotes-api.herokuapp.com/quotes/random';
+const programmingRandomQuoteAPI = 'https://programming-quotes-api.herokuapp.com/quotes/random';
 
 const fetchRandomQuoteFromStormConsultancyQuoteAPI = async () => {
   if (!isBrowser) return null;
 
   let quote = null;
   try {
-    const api = await fetch(stormConsultancyQuoteAPI);
+    const api = await fetch(stormConsultancyRandomQuoteAPI);
     const json = await api.json();
 
     const parsedQuote = {};
@@ -27,12 +27,12 @@ const fetchRandomQuoteFromStormConsultancyQuoteAPI = async () => {
   return quote;
 };
 
-const fetchRandomQuoteFromProgrammingQuotesAPI = async () => {
+const fetchRandomQuoteFromProgrammingQuoteAPI = async () => {
   if (!isBrowser) return null;
 
   let quote = null;
   try {
-    const api = await fetch(programmingQuotesAPI);
+    const api = await fetch(programmingRandomQuoteAPI);
     const json = await api.json();
 
     const parsedQuote = {};
@@ -50,7 +50,7 @@ const fetchRandomQuoteFromProgrammingQuotesAPI = async () => {
 
 const fetchRandomQuotes = async () => {
   const fetchQuotes = () => Promise.allSettled(
-    [fetch(stormConsultancyQuoteAPI), fetch(programmingQuotesAPI)],
+    [fetch(stormConsultancyRandomQuoteAPI), fetch(programmingRandomQuoteAPI)],
   );
 
   const parseQuotes = (fulfilled) => Promise.all(
@@ -79,6 +79,6 @@ const fetchRandomQuotes = async () => {
 
 module.exports = {
   fetchRandomQuoteFromStormConsultancyQuoteAPI,
-  fetchRandomQuoteFromProgrammingQuotesAPI,
+  fetchRandomQuoteFromProgrammingQuoteAPI,
   fetchRandomQuotes,
 };
