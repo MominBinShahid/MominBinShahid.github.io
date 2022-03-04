@@ -2,8 +2,10 @@
 
 ## Development
 
-To start development, clone the repo and run command `npm run init` and you app will be running on localhost on default port i.e. [localhost:8000](https://localhost:8000)
-<br/>
+To start development, clone the repo and run command `npm run init` as this will install all the dependencies and then, your app will be running on localhost on default port i.e. [localhost:8000](https://localhost:8000)
+
+> If you already have dependencies installed, you can just start the server by running `npm start`
+
 Just make sure **node >=14.16.1** is installed, see package.json for more details
 
 ### Essentials

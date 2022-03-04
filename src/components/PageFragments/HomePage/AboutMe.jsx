@@ -2,13 +2,15 @@ import React from 'react';
 import { Row, Col, Space } from 'antd';
 import AboutTile from '../../AboutTile';
 import { stripTags, domHtml } from '../../../utils/stripTags';
-
 import SEO from '../../Seo';
+import Config from '../../../../config';
+
+const { keywords } = Config;
 
 const pageText = {
   paraOne: `
-    It's <span class="devName">Momin Bin Shahid</span> <emoji>👨‍💻</emoji> here.
-    I'm a <strong>Full-Stack JavaScript Developer</strong> passionate about software engineering and technologies, mainly <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>.
+    My name is <span class="devName">Momin Bin Shahid</span>.
+    I'm a <strong>Full-Stack Developer</strong> <emoji>👨‍💻</emoji> passionate about software engineering and technologies, mainly <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>.
     
     <br/>
     <br/>
@@ -58,7 +60,7 @@ const AboutMe = () => {
             title="About"
             description={description}
             path=""
-            keywords={['@MominBinShahid', 'MominBinShahid', 'Momin', 'Bin', 'Shahid', 'Software Engineer', 'FullStack Developer', 'Javascript', 'ReactJS', 'NodeJS', 'VueJS']}
+            keywords={['About Momin Bin Shahid', 'About Momin', ...keywords]}
           />
           <h1 className="titleSeparate">
             About Me

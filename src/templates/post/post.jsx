@@ -14,6 +14,8 @@ import 'prismjs/themes/prism-solarizedlight.css';
 import './highlight-syntax.less';
 import style from './post.module.less';
 
+const { keywords } = Config;
+
 const Post = ({ data }) => {
   const { html, frontmatter } = data.markdownRemark;
   const {
@@ -32,7 +34,7 @@ const Post = ({ data }) => {
           title={removeTagsFromBlogContent(title)}
           description={removeTagsFromBlogContent(excerpt)}
           path={path}
-          keywords={['@MominBinShahid', 'MominBinShahid', 'Momin', 'Bin', 'Shahid', 'Software Engineer', 'FullStack Developer', 'Javascript', 'ReactJS', 'NodeJS', 'VueJS', 'Technology']}
+          keywords={['Momin Blog', 'Momin Bin Shahid Blog', "Momin's Blog", "Momin Bin Shahid's Blog", 'Momin writes', 'Momin Bin Shahid writes', ...keywords]}
         />
         <Header />
         <SidebarWrapper>
@@ -48,7 +50,13 @@ const Post = ({ data }) => {
             </div>
             <article className={style.blogArticle} dangerouslySetInnerHTML={{ __html: html }} />
             {
-              Config.disqusScript && <Comment pageCanonicalUrl={canonicalUrl} pageId={removeTagsFromBlogContent(title)} />
+              Config.disqusScript
+              && (
+                <Comment
+                  pageCanonicalUrl={canonicalUrl}
+                  pageId={removeTagsFromBlogContent(title)}
+                />
+              )
             }
           </div>
         </SidebarWrapper>

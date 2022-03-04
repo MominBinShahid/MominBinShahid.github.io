@@ -14,7 +14,7 @@ import DarkModeToggler from '../components/ThemeToggler';
 import { isPortableDeviceScreen } from '../utils/common';
 
 const {
-  resumeForWeb, resumeDownloadLink, resumePrintableDownloadLink,
+  resumeForWeb, resumeDownloadLink, resumePrintableDownloadLink, keywords,
 } = Config;
 
 const zoomOperatorEnum = {
@@ -72,11 +72,13 @@ export default class Resume extends Component {
       <>
         <SEO
           title="Resume"
-          description="My resume consists of my biodata of experience. You can hire me if you feel
-          I'm good for any position in your organization. I'm open to various challenges that come
-          in the way of building various web applications. - Momin Bin Shahid"
+          description="My resume consists of my biodata (i.e. education, skills, work experience, .etc).
+          Please get in touch for any opportunities or project collaboration or just to say hi.
+          You can hire me if you feel I'm good for any position in your organization.
+          I'm open to learn, grow and tackle various challenges that come in the way of building solutions.
+          - Momin Bin Shahid"
           path="resume"
-          keywords={['@MominBinShahid', 'MominBinShahid', 'Momin', 'Bin', 'Shahid', 'Resume', 'CV', 'C.V.']}
+          keywords={['Momin Bin Shahid Resume', 'Momin Resume', 'Resume', 'CV', 'C.V.', ...keywords]}
         />
 
         <Row justify="center" className="pt-1">

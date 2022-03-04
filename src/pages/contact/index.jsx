@@ -5,18 +5,21 @@ import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import ContactForm from '../../components/PageFragments/ContactForm';
 import SEO from '../../components/Seo';
 import Socials from '../../components/Socials';
+import Config from '../../../config';
+
+const { keywords } = Config;
 
 const Contact = () => (
   <Layout className="outerPadding">
     <Layout className="container">
       <SEO
         title="Contact"
-        description="Hello folks Momin here. You can contact me through the contact form on this page.
-                    Please feel free to contact me, don't be shy guys, just remember Momin is always open to talk about web
-                    technologies especially Javascript tech stacks. Currently working as Sr. Software Development Engineer at Securiti.ai.
-                    Find me on github - MominBinShahid."
+        description="Hello folks Momin here. You can contact me through the contact form on this page OR on social media @MominBinShahid.
+                    Please feel free to reach out as I am always open to talk about web technologies especially JavaScript and related tech stacks,
+                    also about life in general, science, philosophy, .etc. Currently working as Senior Software Development Engineer (SSDE) at Securiti.ai.
+                    Find me on Linkedin, Twitter, Github, StackOverflow - @MominBinShahid."
         path="/contact"
-        keywords={['@MominBinShahid', 'MominBinShahid', 'Momin', 'Bin', 'Shahid', 'Software Engineer', 'FullStack Developer', 'Javascript', 'ReactJS', 'NodeJS', 'VueJS', 'Technology']}
+        keywords={['Contact Momin Bin Shahid', 'Contact Momin', ...keywords]}
       />
       <Header />
       <SidebarWrapper>

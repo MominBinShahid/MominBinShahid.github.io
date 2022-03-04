@@ -1,10 +1,11 @@
 @import (reference) "../../../styles/theme.less";
 
-.refreshColor {
+span.refreshColor {
     background-color: var(--theme-color, @black-color);
     color: whitesmoke;
-    padding: 6px;
+    padding: 8px 9px;
     border-radius: 50%;
+    font-size: 1.2rem;
     cursor: pointer;
 
     -webkit-transition: -webkit-transform 1s ease;
@@ -28,6 +29,7 @@
 .drawerContent {
     p:not(p:first-child) {
         border-top: 1px solid #e3e3e3;
-        padding-top: 8px;
+        padding-top: 0.65rem;
+        margin-bottom: 0.65rem;
     }
 }

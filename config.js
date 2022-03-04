@@ -114,4 +114,19 @@ module.exports = {
     },
 
   },
+
+  keywords: [
+    '@MominBinShahid',
+    'MominBinShahid',
+    'Momin Bin Shahid',
+    'Momin',
+    'Software Engineer',
+    'FullStack Developer',
+    'Javascript',
+    'ReactJS',
+    'NodeJS',
+    'VueJS',
+    'Web',
+    'Technology',
+  ],
 };
