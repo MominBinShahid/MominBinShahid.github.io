@@ -1,7 +1,11 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Tooltip } from 'antd';
+import DiscordSVG from './discord.svg';
 import Config from '../../../config';
+import {
+  getThemeColor,
+} from '../../utils/themeColor';
 import styles from './socials.module.less';
 
 const { social } = Config;
@@ -9,64 +13,97 @@ const { social } = Config;
 export default ({
   useSidebar, useSquareIcons = false, useToolTip = false,
 }) => {
-  const links = [];
+  const themeColor = getThemeColor();
 
+  const links = [];
   Object.keys(social).forEach((key) => {
     const {
-      link, icon, hide, color, 'icon-square': iconSquared,
+      link, icon, hide, hideOnSidebar, color, 'icon-square': iconSquared, useSVG, userName,
     } = social[key];
 
+    if (hide) return;
+
+    if (useSidebar && hideOnSidebar) return;
+
     // if no icon is provided, then no need to render icons
-    if (!icon && !iconSquared) return;
+    if (!icon && !iconSquared && !useSVG) return;
 
     const fontSize = useSquareIcons ? '4rem' : '2rem';
 
     const iconContent = (
-      <FontAwesome
-        name={useSquareIcons ? (iconSquared || icon) : icon}
-        style={{ color, fontSize }}
-        className="resetXMargin"
-      />
+      useSVG
+        ? <DiscordSVG className={styles.discordSVG} />
+        : (
+          <FontAwesome
+            name={useSquareIcons ? (iconSquared || icon) : icon}
+            style={{ color, fontSize }}
+            className="resetXMargin"
+          />
+        )
     );
 
-    const iconWithToolTip = !useToolTip ? iconContent : (
-      <Tooltip title={key} color={color}>
-        {iconContent}
-      </Tooltip>
-    );
+    // eslint-disable-next-line no-nested-ternary
+    const iconWithToolTip = !useToolTip
+      ? iconContent
+      : (
+        userName ? (
+          <Tooltip title={key} color={color}>
+            <Tooltip
+              title={`@${userName}`}
+              color={themeColor}
+              placement="bottom"
+              overlayStyle={{ fontSize: '0.7rem', fontWeight: '300' }}
+              overlayInnerStyle={{
+                paddingTop: '1px', height: '20px', minHeight: '10px', minWidth: '10px',
+              }}
+            >
+              {iconContent}
+            </Tooltip>
+          </Tooltip>
+        )
+          : (
+            <Tooltip title={key} color={color}>
+              {iconContent}
+            </Tooltip>
+          )
+      );
 
     /*
-      for stackoverflow specific CSS because
-      fontawesome v4.7 do not have squared icon for stackoverflow
+      for platform specific CSS because
+      fontawesome v4.7 do not have squared icon for some brands
     */
-    const stackOverflowSquareIcon = useSquareIcons && icon === 'stack-overflow' ? styles.stackOverflowSquareIcon : '';
+    const stackOverflowSquareIcon = useSquareIcons && key === 'stackoverflow' ? styles.stackOverflowSquareIcon : '';
+    const whatsappSquareIcon = useSquareIcons && key === 'whatsapp' ? styles.whatsappSquareIcon : '';
+    const discordSquareIcon = useSquareIcons && useSVG && key === 'discord' ? styles.discordSquareIcon : '';
+    const codepenSquareIcon = useSquareIcons && key === 'codepen' ? styles.codepenSquareIcon : '';
+    const skypeSquareIcon = useSquareIcons && key === 'skype' ? styles.skypeSquareIcon : '';
 
-    if (!hide) {
-      links.push(
-        <span key={link} className={`${stackOverflowSquareIcon}`}>
-          <a
-            href={link}
-            className="setXMargin"
-            aria-label={key}
-            title={useToolTip ? undefined : key}
-            target="_blank"
-            label="button"
-            rel="noopener noreferrer"
-          >
-            {iconWithToolTip}
-          </a>
-        </span>,
-      );
-    }
+    links.push(
+      <span
+        key={link}
+        className={`${stackOverflowSquareIcon} ${whatsappSquareIcon} ${discordSquareIcon} ${codepenSquareIcon} ${skypeSquareIcon}`}
+      >
+        <a
+          href={link}
+          aria-label={key}
+          title={useToolTip ? undefined : key}
+          target="_blank"
+          label="button"
+          rel="noopener noreferrer"
+        >
+          {iconWithToolTip}
+        </a>
+      </span>,
+    );
   });
 
   const simpleLinks = (
-    <div className={`${styles.hoverLighter}`}>
+    <div className={`${styles.sidebarIcons}`}>
       {links}
     </div>
   );
   const socialsSection = (
-    <div className={`${styles.hoverDarker}`}>
+    <div className={`${styles.sectionIcons}`}>
       <h2 className="titleSeparate">
         Elsewhere
         {' '}

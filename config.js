@@ -48,10 +48,11 @@ module.exports = {
   },
   social: {
     twitter: {
+      // userName: 'MominBinShahid',
       link: 'https://twitter.com/MominBinShahid', icon: 'twitter', 'icon-square': 'twitter-square', color: '#1da1f2',
     },
     github: {
-      link: 'https://github.com/MominBinShahid', icon: 'github', 'icon-square': 'github-square', color: '#333',
+      link: 'https://github.com/MominBinShahid', icon: 'github-alt', 'icon-square': 'github-square', color: '#333',
     },
     linkedin: {
       link: 'https://linkedin.com/in/mominbinshahid', icon: 'linkedin', 'icon-square': 'linkedin-square', color: '#0a66c2',
@@ -60,14 +61,45 @@ module.exports = {
       link: 'https://stackoverflow.com/users/9137804/MominBinShahid', icon: 'stack-overflow', color: '#f48024',
     },
     instagram: {
-      link: 'https://www.instagram.com/MominBinShahid', icon: 'instagram', hide: true, color: '#c32aa3',
+      link: 'https://www.instagram.com/MominBinShahid', icon: 'instagram', color: '#c32aa3', hide: true,
     },
     youtube: {
-      link: 'https://www.youtube.com/channel/UCJ4AYMZ3jV0Fpw862C4DDXg', icon: 'youtube-play', 'icon-square': 'youtube-square', hide: true, color: '#ff0000',
+      link: 'https://www.youtube.com/channel/UCJ4AYMZ3jV0Fpw862C4DDXg', icon: 'youtube-play', 'icon-square': 'youtube-square', color: '#ff0000', hide: true,
     },
     facebook: {
       link: 'https://www.facebook.com/MominBinShahid', icon: 'facebook', 'icon-square': 'facebook-square', color: '#1877f2',
     },
+    reddit: {
+      link: 'https://www.reddit.com/user/mominbinshahid/', icon: 'reddit-alien', 'icon-square': 'reddit-square', color: '#FF4500', hideOnSidebar: true,
+    },
+    discord: {
+      link: 'https://discordapp.com/users/MominBinShahid#6892', 'icon-svg': '', useSVG: true, color: '#5865F2', hideOnSidebar: true,
+    },
+    codepen: {
+      link: 'https://codepen.io/MominBinShahid/', icon: 'codepen', color: '#000000', hideOnSidebar: true,
+    },
+    skype: {
+      link: 'https://join.skype.com/invite/i0G7bv3hbB9y', icon: 'skype', color: '#00aff0', hideOnSidebar: true,
+    },
+    whatsapp: {
+      link: 'https://wa.me/923343526270', icon: 'whatsapp', color: '#4AC959', hideOnSidebar: true,
+    },
+
+    // hacker-news
+    // y-combinator
+    // pinterest
+    // quora
+    // slack
+    // snapchat
+    // decide skype momin8003 ?
+    // telegram
+    // twitch
+    // wechat
+    // bitbucket
+    // dev.to
+    // hackerrank
+    // medium
+
     rss: { link: '/rss.xml', hide: true }, // TODO: @Momin see this
   },
 

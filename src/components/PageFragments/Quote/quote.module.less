@@ -7,6 +7,13 @@
   border-left-style: solid;
   border-left-color: var(--theme-color, @black-color);
 
+  //  These are not supported by Internet Explorer, Safari < 15, Safari on iOS < 15. (webhint)
+  //  border-start-start-radius: 5px;
+  //  border-end-start-radius: 5px;
+
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
   background-color: #f9f9f9;
 }
 

@@ -2,12 +2,13 @@ import React from 'react';
 import {
   Affix, Layout, Row, Col, Space,
 } from 'antd';
+import FontAwesome from 'react-fontawesome';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { globalHistory } from '@reach/router';
 import { useWindowSize } from '../../../utils/hooks';
 import Config from '../../../../config';
-import style from './sidebar.module.less';
 import Socials from '../../Socials';
+import style from './sidebar.module.less';
 
 const { Content } = Layout;
 const { resumeDownloadLink /* , resumePrintableDownloadLink  */ } = Config;
@@ -42,13 +43,24 @@ const DomContent = () => (
 
         <li className={`${style.contactBlockItem}`}>
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
-            <span className={`${style.fixSidebarSmiley}`}><emoji>📞</emoji></span>
+            <span className={`${style.fixSidebarSmiley} ${style.phoneEmoji}`}><emoji>📞</emoji></span>
             {/* can also use `callto` instead of tel or do this https://stackoverflow.com/questions/24349340/mailto-link-equivalent-for-phone-calls */}
             {/* Should I hide phone number as I did with email? */}
             {/* and if what I did with email is correct */}
-            <a href="tel:+923343526270">
-              <span className={`${style.fixSideBarRefText} ${style.unsetFontWeight} ${style.phoneHider}`}>+</span>
-            </a>
+            <span>
+              <a href="tel:+923343526270">
+                <span className={`${style.fixSideBarRefText} ${style.unsetFontWeight} ${style.phoneHider}`}>+</span>
+              </a>
+              &nbsp;
+              <a href="https://wa.me/923343526270" target="_blank" rel="noreferrer" aria-label="whatsapp">
+                {/* ref for whatsapp link: https://faq.whatsapp.com/general/chats/how-to-use-click-to-chat/?lang=en */}
+                <FontAwesome
+                  name="whatsapp"
+                  title="whatsapp"
+                  className={`resetXMargin ${style.whatsappWithPhone}`}
+                />
+              </a>
+            </span>
           </Space>
         </li>
 
@@ -84,7 +96,11 @@ const DomContent = () => (
 
       </ul>
       <div className={style.resumeDownload}>
-        <a href={resumeDownloadLink} download target="_blank" rel="noreferrer">Download CV</a>
+        <a href={resumeDownloadLink} download target="_blank" rel="noreferrer">
+          Download
+          {' '}
+          <span>CV</span>
+        </a>
       </div>
 
       {/* <div className={style.resumePrintableDownload}>

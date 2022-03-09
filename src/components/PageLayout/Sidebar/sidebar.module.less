@@ -124,10 +124,13 @@
                     border: none;
                     background: @theme-color;
                     color: #fff;
-                    font-weight: 500;
+                    font-weight: 200;
                     padding: .9rem 1rem;
                     text-transform: uppercase;
                     border-radius: 28px;
+                    span {
+                        font-weight: 600;
+                    }
 
                     -webkit-transition-property: color, font-weight, letter-spacing, background, -webkit-box-shadow;
                             transition-property: color, font-weight, letter-spacing, background, -webkit-box-shadow;
@@ -143,12 +146,15 @@
 
                     &:hover {
                         color: @theme-color;
-                        font-weight: 700;
+                        font-weight: 500;
                         letter-spacing: 3px;
                         background: none;
                         -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
                         -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
                         box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+                        span {
+                            font-weight: 700;
+                        }
                     }
                 }
             }
@@ -198,18 +204,42 @@
                     text-decoration-color: rgb(99, 99, 99);
             text-decoration-thickness: 0.1rem;
             
-            -webkit-transition: font-size 0.25s ease-out;
-            -o-transition: font-size 0.25s ease-out;
-            transition: font-size 0.25s ease-out;
+            // -webkit-transition: font-size 0.25s ease-out;
+            // -o-transition: font-size 0.25s ease-out;
+            // transition: font-size 0.25s ease-out;
 
             &:hover {
                 text-decoration: underline;
-                font-size: 1rem !important
+                // font-size: 1rem !important
             }
         }
     }
     .unsetFontWeight {
         font-weight: unset !important; // sorry, have to fix this for now
+    }
+    .phoneEmoji {
+        position: relative;
+        top: 4px;
+    }
+    .whatsappWithPhone {
+        cursor: pointer;
+        padding: 4px 6px;
+        border-radius: 50%;
+        position: relative;
+        top: 3px;
+        font-size: 1.5rem;
+        color: #4AC959;
+
+        -webkit-transition-property: background-color, color;
+             -o-transition-property: background-color, color;
+                transition-property: background-color, color;
+        -webkit-transition-duration: 0.3s;
+             -o-transition-duration: 0.3s;
+                transition-duration: 0.3s;
+        &:hover {
+            background-color: #4AC959;
+            color: whitesmoke;
+        }
     }
 }
 
