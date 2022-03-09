@@ -62,6 +62,15 @@ const goToLink = (link) => {
   window.open(link, '_blank').focus();
 };
 
+const getRoute = (path) => {
+  const addedSlash = '/';
+
+  //  if you wanted to know the reason of making such urls, see this - https://github.com/gatsbyjs/gatsby/issues/10586#issuecomment-449134665
+  const to = `${addedSlash}${path}${path && addedSlash}`;
+
+  return to;
+};
+
 module.exports = {
   isBrowser,
   isPortableDeviceScreen,
@@ -70,4 +79,5 @@ module.exports = {
   getRandomNumber,
   showConsoleMessage,
   goToLink,
+  getRoute,
 };

@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 import Config from '../../../../config';
 import DarkModeToggler from '../../ThemeToggler';
 import { useWindowSize } from '../../../utils/hooks';
-import { showConsoleMessage } from '../../../utils/common';
+import { showConsoleMessage, getRoute } from '../../../utils/common';
 import { switchThemeColor } from '../../../utils/themeColor';
 import Drawer from './drawer';
 
@@ -47,9 +47,7 @@ export default () => {
 
       if (hide) return;
 
-      const addedSlash = '/';
-      const to = `${addedSlash}${path}${path && addedSlash}`;
-      //  if you wanted to know the reason of making such urls, see this - https://github.com/gatsbyjs/gatsby/issues/10586#issuecomment-449134665
+      const to = getRoute(path);
 
       links.push(
         <li className={style.navItem} key={`${path}-${name}`}>

@@ -1,11 +1,15 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import { Row, Col, Space } from 'antd';
 import AboutTile from '../../AboutTile';
 import { stripTags, domHtml } from '../../../utils/stripTags';
+import { getRoute } from '../../../utils/common';
 import SEO from '../../Seo';
 import Config from '../../../../config';
 
-const { keywords } = Config;
+const { keywords, pages } = Config;
+
+const contactRoute = getRoute(pages.contact.path);
 
 const pageText = {
   paraOne: `
@@ -65,7 +69,9 @@ const AboutMe = () => {
           <h1 className="titleSeparate">
             About Me
             {' '}
-            <emoji className="heyAnimation">👋</emoji>
+            <Link to={contactRoute}>
+              <emoji className="heyAnimation">👋</emoji>
+            </Link>
           </h1>
           {/*
           <p>

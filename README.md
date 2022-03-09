@@ -7,13 +7,15 @@
 </h1>
 <h3 align="center">Created with ❤️ Using Gatsby.js ⚡️</h3>
 
-This project\* was built on new standard† architecture for the web [JAMstack](https://jamstack.org/) 🤩 using [React.js](https://reactjs.org/) via [Gatsby.js](https://www.gatsbyjs.com/)
+This project\* was built on new standard† architecture for the web [JAMstack](https://jamstack.org/) 🤩 using [React.js](https://reactjs.org/) via [Gatsby.js](https://www.gatsbyjs.com/) powered by `Github Pages`
 
 ## Acknowledgements
 
 Mentioned below are some of the technologies and contributors how makes this possible and I wanted to present my tribute 🙏 and complete credit to all of them 👏
 
-[**`rolwinreevan_gatsby_blog`**](https://github.com/rolwin100/rolwinreevan_gatsby_blog): Before we talk about any technologies involved I wanted to give a gigantic shout-out to this awesome starter project for Gatsby.js. This also includes [ant.design](https://ant.design/), and [LESS](https://lesscss.org/) and many more. for more details: visit [this starter on gatsby.js site](https://www.gatsbyjs.com/starters/rolwin100/rolwinreevan_gatsby_blog) do visit this starter and star this project 👍 as this is probably one of the best starters for gatsby.js till now, check for yourself and to the contributor I am eternally grateful for the time and effort you put in to create this awesome starter ✊
+[**`rolwinreevan_gatsby_blog`**](https://github.com/rolwin100/rolwinreevan_gatsby_blog): Before we talk about any technologies involved I wanted to give a gigantic shout-out to this awesome starter project for Gatsby.js. This also includes [ant.design](https://ant.design/), and [LESS](https://lesscss.org/) and many more
+
+For more details: visit [this starter on gatsby.js site](https://www.gatsbyjs.com/starters/rolwin100/rolwinreevan_gatsby_blog) do visit this starter and star this project 👍 as this is probably one of the best starters for gatsby.js till now, check for yourself and to the contributor I am eternally grateful for the time and effort you put in to create this awesome starter ✊
 
 [**`Gatsby.js`**](https://www.gatsbyjs.com/): One of the best static site generator, 🚀 used to build blazing fast and modern apps and websites based on React.js and Node.js. And it's awesome list of remarkable plugins, makes adding a new feature hassle-free 👌
 
