@@ -101,10 +101,13 @@ const Quote = () => {
             </div> */}
 
             <div>
-              { quote.text }
+              <span className={styles.quote}>
+                { quote.text }
+              </span>
             </div>
             <div>
-              —&nbsp;
+              {/* → */}
+              —
               <span className={styles.author}>
                 {quote.author}
               </span>
