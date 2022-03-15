@@ -78,55 +78,52 @@ const Quote = () => {
     </>
   );
 
+  const quotesJSX = quotes.map((quote) => (
+    <div
+      key={quote.text}
+      className={`theme-text-color mt-0_5 ${styles.container} ${quote.link ? 'cursor-pointer' : ''}`}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {... (quote.link && {
+        onClick: () => goToQuoteLink(quote.link),
+        onKeyPress: (event) => handleKeyPress(event, quote.link),
+        role: 'button',
+        tabIndex: '0',
+      })}
+    >
+      {/* <div className={styles.title}>
+        { title }
+      </div> */}
+
+      <div>
+        <span className={styles.quote}>
+          { quote.text }
+        </span>
+      </div>
+      <div>
+        {/* → */}
+        —
+        <span className={styles.author}>
+          {quote.author}
+        </span>
+
+        {
+          quote.category
+            ? (
+              <span className={styles.category}>
+                &nbsp;(#
+                {quote.category}
+                )
+              </span>
+            ) : null
+        }
+      </div>
+    </div>
+  ));
+
   return (
     <div className="mt-1">
-
-      <h2 id="quotes" className="titleSeparate">{title}</h2>
-      {
-        quotes.map((quote) => (
-
-          <div
-            key={quote.text}
-            className={`theme-text-color mt-0_5 ${styles.container} ${quote.link ? 'cursor-pointer' : ''}`}
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {... (quote.link && {
-              onClick: () => goToQuoteLink(quote.link),
-              onKeyPress: (event) => handleKeyPress(event, quote.link),
-              role: 'button',
-              tabIndex: '0',
-            })}
-          >
-            {/* <div className={styles.title}>
-              { title }
-            </div> */}
-
-            <div>
-              <span className={styles.quote}>
-                { quote.text }
-              </span>
-            </div>
-            <div>
-              {/* → */}
-              —
-              <span className={styles.author}>
-                {quote.author}
-              </span>
-
-              {
-                quote.category
-                  ? (
-                    <span className={styles.category}>
-                      &nbsp;(#
-                      {quote.category}
-                      )
-                    </span>
-                  ) : null
-              }
-            </div>
-          </div>
-        ))
-      }
-
+      <h2 className="titleSeparate">{title}</h2>
+      { quotesJSX }
     </div>
   );
 };

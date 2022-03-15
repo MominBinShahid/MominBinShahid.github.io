@@ -25,7 +25,7 @@ const gatsbyConfig = [
       theme_color: '#333333', // '#304CFD', // @theme-color
       display: 'standalone',
       // icon: 'src/images/icon.png', // This path is relative to the root of the site.
-      icon: 'src/images/momin.png', // This path is relative to the root of the site.
+      icon: 'src/images/logo.png', // This path is relative to the root of the site.
       legacy: true, // this will add apple-touch-icon links to <head>. Required for
       // versions prior to iOS 11.3.
     },

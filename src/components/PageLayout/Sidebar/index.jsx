@@ -86,7 +86,7 @@ const DomContent = () => (
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
             <span className={`${style.fixSidebarSmiley}`}><emoji>📧</emoji></span>
             <a
-              href="mailto:&#77;&#111;&#109;&#105;&#110;&#66;&#105;&#110;&#83;&#104;&#97;&#104;&#105;&#100;&#64;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;"
+              href="mailto:&#77;&#111;&#109;&#105;&#110;&#66;&#105;&#110;&#83;&#104;&#97;&#104;&#105;&#100;&#64;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;?subject=Hello from the Website"
               target="_top"
             >
               <span className={`${style.emailHider} ${style.fixSideBarRefText}`}>@</span>

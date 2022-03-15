@@ -15,7 +15,10 @@ export default () => (
           <Space direction="vertical" size="large">
             <AboutMe />
             {/* <Skills /> */}
-            <Quote />
+
+            <div id="quotes" name="quotes">
+              <Quote />
+            </div>
           </Space>
         </>
       </SidebarWrapper>
