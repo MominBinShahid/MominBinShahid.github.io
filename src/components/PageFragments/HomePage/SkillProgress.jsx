@@ -14,7 +14,7 @@ const SkillsProgress = () => (
       <emoji>🤹‍♂️</emoji>
 
       <Tooltip title="These percentages are arbitrarily self-assigned and not the exact representation of the acquired skills and are rendered here just to highlight some of the main skills.">
-        <FontAwesome name="exclamation-circle" />
+        <FontAwesome name="info-circle" />
       </Tooltip>
     </h2>
     <Row gutter={[20, 20]}>
