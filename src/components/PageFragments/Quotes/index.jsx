@@ -6,9 +6,9 @@ import {
 } from '../../../utils/api';
 import { goToLink } from '../../../utils/common';
 
-import styles from './quote.module.less';
+import styles from './quotes.module.less';
 
-const Quote = () => {
+const Quotes = () => {
   // const [quotes, setQuotes] = useState(null);
 
   let quotes = null;
@@ -127,4 +127,4 @@ const Quote = () => {
     </div>
   );
 };
-export default Quote;
+export default Quotes;

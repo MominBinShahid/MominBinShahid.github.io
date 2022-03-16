@@ -144,7 +144,6 @@ module.exports = {
       description: 'A general purpose programming language that is widely used for developing various applications.',
       color: '#f9c646',
     },
-
   },
 
   keywords: [
@@ -160,5 +159,20 @@ module.exports = {
     'VueJS',
     'Web',
     'Technology',
+  ],
+
+  skills: [
+    [
+      { name: 'JavaScript', percentage: 92 },
+      { name: 'ReactJS', percentage: 88 },
+      { name: 'NodeJS', percentage: 85 },
+      { name: 'VueJS', percentage: 87 },
+    ],
+    [
+      { name: 'HTML', percentage: 84 },
+      { name: 'CSS', percentage: 73 },
+      { name: 'MongoDB', percentage: 76 },
+      { name: 'Wordpress', percentage: 71 },
+    ],
   ],
 };

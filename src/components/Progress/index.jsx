@@ -1,19 +1,25 @@
 import React from 'react';
 import { Progress } from 'antd';
+import {
+  getThemeColor,
+} from '../../utils/themeColor';
 
 const ProgressBar = (props) => {
-  const { text, percent } = props;
+  const { text, percent, marginTop = '20px' } = props;
+  const themeColor = getThemeColor();
+
   return (
-    <div style={{ marginTop: '20px' }}>
+    <div style={{ marginTop }}>
       <div>
         <Progress
-          strokeColor={{
-            from: '#304CFD', // @theme-color
-            to: '#108ee9', // @theme-color accent
-          }}
+          // strokeColor={{
+          //   from: themeColor, // '#304CFD', // @theme-color
+          //   to: 'tomato', // '#108ee9', // @theme-color-accent
+          // }}
+          strokeColor={themeColor}
           percent={percent || 0}
           strokeWidth={22}
-          status="active"
+          // status="active"
         />
       </div>
       <div style={{

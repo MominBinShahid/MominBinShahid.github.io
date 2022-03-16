@@ -1,52 +1,38 @@
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Tooltip } from 'antd';
+import FontAwesome from 'react-fontawesome';
 import ProgressBar from '../../Progress';
+import Config from '../../../../config';
+
+const { skills } = Config;
 
 const SkillsProgress = () => (
   <div>
     <h2 className="titleSeparate">
-      My Skills
+      Primary Skills
       {' '}
       <emoji>🤹‍♂️</emoji>
+
+      <Tooltip title="These percentages are arbitrarily self-assigned and not the exact representation of the acquired skills and are rendered here just to highlight some of the main skills.">
+        <FontAwesome name="exclamation-circle" />
+      </Tooltip>
     </h2>
     <Row gutter={[20, 20]}>
-      <Col xs={24} sm={24} md={12}>
-
-        <ProgressBar
-          percent={80}
-          text="Javascript"
-        />
-        <ProgressBar
-          percent={95}
-          text="ReactJS"
-        />
-        <ProgressBar
-          percent={85}
-          text="Gatsby"
-        />
-        <ProgressBar
-          percent={90}
-          text="NodeJS"
-        />
-      </Col>
-      <Col xs={24} sm={24} md={12}>
-        <ProgressBar
-          percent={70}
-          text="Python"
-        />
-        <ProgressBar
-          percent={90}
-          text="Mysql"
-        />
-        <ProgressBar
-          percent={78}
-          text="MongoDB"
-        />
-        <ProgressBar
-          percent={80}
-          text="Wordpress"
-        />
-      </Col>
+      {
+        skills.map((skillSet) => (
+          <Col xs={24} sm={24} md={12}>
+            {
+             skillSet.map((skill, index) => (
+               <ProgressBar
+                 percent={skill.percentage}
+                 text={skill.name}
+                 marginTop={index === 0 ? '0px' : '20px'}
+               />
+             ))
+          }
+          </Col>
+        ))
+      }
     </Row>
   </div>
 );

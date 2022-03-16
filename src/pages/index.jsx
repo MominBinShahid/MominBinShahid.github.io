@@ -3,8 +3,8 @@ import { Layout, Space } from 'antd';
 import Header from '../components/PageLayout/Header';
 import SidebarWrapper from '../components/PageLayout/Sidebar';
 import AboutMe from '../components/PageFragments/HomePage/AboutMe';
-import Quote from '../components/PageFragments/Quote';
-// import Skills from '../components/PageFragments/HomePage/SkillProgress';
+import Quotes from '../components/PageFragments/Quotes';
+import Skills from '../components/PageFragments/HomePage/SkillProgress';
 
 export default () => (
   <Layout className="outerPadding">
@@ -14,10 +14,9 @@ export default () => (
         <>
           <Space direction="vertical" size="large">
             <AboutMe />
-            {/* <Skills /> */}
-
+            <Skills />
             <div id="quotes" name="quotes">
-              <Quote />
+              <Quotes />
             </div>
           </Space>
         </>
