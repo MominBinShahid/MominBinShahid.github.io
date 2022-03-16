@@ -12,33 +12,33 @@ const Quotes = () => {
   // const [quotes, setQuotes] = useState(null);
 
   let quotes = null;
-  const [quote1, setQuote1] = useState(null);
-  const [quote2, setQuote2] = useState(null);
-  const [quote3, setQuote3] = useState(null);
+  const [quote1, setQuote1] = useState();
+  const [quote2, setQuote2] = useState();
+  const [quote3, setQuote3] = useState();
   if (quote1) quotes = quotes ? [...quotes, quote1] : [quote1];
   if (quote2) quotes = quotes ? [...quotes, quote2] : [quote2];
   if (quote3) quotes = quotes ? [...quotes, quote3] : [quote3];
 
   const fetchQuoteIndependently = () => {
     fetchQuote1().then((res) => {
-      if (!res) return;
+      if (!res) return setQuote1(null);
 
       const quote = parseQuote(res);
-      setQuote1(quote);
+      return setQuote1(quote);
     });
 
     fetchQuote2().then((res) => {
-      if (!res) return;
+      if (!res) return setQuote2(null);
 
       const quote = parseQuote(res);
-      setQuote2(quote);
+      return setQuote2(quote);
     });
 
     fetchQuote3().then((res) => {
-      if (!res) return;
+      if (!res) return setQuote3(null);
 
       const quote = parseQuote(res);
-      setQuote3(quote);
+      return setQuote3(quote);
     });
   };
 
@@ -54,7 +54,10 @@ const Quotes = () => {
     fetchQuoteIndependently();
   }, []);
 
-  if (!quotes) return <Spin style={{ paddingTop: '6px' }} />;
+  // if API are failed
+  if (quote1 === null && quote2 === null && quote3 === null) return null;
+
+  if (quotes === null) return <Spin style={{ paddingTop: '6px' }} />;
   if (!quotes.length) return null;
 
   const goToQuoteLink = (link) => {

@@ -19,11 +19,12 @@ const SkillsProgress = () => (
     </h2>
     <Row gutter={[20, 20]}>
       {
-        skills.map((skillSet) => (
-          <Col xs={24} sm={24} md={12}>
+        skills.map((skillSet, colIndex) => (
+          <Col xs={24} sm={24} md={12} key={`col-${skillSet.length - colIndex}`}>
             {
              skillSet.map((skill, index) => (
                <ProgressBar
+                 key={skill.name}
                  percent={skill.percentage}
                  text={skill.name}
                  marginTop={index === 0 ? '0px' : '20px'}
