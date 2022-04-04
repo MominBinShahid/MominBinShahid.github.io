@@ -7,6 +7,13 @@ import { getRoute } from '../../../utils/common';
 import SEO from '../../Seo';
 import Config from '../../../../config';
 
+import CodeImage from '../../../images/icons/code.png';
+import GraduationImage from '../../../images/icons/graduation.png';
+import JavaScriptImage from '../../../images/icons/javascript.png';
+import LocationImage from '../../../images/icons/location.png';
+import MeetingImage from '../../../images/icons/meeting.png';
+import OpenSourceImage from '../../../images/icons/open-source.png';
+
 const { keywords, pages } = Config;
 
 const contactRoute = getRoute(pages.contact.path);
@@ -84,7 +91,7 @@ const AboutMe = () => {
         <Row gutter={[20, 20]}>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img="location.png"
+              img={LocationImage}
               alt="location image"
               textH4="Born and bought up in"
               textH3="Karachi, Sindh, P.K."
@@ -92,7 +99,7 @@ const AboutMe = () => {
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img="javascript.png"
+              img={JavaScriptImage}
               alt="javascript logo image"
               textH4="Love JavaScript ♥️"
               textH3="Learn Once, Ship Anywhere!"
@@ -100,7 +107,7 @@ const AboutMe = () => {
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img="meeting.png"
+              img={MeetingImage}
               alt="meeting with other people image"
               textH4="Socially Awkward (at times)"
               textH3="Yet, Love to Socialize"
@@ -108,7 +115,7 @@ const AboutMe = () => {
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img="open-source.png"
+              img={OpenSourceImage}
               alt="open source initiative image"
               textH4="Worked on Closed-Source"
               textH3="Getting into Open-Source"
@@ -116,7 +123,7 @@ const AboutMe = () => {
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img="code.png"
+              img={CodeImage}
               alt="code image"
               textH4="Self Taught Programmer"
               textH3="Thanks to the Web Resources"
@@ -124,7 +131,7 @@ const AboutMe = () => {
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img="graduation.png"
+              img={GraduationImage}
               alt="graduation image"
               textH4="Pursued Bachelors in"
               textH3="Computer Science"

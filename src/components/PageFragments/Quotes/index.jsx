@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { Spin } from 'antd';
 import {
   // fetchRandomQuotes,
@@ -8,37 +8,48 @@ import { goToLink } from '../../../utils/common';
 
 import styles from './quotes.module.less';
 
-const Quotes = () => {
-  // const [quotes, setQuotes] = useState(null);
+function quotesReducer(quotes, action) {
+  switch (action.type) {
+    case '👍':
+      if (!quotes) return [action.quote];
 
-  let quotes = null;
-  const [quote1, setQuote1] = useState();
-  const [quote2, setQuote2] = useState();
-  const [quote3, setQuote3] = useState();
-  if (quote1) quotes = quotes ? [...quotes, quote1] : [quote1];
-  if (quote2) quotes = quotes ? [...quotes, quote2] : [quote2];
-  if (quote3) quotes = quotes ? [...quotes, quote3] : [quote3];
+      return [...quotes, action.quote];
+    case '👎': {
+      if (!quotes) return quotes;
+
+      const quoteIndexToDelete = quotes.findIndex((quote) => quote.text === action.text);
+      if (quoteIndexToDelete === -1) return quotes;
+
+      quotes.splice(quoteIndexToDelete, 1);
+      return [...quotes];
+    }
+    case '❌':
+      if (!quotes) return [];
+
+      return quotes;
+    default:
+      throw new Error('Use proper action.type for quotesReducer');
+  }
+}
+
+const useQuotes = (defaultState = null, quoteAPIs = []) => {
+  const [quotes, dispatch] = useReducer(quotesReducer, defaultState);
+
+  // const [quotes, setQuotes] = useState(null);
+  /**
+   * Can not use `useState` here
+   * ref: https://reactjs.org/docs/hooks-reference.html#:~:text=when%20the%20next%20state%20depends%20on%20the%20previous%20one
+   */
 
   const fetchQuoteIndependently = () => {
-    fetchQuote1().then((res) => {
-      if (!res) return setQuote1(null);
+    quoteAPIs.forEach((apiPromise) => {
+      apiPromise().then((res) => {
+        if (!res || res instanceof Error) return dispatch({ type: '❌', error: res });
 
-      const quote = parseQuote(res);
-      return setQuote1(quote);
-    });
-
-    fetchQuote2().then((res) => {
-      if (!res) return setQuote2(null);
-
-      const quote = parseQuote(res);
-      return setQuote2(quote);
-    });
-
-    fetchQuote3().then((res) => {
-      if (!res) return setQuote3(null);
-
-      const quote = parseQuote(res);
-      return setQuote3(quote);
+        const quote = parseQuote(res);
+        return dispatch({ type: '👍', quote });
+        // setQuotes(quotes ? [...quotes, quote] : [quote]);
+      });
     });
   };
 
@@ -54,8 +65,13 @@ const Quotes = () => {
     fetchQuoteIndependently();
   }, []);
 
-  // if API are failed
-  if (quote1 === null && quote2 === null && quote3 === null) return null;
+  return quotes;
+};
+
+const Quotes = () => {
+  const quoteAPIs = [fetchQuote1, fetchQuote2, fetchQuote3];
+
+  const quotes = useQuotes(null, quoteAPIs);
 
   if (quotes === null) return <Spin style={{ paddingTop: '6px' }} />;
   if (!quotes.length) return null;

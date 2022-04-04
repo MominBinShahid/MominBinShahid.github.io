@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'antd';
 import style from './about.module.less';
 
 const AboutTile = (props) => {
@@ -8,8 +9,9 @@ const AboutTile = (props) => {
   return (
     <div className={style.aboutTile}>
       <div className={style.aboutBlock}>
-        <img
-          src={`../${img}`}
+        <Image
+          preview={false}
+          src={img}
           height={height || 64}
           width={width || 64}
           alt={alt || ''}

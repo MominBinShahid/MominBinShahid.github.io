@@ -18,4 +18,5 @@
 - check for no-extraneous-dependencies in code
 - Check all `TODO` and `FIXME` to see if you can fix them
 - Make over all app less white as it will make dark mode less pitch black look
+- Skills color does not change on random color theme because of color is coming from JS and not CSS
 - Enable outline on focus to fix accessibility issues (see: Fixes ANT Design outline:none issue)

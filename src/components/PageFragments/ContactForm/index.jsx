@@ -5,7 +5,8 @@ import React, { useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { FrownOutlined } from '@ant-design/icons';
 import Config from '../../../../config';
-import { debounce, isInDarkMode } from '../../../utils/common';
+import { debounce } from '../../../utils/common';
+import { isInDarkMode } from '../../../utils/darkMode';
 import style from './contact.module.less';
 
 const showInvertedEmojiWarning = () => {

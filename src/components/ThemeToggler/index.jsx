@@ -5,11 +5,14 @@ import { Switch } from 'antd';
 // import { useWindowSize } from '../../utils/hooks';
 // import { isBrowser } from '../../utils/common';
 import style from './toggler.module.less';
+import { addDarkModeEventListener, darkModeEnum } from '../../utils/darkMode';
 
 export default () => (
   <ThemeToggler>
     {({ theme, toggleTheme }) => {
-      const isDark = theme === 'dark';
+      addDarkModeEventListener(toggleTheme);
+
+      const isDark = theme === darkModeEnum.DARK;
 
       // const [screenWidth] = useWindowSize();
       // const setClassesBasedOnDevice = (appliedTheme) => {
@@ -30,16 +33,17 @@ export default () => (
           {/* <div className={style.themeTogglerDiv}>
             <FontAwesome
               name="sun-o"
-              onClick={() => toggleTheme('light')}
+              onClick={() => toggleTheme(darkModeEnum.LIGHT)}
               style={{ fontWeight: !isDark && 'bold' }}
             />
             <FontAwesome
               name={isDark ? 'toggle-on' : 'toggle-off'}
-              onClick={() => (isDark ? toggleTheme('light') : toggleTheme('dark'))}
+              onClick={() => (isDark
+                ? toggleTheme(darkModeEnum.LIGHT) : toggleTheme(darkModeEnum.DARK))}
             />
             <FontAwesome
               name="moon-o"
-              onClick={() => toggleTheme('dark')}
+              onClick={() => toggleTheme(darkModeEnum.DARK)}
               style={{ fontWeight: isDark && 'bold' }}
             />
           </div> */}
@@ -48,7 +52,8 @@ export default () => (
             className={style.themeToggler}
             checkedChildren={(<emoji>🌙</emoji>)}
             unCheckedChildren={<emoji>🔆</emoji>}
-            onChange={(checked) => (checked ? toggleTheme('dark') : toggleTheme('light'))}
+            onChange={(checked) => (checked
+              ? toggleTheme(darkModeEnum.DARK) : toggleTheme(darkModeEnum.LIGHT))}
             checked={isDark}
           />
         </>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import FontAwesome from 'react-fontawesome';
 import {
   Drawer, Checkbox, Typography, Input, Button,
@@ -10,6 +10,9 @@ import {
   setUserThemeColorSetting,
   switchThemeColor,
 } from '../../../utils/themeColor';
+import {
+  isInDarkMode, turnOnDarkMode, turnOffDarkMode,
+} from '../../../utils/darkMode';
 
 // for .module.less - read: https://www.gatsbyjs.com/plugins/gatsby-plugin-less/#with-css-modules
 import style from './drawer.module.less';
@@ -46,6 +49,28 @@ const DrawerContent = () => {
 
   const generateNewColor = () => {
     switchThemeColor();
+  };
+
+  /**
+   * used useRef hook instead of simple assignment because
+   * we do not wanted to reassign the variable on every render
+   * ref: https://reactjs.org/docs/hooks-reference.html#:~:text=It%E2%80%99s%20handy%20for%20keeping%20any%20mutable%20value%20around
+   */
+  const resettingTheme = useRef(false);
+
+  const colorPickerOpened = () => {
+    if (!isInDarkMode()) return;
+
+    resettingTheme.current = true;
+    turnOffDarkMode();
+  };
+  const colorPickerClosed = () => {
+    if (!resettingTheme.current) return;
+
+    if (isInDarkMode()) return;
+
+    resettingTheme.current = false;
+    turnOnDarkMode();
   };
 
   return (
@@ -86,13 +111,15 @@ const DrawerContent = () => {
                 >
                   <Input
                     type="color"
+                    onFocus={colorPickerOpened}
+                    onBlur={colorPickerClosed}
                     // allowClear
                     defaultValue={userThemeColor}
                     value={userThemeColor}
                     onChange={onUserThemeColorChange}
                     addonBefore={userThemeColor}
                     aria-label="Set color theme"
-                    style={{ width: '200px' }}
+                    style={{ width: '180px' }}
                   />
                   <Button
                     onClick={onUserThemeColorChange}
@@ -117,12 +144,17 @@ export default ({ showSettings, setSettingsVisibility }) => {
 
   return (
     <Drawer
-      title={['Your Preferences ', <emoji key="emoji">⚙️</emoji>]}
-      placement="bottom"
       key="drawer"
+      title={['Your Preferences ', <emoji key="emoji">⚙️</emoji>]}
       closable
       onClose={onSettingsClose}
       visible={showSettings}
+      /**
+       * this will be messed up in dark mode because of position: fixed
+       * under CSS filter see details in dark.less
+       */
+      // placement="bottom"
+      placement="right"
     >
       <DrawerContent />
     </Drawer>

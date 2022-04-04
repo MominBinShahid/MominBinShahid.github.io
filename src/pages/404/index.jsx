@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Image } from 'antd';
 import { Link, graphql } from 'gatsby';
 import Header from '../../components/PageLayout/Header';
 import { Sidebar404 } from '../../components/PageLayout/Sidebar';
@@ -24,17 +24,21 @@ export default ({ data }) => (
       <Sidebar404>
         <>
           <div className={`${style.sidebar404Img} ${style.boxContent}`}>
-            <img
+            <Image
               src={data.file.childImageSharp.fluid.src}
               width="100%"
               alt="404"
             />
           </div>
           <div className={`textCenter ${style.boxContent}`}>
-            <h1>This page was lost</h1>
+            <h1>
+              Page not found
+              {' '}
+              <emoji>😔</emoji>
+            </h1>
             <h4>
-              The Page You are looking for isn’t available. Try to search again or use
-              the Go Back button below.
+              The page you are looking for isn’t available. Try to search again or use
+              the ‘Go Back’ button below.
             </h4>
             <Link to="/">
               <div className={`centerAlign ${style.textHover}`}>

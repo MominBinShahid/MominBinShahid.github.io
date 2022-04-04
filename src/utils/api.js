@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const { isBrowser } = require('./common');
 
-const handleError = (reason) => console.error('Can not fetch quote for you right now, try again in a while 😔', { reason });
+const handleError = (reason) => console.error('Can not fetch quote for you right now, try again in a while 😔', { reason }) || reason;
 
 const fetchQuote1 = () => fetch('https://programming-quotes-api.herokuapp.com/quotes/random').then((res) => res.json()).catch((e) => handleError(e));
 const fetchQuote2 = () => fetch('https://free-quotes-api.herokuapp.com/').then((res) => res.json()).catch((e) => handleError(e));

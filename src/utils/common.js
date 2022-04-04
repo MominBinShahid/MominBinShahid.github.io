@@ -31,14 +31,6 @@ const debounce = (func, delay, { leading } = {}) => {
   };
 };
 
-// Is App In Dark Mode
-const isInDarkMode = () => {
-  if (!isBrowser) return false;
-
-  const currentTheme = window.localStorage.getItem('theme');
-  return currentTheme === 'dark';
-};
-
 const getRandomNumber = (max = 1, min = 0) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const showConsoleMessage = () => {
@@ -75,7 +67,6 @@ module.exports = {
   isBrowser,
   isPortableDeviceScreen,
   debounce,
-  isInDarkMode,
   getRandomNumber,
   showConsoleMessage,
   goToLink,

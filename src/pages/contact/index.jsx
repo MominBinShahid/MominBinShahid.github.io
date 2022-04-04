@@ -1,11 +1,15 @@
 import React from 'react';
-import { Layout, Row, Col } from 'antd';
+import {
+  Layout, Row, Col, Image,
+} from 'antd';
 import Header from '../../components/PageLayout/Header';
 import SidebarWrapper from '../../components/PageLayout/Sidebar';
 import ContactForm from '../../components/PageFragments/ContactForm';
 import SEO from '../../components/Seo';
 import Socials from '../../components/Socials';
 import Config from '../../../config';
+
+import ContactImage from '../../images/contact.png';
 
 const { keywords } = Config;
 
@@ -32,8 +36,9 @@ const Contact = () => (
         </div>
         <Row gutter={[40, 20]}>
           <Col sm={24} md={24} lg={12}>
-            <img
-              src="../../contact.png"
+            <Image
+              preview={false}
+              src={ContactImage}
               alt="contact"
               className="widthFull contactImgBorder"
             />

@@ -32,7 +32,7 @@ const DomContent = () => (
       </div>
       <div className={`${style.badge} ${style.badgeGray} ${style.badgeGrayDescText}`}>
         @&nbsp;
-        <a href="https://Securiti.ai" target="_blank" rel="noreferrer">Securiti.ai</a>
+        <a href="https://Securiti.ai" target="_blank" rel="noopener noreferrer">Securiti.ai</a>
       </div>
       <div className="centerAlign box">
         <Socials useSidebar />
@@ -52,7 +52,7 @@ const DomContent = () => (
                 <span className={`${style.fixSideBarRefText} ${style.unsetFontWeight} ${style.phoneHider}`}>+</span>
               </a>
               &nbsp;
-              <a href="https://wa.me/923343526270" target="_blank" rel="noreferrer" aria-label="whatsapp">
+              <a href="https://wa.me/923343526270" target="_blank" rel="noopener noreferrer" aria-label="whatsapp">
                 {/* ref for whatsapp link: https://faq.whatsapp.com/general/chats/how-to-use-click-to-chat/?lang=en */}
                 <FontAwesome
                   name="whatsapp"
@@ -67,7 +67,7 @@ const DomContent = () => (
         <li className={`${style.contactBlockItem}`}>
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
             <span className={`${style.fixSidebarSmiley}`}><emoji>🎂</emoji></span>
-            <a href="https://en.wikipedia.org/wiki/December_13" target="_blank" rel="noreferrer">
+            <a href="https://en.wikipedia.org/wiki/December_13" target="_blank" rel="noopener noreferrer">
               <span className={`${style.unsetFontWeight} ${style.fixSideBarRefText}`}>Dec 13, 1995</span>
             </a>
           </Space>
@@ -76,7 +76,7 @@ const DomContent = () => (
         <li className={`${style.contactBlockItem}`}>
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
             <span className={`${style.fixSidebarSmiley}`}><emoji>📍</emoji></span>
-            <a href="https://en.wikipedia.org/wiki/Karachi" target="_blank" rel="noreferrer">
+            <a href="https://en.wikipedia.org/wiki/Karachi" target="_blank" rel="noopener noreferrer">
               <span className={`${style.unsetFontWeight} ${style.fixSideBarRefText}`}>Karachi, Pakistan</span>
             </a>
           </Space>
@@ -96,7 +96,7 @@ const DomContent = () => (
 
       </ul>
       <div className={style.resumeDownload}>
-        <a href={resumeDownloadLink} download target="_blank" rel="noreferrer">
+        <a href={resumeDownloadLink} download target="_blank" rel="noopener noreferrer">
           Download
           {' '}
           <span>CV</span>

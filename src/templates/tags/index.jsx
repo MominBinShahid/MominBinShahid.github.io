@@ -41,7 +41,11 @@ const TagPage = ({ data, pageContext }) => {
               {tagName}
             </h1>
             <div className={style.bannerImgContainer}>
-              <Img className={style.bannerImg} fluid={tagImage} alt={tagName} />
+              <Img
+                className={style.bannerImg}
+                fluid={tagImage}
+                alt={tagName}
+              />
             </div>
             <h4 className="textCenter">
               {Config.tags[tag].description}
