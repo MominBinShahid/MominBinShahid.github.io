@@ -31,6 +31,8 @@ function SEO({
   translations,
   meta,
 }) {
+  const siteTitleWithEmoji = `${Config.siteTitle} 👨‍💻`
+  const titleTemplate = path ? `%s | ${siteTitleWithEmoji}` : siteTitleWithEmoji
   return (
     <StaticQuery
       query={detailsQuery}
@@ -51,7 +53,7 @@ function SEO({
         return (
           <Helmet
             title={title} // Page title
-            titleTemplate={`%s | ${Config.siteTitle} 👨‍💻`}
+            titleTemplate={titleTemplate}
             meta={
               [
                 { name: 'description', content: description }, // Page description

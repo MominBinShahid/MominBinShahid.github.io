@@ -1,4 +1,15 @@
-
+.unsetMarginForFirstAndLastAnchor {
+    &:first-of-type {
+        a {
+            margin-left: unset;
+        }
+    }
+    &:last-of-type {
+        a {
+            margin-right: unset;
+        }
+    }
+}
 
 .sidebarIcons {
     text-align: center;
@@ -14,6 +25,7 @@
                 }
             }
         }
+        .unsetMarginForFirstAndLastAnchor();
     }
 }
 
@@ -35,6 +47,7 @@
                 }
             }
         }
+        .unsetMarginForFirstAndLastAnchor();
     }
 }
 

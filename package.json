@@ -48,8 +48,10 @@
     "clean": "gatsby clean",
     "init": "rm -rf node_modules && npm install && npm start",
     "clean-install": "rm -rf node_modules && rm -f package-lock.json && npm i",
+    "clean-install-start": "npm run clean-install && npm run start",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\""
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "test-node-version": "node -v"
   },
   "dependencies": {
     "antd": "^4.0.1",

@@ -47,7 +47,7 @@ const DomContent = () => (
             {/* can also use `callto` instead of tel or do this https://stackoverflow.com/questions/24349340/mailto-link-equivalent-for-phone-calls */}
             {/* Should I hide phone number as I did with email? */}
             {/* and if what I did with email is correct */}
-            <span>
+            <span className="textCenter display-inline-block">
               <a href="tel:+923343526270">
                 <span className={`${style.fixSideBarRefText} ${style.unsetFontWeight} ${style.phoneHider}`}>+</span>
               </a>
@@ -75,7 +75,7 @@ const DomContent = () => (
 
         <li className={`${style.contactBlockItem}`}>
           <Space size="middle" className={`${style.fixSidebarInfoIcons}`}>
-            <span className={`${style.fixSidebarSmiley}`}><emoji>📍</emoji></span>
+            <span className={`${style.fixSidebarSmiley}`}><emoji>🏡</emoji></span>
             <a href="https://en.wikipedia.org/wiki/Karachi" target="_blank" rel="noopener noreferrer">
               <span className={`${style.unsetFontWeight} ${style.fixSideBarRefText}`}>Karachi, Pakistan</span>
             </a>
@@ -119,11 +119,12 @@ const DomContent = () => (
 );
 
 const Sidebar = (props) => {
-  const [width] = useWindowSize();
+  const [width, height] = useWindowSize();
   const { children } = props;
   const { pathname } = globalHistory.location;
   let domContent = <DomContent />;
-  if (width > 997) {
+  // height was needed because the sidebar content is more than 750
+  if (width > 997 && height > 760) {
     domContent = (
       <Affix offsetTop={0}>
         <DomContent />
