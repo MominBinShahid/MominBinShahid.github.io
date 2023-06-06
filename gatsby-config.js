@@ -11,7 +11,16 @@ require('dotenv').config({
 });
 
 const config = require('./config');
-const plugins = require('./gatsby-config.plugins');
+let plugins = require('./gatsby-config.plugins');
+
+/* while in development some plugins do create caching and other dev server problems
+so, we ignore such plugins in development (only use then in production) */
+const pluginsToRemoveInNonProdEnv = ['gatsby-plugin-offline'];
+if (process.env.NODE_ENV !== 'production') {
+  plugins = plugins.filter(
+    plugin => !pluginsToRemoveInNonProdEnv.includes(plugin.resolve || plugin)
+  );
+}
 
 module.exports = {
   pathPrefix: config.pathPrefix,

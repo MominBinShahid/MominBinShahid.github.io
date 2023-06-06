@@ -1,0 +1,91 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "npm install"
+    }
+  ],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "prebuild": {
+      "name": "prebuild",
+      "command": "npm run prebuild",
+      "runAtStart": false
+    },
+    "build": {
+      "name": "build",
+      "command": "npm run build",
+      "runAtStart": false
+    },
+    "gh-pages-help": {
+      "name": "gh-pages-help",
+      "command": "npm run gh-pages-help",
+      "runAtStart": false
+    },
+    "publish": {
+      "name": "publish",
+      "command": "npm run publish",
+      "runAtStart": false
+    },
+    "develop": {
+      "name": "develop",
+      "command": "npm run develop",
+      "runAtStart": false
+    },
+    "start": {
+      "name": "start",
+      "command": "npm run start",
+      "runAtStart": true,
+      "preview": {
+        "port": 8000
+      }
+    },
+    "preserve": {
+      "name": "preserve",
+      "command": "npm run preserve",
+      "runAtStart": false
+    },
+    "serve": {
+      "name": "serve",
+      "command": "npm run serve",
+      "runAtStart": false
+    },
+    "clean": {
+      "name": "clean",
+      "command": "npm run clean",
+      "runAtStart": false
+    },
+    "init": {
+      "name": "init",
+      "command": "npm run init",
+      "runAtStart": false
+    },
+    "clean-install": {
+      "name": "clean-install",
+      "command": "npm run clean-install",
+      "runAtStart": false
+    },
+    "clean-install-start": {
+      "name": "clean-install-start",
+      "command": "npm run clean-install-start",
+      "runAtStart": false
+    },
+    "test": {
+      "name": "test",
+      "command": "npm run test",
+      "runAtStart": false
+    },
+    "format": {
+      "name": "format",
+      "command": "npm run format",
+      "runAtStart": false
+    },
+    "test-node-version": {
+      "name": "test-node-version",
+      "command": "npm run test-node-version",
+      "runAtStart": false
+    }
+  }
+}

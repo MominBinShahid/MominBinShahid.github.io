@@ -51,7 +51,7 @@ export default () => (
           <Switch
             className={style.themeToggler}
             checkedChildren={(<emoji>🌙</emoji>)}
-            unCheckedChildren={<emoji>🔆</emoji>}
+            unCheckedChildren={<emoji>☀</emoji>}
             onChange={(checked) => (checked
               ? toggleTheme(darkModeEnum.DARK) : toggleTheme(darkModeEnum.LIGHT))}
             checked={isDark}
