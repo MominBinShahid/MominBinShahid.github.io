@@ -1,6 +1,6 @@
 {
   "name": "mominbinshahid.github.io",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Momin Bin Shahid's website",
   "keywords": [
     "MominBinShahid",
@@ -46,6 +46,8 @@
     "preserve": "npm run build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
+    "lint": "eslint --ext .js,.jsx .",
+    "lint-fix": "npm run lint -- --fix",
     "init": "rm -rf node_modules && npm install && npm start",
     "clean-install": "rm -rf node_modules && rm -f package-lock.json && npm i",
     "clean-install-start": "npm run clean-install && npm run start",

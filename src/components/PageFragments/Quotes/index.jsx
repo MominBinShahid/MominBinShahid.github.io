@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import { Spin } from 'antd';
 import {
   // fetchRandomQuotes,
-  fetchQuote1, fetchQuote2, fetchQuote3, parseQuote,
+  fetchQuoteAPIs, parseQuote,
 } from '../../../utils/api';
 import { goToLink } from '../../../utils/common';
 
@@ -42,11 +42,14 @@ const useQuotes = (defaultState = null, quoteAPIs = []) => {
    */
 
   const fetchQuoteIndependently = () => {
-    quoteAPIs.forEach((apiPromise) => {
+    quoteAPIs.forEach((quoteAPI) => {
+      const apiPromise = quoteAPI.api || quoteAPI;
+      const parser = quoteAPI.parser || parseQuote;
+
       apiPromise().then((res) => {
         if (!res || res instanceof Error) return dispatch({ type: '❌', error: res });
 
-        const quote = parseQuote(res);
+        const quote = parser(res);
         return dispatch({ type: '👍', quote });
         // setQuotes(quotes ? [...quotes, quote] : [quote]);
       });
@@ -69,9 +72,7 @@ const useQuotes = (defaultState = null, quoteAPIs = []) => {
 };
 
 const Quotes = () => {
-  const quoteAPIs = [fetchQuote1, fetchQuote2, fetchQuote3];
-
-  const quotes = useQuotes(null, quoteAPIs);
+  const quotes = useQuotes(null, fetchQuoteAPIs);
 
   if (quotes === null) return <Spin style={{ paddingTop: '6px' }} />;
   if (!quotes.length) return null;
@@ -91,7 +92,7 @@ const Quotes = () => {
   const title = (
     <>
       {quotes.length > 1 ? 'Couple of ' : 'An '}
-      Insightful Quote
+      Insightful Thought
       {quotes.length > 1 ? 's ' : ' '}
       <emoji>💬</emoji>
     </>
@@ -99,7 +100,7 @@ const Quotes = () => {
 
   const quotesJSX = quotes.map((quote) => (
     <div
-      key={quote.text}
+      key={quote.id || quote.text}
       className={`theme-text-color mt-0_5 ${styles.container} ${quote.link ? 'cursor-pointer' : ''}`}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {... (quote.link && {
@@ -122,16 +123,14 @@ const Quotes = () => {
         {/* → */}
         —
         <span className={styles.author}>
-          {quote.author}
+          { quote.author || 'Anonymous' }
         </span>
 
         {
           quote.category
             ? (
               <span className={styles.category}>
-                &nbsp;(#
-                {quote.category}
-                )
+                ({ quote.category })
               </span>
             ) : null
         }
