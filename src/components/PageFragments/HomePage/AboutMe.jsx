@@ -26,7 +26,7 @@ const pageText = {
     <br/>
     <br/>
     
-    With an <strong>industry experience</strong> of <strong>4+ years</strong> in <strong>software development</strong> <emoji>💻</emoji> and <strong>1+ years</strong> in <strong>sales</strong> and <strong>marketing</strong>, I love to learn the processes, build and sell solutions. 
+    With an <strong>industry experience</strong> of <strong>5+ years</strong> in <strong>software development</strong> <emoji>💻</emoji> and <strong>1+ years</strong> in <strong>sales</strong> and <strong>marketing</strong>, I love to learn the processes, build and sell solutions. 
     
     <br/>
     
