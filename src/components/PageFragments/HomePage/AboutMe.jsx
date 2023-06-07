@@ -49,7 +49,7 @@ const pageText = {
     <br/>
     <br/>
 
-    My <strong>main highlight</strong> is that I have a strong passion for solving complex problems and a drive for continuous and quick <emoji>⚡️</emoji> learning, I consistently strive to stay updated with the latest industry trends <emoji>📈</emoji> and technologies. I have a proven track record of successfully delivering high-quality software solutions that meet and exceed client expectations <emoji>👍</emoji>. My strong analytical skills, attention to detail, and ability to work effectively in cross-functional teams make me a valuable asset in delivering innovative and scalable software solutions. 
+    My <strong>primary highlight</strong> is that I have a strong passion for solving complex problems and a drive for continuous and quick <emoji>⚡️</emoji> learning, I consistently strive to stay updated with the latest industry trends <emoji>📈</emoji> and technologies. I have a proven track record of successfully delivering high-quality software solutions that meet and exceed client expectations <emoji>👍</emoji>. My strong analytical skills, attention to detail, and ability to work effectively in cross-functional teams make me a valuable asset in delivering innovative and scalable software solutions. 
     
     <br/>
     <br/>
