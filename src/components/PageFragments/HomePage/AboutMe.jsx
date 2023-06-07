@@ -26,7 +26,7 @@ const pageText = {
     <br/>
     <br/>
 
-    With <strong>over 5 years</strong> of experience in the <strong>software development</strong> <emoji>🛠</emoji> field, along with an additional 1+ years in sales and marketing, I possess a profound understanding of the development lifecycle and adhere to industry standards. I thrive on acquiring knowledge about various processes, building innovative solutions, and effectively promoting them to the market.
+    With a <strong>Bachelor's Degree</strong> in Computer Science and <strong>over 5 years</strong> of experience in the <strong>software development</strong> <emoji>🛠</emoji> field, complemented by an additional 1+ years in sales and marketing, I possess a profound understanding of the development lifecycle and adhere to industry standards. I thrive on acquiring knowledge about various processes, building innovative solutions, and effectively promoting them to the market.
     
     <br/>
     <br/>
