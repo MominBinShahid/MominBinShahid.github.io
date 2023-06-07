@@ -31,7 +31,7 @@ const pageText = {
     <br/>
     <br/>
 
-    My expertise lies in creating and maintaining robust solutions utilizing stacks such as <strong>MERN</strong> <emoji>⚛</emoji>, <strong>MEVN</strong>, MEAN, and <strong>JAM</strong>. These ventures span a diverse range of domains, including Internet Privacy and Security, Enterprise Resource Planning (ERP), Human Resource Management Systems (HRMS), EdTech, and more.
+    My expertise lies in creating and maintaining robust solutions utilizing stacks such as <strong>MERN</strong> <emoji>⚛</emoji>, <strong>MEVN</strong>, MEAN, and <strong>JAM</strong>. These ventures span a diverse range of domains, including Internet Privacy and Security, Metadata Platforms, Enterprise Resource Planning (ERP), Human Resource Management Systems (HRMS), EdTech (E-learning platform for educational institutions), and Bioinformatics projects with research institutions, among others.
 
     <br/>
     <br/>
