@@ -21,7 +21,7 @@ const contactRoute = getRoute(pages.contact.path);
 const pageText = {
   paraOne: `
     My name is <span class="devName">Momin Bin Shahid</span>,
-    and I am a dedicated <strong>Full-Stack Software Engineer</strong> <emoji>👨‍💻</emoji> with a strong passion for software engineering and cutting-edge technologies, particularly in the domain of <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>
+    and I am a dedicated <strong>Full-Stack Software Engineer</strong> <emoji>👨‍💻</emoji> with a deep enthusiasm for software engineering and cutting-edge technologies, particularly in the domain of <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>
     
     <br/>
     <br/>
@@ -49,7 +49,12 @@ const pageText = {
     <br/>
     <br/>
 
-    I pride myself on being a quick learner <emoji>⚡️</emoji> and a self-taught <emoji>🧐</emoji> programmer. Although my previous experiences have primarily revolved around closed-source <emoji>🔒</emoji> projects, I am increasingly immersing myself in the world of open-source software <emoji>🍀</emoji>
+    My main highlight is that I have a strong passion for solving complex problems and a drive for continuous and quick <emoji>⚡️</emoji> learning, I consistently strive to stay updated with the latest industry trends <emoji>📈</emoji> and technologies. I have a proven track record of successfully delivering high-quality software solutions that meet and exceed client expectations <emoji>👍</emoji>. My strong analytical skills, attention to detail, and ability to work effectively in cross-functional teams make me a valuable asset in delivering innovative and scalable software solutions. 
+    
+    <br/>
+    <br/>
+
+    Although my previous experiences have primarily revolved around closed-source <emoji>🔒</emoji> projects, I am increasingly immersing myself in the world of open-source software <emoji>🍀</emoji>
     
     <br/>
     <br/>
