@@ -14,7 +14,8 @@ const config = require('./config');
 let plugins = require('./gatsby-config.plugins');
 
 /* while in development some plugins do create caching and other dev server problems
-so, we ignore such plugins in development (only use then in production) */
+so, we ignore such plugins in development (only use then in production) 
+ref - https://stackoverflow.com/a/74585209 */
 const pluginsToRemoveInNonProdEnv = ['gatsby-plugin-offline'];
 if (process.env.NODE_ENV !== 'production') {
   plugins = plugins.filter(
