@@ -153,9 +153,15 @@ module.exports = {
     'Software Engineer',
     'FullStack Developer',
     'Javascript',
+    'React.js',
+    'Node.js',
+    'Vue.js',
     'ReactJS',
     'NodeJS',
     'VueJS',
+    'React',
+    'Node',
+    'Vue',
     'Web',
     'Technology',
   ],
@@ -163,9 +169,9 @@ module.exports = {
   skills: [
     [
       { name: 'JavaScript', percentage: 92 },
-      { name: 'ReactJS', percentage: 88 },
-      { name: 'NodeJS', percentage: 85 },
-      { name: 'VueJS', percentage: 87 },
+      { name: 'React.js', percentage: 88 },
+      { name: 'Node.js', percentage: 85 },
+      { name: 'Vue.js', percentage: 87 },
     ],
     [
       { name: 'HTML', percentage: 84 },
