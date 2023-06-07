@@ -20,44 +20,46 @@ const contactRoute = getRoute(pages.contact.path);
 
 const pageText = {
   paraOne: `
-    My name is <span class="devName">Momin Bin Shahid</span>.
-    I'm a <strong>Full-Stack Developer</strong> <emoji>👨‍💻</emoji> passionate about software engineering and technologies, mainly <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>.
+    My name is <span class="devName">Momin Bin Shahid</span>,
+    and I am a dedicated <strong>Full-Stack Software Engineer</strong> <emoji>👨‍💻</emoji> with a deep enthusiasm for software engineering and cutting-edge technologies, particularly in the domain of <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>
     
     <br/>
     <br/>
-    
-    With an <strong>industry experience</strong> of <strong>5+ years</strong> in <strong>software development</strong> <emoji>💻</emoji> and <strong>1+ years</strong> in <strong>sales</strong> and <strong>marketing</strong>, I love to learn the processes, build and sell solutions. 
-    
-    <br/>
-    
-    Experienced in working with <strong>service-based</strong> and <strong>product-based</strong> companies as well as with clients from the U.S., Europe, Middle East and also other parts of the world usually building and maintaining solutions using <strong>MERN</strong>, <strong>MEVN</strong> and <strong>MEAN</strong> stacks.
+
+    With a <strong>Bachelor's Degree</strong> in Computer Science and <strong>over 5 years</strong> of experience in the <strong>software development</strong> <emoji>🛠</emoji> field, complemented by an additional 1+ years in sales and marketing, I possess a profound understanding of the development lifecycle and adhere to industry standards. I thrive on acquiring knowledge about various processes, building innovative solutions, and effectively promoting them to the market.
     
     <br/>
-    
-    My working experiences comprise diverse domains like <strong>Internet Privacy</strong> and <strong>Security</strong>, <strong>Enterprise Resource Planning (ERP)</strong>, <strong>Human Resource Management System (HRMS)</strong>, <strong>EdTech</strong> and more.
+    <br/>
+
+    My expertise lies in creating and maintaining robust solutions utilizing stacks such as <strong>MERN</strong> <emoji>⚛</emoji>, <strong>MEVN</strong>, MEAN, and <strong>JAM</strong>. These ventures span a diverse range of domains, including Internet Privacy and Security, Metadata Platforms, Enterprise Resource Planning (ERP), Human Resource Management Systems (HRMS), EdTech (E-learning platform for educational institutions), and Bioinformatics projects with research institutions, among others.
 
     <br/>
     <br/>
     
-    You will usually find me learning and experimenting with different technologies and concepts that encompass Web, Mobile and Desktop apps using <strong>JavaScript</strong> <emoji>🚀</emoji> and other exciting <emoji>🤩</emoji> technologies.
+    Throughout my career, I have had the privilege of working with both <strong>service-based</strong> and <strong>product-based</strong> companies, collaborating with clients hailing from the United States, Europe, the Middle East, and other regions across the globe. 
+
+    <br/>
+    <br/>
+    
+    My insatiable curiosity drives me to constantly explore and experiment with emerging technologies and concepts. I am always enthusiastic about developing Web <emoji>🌐</emoji>, Mobile <emoji>📱</emoji>, and Desktop <emoji>💻</emoji> applications using <strong>JavaScript</strong> <emoji>🚀</emoji> and other exciting technologies.
   `,
   paraTwo: `
-    Currently, at work, I mostly utilize JavaScript-based technologies <emoji>🛠</emoji> like <strong>VueJS, ReactJS, NodeJS, and more</strong>.
-    I also have hands-on experience working with <strong>On-Premise</strong> <emoji>⛰</emoji> and <strong>Cloud</strong> <emoji>☁️</emoji> infrastructures like <strong>AWS</strong>, <strong>Azure</strong>, <strong>Firebase</strong> (<strong>GCP</strong>).
-    I have built and maintained <strong>serverless</strong> and <strong>micro-services</strong>-based applications as well.
-    While developing and deploying apps, I do keep <strong>scalability</strong> in mind while utilizing industry <strong>best practices</strong>.
-    I utilize <strong>Docker</strong> <emoji>🐳</emoji> and <strong>Kubernetes</strong> <emoji>☸️</emoji> for development as well as for CI/CD.
+    In my recent experiences, I have extensively utilized JavaScript-based technologies such as <strong>React.js</strong> <emoji>⚛</emoji>, <strong>Vue.js</strong>, and <strong>Node.js</strong>. Furthermore, I have hands-on experience working with <strong>On-Premise</strong> <emoji>⛰️</emoji> and <strong>Cloud</strong> <emoji>☁️</emoji> infrastructures such as <strong>AWS</strong>, Azure, and <strong>Firebase</strong> (GCP). I have successfully built and maintained monolith, serverless (FaaS), and microservices-based applications, leveraging Docker <emoji>🐳</emoji> and Kubernetes to enhance efficiency, scalability, and portability while ensuring seamless deployment (CI/CD) and management.
     
     <br/>
     <br/>
 
-    I'm always a quick learner <emoji>⚡️</emoji> and a self-taught <emoji>🧐</emoji> programmer.
-    As of now, I have only <strong>worked on closed-source</strong> <emoji>🔒</emoji> projects but lately, I am getting into the <strong>open-source software</strong> <emoji>🍀</emoji> as well.
-
-    <br/>
-    <br/>
+    My <strong>main highlight</strong> is that I have a strong passion for solving complex problems and a drive for continuous and quick <emoji>⚡️</emoji> learning, I consistently strive to stay updated with the latest industry trends <emoji>📈</emoji> and technologies. I have a proven track record of successfully delivering high-quality software solutions that meet and exceed client expectations <emoji>👍</emoji>. My strong analytical skills, attention to detail, and ability to work effectively in cross-functional teams make me a valuable asset in delivering innovative and scalable software solutions. 
     
-    Let's get in touch <emoji>🤙</emoji> and feel free to reach out for any opportunities or project collaboration <emoji>😇</emoji> or just to say hi <emoji>🙋‍♂️</emoji>
+    <br/>
+    <br/>
+
+    Although my previous experiences have primarily revolved around closed-source <emoji>🔒</emoji> projects, I am increasingly immersing myself in the world of open-source software <emoji>🍀</emoji>
+    
+    <br/>
+    <br/>
+
+    Please feel free to reach out to me for any opportunities or potential collaborations <emoji>🤝</emoji> or just to say hi <emoji>🙋‍♂️</emoji>. I am excited to connect and explore how we can work together. Let's get in touch <emoji>🤙</emoji>
   `,
 };
 
