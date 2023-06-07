@@ -27,11 +27,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Using Node.js
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: 14.x
@@ -71,7 +71,7 @@ jobs:
       # Deploy to Github Pages (defaults branch is `gh-pages`, and folder is `./public`)
       # for first deployment follow: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-first-deployment-with-github_token
       - name: GitHub Pages action
-        uses: peaceiris/actions-gh-pages@v3.7.3
+        uses: peaceiris/actions-gh-pages@v3
         with:
           # Set a generated GITHUB_TOKEN for pushing to the remote branch.
           github_token: ${{ secrets.GITHUB_TOKEN }}
