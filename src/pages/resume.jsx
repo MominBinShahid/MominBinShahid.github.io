@@ -110,7 +110,7 @@ export default class Resume extends Component {
               <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
                 <Col>
                   <Alert
-                    message="In Preview Mode"
+                    message="In View Only Mode"
                     type="info"
                     showIcon
                     action={(
