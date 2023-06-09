@@ -30,9 +30,9 @@ module.exports = {
   contactFormUrl: process.env.CONTACT_FORM_ENDPOINT,
   googleAnalyticTrackingId: process.env.GA_TRACKING_ID || '',
 
-  resumeForWeb: '../Momin_Bin_Shahid.pdf',
-  resumeDownloadLink: '../Momin_Bin_Shahid.pdf',
-  resumePrintableDownloadLink: '../Momin_Bin_Shahid-For_Print_Only.pdf',
+  resumeForWeb: '../MominBinShahid.pdf',
+  resumeDownloadLink: '../MominBinShahid.pdf',
+  resumePrintableDownloadLink: '../MominBinShahid-ForPrintOnly.pdf',
 
   pages: {
     // home: '/',
