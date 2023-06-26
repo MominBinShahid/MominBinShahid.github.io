@@ -49,7 +49,11 @@
                 background-color: #E9EDF0;
                 color: @text-color;
                 text-align: center;
+                font-family: monospace;
                 z-index: 1; /* to make this above below tile */
+                a:hover {
+                    font-weight: bolder;
+                }
             }
             .badgeGrayDescText {
                 z-index: 0; /* to make this below above tile */
@@ -57,6 +61,11 @@
                 border-radius: 0rem 0rem 1rem 1rem;
                 background-color: #f5f5f5;
                 padding: 0.2rem 0.7rem 0.3rem;
+                span {
+                    // font-family: initial;
+                    margin-right: 5px;
+                }
+                // can comment this section as job title and company name co-aligns itself  
                 @media screen and (max-width:767px){
                     border-radius: 0rem 1rem 1rem 0rem;
                     padding: 0.1rem 0.7rem 0.15rem;
