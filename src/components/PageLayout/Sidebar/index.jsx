@@ -25,13 +25,11 @@ const DomContent = () => (
         </h2>
       </div>
       <div className={`${style.badge} ${style.badgeGray}`}>
-        Senior Software Engineer
+        Senior Frontend Engineer
       </div>
       <div className={`${style.badge} ${style.badgeGray} ${style.badgeGrayDescText}`}>
         <span>@</span>
-        <a href="https://www.brandver.se/" target="_blank" rel="noopener noreferrer">Brandverse</a>
-        &nbsp;•&nbsp;
-        <a href="https://www.getchikoo.com/" target="_blank" rel="noopener noreferrer">Chikoo</a>
+        <a href="https://www.sastaticket.pk/" target="_blank" rel="noopener noreferrer">Sastaticket.pk</a>
       </div>
       <div className="centerAlign box">
         <Socials useSidebar />
