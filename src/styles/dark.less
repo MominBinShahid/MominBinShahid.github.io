@@ -6,7 +6,7 @@
 .invertDarkMode() {
   /*
     100% invert filter here is intentional.
-    Reason: to give a sight vibrance in dark mode
+    Reason: to give a slight vibrance in dark mode
   */
   -webkit-filter: invert(100%) hue-rotate(180deg) !important;
   filter: invert(100%) hue-rotate(180deg) !important;
@@ -33,9 +33,9 @@
   emoji, // for emojis in markdown
   .invert // use better word then invert
   // html // will have to test
-  // input, textarea // all forms field should be included here
+  // input, textarea // TODO: all forms field should be included here
   {
-    @rules()
+    @rules();
   }
 }
 
@@ -44,7 +44,8 @@ body {
   background: @white-bg;
 
   // removing transition from dark-mode, only because of the negative effect on non-filter elements
-  // .applyTransitions()
+  // FIXME: find a way not to effect elements like emojis, images and others
+  // .applyTransitions();
 }
 
 // html.dark
@@ -93,7 +94,7 @@ body.dark {
    * BUT it is an issue for now, so as a hot-fix
    * I am removing the `position: fixed` effect from this Affix
    */
-   .ant-affix {
+  .ant-affix {
     position: absolute !important;
   }
 }

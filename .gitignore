@@ -60,8 +60,10 @@ public
 
 # Mac files
 .DS_Store
+Icon?
 
 # Yarn
+.yarn
 yarn-error.log
 .pnp/
 .pnp.js

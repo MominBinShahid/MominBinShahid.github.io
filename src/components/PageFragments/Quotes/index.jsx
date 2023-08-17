@@ -130,7 +130,9 @@ const Quotes = () => {
           quote.category
             ? (
               <span className={styles.category}>
-                ({ quote.category })
+                (
+                { quote.category }
+                )
               </span>
             ) : null
         }

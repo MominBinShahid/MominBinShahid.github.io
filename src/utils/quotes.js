@@ -10,76 +10,82 @@
 // https://api.adviceslip.com/advice -> https://api.adviceslip.com/
 
 const quotableAPI = [
-  "https://api.quotable.io/quotes/random",
-  quote => {
-    const { _id: id, author, content: text, tags } = quote && quote[0]
-    const category = tags.join(", ")
+  'https://api.quotable.io/quotes/random',
+  (quote) => {
+    const {
+      _id: id, author, content: text, tags,
+    } = quote && quote[0];
+    const category = tags.join(', ');
     return {
       id,
       author,
       text,
       category,
-    }
+    };
   },
-]
+];
 
 const dummyJsonAPI = [
-  "https://dummyjson.com/quotes/random",
-  quote => {
-    const { id, author, quote: text } = quote
-    return { id, author, text }
+  'https://dummyjson.com/quotes/random',
+  (quote) => {
+    const { id, author, quote: text } = quote;
+    return { id, author, text };
   },
-]
+];
 
 // FIXME: CORS issue
+// eslint-disable-next-line no-unused-vars
 const favqsAPI = [
-  "https://favqs.com/api/qotd",
-  quote => {
+  'https://favqs.com/api/qotd',
+  (quote) => {
     const {
-      quote: { author, body: text, id, tags, url: link },
-    } = quote
-    const category = tags.join(", ")
+      quote: {
+        author, body: text, id, tags, url: link,
+      },
+    } = quote;
+    const category = tags.join(', ');
     return {
       id,
       author,
       text,
       category,
       link,
-    }
+    };
   },
   {
-    mode: "no-cors",
+    mode: 'no-cors',
   },
-]
+];
 
 const stoicAPI = [
-  "https://api.themotivate365.com/stoic-quote",
-  quote => {
-    const { quote: text, author } = quote
-    const category = "Stoic"
-    return { author, text, category }
+  'https://api.themotivate365.com/stoic-quote',
+  (quote) => {
+    const { quote: text, author } = quote;
+    const category = 'Stoic';
+    return { author, text, category };
   },
-]
+];
 
 // FIXME: CORS issue
+// eslint-disable-next-line no-unused-vars
 const affirmationAPI = [
-  "https://www.affirmations.dev/",
-  quote => {
-    const { affirmation: text } = quote
-    return { text }
+  'https://www.affirmations.dev/',
+  (quote) => {
+    const { affirmation: text } = quote;
+    return { text };
   },
-]
+];
 
 const adviceSlipAPI = [
-  "https://api.adviceslip.com/advice",
-  quote => {
+  'https://api.adviceslip.com/advice',
+  (quote) => {
     const {
       slip: { advice: text, id },
-    } = quote
-    const category = "Advice"
-    return { id, text, category }
+    } = quote;
+    const category = 'Advice';
+    return { id, text, category };
   },
-]
+];
 
 module.exports = [
   quotableAPI,
@@ -88,4 +94,4 @@ module.exports = [
   stoicAPI,
   // affirmationAPI,
   adviceSlipAPI,
-]
+];

@@ -8,8 +8,7 @@ import SEO from '../../components/Seo';
 import Comment from '../../components/Comment';
 import Config from '../../../config';
 import Utils from '../../utils/pageUtils';
-import { removeTagsFromBlogContent } from '../../utils/stripTags';
-
+import { useEmojiTag } from '../../utils/stripTags';
 import 'prismjs/themes/prism-solarizedlight.css';
 import './highlight-syntax.less';
 import style from './post.module.less';
@@ -22,39 +21,44 @@ const Post = ({ data }) => {
     title, cover: { childImageSharp: { fluid } }, excerpt, path,
   } = frontmatter;
 
+  const reHtml = useEmojiTag(html);
+  const reTitle = useEmojiTag(title);
+  const reExcerpt = useEmojiTag(excerpt);
+
   const canonicalUrl = Utils.resolvePageUrl(
     Config.siteUrl,
     Config.pathPrefix,
     path,
   );
+
   return (
     <Layout className="outerPadding">
       <Layout className="container">
         <SEO
-          title={removeTagsFromBlogContent(title)}
-          description={removeTagsFromBlogContent(excerpt)}
+          title={reTitle}
+          description={reExcerpt}
           path={path}
           keywords={['Momin Blog', 'Momin Bin Shahid Blog', "Momin's Blog", "Momin Bin Shahid's Blog", 'Momin writes', 'Momin Bin Shahid writes', ...keywords]}
         />
         <Header />
         <SidebarWrapper>
           <div className="marginTopTitle">
-            <h1 dangerouslySetInnerHTML={{ __html: title }} />
+            <h1 dangerouslySetInnerHTML={{ __html: reTitle }} />
             <div className={style.bannerImgContainer}>
               <Img
                 className={style.bannerImg}
                 fluid={fluid}
-                title={removeTagsFromBlogContent(excerpt)}
-                alt={removeTagsFromBlogContent(title)}
+                title={reExcerpt}
+                alt={reTitle}
               />
             </div>
-            <article className={style.blogArticle} dangerouslySetInnerHTML={{ __html: html }} />
+            <article className={style.blogArticle} dangerouslySetInnerHTML={{ __html: reHtml }} />
             {
               Config.disqusScript
               && (
                 <Comment
                   pageCanonicalUrl={canonicalUrl}
-                  pageId={removeTagsFromBlogContent(title)}
+                  pageId={reTitle}
                 />
               )
             }

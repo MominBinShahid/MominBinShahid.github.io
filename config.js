@@ -152,6 +152,8 @@ module.exports = {
     'Momin',
     'Software Engineer',
     'FullStack Developer',
+    'Frontend Engineer',
+    'Frontend Developer',
     'Javascript',
     'React.js',
     'Node.js',

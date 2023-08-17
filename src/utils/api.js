@@ -5,8 +5,8 @@ const quotes = require('./quotes');
 const handleError = (reason) => console.error('Can not fetch quote for you right now, try again in a while 😔', { reason }) || reason;
 
 const fetchQuoteAPIs = quotes.map((quote) => {
-  const createFetch = (...fetchParams) =>
-    () => fetch(...fetchParams).then((res) => res.json()).catch((e) => handleError(e));
+  const createFetch = (...fetchParams) => () => fetch(...fetchParams)
+    .then((res) => res.json()).catch((e) => handleError(e));
 
   if (typeof quote === 'string') {
     return createFetch(quote);

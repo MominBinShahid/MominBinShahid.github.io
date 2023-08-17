@@ -79,7 +79,7 @@ const AboutMe = () => {
             About Me
             {' '}
             <Link to={contactRoute}>
-              <emoji className="heyAnimation">👋</emoji>
+              <emoji className="heyAnimation font-size2_5">👋</emoji>
             </Link>
           </h1>
           {/*

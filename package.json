@@ -57,6 +57,7 @@
   },
   "dependencies": {
     "antd": "^4.0.1",
+    "emoji-regex": "^10.2.1",
     "font-awesome": "^4.7.0",
     "gatsby": "^2.29.2",
     "gatsby-image": "^2.3.1",
@@ -98,5 +99,8 @@
     "gatsby-plugin-eslint-v2": "^2.0.0-beta.0",
     "gh-pages": "^3.2.0",
     "prettier": "^1.19.1"
+  },
+  "volta": {
+    "node": "14.21.3"
   }
 }

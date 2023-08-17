@@ -1,3 +1,8 @@
+import { useMemo } from 'react';
+import emojiRegex from 'emoji-regex';
+
+const regexForEmoji = emojiRegex();
+
 export const stripTags = (ipStr) => {
   let str = ipStr;
   if ((str === null) || (str === '')) {
@@ -21,3 +26,8 @@ export const removeTagsFromBlogContent = (content) => {
   const cleansedString = content.replace(removeEmojiTagsRegex, '');
   return cleansedString;
 };
+
+export const useEmojiTag = (string) => useMemo(() => {
+  const groupRegex = new RegExp(`(${regexForEmoji.source})`, 'g');
+  return string.replace(groupRegex, '<emoji>$1</emoji>');
+}, [string]);

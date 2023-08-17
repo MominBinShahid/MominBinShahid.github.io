@@ -31,8 +31,9 @@ function SEO({
   translations,
   meta,
 }) {
-  const siteTitleWithEmoji = `${Config.siteTitle} 👨‍💻`
-  const titleTemplate = path ? `%s | ${siteTitleWithEmoji}` : siteTitleWithEmoji
+  const siteTitleWithEmoji = `${Config.siteTitle} 👨‍💻`;
+  const titleTemplate = path ? `%s | ${siteTitleWithEmoji}` : siteTitleWithEmoji;
+
   return (
     <StaticQuery
       query={detailsQuery}
