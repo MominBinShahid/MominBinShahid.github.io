@@ -9,8 +9,8 @@ cover: ./flexbox-css.jpg
 excerpt: Many a time I noticed that people find it very difficult to align content to the center either vertically or horizontally using CSS. So let's see few ways in how you can align content with css.  
 ---
 
-Many a time I noticed that people find it very difficult to align content to the center either vertically or horizontally using CSS <span class="invert">😐</span>.
-So I decided to write a few ways of aligning content to the center using CSS 😃 CSS <emoji>😃</emoji>.
+Many a time I noticed that people find it very difficult to align content to the center either vertically or horizontally using CSS 😐.
+So I decided to write a few ways of aligning content to the center using CSS 😃.
 
 ### Center aligning text in CSS.
 

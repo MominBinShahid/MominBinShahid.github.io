@@ -1,12 +1,12 @@
 ---
 published: false
 
-title: "Hello World - Rolwin's first blog <emoji>😇</emoji>"
+title: "Hello World - Rolwin's first blog 😇"
 path: blog/hello-world-rolwins-first-blog
 tags: [javascript, html,css]
 cover: ./rolwin.jpg
 date: 2018-12-20
-excerpt: Blogging and writing about tech stacks <emoji>🕸️</emoji> is always been my thing. I like to experiment with different technologies and write my views on them. Web technologies has always been my passion. Check my blog for codebits on various web technologies 🍔.
+excerpt: Blogging and writing about tech stacks 🕸️ is always been my thing. I like to experiment with different technologies and write my views on them. Web technologies has always been my passion. Check my blog for codebits on various web technologies 🍔.
 ---
 
 Hello World 🌎 - I would like to talk 🔈 about my self in this article. Let's start this journey together. My name is Rolwin and I'm a full-stack web developer 🕸️. I have been an opensource contributor for a very long time since 2016. Currently I'm a part of Gatsby organization contributing to [Gatsby.js](https://www.gatsbyjs.org/).

@@ -1,6 +1,9 @@
 .enableDarkMode() {
-  -webkit-filter: invert(95%) hue-rotate(180deg) !important;
-  filter: invert(95%) hue-rotate(180deg) !important;
+  // -webkit-filter: invert(95%) hue-rotate(180deg) !important;
+  // filter: invert(95%) hue-rotate(180deg) !important;
+
+  -webkit-filter: invert(92%) hue-rotate(180deg) !important;
+  filter: invert(92%) hue-rotate(180deg) !important;
 }
 
 .invertDarkMode() {
@@ -36,6 +39,14 @@
   // input, textarea // TODO: all forms field should be included here
   {
     @rules();
+  }
+
+  // but if emoji is inside code block no need to make a negative of it
+  .gatsby-highlight {
+    emoji {
+      -webkit-filter: unset !important;
+      filter: unset !important;
+    }
   }
 }
 

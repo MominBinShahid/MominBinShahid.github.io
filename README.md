@@ -28,11 +28,13 @@ For more details: visit [this starter on gatsby.js site](https://www.gatsbyjs.co
 With all these above, I would also like to mention ✍️ and show my eternal gratitude 🙇 to these awesome techs such as [**`Canva`**](https://canva.com) for stupendous resume, [**`icon8`**](https://icons8.com/) for astounding icons, [**`fontawesome`**](https://fontawesome.com/v4.7/icons/) for incredible icons, even wanted to mentioned this subtle button [effect](https://www.fabriziovanmarciano.com/button-styles/#:~:text=this%20button%20below.-,Button%20E%20Preview,-ADD%20CALL%20TO) and definitely [**`Github`**](https://github.com) for everything ❤️
 
 ## Setup
+
 Follow [docs/setup.md](docs/setup.md) to setup for development
 
 ## Notes
 
-\* Repo contains the code for personal website <br/> 
+\* Repo contains the code for personal website
+<br/>
 † Opinionated statement based on the use-case
 
 ---
