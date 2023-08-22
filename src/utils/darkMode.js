@@ -5,21 +5,32 @@ const darkModeEnum = {
   DARK: 'dark',
 };
 
-const localStorageItemName = 'theme';
+// const localStorageItemName = 'theme';
 const customEventName = 'toggleTheme';
 
 // Is App In Dark Mode
 const isInDarkMode = () => {
   if (!isBrowser) return false;
 
-  const currentTheme = window.localStorage.getItem(localStorageItemName);
+  // eslint-disable-next-line no-underscore-dangle
+  const currentTheme = window.__theme;
+
+  // let currentTheme = window.localStorage.getItem(localStorageItemName);
+
+  // if (!currentTheme) {
+  //   const isDarkInBodyClass = document.body.className.includes(darkModeEnum.DARK);
+  //   if (isDarkInBodyClass) {
+  //     window.localStorage.setItem(localStorageItemName, darkModeEnum.DARK);
+  //     currentTheme = darkModeEnum.DARK;
+  //   }
+  // }
+
   return currentTheme === darkModeEnum.DARK;
 };
 
 const addDarkModeEventListener = (toggleFn) => {
   if (!isBrowser) return;
 
-  // eslint-disable-next-line no-undef
   document.body.addEventListener(customEventName, (e) => {
     const newTheme = e.detail.setTheme;
     toggleFn(newTheme);
@@ -29,13 +40,12 @@ const addDarkModeEventListener = (toggleFn) => {
 const toggleDarkMode = (theme) => {
   if (!isBrowser) return;
 
-  // eslint-disable-next-line no-undef
   const toggleThemeEvent = new CustomEvent(customEventName, {
     detail: {
       setTheme: theme,
     },
   });
-    // eslint-disable-next-line no-undef
+
   document.body.dispatchEvent(toggleThemeEvent);
 };
 

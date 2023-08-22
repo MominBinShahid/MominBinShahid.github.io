@@ -34,11 +34,16 @@
   [style^="background-image:"], // for tag card images
   iframe, // embedded content
   emoji, // for emojis in markdown
-  .invert // use better word then invert
-  // html // will have to test
-  // input, textarea // TODO: all forms field should be included here
+  .invert, // use better word then invert
+  input, textarea // more forms field can be added here
   {
     @rules();
+  }
+
+  // because if user type emoji it will be inverted
+  input, textarea {
+    background-color: @black-bg !important;
+    color: @theme-text !important;
   }
 
   // but if emoji is inside code block no need to make a negative of it
@@ -54,12 +59,17 @@ body {
   /* for extra space shown below about page (or any shorter page) */
   background: @white-bg;
 
+  input, textarea {
+    // AntD design applies this transition but it bothers users while changing the theme
+    // Can be fixed if transition is introduced
+    transition: background-color 0s, color 0s !important;
+  }
+
   // removing transition from dark-mode, only because of the negative effect on non-filter elements
   // FIXME: find a way not to effect elements like emojis, images and others
   // .applyTransitions();
 }
 
-// html.dark
 body.dark {
   // below code makes text-seeing harder
   // -webkit-font-smoothing: antialiased;

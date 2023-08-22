@@ -3,81 +3,82 @@ import {
 } from 'antd';
 import React, { useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { FrownOutlined } from '@ant-design/icons';
+// import { FrownOutlined } from '@ant-design/icons';
 import Config from '../../../../config';
-import { debounce } from '../../../utils/common';
-import { isInDarkMode } from '../../../utils/darkMode';
 import style from './contact.module.less';
+// import { debounce } from '../../../utils/common';
+// import { isInDarkMode } from '../../../utils/darkMode';
 
-const showInvertedEmojiWarning = () => {
-  const description = (
-    <>
-      You caught me there
-      {' '}
-      <emoji>🙌</emoji>
-      <br />
-      Can you ignore these inverted emojis for now
-      {' '}
-      <emoji>🙏</emoji>
-      {' '}
-      But do send them to me as these are only appearing like this here
-      <div style={{ marginTop: '5px', marginBottom: '5px' }}>
-        Want to know the reason?
-        {' '}
-        <emoji>🤔</emoji>
-        <br />
-        It&apos;s because of a particular implementation of dark mode,
-        which is done by using CSS filters. Other emojis are looking okay
-        (i.e. looking like this
-        {' '}
-        <emoji>🤪</emoji>
-        {' '}
-        and not like this 🤪)
-        because specific CSS is applied to those emojis using a
-        special wrapped tag to fix the color inversion but can not apply
-        those rules to a specific text inside a textarea or input fields
-      </div>
-      If you wanted to discuss this further (or anything else) do reach out
-      {' '}
-      <emoji>🤙</emoji>
-    </>
-  );
-  notification.open({
-    message: (
-      <>
-        Oops
-        {' '}
-        <emoji>😢</emoji>
-        {' '}
-        have you noticed something wrong!?
-      </>
-    ),
-    description,
-    icon: <FrownOutlined style={{ color: 'crimson' }} />,
-    duration: 0,
-  });
-};
+// const showInvertedEmojiWarning = () => {
+//   const description = (
+//     <>
+//       You caught me there
+//       {' '}
+//       <emoji>🙌</emoji>
+//       <br />
+//       Can you ignore these inverted emojis for now
+//       {' '}
+//       <emoji>🙏</emoji>
+//       {' '}
+//       But do send them to me as these are only appearing like this here
+//       <div style={{ marginTop: '5px', marginBottom: '5px' }}>
+//         Want to know the reason?
+//         {' '}
+//         <emoji>🤔</emoji>
+//         <br />
+//         It&apos;s because of a particular implementation of dark mode,
+//         which is done by using CSS filters. Other emojis are looking okay
+//         (i.e. looking like this
+//         {' '}
+//         <emoji>🤪</emoji>
+//         {' '}
+//         and not like this 🤪)
+//         because specific CSS is applied to those emojis using a
+//         special wrapped tag to fix the color inversion but can not apply
+//         those rules to a specific text inside a textarea or input fields
+//       </div>
+//       If you wanted to discuss this further (or anything else) do reach out
+//       {' '}
+//       <emoji>🤙</emoji>
+//     </>
+//   );
+//   notification.open({
+//     message: (
+//       <>
+//         Oops
+//         {' '}
+//         <emoji>😢</emoji>
+//         {' '}
+//         have you noticed something wrong!?
+//       </>
+//     ),
+//     description,
+//     icon: <FrownOutlined style={{ color: 'crimson' }} />,
+//     duration: 0,
+//   });
+// };
 
-let IsInvertedEmojiWarningAlreadyShowed = false;
-const checkForInvertedEmoji = (changedValues) => {
-  // console.count('checkForInvertedEmoji');
+// FIXME: this is fixed please remove this implementation
+// let IsInvertedEmojiWarningAlreadyShowed = false;
+// const checkForInvertedEmoji = (changedValues) => {
+//   // console.count('checkForInvertedEmoji');
 
-  // if its not dark mode, then no need to show the warning
-  if (!isInDarkMode() || IsInvertedEmojiWarningAlreadyShowed) return;
+//   // if its not dark mode, then no need to show the warning
+//   if (!isInDarkMode() || IsInvertedEmojiWarningAlreadyShowed) return;
 
-  Object.keys(changedValues).forEach((fieldKey) => {
-    const fieldValue = changedValues[fieldKey];
+//   Object.keys(changedValues).forEach((fieldKey) => {
+//     const fieldValue = changedValues[fieldKey];
 
-    const emojiRegex = /([\p{Emoji}\u200d]+)/gu;
-    const isEmojiUsed = emojiRegex.test(fieldValue);
+//     const emojiRegex = /([\p{Emoji}\u200d]+)/gu;
+//     const isEmojiUsed = emojiRegex.test(fieldValue);
 
-    if (!isEmojiUsed) return;
+//     if (!isEmojiUsed) return;
 
-    IsInvertedEmojiWarningAlreadyShowed = true;
-    showInvertedEmojiWarning();
-  });
-};
-const debouncedCheckForInvertedEmoji = debounce(checkForInvertedEmoji, 500);
+//     IsInvertedEmojiWarningAlreadyShowed = true;
+//     showInvertedEmojiWarning();
+//   });
+// };
+// const debouncedCheckForInvertedEmoji = debounce(checkForInvertedEmoji, 500);
 
 const openNotification = () => {
   const description = (
@@ -182,14 +183,44 @@ export default () => {
       });
   };
 
-  const onValuesChange = (changedValues) => {
-    // console.count('onValuesChange');
-    debouncedCheckForInvertedEmoji(changedValues);
+  // const onValuesChange = (changedValues) => {
+  //   // debouncedCheckForInvertedEmoji(changedValues);
+  // };
+
+  const onFinishFailed = (errorInfo) => {
+    const invalidFields = errorInfo.errorFields.map((errorField) => errorField.name[0]);
+    const invalidFieldsString = invalidFields.join(', ');
+    message.error(
+      <>
+        There
+        {' '}
+        {invalidFields.length > 1 ? 'are' : 'is'}
+        {' '}
+        {invalidFields.length > 1 ? invalidFields.length : 'an'}
+        {' '}
+        {invalidFields.length > 1 ? 'errors' : 'error'}
+        {' '}
+        in this form that require your attention
+        <br />
+        {invalidFields.length > 1 ? 'Fields' : 'Field'}
+        :
+        {' '}
+        {invalidFieldsString}
+      </>,
+    );
   };
 
   return (
     <Col sm={24} md={24} lg={12} className="widthFull">
-      <Form form={form} name="nest-messages" validateMessages={validateMessages} onFinish={onFinish} onValuesChange={onValuesChange} autoComplete="off">
+      <Form
+        form={form}
+        name="nest-messages"
+        validateMessages={validateMessages}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        // onValuesChange={onValuesChange}
+        autoComplete="off"
+      >
 
         <Form.Item name={['name']} rules={[{ required: true }]}>
           <Input aria-label="name" size="large" placeholder="Full Name *" />
@@ -206,7 +237,14 @@ export default () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" shape="round" size="large" htmlType="submit" className={`${style.submitButton}`} loading={isLoading}>
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            htmlType="submit"
+            className={`${style.submitButton}`}
+            loading={isLoading}
+          >
             SUBMIT
           </Button>
         </Form.Item>

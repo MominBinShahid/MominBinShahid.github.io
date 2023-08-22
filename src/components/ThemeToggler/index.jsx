@@ -19,9 +19,7 @@ export default () => (
       //   const isNotPortableDevice = screenWidth > 997;
       //   if (isNotPortableDevice) {
       //     if (isBrowser) {
-      //       // eslint-disable-next-line no-undef
       //       document.body.classList.remove(appliedTheme);
-      //       // eslint-disable-next-line no-undef
       //       document.documentElement.classList.toggle(appliedTheme);
       //     }
       //   }

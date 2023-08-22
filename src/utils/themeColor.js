@@ -8,7 +8,6 @@ const defaultThemeColor = '#333333';
 const getThemeColor = () => {
   if (!isBrowser) return null;
 
-  // eslint-disable-next-line no-undef
   const cs = window.getComputedStyle(document.documentElement);
   const themeColor = cs.getPropertyValue('--theme-color');
   return themeColor || defaultThemeColor;
@@ -17,7 +16,6 @@ const getThemeColor = () => {
 const setThemeColor = (themeColor = defaultThemeColor) => {
   if (!isBrowser) return;
 
-  // eslint-disable-next-line no-undef
   const root = document.querySelector(':root');
   root.style.setProperty('--theme-color', themeColor);
 };

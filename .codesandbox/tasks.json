@@ -39,7 +39,7 @@
       "command": "npm run start",
       "runAtStart": true,
       "preview": {
-        "port": 8000
+        "port": 8765
       }
     },
     "preserve": {

@@ -23,7 +23,6 @@ class Comments extends React.Component {
         this.page.identifier = pageId;
       };
       (function () {
-        // eslint-disable-next-line no-undef
         const d = document;
         const s = d.createElement('script');
         s.src = Config.disqusScript;
