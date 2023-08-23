@@ -24,12 +24,14 @@ const DomContent = () => (
           <span><emoji>👨‍💻</emoji></span>
         </h2>
       </div>
-      <div className={`${style.badge} ${style.badgeGray}`}>
-        Senior Frontend Engineer
-      </div>
-      <div className={`${style.badge} ${style.badgeGray} ${style.badgeGrayDescText}`}>
-        <span>@</span>
-        <a href="https://www.sastaticket.pk/" target="_blank" rel="noopener noreferrer">Sastaticket.pk</a>
+      <div className={style.designation}>
+        <div className={`${style.badge} ${style.badgeGray}`}>
+          Senior Frontend Engineer
+        </div>
+        <div className={`${style.badge} ${style.badgeGray} ${style.badgeGrayDescText}`}>
+          <span>@</span>
+          <a href="https://www.sastaticket.pk/" target="_blank" rel="noopener noreferrer">Sastaticket.pk</a>
+        </div>
       </div>
       <div className="centerAlign box">
         <Socials useSidebar />
