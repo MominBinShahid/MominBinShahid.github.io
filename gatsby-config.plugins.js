@@ -18,7 +18,8 @@ const gatsbyConfig = [
     options: {
       name: 'Momin Bin Shahid',
       short_name: 'Momin',
-      description: 'Momin Bin Shahid`s home on web. Momin Bin Shahid is a curious software engineer 👨‍💻, let`s connect 🤙 @MominBinShahid',
+      description:
+        'Momin Bin Shahid`s home on web. Momin Bin Shahid is a curious software engineer 👨‍💻, let`s connect 🤙 @MominBinShahid',
       start_url: '/',
       lang: 'en',
       background_color: '#EEEEEE', // '#304CFD', // @theme-color
@@ -36,6 +37,36 @@ const gatsbyConfig = [
     options: {
       name: 'markdown-pages',
       path: `${__dirname}/content`,
+    },
+  },
+  {
+    resolve: 'gatsby-omni-font-loader',
+    options: {
+      enableListener: true,
+      preconnect: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+      // preconnect: ['https://github.com/ryanoasis/nerd-fonts'],
+      web: [
+        // {
+        //   name: 'Fira Code',
+        //   file:
+        //     'https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap',
+        // },
+        // {
+        //   name: 'Roboto Mono',
+        //   file:
+        //     'https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap',
+        // },
+        {
+          name: 'JetBrains Mono',
+          file:
+            'https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap',
+        },
+        // {
+        //   name: 'Cascadia Code',
+        //   file:
+        //     'https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/CascadiaCode/Regular/CaskaydiaCoveNerdFont-Regular.ttf',
+        // },
+      ],
     },
   },
   {
@@ -69,7 +100,8 @@ const gatsbyConfig = [
     },
   },
   'gatsby-plugin-sitemap',
-  'gatsby-plugin-robots-txt', /* <- convert it version inside package.json from ^1.5.5 to ~1.5.5
+  'gatsby-plugin-robots-txt',
+  /* ^ <- convert it version inside package.json from ^1.5.5 to ~1.5.5
   because actual version installed (from package-lock.json) was 1.6.2 and after ~ is it 1.5.6
   Reason: in version 1.6 sitemap url in robots.txt set as ../sitemap/sitemap_index.xml
   and sitemap was actually generated as /sitemap.xml on root, not inside folder

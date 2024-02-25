@@ -85,6 +85,7 @@ export default () => {
         tabIndex="0"
         onClick={toggleMenu}
         onKeyDown={toggleMenu}
+        aria-label="menu"
       >
         <div className={`${style.hamburger} ${menu ? style.menuIcon : ''}`}>
           <div className={style.hamburgerText}>

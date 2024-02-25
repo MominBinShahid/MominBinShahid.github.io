@@ -5,6 +5,7 @@
  * ref: https://www.gatsbyjs.com/docs/debugging-html-builds/#how-to-check-if-window-is-defined
  */
 const isBrowser = typeof window !== 'undefined' || typeof document !== 'undefined';
+// const isBrowser = () => ![typeof window, typeof document].includes('undefined');
 
 /**
  * Check is it's portable device using the app

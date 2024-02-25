@@ -9,9 +9,24 @@ import Comment from '../../components/Comment';
 import Config from '../../../config';
 import Utils from '../../utils/pageUtils';
 import { useEmojiTag } from '../../utils/stripTags';
-import 'prismjs/themes/prism-solarizedlight.css';
-import './highlight-syntax.less';
 import style from './post.module.less';
+
+import 'prismjs/themes/prism-solarizedlight.min.css';
+// import 'prismjs/themes/prism-coy.css';
+// import 'prismjs/themes/prism-tomorrow.css';
+
+// import 'prismjs/themes/prism-vsc-dark-plus.css';
+
+// import 'prismjs/themes/prism-dark.css';
+// import 'prismjs/themes/prism-funky.css';
+// import 'prismjs/themes/prism-okaidia.css';
+// import 'prismjs/themes/prism-twilight.css';
+// import 'prismjs/themes/prism.css';
+
+import './highlight-syntax.less';
+
+// import "prismjs/components/prism-typescript";
+// import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
 const { keywords } = Config;
 

@@ -17,7 +17,6 @@
 
 .applyTransitions() {
   will-change: transform;
-  
   @transitionSpeed: 0.25s;
   @transitionTimingFunction: ease;
 
@@ -25,7 +24,8 @@
   transition: -webkit-filter @transitionSpeed @transitionTimingFunction;
   -o-transition: filter @transitionSpeed @transitionTimingFunction;
   transition: filter @transitionSpeed @transitionTimingFunction;
-  transition: filter @transitionSpeed @transitionTimingFunction, -webkit-filter @transitionSpeed @transitionTimingFunction;
+  transition: filter @transitionSpeed @transitionTimingFunction,
+    -webkit-filter @transitionSpeed @transitionTimingFunction;
 }
 
 .reapplyFilterToFixedNegative(@rules) {
@@ -35,13 +35,14 @@
   iframe, // embedded content
   emoji, // for emojis in markdown
   .invert, // use better word then invert
-  input, textarea // more forms field can be added here
-  {
+  input, textarea // more forms field can be added here 
+ {
     @rules();
   }
 
   // because if user type emoji it will be inverted
-  input, textarea {
+  input,
+  textarea {
     background-color: @black-bg !important;
     color: @theme-text !important;
   }
@@ -59,7 +60,8 @@ body {
   /* for extra space shown below about page (or any shorter page) */
   background: @white-bg;
 
-  input, textarea {
+  input,
+  textarea {
     // AntD design applies this transition but it bothers users while changing the theme
     // Can be fixed if transition is introduced
     transition: background-color 0s, color 0s !important;
@@ -78,11 +80,7 @@ body.dark {
   background: @black-bg;
 
   .enableDarkMode();
-  .reapplyFilterToFixedNegative(
-    {
-      .invertDarkMode();
-    }
-  );
+  .reapplyFilterToFixedNegative({.invertDarkMode() ;});
 
   /* 
     Test a white line below the screen after screen-up
@@ -114,8 +112,18 @@ body.dark {
    *
    * BUT it is an issue for now, so as a hot-fix
    * I am removing the `position: fixed` effect from this Affix
+   *
+   * THIS HAS BEEN FIXED - SEE `affix-fix-in-dark-mode` below
    */
   .ant-affix {
     position: absolute !important;
+  }
+  #affix-fix-in-dark-mode {
+    position: relative; /* Fallback */
+
+    position: -webkit-sticky; /* For older WebKit browsers */
+
+    position: sticky;
+    top: 0;
   }
 }

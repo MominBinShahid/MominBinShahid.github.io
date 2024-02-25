@@ -20,8 +20,10 @@ const DomContent = () => (
       <div className={`${style.boxName} centerAlign`}>
         <h2>
           <span>Momin </span>
-          <span className={`${style.unsetFontWeight}`}> Bin Shahid </span>
-          <span><emoji>👨‍💻</emoji></span>
+          <span className={`${style.unsetFontWeight}`}> Bin Shahid</span>
+          <span>
+            <emoji>👨‍💻</emoji>
+          </span>
         </h2>
       </div>
       <div className={style.designation}>
@@ -117,17 +119,25 @@ const DomContent = () => (
   </aside>
 );
 
+const AffixFixInDarkMode = ({ children }) => (
+  <div id="affix-fix-in-dark-mode">
+    <Affix offsetTop={0}>
+      {children}
+    </Affix>
+  </div>
+);
+
 const Sidebar = (props) => {
   const [width, height] = useWindowSize();
   const { children } = props;
   const { pathname } = globalHistory.location;
   let domContent = <DomContent />;
   // height was needed because the sidebar content is more than 750
-  if (width > 997 && height > 765) {
+  if (width > 767 /* 997 */ && height > 765) {
     domContent = (
-      <Affix offsetTop={0}>
+      <AffixFixInDarkMode>
         <DomContent />
-      </Affix>
+      </AffixFixInDarkMode>
     );
   }
   if (width < 768) {

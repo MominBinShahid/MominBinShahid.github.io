@@ -4,7 +4,8 @@
 @import './dark.less';
 
 body{
-  font-size: 15px;
+  // font-size: 15px;
+    font-family: @font-family;
 }
 h1, h2, h3, h4, h5, h6 {
     color: @text-color;
@@ -120,6 +121,8 @@ ul{
   }
 }
 .borderRadiusSection{
+  border-bottom-right-radius: 3rem;
+  
   @media screen and (max-width: 768px){
     border-radius: 3rem;
   }

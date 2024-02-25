@@ -8,8 +8,7 @@
         font-weight: 500;
         background-color: #657b83;
         white-space: inherit;
-        font-family: inherit
-        ;
+        font-family: inherit;
         color: #5b6ac4;
       }
 }
@@ -27,6 +26,15 @@
     background-color: rgba(27,31,35,.06) !important;
 }
 
+.gatsby-highlight-code-line {
+    background-color: #5a5959; // #feb;
+    display: block;
+    margin-right: -1em;
+    margin-left: -1em;
+    padding-right: 1em;
+    padding-left: 0.75em;
+    border-left: 0.25em solid #f99;
+}
 .gatsby-highlight {
     position: relative;
     &::before {
@@ -48,7 +56,7 @@
         background-color: rgb(40, 42, 54) !important;
         box-shadow: rgba(0, 0, 0, 0.55) 0px 6px 10px;
         margin-bottom:2rem;
-        font-family: Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace!important;
+        font-family: @font-family-code;
         code {
             font-family: inherit;
             line-height: 1.25em;
@@ -101,3 +109,5 @@
 .language-label-colors('javascript','JS', #efbb35);
 .language-label-colors('typescript','TS', #2b7489);
 .language-label-colors('php','php', #4F5D95);
+.language-label-colors('jsx', 'jsx', #4F5D95);
+.language-label-colors('react', 'react', #4F5D95);
