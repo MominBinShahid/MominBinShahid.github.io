@@ -1,267 +1,271 @@
 @import (reference) '../../../styles/index.less';
 
-.content{
-    border-radius: @border-radius-content;
-    margin: 0px;
-    min-height: 280px
+.content {
+  border-radius: @border-radius-content;
+  margin: 0px;
+  min-height: 280px;
 }
 
-.sidebarContent{
-    // background: #F5F8F9;
-    border-radius: @border-radius-full;
-    margin: 0px;
-    aside{
-        padding: @padding-margin-val;
-    
-        .profileAvatar{
-            background-image: url('../../../images/momin.jpg');
-            height: 230px;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius:  @border-radius-full;
-            @media screen and (max-width:767px){
-                max-width: 230px;
-                margin: auto;
-            }
-        }
-        .name{
-            margin-top:1.4rem;
-            h2{
-                font-size: 1.3rem;
-
-                font-weight: 200;
-                letter-spacing: 2px;
-                // word-spacing: -15px; // for fira code
-                word-spacing: -8px;
-                // white-space: nowrap; // because of this it's stuck as oneline for more smaller screens
-                text-align: center;
-                span {
-                    font-weight: 600;
-                    letter-spacing: 0px;
-                }
-                span emoji {
-                    padding-left: 0.5rem;
-                }
-            }
-            .designation {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            .badge {
-                font-size: .837rem;
-                font-weight: 400;
-                border-radius: 10rem;
-                padding: .4rem 1rem;
-            }
-            .badgeGray {
-                background-color: #E9EDF0;
-                color: @text-color;
-                text-align: center;
-                font-family: monospace;
-                a:hover {
-                    font-weight: bolder;
-                }
-            }
-            .badgeGrayDescText {
-                font-size: .8rem;
-                border-radius: 0rem 0rem 1rem 1rem;
-                background-color: #f5f5f5;
-                padding: 0.2rem 0.7rem 0.3rem;
-                span {
-                    font-family: sans-serif;
-                    margin-right: 5px;
-                    vertical-align: middle;
-                }
-            }
-            .boxName{
-                width: 100%;
-            }
-            ul{
-                list-style-type: none;
-                a{
-                    color: rgba(0, 0, 0, 0.65);
-                    width: 200px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-    
-                }
-            }
-            // this class .contactBlock is not applied see markup
-            .contactBlock {
-                color: @text-color;
-                font-size: .937rem;
-                padding-left: 0;
-                margin-bottom: 1.3rem;
-                @media screen and (max-width: 767px){
-                    max-width: 230px;
-                }
-            }
-            .contactBlockItem {
-                color: @text-color; // as above .class is not working so, have to apply the color here
-
-                display: -webkit-flex;
-                display: -ms-flexbox;
-                display: -moz-box;
-                display: flex;
-                -webkit-align-items: center;
-                -ms-flex-align: center;
-                align-items: center;
-
-                @media screen and ( max-width:767px ) {
-                    -webkit-box-pack: center;
-                    -ms-flex-pack: center;
-                    justify-content: center;
-                }
-
-                &:not(:last-of-type) {
-                    // these rules will apply to all the elements except the last one
-                    margin-bottom: .75rem;
-                }
-            }
-            .resumeDownload, .resumePrintableDownload {
-                margin-top: 0.5rem;
-                margin-bottom: 0.5rem;
-                text-align: center;
-                a{
-                    display: inline-block;
-                    border: none;
-                    background: @theme-color;
-                    color: #fff;
-                    font-weight: 200;
-                    padding: .9rem 1rem;
-                    text-transform: uppercase;
-                    border-radius: 28px;
-                    span {
-                        font-weight: 600;
-                    }
-
-                    -webkit-transition-property: color, font-weight, letter-spacing, background, -webkit-box-shadow;
-                            transition-property: color, font-weight, letter-spacing, background, -webkit-box-shadow;
-                         -o-transition-property: color, font-weight, letter-spacing, background, box-shadow;
-                            transition-property: color, font-weight, letter-spacing, background, box-shadow;
-                            transition-property: color, font-weight, letter-spacing, background, box-shadow, -webkit-box-shadow; 
-                    -webkit-transition-duration: 0.3s; 
-                        -o-transition-duration: 0.3s; 
-                            transition-duration: 0.3s; 
-                    -webkit-transition-timing-function: ease; 
-                         -o-transition-timing-function: ease; 
-                            transition-timing-function: ease; 
-
-                    &:hover {
-                        color: @theme-color;
-                        font-weight: 500;
-                        letter-spacing: 3px;
-                        background: none;
-                        -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-                        -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-                        box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-                        span {
-                            font-weight: 700;
-                        }
-                    }
-                }
-            }
-            .fixSidebarInfoIcons {
-                line-height: 1
-            }
-            .fixSidebarSmiley {
-                font-size: 1.3rem;
-            }
-        }
-    }
-    a{
-        color: rgba(0, 0, 0, 0.65);
-        &:hover{
-            color: rgba(0, 0, 0, 0.65);
-        }
-        .emailHider{
-            // font-size: 0.837rem;
-            // font-weight: 400 !important;
-            line-height: 1rem;
-            // font-style: italic;
-            &::before{
-                content: 'MominBinShahid';
-                // font-family: monospace;
-                // font-variant: small-caps;
-                // letter-spacing: 0.05rem;
-                display: block;
-                // font-style: normal;
-                // font-size: 1.15rem;
-            }
-            &::after{
-                content: 'gmail.com';
-                // font-family: cursive;
-                // font-style: normal;
-                // font-size: 0.75rem;
-            }
-        }
-        .phoneHider {
-            &::after{
-                content: '92 334 3526270';
-            }
-        }
-        .fixSideBarRefText {
-            color: rgba(0, 0, 0, 0.85);
-            
-            -webkit-text-decoration-color: rgb(99, 99, 99);
-                    text-decoration-color: rgb(99, 99, 99);
-            text-decoration-thickness: 0.1rem;
-            
-            // -webkit-transition: font-size 0.25s ease-out;
-            // -o-transition: font-size 0.25s ease-out;
-            // transition: font-size 0.25s ease-out;
-
-            &:hover {
-                text-decoration: underline;
-                // font-size: 1rem !important
-            }
-        }
-    }
-    .unsetFontWeight {
-        font-weight: unset !important; // sorry, have to fix this for now
-    }
-    .phoneEmoji {
-        position: relative;
-        top: 4px;
-    }
-    .whatsappWithPhone {
-        cursor: pointer;
-        padding: 4px 6px;
-        border-radius: 50%;
-        position: relative;
-        top: 3px;
-        font-size: 1.5rem;
-        color: #4AC959;
-
-        -webkit-transition-property: background-color, color;
-             -o-transition-property: background-color, color;
-                transition-property: background-color, color;
-        -webkit-transition-duration: 0.3s;
-             -o-transition-duration: 0.3s;
-                transition-duration: 0.3s;
-        &:hover {
-            background-color: #4AC959;
-            color: whitesmoke;
-        }
-    }
-}
-
-.background{
-    .whiteBg()
-}
-.boxContent{
+.sidebarContent {
+  // background: #F5F8F9;
+  border-radius: @border-radius-full;
+  margin: 0px;
+  aside {
     padding: @padding-margin-val;
-    padding-left: 0;
-    @media screen and (max-width: 767px){
-        padding: @padding-margin-val;
-        padding-top: 0;
+
+    .profileAvatar {
+      background-image: url('../../../images/momin.jpg');
+      height: 230px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: @border-radius-full;
+      @media screen and (max-width: 767px) {
+        max-width: 230px;
+        margin: auto;
+      }
     }
-    
+    .name {
+      margin-top: 1.4rem;
+      h2 {
+        font-size: 1.3rem;
+
+        font-weight: 200;
+        letter-spacing: 2px;
+        // word-spacing: -15px; // for fira code
+        word-spacing: -8px;
+        // white-space: nowrap; // because of this it's stuck as oneline for more smaller screens
+        text-align: center;
+        span {
+          font-weight: 600;
+          letter-spacing: 0px;
+        }
+        span emoji {
+          padding-left: 0.5rem;
+        }
+      }
+      .designation {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .badge {
+        font-size: 0.837rem;
+        font-weight: 400;
+        border-radius: 10rem;
+        padding: 0.4rem 1rem;
+      }
+      .badgeGray {
+        background-color: #e9edf0;
+        color: @text-color;
+        text-align: center;
+        // font-family: monospace;
+        a:hover {
+          font-weight: bolder;
+        }
+      }
+      .badgeGrayDescText {
+        font-size: 0.8rem;
+        border-radius: 0rem 0rem 1rem 1rem;
+        background-color: #f5f5f5;
+        padding: 0.2rem 0.7rem 0.3rem;
+        span {
+          // font-family: sans-serif;
+          margin-right: 5px;
+          vertical-align: middle;
+        }
+      }
+      .boxName {
+        width: 100%;
+      }
+      ul {
+        list-style-type: none;
+        a {
+          color: rgba(0, 0, 0, 0.65);
+          width: 200px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      // this class .contactBlock is not applied see markup
+      .contactBlock {
+        color: @text-color;
+        font-size: 0.937rem;
+        padding-left: 0;
+        margin-bottom: 1.3rem;
+        @media screen and (max-width: 767px) {
+          max-width: 230px;
+        }
+      }
+      .contactBlockItem {
+        color: @text-color; // as above .class is not working so, have to apply the color here
+
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: -moz-box;
+        display: flex;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+
+        @media screen and (max-width: 767px) {
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+        }
+
+        &:not(:last-of-type) {
+          // these rules will apply to all the elements except the last one
+          margin-bottom: 0.75rem;
+        }
+      }
+      .resumeDownload,
+      .resumePrintableDownload {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        a {
+          display: inline-block;
+          border: none;
+          background: @theme-color;
+          color: #fff;
+          font-weight: 200;
+          padding: 0.9rem 1rem;
+          text-transform: uppercase;
+          border-radius: 28px;
+          span {
+            font-weight: 600;
+          }
+
+          -webkit-transition-property: color, font-weight, letter-spacing,
+            background, -webkit-box-shadow;
+          transition-property: color, font-weight, letter-spacing, background,
+            -webkit-box-shadow;
+          -o-transition-property: color, font-weight, letter-spacing, background,
+            box-shadow;
+          transition-property: color, font-weight, letter-spacing, background,
+            box-shadow;
+          transition-property: color, font-weight, letter-spacing, background,
+            box-shadow, -webkit-box-shadow;
+          -webkit-transition-duration: 0.3s;
+          -o-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+          -webkit-transition-timing-function: ease;
+          -o-transition-timing-function: ease;
+          transition-timing-function: ease;
+
+          &:hover {
+            color: @theme-color;
+            font-weight: 500;
+            letter-spacing: 3px;
+            background: none;
+            -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+            -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+            box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+            span {
+              font-weight: 700;
+            }
+          }
+        }
+      }
+      .fixSidebarInfoIcons {
+        line-height: 1;
+      }
+      .fixSidebarSmiley {
+        font-size: 1.3rem;
+      }
+    }
+  }
+  a {
+    color: rgba(0, 0, 0, 0.65);
+    &:hover {
+      color: rgba(0, 0, 0, 0.65);
+    }
+    .emailHider {
+      // font-size: 0.837rem;
+      // font-weight: 400 !important;
+      line-height: 1rem;
+      // font-style: italic;
+      &::before {
+        content: 'MominBinShahid';
+        // font-family: monospace;
+        // font-variant: small-caps;
+        // letter-spacing: 0.05rem;
+        display: block;
+        // font-style: normal;
+        // font-size: 1.15rem;
+      }
+      &::after {
+        content: 'gmail.com';
+        // font-family: cursive;
+        // font-style: normal;
+        // font-size: 0.75rem;
+      }
+    }
+    .phoneHider {
+      &::after {
+        content: '92 334 3526270';
+      }
+    }
+    .fixSideBarRefText {
+      color: rgba(0, 0, 0, 0.85);
+
+      -webkit-text-decoration-color: rgb(99, 99, 99);
+      text-decoration-color: rgb(99, 99, 99);
+      text-decoration-thickness: 0.1rem;
+
+      // -webkit-transition: font-size 0.25s ease-out;
+      // -o-transition: font-size 0.25s ease-out;
+      // transition: font-size 0.25s ease-out;
+
+      &:hover {
+        text-decoration: underline;
+        // font-size: 1rem !important
+      }
+    }
+  }
+  .unsetFontWeight {
+    font-weight: unset !important; // sorry, have to fix this for now
+  }
+  .phoneEmoji {
+    position: relative;
+    top: 4px;
+  }
+  .whatsappWithPhone {
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 50%;
+    position: relative;
+    top: 3px;
+    font-size: 1.5rem;
+    color: #4ac959;
+
+    -webkit-transition-property: background-color, color;
+    -o-transition-property: background-color, color;
+    transition-property: background-color, color;
+    -webkit-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    &:hover {
+      background-color: #4ac959;
+      color: whitesmoke;
+    }
+  }
 }
 
-.sideBar404Radius{
-    border-radius: 3rem 0 3rem 3rem;
+.background {
+  .whiteBg();
+}
+.boxContent {
+  padding: @padding-margin-val;
+  padding-left: 0;
+  @media screen and (max-width: 767px) {
+    padding: @padding-margin-val;
+    padding-top: 0;
+  }
+}
+
+.sideBar404Radius {
+  border-radius: 3rem 0 3rem 3rem;
 }
