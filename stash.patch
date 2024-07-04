@@ -1,0 +1,343 @@
+diff --git a/config.js b/config.js
+index 69d4550..d4caf36 100644
+--- a/config.js
++++ b/config.js
+@@ -41,9 +41,9 @@ module.exports = {
+     // resume: 'resume',
+     // tag: 'tags',
+     home: { name: 'Home', path: '' },
++    blog: { name: 'Blog', path: 'blog' },
++    tag: { name: 'Tags', path: 'tags' },
+     contact: { name: 'Contact', path: 'contact' },
+-    blog: { name: 'Blog', path: 'blog', hide: true },
+-    tag: { name: 'Tags', path: 'tags', hide: true },
+     resume: { name: 'Resume', path: 'resume' },
+   },
+   social: {
+diff --git a/content/2018-12-20-Hello-World/index.md b/content/2018-12-20-Hello-World/index.md
+index 36a7d1b..f576d96 100644
+--- a/content/2018-12-20-Hello-World/index.md
++++ b/content/2018-12-20-Hello-World/index.md
+@@ -1,5 +1,5 @@
+ ---
+-published: false
++published: true
+ 
+ title: "Hello World - Rolwin's first blog 😇"
+ path: blog/hello-world-rolwins-first-blog
+diff --git "a/content/2019-01-06-react\342\200\223the-future-of-web-frontend/index.md" "b/content/2019-01-06-react\342\200\223the-future-of-web-frontend/index.md"
+index 0d7069c..dd709ac 100644
+--- "a/content/2019-01-06-react\342\200\223the-future-of-web-frontend/index.md"
++++ "b/content/2019-01-06-react\342\200\223the-future-of-web-frontend/index.md"
+@@ -1,5 +1,5 @@
+ ---
+-published: false
++published: true
+ 
+ title: React – The Future Of Web Frontend
+ tags: [reactjs, javascript, typescript, html, css ]
+diff --git "a/content/2019-01-07-Django\342\200\223the-widely-used-python-framework-for-web-development/index.md" "b/content/2019-01-07-Django\342\200\223the-widely-used-python-framework-for-web-development/index.md"
+index 118a1be..97fd5e6 100644
+--- "a/content/2019-01-07-Django\342\200\223the-widely-used-python-framework-for-web-development/index.md"
++++ "b/content/2019-01-07-Django\342\200\223the-widely-used-python-framework-for-web-development/index.md"
+@@ -1,5 +1,5 @@
+ ---
+-published: false
++published: true
+ 
+ title: Django – The widely used python framework for web development
+ tags: [python, html, css ]
+diff --git a/content/2020-04-01-how-to-build-your-own-compiler/index.md b/content/2020-04-01-how-to-build-your-own-compiler/index.md
+index 9266447..2c0f79c 100644
+--- a/content/2020-04-01-how-to-build-your-own-compiler/index.md
++++ b/content/2020-04-01-how-to-build-your-own-compiler/index.md
+@@ -1,5 +1,5 @@
+ ---
+-published: false
++published: true
+ 
+ title: How to build your own compiler ? ( The Worlds smallest compiler )
+ tags: [ javascript ]
+diff --git a/content/2020-04-08-why-I-migrated-my-website-from-worpress-to-gatsby/index.md b/content/2020-04-08-why-I-migrated-my-website-from-worpress-to-gatsby/index.md
+index 9db2fc1..6f1e412 100644
+--- a/content/2020-04-08-why-I-migrated-my-website-from-worpress-to-gatsby/index.md
++++ b/content/2020-04-08-why-I-migrated-my-website-from-worpress-to-gatsby/index.md
+@@ -1,5 +1,5 @@
+ ---
+-published: false
++published: true
+ 
+ title: Why I migrated my website from wordpress to gatsby? (gatsby vs wordpress)
+ tags: [ javascript, gatsby, typescript ]
+diff --git a/content/2020-04-20-promises-in-javascript/index.md b/content/2020-04-20-promises-in-javascript/index.md
+index 19e080d..8bda168 100644
+--- a/content/2020-04-20-promises-in-javascript/index.md
++++ b/content/2020-04-20-promises-in-javascript/index.md
+@@ -1,5 +1,5 @@
+ ---
+-published: false
++published: true
+ 
+ title: Working with promises in Javascript
+ tags: [ javascript, typescript, nodejs, reactjs ]
+diff --git a/content/2020-05-15-center-align-things-with-css/index.md b/content/2020-05-15-center-align-things-with-css/index.md
+index bfd01f8..33b7dc6 100644
+--- a/content/2020-05-15-center-align-things-with-css/index.md
++++ b/content/2020-05-15-center-align-things-with-css/index.md
+@@ -1,5 +1,5 @@
+ ---
+-published: false
++published: true
+ 
+ title: Center aligning content with CSS and flex-box
+ tags: [ html, css, reactjs ]
+diff --git a/content/2020-12-24-whats-new-in-react17/index.md b/content/2020-12-24-whats-new-in-react17/index.md
+index 23c08e3..7ea478c 100644
+--- a/content/2020-12-24-whats-new-in-react17/index.md
++++ b/content/2020-12-24-whats-new-in-react17/index.md
+@@ -1,5 +1,5 @@
+ ---
+-published: false
++published: true
+ 
+ title: What's new in React 17 ( No new features )
+ tags: [ reactjs ]
+@@ -13,10 +13,31 @@ On 20th October the new version of React was released which was a major release
+ 
+ ## Why no new features in React 17 ?
+ 
+-The new version of React doesn't add any new developer features to it rather it focuses on adding backward compatibility with old versions of react. React 17 will serve as the bridge between the older and upcoming versions of ReactJS. The team is working on the new features like concurrent mode but they are not a part of this release.
++The new version of React doesn't => ==> === add any new developer features to it rather it focuses on adding backward compatibility with old versions of react. React 17 will serve as the bridge between the older and upcoming versions of ReactJS. The team is working on the new features like concurrent mode but they are not a part of this release.
+ 
+ React 17 allows multiple versions of React to be embedded inside the DOM tree. This is one of the major benifits of React 17.
+ 
++*italic*
++
++***italic bold***
++
++**bold**
++
++<pre class="language-jsx" data-line=2>
++<code>
++const someValue = 'someValue'
++someMore();
++andMore();
++</code>
++</pre>
++
++[Duck Duck Go](https://duckduckgo.com)
++
++<script src="https://gist.github.com/MominBinShahid/481f5dad3d5f727edf353b5dacb92b1f.js"></script>
++<script src="https://gist.github.com/MominBinShahid/481f5dad3d5f727edf353b5dacb92b1f.js"></script>
++`gist:MominBinShahid/481f5dad3d5f727edf353b5dacb92b1f#testing-embedding-code.txt`
++<https://gist.github.com/MominBinShahid/481f5dad3d5f727edf353b5dacb92b1f>
++
+ ## Gradual React Upgrades
+ 
+ With React 17 you can do gradual React updates. You can update the entire app from the older version to the new version completely or part by part.
+@@ -31,17 +52,17 @@ In React we write a click event like:
+ 
+ ```javascript
+ 
+-    <button onClick={handleClick}>
++<button onClick={handleClick}>
+ 
+ ```
+ 
+ This event does not attach itself to the document node on which it is written rather it attaches itself to the document root in React 16 and previous versions of React. In React 17 the event is attached to the root dom container in which your tree is rendered. 
+ 
+ ```javascript
+-
+-    const rootNode = document.getElementById('root');
+-    ReactDOM.render(<App />, rootNode);
+-
++// highlight-next-line
++const rootNode = document.getElementById('root'); 
++ReactDOM.render(<App />, rootNode);
++=> ==> ===
+ ```
+ 
+ The below diagram shows us how the event progation works in React 16 vs React 17.
+@@ -56,7 +77,7 @@ This is why we can nest muliple versions of React in React 17.
+ 
+ With the new React 17 you don't need to import React while writing a React component.
+ 
+-```javascript
++```javascript{1-2}{numberLines: true}
+ 
+ const MyComponent = ()=> (
+     <div>"some text man"</div>
+diff --git a/gatsby-config.plugins.js b/gatsby-config.plugins.js
+index ef4f2c1..226a65c 100644
+--- a/gatsby-config.plugins.js
++++ b/gatsby-config.plugins.js
+@@ -46,11 +46,11 @@ const gatsbyConfig = [
+       preconnect: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+       // preconnect: ['https://github.com/ryanoasis/nerd-fonts'],
+       web: [
+-        // {
+-        //   name: 'Fira Code',
+-        //   file:
+-        //     'https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap',
+-        // },
++        {
++          name: 'Fira Code',
++          file:
++            'https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap',
++        },
+         // {
+         //   name: 'Roboto Mono',
+         //   file:
+diff --git a/src/components/PageFragments/HomePage/AboutMe.jsx b/src/components/PageFragments/HomePage/AboutMe.jsx
+index 4b5a761..276c750 100644
+--- a/src/components/PageFragments/HomePage/AboutMe.jsx
++++ b/src/components/PageFragments/HomePage/AboutMe.jsx
+@@ -20,7 +20,7 @@ const contactRoute = getRoute(pages.contact.path);
+ 
+ const pageText = {
+   paraOne: `
+-    My name is <span class="devName">Momin Bin Shahid</span>,
++    <em>My name <strong>is</strong></em> => <span class="devName">Momin Bin Shahid</span>,
+     and I am a dedicated <strong>Full-Stack Software Engineer</strong> <emoji>👨‍💻</emoji> with a deep enthusiasm for software engineering and cutting-edge technologies, particularly in the domain of <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>
+     
+     <br/>
+diff --git a/src/components/PageFragments/Quotes/index.jsx b/src/components/PageFragments/Quotes/index.jsx
+index a3944f9..474757f 100644
+--- a/src/components/PageFragments/Quotes/index.jsx
++++ b/src/components/PageFragments/Quotes/index.jsx
+@@ -1,5 +1,6 @@
+ import React, { useReducer, useEffect } from 'react';
+-import { Spin } from 'antd';
++import { Button, Spin, Tooltip } from 'antd';
++// import { ReloadOutlined } from '@ant-design/icons';
+ import {
+   // fetchRandomQuotes,
+   fetchQuoteAPIs, parseQuote,
+@@ -27,6 +28,9 @@ function quotesReducer(quotes, action) {
+       if (!quotes) return [];
+ 
+       return quotes;
++    case '🗑':
++      return [];
++
+     default:
+       throw new Error('Use proper action.type for quotesReducer');
+   }
+@@ -56,7 +60,9 @@ const useQuotes = (defaultState = null, quoteAPIs = []) => {
+     });
+   };
+ 
+-  useEffect(() => {
++  const getFreshQuotes = () => {
++    dispatch({ type: '🗑' });
++
+     // // Reason of doing this instead of using async function in useEffect is here - https://reactjs.org/docs/hooks-faq.html#how-can-i-do-data-fetching-with-hooks
+     // // Article - https://www.robinwieruch.de/react-hooks-fetch-data/
+     // const fetchData = async () => {
+@@ -66,13 +72,17 @@ const useQuotes = (defaultState = null, quoteAPIs = []) => {
+     // fetchData();
+ 
+     fetchQuoteIndependently();
++  };
++
++  useEffect(() => {
++    getFreshQuotes();
+   }, []);
+ 
+-  return quotes;
++  return [quotes, getFreshQuotes];
+ };
+ 
+ const Quotes = () => {
+-  const quotes = useQuotes(null, fetchQuoteAPIs);
++  const [quotes, reload] = useQuotes(null, fetchQuoteAPIs);
+ 
+   if (quotes === null) return <Spin style={{ paddingTop: '6px' }} />;
+   if (!quotes.length) return null;
+@@ -89,6 +99,12 @@ const Quotes = () => {
+     goToQuoteLink(link);
+   };
+ 
++  const refresh = (
++    <Tooltip title="Reload new quotes">
++      <Button type="dashed" size="large" shape="circle" icon="↻" className={styles.reload} onClick={reload} />
++    </Tooltip>
++  );
++
+   const title = (
+     <>
+       {quotes.length > 1 ? 'Couple of ' : 'An '}
+@@ -142,7 +158,10 @@ const Quotes = () => {
+ 
+   return (
+     <div className="mt-1">
+-      <h2 className="titleSeparate">{title}</h2>
++      <h2 className="titleSeparate">
++        {title}
++        {refresh}
++      </h2>
+       { quotesJSX }
+     </div>
+   );
+diff --git a/src/components/PageFragments/Quotes/quotes.module.less b/src/components/PageFragments/Quotes/quotes.module.less
+index 5721839..64c5dea 100644
+--- a/src/components/PageFragments/Quotes/quotes.module.less
++++ b/src/components/PageFragments/Quotes/quotes.module.less
+@@ -37,4 +37,9 @@
+ .category {
+     font-weight: lighter;
+     margin-left: 5px;
++}
++
++.reload {
++  margin-left: 10px;
++  float: right;
+ }
+\ No newline at end of file
+diff --git a/src/components/PageLayout/Sidebar/sidebar.module.less b/src/components/PageLayout/Sidebar/sidebar.module.less
+index 85dcecf..183e3ff 100644
+--- a/src/components/PageLayout/Sidebar/sidebar.module.less
++++ b/src/components/PageLayout/Sidebar/sidebar.module.less
+@@ -19,7 +19,11 @@
+       background-size: cover;
+       background-repeat: no-repeat;
+       background-position: center;
+-      border-radius: @border-radius-full;
++
++      border-radius: 50%;
++      // border: 2px inset @theme-color;
++      filter: drop-shadow(1px 2px 3px @theme-color);
++
+       @media screen and (max-width: 767px) {
+         max-width: 230px;
+         margin: auto;
+diff --git a/src/utils/quotes.js b/src/utils/quotes.js
+index 1dda6cf..b9108a0 100644
+--- a/src/utils/quotes.js
++++ b/src/utils/quotes.js
+@@ -52,11 +52,13 @@ const favqsAPI = [
+       link,
+     };
+   },
+-  {
+-    mode: 'no-cors',
+-  },
++  // {
++  //   mode: 'no-cors',
++  // },
+ ];
+ 
++// FIXME: CORS issue
++// eslint-disable-next-line no-unused-vars
+ const stoicAPI = [
+   'https://api.themotivate365.com/stoic-quote',
+   (quote) => {
+@@ -91,7 +93,7 @@ module.exports = [
+   quotableAPI,
+   dummyJsonAPI,
+   // favqsAPI,
+-  stoicAPI,
++  // stoicAPI,
+   // affirmationAPI,
+   adviceSlipAPI,
+ ];
