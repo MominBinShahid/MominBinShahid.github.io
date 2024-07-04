@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 
 title: React – The Future Of Web Frontend
 tags: [reactjs, javascript, typescript, html, css ]

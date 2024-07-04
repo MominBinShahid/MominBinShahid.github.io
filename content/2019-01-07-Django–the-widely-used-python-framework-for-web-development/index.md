@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 
 title: Django – The widely used python framework for web development
 tags: [python, html, css ]

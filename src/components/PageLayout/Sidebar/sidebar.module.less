@@ -19,7 +19,11 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
-      border-radius: @border-radius-full;
+
+      border-radius: 50%;
+      // border: 2px inset @theme-color;
+      filter: drop-shadow(1px 2px 3px @theme-color);
+
       @media screen and (max-width: 767px) {
         max-width: 230px;
         margin: auto;

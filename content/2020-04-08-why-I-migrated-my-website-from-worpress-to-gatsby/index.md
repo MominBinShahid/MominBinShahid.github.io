@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 
 title: Why I migrated my website from wordpress to gatsby? (gatsby vs wordpress)
 tags: [ javascript, gatsby, typescript ]

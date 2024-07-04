@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
-import { Spin } from 'antd';
+import { Button, Spin, Tooltip } from 'antd';
+// import { ReloadOutlined } from '@ant-design/icons';
 import {
   // fetchRandomQuotes,
   fetchQuoteAPIs, parseQuote,
@@ -27,6 +28,9 @@ function quotesReducer(quotes, action) {
       if (!quotes) return [];
 
       return quotes;
+    case '🗑':
+      return [];
+
     default:
       throw new Error('Use proper action.type for quotesReducer');
   }
@@ -56,7 +60,9 @@ const useQuotes = (defaultState = null, quoteAPIs = []) => {
     });
   };
 
-  useEffect(() => {
+  const getFreshQuotes = () => {
+    dispatch({ type: '🗑' });
+
     // // Reason of doing this instead of using async function in useEffect is here - https://reactjs.org/docs/hooks-faq.html#how-can-i-do-data-fetching-with-hooks
     // // Article - https://www.robinwieruch.de/react-hooks-fetch-data/
     // const fetchData = async () => {
@@ -66,13 +72,17 @@ const useQuotes = (defaultState = null, quoteAPIs = []) => {
     // fetchData();
 
     fetchQuoteIndependently();
+  };
+
+  useEffect(() => {
+    getFreshQuotes();
   }, []);
 
-  return quotes;
+  return [quotes, getFreshQuotes];
 };
 
 const Quotes = () => {
-  const quotes = useQuotes(null, fetchQuoteAPIs);
+  const [quotes, reload] = useQuotes(null, fetchQuoteAPIs);
 
   if (quotes === null) return <Spin style={{ paddingTop: '6px' }} />;
   if (!quotes.length) return null;
@@ -88,6 +98,12 @@ const Quotes = () => {
 
     goToQuoteLink(link);
   };
+
+  const refresh = (
+    <Tooltip title="Reload new quotes">
+      <Button type="dashed" size="large" shape="circle" icon="↻" className={styles.reload} onClick={reload} />
+    </Tooltip>
+  );
 
   const title = (
     <>
@@ -142,7 +158,10 @@ const Quotes = () => {
 
   return (
     <div className="mt-1">
-      <h2 className="titleSeparate">{title}</h2>
+      <h2 className="titleSeparate">
+        {title}
+        {refresh}
+      </h2>
       { quotesJSX }
     </div>
   );

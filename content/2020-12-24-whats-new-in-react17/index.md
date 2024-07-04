@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 
 title: What's new in React 17 ( No new features )
 tags: [ reactjs ]
@@ -13,9 +13,30 @@ On 20th October the new version of React was released which was a major release 
 
 ## Why no new features in React 17 ?
 
-The new version of React doesn't add any new developer features to it rather it focuses on adding backward compatibility with old versions of react. React 17 will serve as the bridge between the older and upcoming versions of ReactJS. The team is working on the new features like concurrent mode but they are not a part of this release.
+The new version of React doesn't => ==> === add any new developer features to it rather it focuses on adding backward compatibility with old versions of react. React 17 will serve as the bridge between the older and upcoming versions of ReactJS. The team is working on the new features like concurrent mode but they are not a part of this release.
 
 React 17 allows multiple versions of React to be embedded inside the DOM tree. This is one of the major benifits of React 17.
+
+*italic*
+
+***italic bold***
+
+**bold**
+
+<pre class="language-jsx" data-line=2>
+<code>
+const someValue = 'someValue'
+someMore();
+andMore();
+</code>
+</pre>
+
+[Duck Duck Go](https://duckduckgo.com)
+
+<script src="https://gist.github.com/MominBinShahid/481f5dad3d5f727edf353b5dacb92b1f.js"></script>
+<script src="https://gist.github.com/MominBinShahid/481f5dad3d5f727edf353b5dacb92b1f.js"></script>
+`gist:MominBinShahid/481f5dad3d5f727edf353b5dacb92b1f#testing-embedding-code.txt`
+<https://gist.github.com/MominBinShahid/481f5dad3d5f727edf353b5dacb92b1f>
 
 ## Gradual React Upgrades
 
@@ -31,17 +52,17 @@ In React we write a click event like:
 
 ```javascript
 
-    <button onClick={handleClick}>
+<button onClick={handleClick}>
 
 ```
 
 This event does not attach itself to the document node on which it is written rather it attaches itself to the document root in React 16 and previous versions of React. In React 17 the event is attached to the root dom container in which your tree is rendered. 
 
 ```javascript
-
-    const rootNode = document.getElementById('root');
-    ReactDOM.render(<App />, rootNode);
-
+// highlight-next-line
+const rootNode = document.getElementById('root'); 
+ReactDOM.render(<App />, rootNode);
+=> ==> ===
 ```
 
 The below diagram shows us how the event progation works in React 16 vs React 17.
@@ -56,7 +77,7 @@ This is why we can nest muliple versions of React in React 17.
 
 With the new React 17 you don't need to import React while writing a React component.
 
-```javascript
+```javascript{1-2}{numberLines: true}
 
 const MyComponent = ()=> (
     <div>"some text man"</div>

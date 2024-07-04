@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 
 title: Working with promises in Javascript
 tags: [ javascript, typescript, nodejs, reactjs ]

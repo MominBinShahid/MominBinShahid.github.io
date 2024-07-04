@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 
 title: How to build your own compiler ? ( The Worlds smallest compiler )
 tags: [ javascript ]

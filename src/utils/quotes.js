@@ -52,11 +52,13 @@ const favqsAPI = [
       link,
     };
   },
-  {
-    mode: 'no-cors',
-  },
+  // {
+  //   mode: 'no-cors',
+  // },
 ];
 
+// FIXME: CORS issue
+// eslint-disable-next-line no-unused-vars
 const stoicAPI = [
   'https://api.themotivate365.com/stoic-quote',
   (quote) => {
@@ -91,7 +93,7 @@ module.exports = [
   quotableAPI,
   dummyJsonAPI,
   // favqsAPI,
-  stoicAPI,
+  // stoicAPI,
   // affirmationAPI,
   adviceSlipAPI,
 ];

@@ -20,7 +20,7 @@ const contactRoute = getRoute(pages.contact.path);
 
 const pageText = {
   paraOne: `
-    My name is <span class="devName">Momin Bin Shahid</span>,
+    <em>My name <strong>is</strong></em> => <span class="devName">Momin Bin Shahid</span>,
     and I am a dedicated <strong>Full-Stack Software Engineer</strong> <emoji>👨‍💻</emoji> with a deep enthusiasm for software engineering and cutting-edge technologies, particularly in the domain of <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>
     
     <br/>

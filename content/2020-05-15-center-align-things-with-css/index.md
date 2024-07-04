@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 
 title: Center aligning content with CSS and flex-box
 tags: [ html, css, reactjs ]

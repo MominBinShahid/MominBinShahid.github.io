@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 
 title: "Hello World - Rolwin's first blog 😇"
 path: blog/hello-world-rolwins-first-blog

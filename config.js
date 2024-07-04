@@ -41,9 +41,9 @@ module.exports = {
     // resume: 'resume',
     // tag: 'tags',
     home: { name: 'Home', path: '' },
+    blog: { name: 'Blog', path: 'blog' },
+    tag: { name: 'Tags', path: 'tags' },
     contact: { name: 'Contact', path: 'contact' },
-    blog: { name: 'Blog', path: 'blog', hide: true },
-    tag: { name: 'Tags', path: 'tags', hide: true },
     resume: { name: 'Resume', path: 'resume' },
   },
   social: {

@@ -46,11 +46,11 @@ const gatsbyConfig = [
       preconnect: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
       // preconnect: ['https://github.com/ryanoasis/nerd-fonts'],
       web: [
-        // {
-        //   name: 'Fira Code',
-        //   file:
-        //     'https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap',
-        // },
+        {
+          name: 'Fira Code',
+          file:
+            'https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap',
+        },
         // {
         //   name: 'Roboto Mono',
         //   file:
