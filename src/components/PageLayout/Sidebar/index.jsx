@@ -28,7 +28,7 @@ const DomContent = () => (
       </div>
       <div className={style.designation}>
         <div className={`${style.badge} ${style.badgeGray}`}>
-          Senior Frontend Engineer
+          Senior Software Engineer
         </div>
         <div className={`${style.badge} ${style.badgeGray} ${style.badgeGrayDescText}`}>
           <span>@</span>
