@@ -20,7 +20,7 @@ const Contact = () => (
         title="Contact"
         description="Hello folks Momin here. You can contact me through the contact form on this page OR on social media @MominBinShahid.
                     Please feel free to reach out as I am always open to talk about web technologies especially JavaScript and related tech stacks,
-                    also about life in general, science, philosophy, .etc. Currently working as Senior Frontend Engineer (SFE) at Sastaticket.pk.
+                    also about life in general, science, philosophy, .etc. Currently working as Senior Software Engineer (SSE) at Sastaticket.pk.
                     Find me on Linkedin, Twitter, Github, StackOverflow - @MominBinShahid."
         path="/contact"
         keywords={['Contact Momin Bin Shahid', 'Contact Momin', ...keywords]}

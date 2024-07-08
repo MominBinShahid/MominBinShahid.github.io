@@ -151,6 +151,7 @@ module.exports = {
     'Momin Bin Shahid',
     'Momin',
     'Software Engineer',
+    'Senior Software Engineer',
     'FullStack Developer',
     'Frontend Engineer',
     'Frontend Developer',
