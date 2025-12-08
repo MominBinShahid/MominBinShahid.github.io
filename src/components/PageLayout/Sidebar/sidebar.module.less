@@ -19,7 +19,11 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
-      border-radius: @border-radius-full;
+
+      border-radius: 50%;
+      // border: 2px inset @theme-color;
+      filter: drop-shadow(1px 2px 3px @theme-color);
+
       @media screen and (max-width: 767px) {
         max-width: 230px;
         margin: auto;
@@ -52,7 +56,7 @@
       .badge {
         font-size: 0.837rem;
         font-weight: 400;
-        border-radius: 10rem;
+        border-radius: 1rem;
         padding: 0.4rem 1rem;
       }
       .badgeGray {
@@ -62,6 +66,13 @@
         // font-family: monospace;
         a:hover {
           font-weight: bolder;
+        }
+        font-weight: 700;
+        span {
+          // for subtitle
+          font-size: 0.8rem;
+          font-weight: 400;
+          color: lighten(@text-color, 15%);
         }
       }
       .badgeGrayDescText {

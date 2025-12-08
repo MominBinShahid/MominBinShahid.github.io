@@ -9,6 +9,20 @@
 // https://www.affirmations.dev/ → https://www.affirmations.dev/
 // https://api.adviceslip.com/advice -> https://api.adviceslip.com/
 
+// NOTE: zenquotes.io doesn't support CORS - can't be used directly from browser
+// eslint-disable-next-line no-unused-vars
+const zenquotesAPI = [
+  'https://zenquotes.io/api/random',
+  (quote) => {
+    const { q: text, a: author, h: hypertext } = quote;
+
+    console.log(hypertext);
+
+    return { text, author };
+  },
+];
+
+// eslint-disable-next-line no-unused-vars
 const quotableAPI = [
   'https://api.quotable.io/quotes/random',
   (quote) => {
@@ -52,11 +66,13 @@ const favqsAPI = [
       link,
     };
   },
-  {
-    mode: 'no-cors',
-  },
+  // {
+  //   mode: 'no-cors',
+  // },
 ];
 
+// FIXME: CORS issue
+// eslint-disable-next-line no-unused-vars
 const stoicAPI = [
   'https://api.themotivate365.com/stoic-quote',
   (quote) => {
@@ -88,10 +104,11 @@ const adviceSlipAPI = [
 ];
 
 module.exports = [
-  quotableAPI,
+  // zenquotesAPI,
+  // quotableAPI,
   dummyJsonAPI,
   // favqsAPI,
-  stoicAPI,
+  // stoicAPI,
   // affirmationAPI,
   adviceSlipAPI,
 ];

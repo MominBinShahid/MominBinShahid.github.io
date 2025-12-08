@@ -11,7 +11,7 @@ import Socials from '../../Socials';
 import style from './sidebar.module.less';
 
 const { Content } = Layout;
-const { resumeDownloadLink /* , resumePrintableDownloadLink  */ } = Config;
+const { resume /* , legacy_resume  */ } = Config;
 
 const DomContent = () => (
   <aside>
@@ -28,7 +28,9 @@ const DomContent = () => (
       </div>
       <div className={style.designation}>
         <div className={`${style.badge} ${style.badgeGray}`}>
-          Senior Software Engineer
+          Lead Engineer
+          <br />
+          <span>Full Stack AI Engineer</span>
         </div>
         <div className={`${style.badge} ${style.badgeGray} ${style.badgeGrayDescText}`}>
           <span>@</span>
@@ -97,7 +99,7 @@ const DomContent = () => (
 
       </ul>
       <div className={style.resumeDownload}>
-        <a href={resumeDownloadLink} download target="_blank" rel="noopener noreferrer">
+        <a href={resume} download target="_blank" rel="noopener noreferrer">
           Download
           {' '}
           <span>CV</span>
@@ -106,12 +108,12 @@ const DomContent = () => (
 
       {/* <div className={style.resumePrintableDownload}>
         <a
-          href={resumePrintableDownloadLink}
+          href={legacy_resume}
           download
           target="_blank"
           rel="noreferrer"
         >
-          Printable CV
+          Download Legacy CV
         </a>
       </div> */}
 

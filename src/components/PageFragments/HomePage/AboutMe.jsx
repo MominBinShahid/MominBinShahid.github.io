@@ -7,13 +7,6 @@ import { getRoute } from '../../../utils/common';
 import SEO from '../../Seo';
 import Config from '../../../../config';
 
-import CodeImage from '../../../images/icons/code.png';
-import GraduationImage from '../../../images/icons/graduation.png';
-import JavaScriptImage from '../../../images/icons/javascript.png';
-import LocationImage from '../../../images/icons/location.png';
-import MeetingImage from '../../../images/icons/meeting.png';
-import OpenSourceImage from '../../../images/icons/open-source.png';
-
 const { keywords, pages } = Config;
 
 const contactRoute = getRoute(pages.contact.path);
@@ -21,45 +14,55 @@ const contactRoute = getRoute(pages.contact.path);
 const pageText = {
   paraOne: `
     My name is <span class="devName">Momin Bin Shahid</span>,
-    and I am a dedicated <strong>Full-Stack Software Engineer</strong> <emoji>👨‍💻</emoji> with a deep enthusiasm for software engineering and cutting-edge technologies, particularly in the domain of <strong>Web</strong> and <strong>JavaScript</strong> <emoji>🤟</emoji>
+    and I am a <strong>Full-Stack Engineer & AI Engineer</strong> <emoji>👨‍💻</emoji> with a deep enthusiasm for software engineering and cutting-edge technologies. I love building things that live on the web and now, things that think <emoji>🤖</emoji>
     
     <br/>
     <br/>
 
-    With a <strong>Bachelor's Degree</strong> in Computer Science and <strong>over 5 years</strong> of experience in the <strong>software development</strong> <emoji>🛠</emoji> field, complemented by an additional 1+ years in sales and marketing, I possess a profound understanding of the development lifecycle and adhere to industry standards. I thrive on acquiring knowledge about various processes, building innovative solutions, and effectively promoting them to the market.
-    
-    <br/>
-    <br/>
-
-    My expertise lies in creating and maintaining robust solutions utilizing stacks such as <strong>MERN</strong> <emoji>⚛</emoji>, <strong>MEVN</strong>, MEAN, and <strong>JAM</strong>. These ventures span a diverse range of domains, including Internet Privacy and Security, Metadata Platforms, Enterprise Resource Planning (ERP), Human Resource Management Systems (HRMS), EdTech (E-learning platform for educational institutions), and Bioinformatics projects with research institutions, among others.
+    With <strong>8 years</strong> of shipping production software and a <strong>Bachelor's Degree</strong> in Computer Science, I've spent my career architecting web applications from scratch and recently expanded into the fascinating world of <strong>AI Agents</strong> and <strong>LLMs</strong> <emoji>🧠</emoji>. Currently, I'm a <strong>Lead Engineer</strong> at <strong>Sastaticket.pk</strong> where I build AI-powered systems, work directly with stakeholders to understand their needs, and lead a team of awesome engineers.
 
     <br/>
     <br/>
-    
-    Throughout my career, I have had the privilege of working with both <strong>service-based</strong> and <strong>product-based</strong> companies, collaborating with clients hailing from the United States, Europe, the Middle East, and other regions across the globe. 
+
+    My core expertise lies in <strong>JavaScript</strong> and its ecosystem. I've built production applications with <strong>React.js</strong>, <strong>Vue.js</strong>, and <strong>Angular</strong> on the frontend, spanning the full alphabet soup of stacks: <strong>MERN</strong>, <strong>MEVN</strong>, MEAN, and <strong>JAMstack</strong>. On the backend, I work extensively with <strong>Node.js</strong>, <strong>Python</strong>, and <strong>Django</strong> for web services and AI/ML workloads. For AI development, I leverage both <strong>LangChain</strong> and direct integrations with frontier model APIs like <strong>Google GenAI</strong>, <strong>OpenAI</strong>, and <strong>Anthropic Claude</strong> to build intelligent agents.
 
     <br/>
     <br/>
     
-    My insatiable curiosity drives me to constantly explore and experiment with emerging technologies and concepts. I am always enthusiastic about developing Web <emoji>🌐</emoji>, Mobile <emoji>📱</emoji>, and Desktop <emoji>💻</emoji> applications using <strong>JavaScript</strong> <emoji>🚀</emoji> and other exciting technologies.
+    I've had the privilege of building across <strong>diverse domains</strong> including Internet Privacy & Security <emoji>🔐</emoji> (at the unicorn Securiti.ai), Metadata Platforms, Enterprise Resource Planning (ERP), Human Resource Management Systems (HRMS), EdTech, Travel Tech <emoji>✈️</emoji>, and now AI/Agentic Systems. Throughout my career, I've collaborated directly with clients and served users across the <strong>USA</strong>, <strong>Europe</strong>, <strong>Middle East</strong>, and <strong>South Asia</strong>, always with a focus on understanding their needs and delivering solutions that exceed expectations.
+
+    <br/>
+    <br/>
+    
+    I've shipped code in both <strong>service-based consultancies</strong> (where you learn to adapt fast and interact with clients daily) and <strong>product-based companies</strong> (where you own features end-to-end). Both have taught me that great software is about understanding people, not just writing code <emoji>💡</emoji>.
   `,
   paraTwo: `
-    In my recent experiences, I have extensively utilized JavaScript-based technologies such as <strong>React.js</strong> <emoji>⚛</emoji>, <strong>Vue.js</strong>, and <strong>Node.js</strong>. Furthermore, I have hands-on experience working with <strong>On-Premise</strong> <emoji>⛰️</emoji> and <strong>Cloud</strong> <emoji>☁️</emoji> infrastructures such as <strong>AWS</strong>, Azure, and <strong>Firebase</strong> (GCP). I have successfully built and maintained monolith, serverless (FaaS), and microservices-based applications, leveraging Docker <emoji>🐳</emoji> and Kubernetes to enhance efficiency, scalability, and portability while ensuring seamless deployment (CI/CD) and management.
+    These days, I'm obsessed with building <strong>AI Agents</strong> that actually solve real business problems. For example, I built a QA agent that reviews hundreds of customer support calls daily with remarkable accuracy, accomplishing in a single day what would take a team of humans several days, and with a consistency humans simply can't match. There's something magical about teaching machines to understand context and take action <emoji>✨</emoji>.
+
+    <br/>
+    <br/>
+
+    On the infrastructure side, I work with both <strong>On-Premise</strong> and <strong>Cloud</strong> <emoji>☁️</emoji> environments. I've built and maintained monolithic and microservices-based applications using <strong>Docker</strong> and <strong>Kubernetes</strong>, deployed across <strong>AWS</strong>, <strong>GCP</strong>, and Azure with CI/CD pipelines ensuring seamless deployment and management.
     
     <br/>
     <br/>
 
-    My <strong>primary highlight</strong> is that I have a strong passion for solving complex problems and a drive for continuous and quick <emoji>⚡️</emoji> learning, I consistently strive to stay updated with the latest industry trends <emoji>📈</emoji> and technologies. I have a proven track record of successfully delivering high-quality software solutions that meet and exceed client expectations <emoji>👍</emoji>. My strong analytical skills, attention to detail, and ability to work effectively in cross-functional teams make me a valuable asset in delivering innovative and scalable software solutions. 
+    <strong>What drives me?</strong> The thrill of solving gnarly problems <emoji>⚡️</emoji>, the satisfaction of <strong>mentoring engineers</strong> and watching them grow <emoji>🌱</emoji>, and the never-ending rabbit hole of learning new technologies <emoji>📈</emoji>. I'm that person who reads documentation for fun (well, sometimes... now I let AI summarize it for me). I believe in leaving codebases better than I found them <emoji>🏕️</emoji>, call it the <strong>Boy Scout Rule</strong> of programming.
     
     <br/>
     <br/>
 
-    Although my previous experiences have primarily revolved around closed-source <emoji>🔒</emoji> projects, I am increasingly immersing myself in the world of open-source software <emoji>🍀</emoji>
-    
+    I'm endlessly curious and love exploring emerging technologies. I'm always enthusiastic about developing <strong>Web</strong>, <strong>Mobile</strong>, and <strong>Desktop</strong> applications using <strong>JavaScript</strong>, <strong>Python</strong>, and other exciting technologies in their ecosystems.
+
     <br/>
     <br/>
 
-    Please feel free to reach out to me for any opportunities or potential collaborations <emoji>🤝</emoji> or just to say hi <emoji>🙋‍♂️</emoji>. I am excited to connect and explore how we can work together. Let's get in touch <emoji>🤙</emoji>
+    While most of my professional work has been closed-source <emoji>🔒</emoji>, I'm increasingly contributing to and learning from the <strong>open-source community</strong> <emoji>🍀</emoji>. The web taught me everything I know, and I want to give back.
+
+    <br/>
+    <br/>
+
+    Want to build something together? Have an interesting <strong>AI problem</strong>? Or just want to geek out about the latest in LLMs and web tech? Beyond code, I'm equally fascinated by <strong>philosophy</strong> <emoji>🧘</emoji> and esoteric discussions about the nature of reality, consciousness, and what it means to be alive in this strange universe. I'm always up for a good conversation, whether it's about software architecture or the mysteries of existence. Let's connect! <emoji>🤙</emoji>
   `,
 };
 
@@ -93,50 +96,50 @@ const AboutMe = () => {
         <Row gutter={[20, 20]}>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img={LocationImage}
-              alt="location image"
-              textH4="Born and bought up in"
-              textH3="Karachi, Sindh, P.K."
+              emoji="🛠️"
+              alt="8 years of coding experience"
+              textH4="8 Years Building"
+              textH3="Full-Stack to AI Agents"
             />
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img={JavaScriptImage}
-              alt="javascript logo image"
-              textH4="Love JavaScript ♥️"
-              textH3="Learn Once, Ship Anywhere!"
+              emoji="🐍"
+              alt="javascript and python"
+              textH4="JavaScript + Python"
+              textH3="Full-Stack & AI Ecosystems"
             />
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img={MeetingImage}
-              alt="meeting with other people image"
-              textH4="Socially Awkward (at times)"
-              textH3="Yet, Love to Socialize"
+              emoji="👨‍💻"
+              alt="lead engineer mentoring team"
+              textH4="Lead Engineer"
+              textH3="Mentoring Engineers Daily"
             />
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img={OpenSourceImage}
-              alt="open source initiative image"
-              textH4="Worked on Closed-Source"
-              textH3="Getting into Open-Source"
+              emoji="🔄"
+              alt="learn and solve problems"
+              textH4="Learn & Solve"
+              textH3="The Never-Ending Loop"
             />
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img={CodeImage}
-              alt="code image"
-              textH4="Self Taught Programmer"
-              textH3="Thanks to the Web Resources"
+              emoji="🤝"
+              alt="customer focused development"
+              textH4="Customer Focused"
+              textH3="Building What Users Need"
             />
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
             <AboutTile
-              img={GraduationImage}
-              alt="graduation image"
-              textH4="Pursued Bachelors in"
-              textH3="Computer Science"
+              emoji="🧠"
+              alt="philosophy and deep thinking"
+              textH4="Forever Curious"
+              textH3="Code & Consciousness"
             />
           </Col>
         </Row>

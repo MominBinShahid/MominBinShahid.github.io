@@ -1,5 +1,6 @@
-import React, { useReducer, useEffect } from 'react';
-import { Spin } from 'antd';
+import React, { useReducer, useEffect, useState } from 'react';
+import { Button, Spin, Tooltip } from 'antd';
+
 import {
   // fetchRandomQuotes,
   fetchQuoteAPIs, parseQuote,
@@ -27,6 +28,9 @@ function quotesReducer(quotes, action) {
       if (!quotes) return [];
 
       return quotes;
+    case '🗑':
+      return [];
+
     default:
       throw new Error('Use proper action.type for quotesReducer');
   }
@@ -56,7 +60,9 @@ const useQuotes = (defaultState = null, quoteAPIs = []) => {
     });
   };
 
-  useEffect(() => {
+  const getFreshQuotes = () => {
+    dispatch({ type: '🗑' });
+
     // // Reason of doing this instead of using async function in useEffect is here - https://reactjs.org/docs/hooks-faq.html#how-can-i-do-data-fetching-with-hooks
     // // Article - https://www.robinwieruch.de/react-hooks-fetch-data/
     // const fetchData = async () => {
@@ -66,13 +72,38 @@ const useQuotes = (defaultState = null, quoteAPIs = []) => {
     // fetchData();
 
     fetchQuoteIndependently();
+  };
+
+  useEffect(() => {
+    getFreshQuotes();
   }, []);
 
-  return quotes;
+  return [quotes, getFreshQuotes];
 };
 
+const REFRESH_COOLDOWN_SECONDS = 30; // TODO: add a config for this
+
 const Quotes = () => {
-  const quotes = useQuotes(null, fetchQuoteAPIs);
+  const [quotes, reload] = useQuotes(null, fetchQuoteAPIs);
+  const [isRefreshDisabled, setIsRefreshDisabled] = useState(false);
+  const [cooldownRemaining, setCooldownRemaining] = useState(0);
+
+  const handleReload = () => {
+    reload();
+    setIsRefreshDisabled(true);
+    setCooldownRemaining(REFRESH_COOLDOWN_SECONDS);
+
+    const interval = setInterval(() => {
+      setCooldownRemaining((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setIsRefreshDisabled(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
 
   if (quotes === null) return <Spin style={{ paddingTop: '6px' }} />;
   if (!quotes.length) return null;
@@ -88,6 +119,24 @@ const Quotes = () => {
 
     goToQuoteLink(link);
   };
+
+  const refreshTooltip = isRefreshDisabled
+    ? `Wait ${cooldownRemaining}s to refresh again`
+    : 'Reload new quotes';
+
+  const refresh = (
+    <Tooltip title={refreshTooltip}>
+      <Button
+        type="dashed"
+        size="large"
+        shape="circle"
+        icon="↻"
+        className={styles.reload}
+        onClick={handleReload}
+        disabled={isRefreshDisabled}
+      />
+    </Tooltip>
+  );
 
   const title = (
     <>
@@ -142,7 +191,10 @@ const Quotes = () => {
 
   return (
     <div className="mt-1">
-      <h2 className="titleSeparate">{title}</h2>
+      <h2 className="titleSeparate">
+        {title}
+        {refresh}
+      </h2>
       { quotesJSX }
     </div>
   );

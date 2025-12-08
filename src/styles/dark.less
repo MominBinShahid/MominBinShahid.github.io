@@ -33,11 +33,19 @@
   .gatsby-highlight, // for code highlighted snippets in markdown
   [style^="background-image:"], // for tag card images
   iframe, // embedded content
-  emoji, // for emojis in markdown
+  // emoji, // for emojis in markdown
   .invert, // use better word then invert
   input, textarea // more forms field can be added here 
  {
     @rules();
+  }
+
+  // Emojis need special handling - use matching inversion + brightness/contrast for vibrancy
+  emoji {
+    -webkit-filter: invert(92%) hue-rotate(180deg) brightness(1.2) contrast(1.1)
+      saturate(1.3) !important;
+    filter: invert(92%) hue-rotate(180deg) brightness(1.2) contrast(1.1)
+      saturate(1.3) !important;
   }
 
   // because if user type emoji it will be inverted

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'gatsby';
 import { Document, Page } from 'react-pdf';
 import {
-  Button, Row, Col, Alert, Space, Spin, Tooltip,
+  Button, Row, Col, Space, Spin, Tooltip,
 } from 'antd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {
@@ -14,7 +14,7 @@ import DarkModeToggler from '../components/ThemeToggler';
 import { isPortableDeviceScreen } from '../utils/common';
 
 const {
-  resumeForWeb, resumeDownloadLink, resumePrintableDownloadLink, keywords,
+  resume, legacy_resume: legacyResume, keywords,
 } = Config;
 
 const zoomOperatorEnum = {
@@ -109,42 +109,6 @@ export default class Resume extends Component {
 
               <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
                 <Col>
-                  <Alert
-                    message="In View Only Mode"
-                    type="info"
-                    showIcon
-                    action={(
-                      <Space>
-                        {/* style={{ textAlign: 'center' }} */}
-                        {/* className="text-center" */}
-                        {/* used block style button so, comment centering */}
-                        <Button
-                          size="small"
-                          type="primary"
-                          href={resumeDownloadLink}
-                          download
-                          target="_blank"
-                          block
-                        >
-                          Download
-                        </Button>
-                        <Button
-                          size="small"
-                          href={resumePrintableDownloadLink}
-                          download
-                          target="_blank"
-                          block
-                        >
-                          Printable
-                        </Button>
-                      </Space>
-                    )}
-                  />
-                </Col>
-              </Row>
-
-              <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
-                <Col>
                   <Tooltip title="Increase the size of the page">
                     <Button
                       type="dashed"
@@ -174,6 +138,40 @@ export default class Resume extends Component {
 
               </Row>
 
+              <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
+                <Col>
+                  <Button
+                    type="primary"
+                    size="large"
+                    href={resume}
+                    download
+                    target="_blank"
+                    block
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: '16px',
+                    }}
+                  >
+                    Download Resume
+                  </Button>
+                </Col>
+              </Row>
+
+              <Row justify="center" style={{ /* background: 'lightslategray', */ }}>
+                <Col>
+                  <Button
+                    size="small"
+                    type="ghost"
+                    href={legacyResume}
+                    download
+                    target="_blank"
+                    block
+                  >
+                    Legacy Resume
+                  </Button>
+                </Col>
+              </Row>
+
               {
                 numPages > 1
                 && (
@@ -183,7 +181,7 @@ export default class Resume extends Component {
                       <span>{`Page ${pageNumber} of ${numPages}`}</span>
                     </Col>
                     <Col>
-                      <Button type="primary" size="small" onClick={() => this.pageToggle(pageNumber)}>{pageNumber === 1 ? 'Next Page' : 'Previous Page'}</Button>
+                      <Button type="dashed" size="small" onClick={() => this.pageToggle(pageNumber)}>{pageNumber === 1 ? 'Next Page' : 'Previous Page'}</Button>
                     </Col>
                   </Space>
                 </Row>
@@ -191,7 +189,7 @@ export default class Resume extends Component {
               }
 
               <Document
-                file={resumeForWeb}
+                file={resume}
                 onLoadSuccess={this.onDocumentLoadSuccess}
                 loading={loader}
                 className="pb-2"
