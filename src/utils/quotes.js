@@ -9,6 +9,14 @@
 // https://www.affirmations.dev/ → https://www.affirmations.dev/
 // https://api.adviceslip.com/advice -> https://api.adviceslip.com/
 
+const motivationalSparkAPI = [
+  'https://motivational-spark-api.vercel.app/api/quotes/random',
+  (quote) => {
+    const { quote: text, author } = quote;
+    return { text, author };
+  },
+];
+
 // NOTE: zenquotes.io doesn't support CORS - can't be used directly from browser
 // eslint-disable-next-line no-unused-vars
 const zenquotesAPI = [
@@ -104,6 +112,7 @@ const adviceSlipAPI = [
 ];
 
 module.exports = [
+  motivationalSparkAPI,
   // zenquotesAPI,
   // quotableAPI,
   dummyJsonAPI,
