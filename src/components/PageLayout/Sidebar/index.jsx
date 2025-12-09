@@ -30,7 +30,7 @@ const DomContent = () => (
         <div className={`${style.badge} ${style.badgeGray}`}>
           Lead Engineer
           <br />
-          <span>Full Stack AI Engineer</span>
+          <span>Full Stack + AI Engineer</span>
         </div>
         <div className={`${style.badge} ${style.badgeGray} ${style.badgeGrayDescText}`}>
           <span>@</span>
