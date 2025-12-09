@@ -72,11 +72,8 @@ export default class Resume extends Component {
       <>
         <SEO
           title="Resume"
-          description="My resume consists of my biodata (i.e. education, skills, work experience, .etc).
-          Please get in touch for any opportunities or project collaboration or just to say hi.
-          You can hire me if you feel I'm good for any position in your organization.
-          I'm open to learn, grow and tackle various challenges that come in the way of building solutions.
-          - Momin Bin Shahid"
+          description="Full-Stack & AI Engineer with 8 years of building production web applications and AI agents. Skilled in JavaScript/TypeScript, Python, React, Node.js, and LangChain. Open to job opportunities, project collaborations, or just saying hi. Looking to hire? I'm ready to learn, grow, and tackle the challenges that come with building great solutions. Let's connect!
+          - Momin Bin Shahid @MominBinShahid"
           path="resume"
           keywords={['Momin Bin Shahid Resume', "Momin Bin Shahid's Resume", 'Momin Resume', 'Resume', 'CV', 'C.V.', ...keywords]}
         />
