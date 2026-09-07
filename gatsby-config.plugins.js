@@ -31,7 +31,44 @@ const gatsbyConfig = [
       // versions prior to iOS 11.3.
     },
   },
-  'gatsby-plugin-offline', // read plugin placement. ref: https://www.gatsbyjs.com/docs/how-to/performance/add-offline-support-with-a-service-worker/#using-service-workers-in-gatsby-with-gatsby-plugin-offline
+  {
+    // read plugin placement. ref: https://www.gatsbyjs.com/docs/how-to/performance/add-offline-support-with-a-service-worker/#using-service-workers-in-gatsby-with-gatsby-plugin-offline
+    resolve: 'gatsby-plugin-offline',
+    options: {
+      // This worker registers at '/' (the plugin calls register('/sw.js') with
+      // no scope option), so it sees every request on the origin - including
+      // requests belonging to other apps hosted here, such as /MealUnits/.
+      //
+      // The plugin's default routes are unanchored and Workbox matches
+      // same-origin requests on partial URLs, so /MealUnits/assets/index-*.js
+      // was being served CacheFirst, with no expiration, by this worker. The
+      // negative lookahead below excludes that path prefix and changes nothing
+      // else.
+      //
+      // The plugin merges these into its defaults with _.merge, which merges
+      // arrays BY INDEX. Position is therefore part of the fix: each entry
+      // overrides only the keys it names on the route at that index, and the
+      // routes it does not name keep their own patterns and handlers.
+      workboxConfig: {
+        runtimeCaching: [
+          // 0 - CacheFirst on js/css/static. The original offender.
+          { urlPattern: /^(?!.*\/MealUnits\/).*(?:\.js$|\.css$|static\/)/ },
+          // 1 - page-data JSON, unchanged. DO NOT DELETE THIS EMPTY OBJECT.
+          // The merge is by index: removing it slides the route below up into
+          // slot 1, and route 2's original pattern - which also matches .js and
+          // .css - starts intercepting /MealUnits/ again through
+          // StaleWhileRevalidate. Its job is to hold a position.
+          {},
+          // 2 - the broad asset route, which matches .js and .css a second time.
+          {
+            urlPattern: /^(?!.*\/MealUnits\/)https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/,
+          },
+          // 3 - Google Fonts, unchanged, and left off the end of this array.
+        ],
+        dontCacheBustURLsMatching: /^(?!.*\/MealUnits\/).*(?:\.js$|\.css$|static\/)/,
+      },
+    },
+  },
   {
     resolve: 'gatsby-source-filesystem',
     options: {
