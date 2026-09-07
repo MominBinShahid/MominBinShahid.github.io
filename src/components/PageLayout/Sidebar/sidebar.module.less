@@ -15,19 +15,22 @@
 
     .profileAvatar {
       background-image: url('../../../images/momin.jpg');
-      height: 230px;
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
+      // Fluid sizing: scales smoothly relative to parent container
+      // Using clamp(min, preferred, max) - scales from 120px to 230px based on container width
+      // Fallback for older browsers (IE11, older Safari)
+      width: 200px; // Fallback for browsers that don't support clamp()
+      width: clamp(120px, 90%, 230px);
+      height: 200px; // Fallback for browsers that don't support clamp()
+      height: clamp(120px, 90%, 230px);
+      aspect-ratio: 1 / 1; // Ensures exact 1:1 ratio (perfect circle)
+      margin: 0 auto; // Centers the avatar horizontally
 
       border-radius: 50%;
       // border: 2px inset @theme-color;
       filter: drop-shadow(1px 2px 3px @theme-color);
-
-      @media screen and (max-width: 767px) {
-        max-width: 230px;
-        margin: auto;
-      }
     }
     .name {
       margin-top: 1.4rem;
