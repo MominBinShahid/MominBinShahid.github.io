@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout, Image } from 'antd';
 import { Link, graphql } from 'gatsby';
 import Header from '../../components/PageLayout/Header';
 import { Sidebar404 } from '../../components/PageLayout/Sidebar';
 import style from './404.module.less';
+
+/**
+ * GitHub Pages serves a project site at its repository's EXACT case, so
+ * /mealunits/ never reaches that app at all — it falls through to this user
+ * site and lands here. The page is genuinely missing, but the URL is only
+ * wrong in shape, and a 404 is the wrong answer to a typing difference.
+ *
+ * Listed rather than guessed: only a path whose first segment case-insensitively
+ * matches a real project is rewritten, so every other 404 still renders as one.
+ */
+const PROJECTS = ['MealUnits'];
+
+/**
+ * The correctly-cased path, or null when there is nothing to correct — which
+ * includes the case already being right. Returning null there is what stops a
+ * redirect loop.
+ */
+export function canonicalProjectPath(pathname) {
+  const segments = pathname.split('/');
+  const first = segments[1];
+  if (!first) return null;
+  const project = PROJECTS.find((name) => name.toLowerCase() === first.toLowerCase());
+  if (!project || project === first) return null;
+  segments[1] = project;
+  return segments.join('/');
+}
 
 export const query = graphql`
   {
@@ -17,7 +43,18 @@ export const query = graphql`
   }
 `;
 
-export default ({ data }) => (
+export default ({ data }) => {
+  useEffect(() => {
+    // Guarded because Gatsby renders this at build time, where there is no window.
+    if (typeof window === 'undefined') return;
+    const target = canonicalProjectPath(window.location.pathname);
+    if (target === null) return;
+    // replace() rather than assign(): the broken URL should not sit in history
+    // for the Back button to return to.
+    window.location.replace(target + window.location.search + window.location.hash);
+  }, []);
+
+  return (
   <Layout className="outerPadding">
     <Layout className="container">
       <Header />
@@ -53,4 +90,5 @@ export default ({ data }) => (
       </Sidebar404>
     </Layout>
   </Layout>
-);
+  );
+};
