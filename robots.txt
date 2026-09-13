@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
-Sitemap: https://mominbinshahid.github.io/sitemap.xml
+Sitemap: https://MominBinShahid.github.io/sitemap.xml
+Sitemap: https://MominBinShahid.github.io/MealUnits/sitemap.xml
 Host: https://mominbinshahid.github.io
