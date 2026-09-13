@@ -137,7 +137,23 @@ const gatsbyConfig = [
     },
   },
   'gatsby-plugin-sitemap',
-  'gatsby-plugin-robots-txt',
+  {
+    resolve: 'gatsby-plugin-robots-txt',
+    options: {
+      // MealUnits is a separate repository deployed to /MealUnits/ on this host.
+      // Crawlers read robots.txt only from the origin root, so the one inside it
+      // is never fetched — naming its sitemap here is the only way to reach it,
+      // and that sitemap carries a lastmod this build cannot know.
+      //
+      // `host` is repeated because the plugin queries siteUrl only when both it
+      // and `sitemap` are absent; supplying one alone silently loses the other.
+      host: config.siteUrl,
+      sitemap: [
+        `${config.siteUrl}/sitemap.xml`,
+        `${config.siteUrl}/MealUnits/sitemap.xml`,
+      ],
+    },
+  },
   /* ^ <- convert it version inside package.json from ^1.5.5 to ~1.5.5
   because actual version installed (from package-lock.json) was 1.6.2 and after ~ is it 1.5.6
   Reason: in version 1.6 sitemap url in robots.txt set as ../sitemap/sitemap_index.xml
