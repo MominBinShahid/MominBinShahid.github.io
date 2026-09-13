@@ -75,6 +75,13 @@ function SEO({
                 { name: 'twitter:image:alt', content: description },
                 { name: 'twitter:site', content: Config.author },
                 { name: 'twitter:creator', content: Config.author },
+                /* Search Console ownership. Same token for the MealUnits
+                   property, because the HTML tag proves control of the HOST and
+                   both properties sit on this one. */
+                {
+                  name: 'google-site-verification',
+                  content: 'fkilO4peF6pbwOrFAy7QqM0HV9ccL8A2dH58RYnGfTc',
+                },
               ]
                 .concat(metaKeywords) // Keywords
                 .concat(meta || []) // Other provided metadata
