@@ -22,10 +22,8 @@ const motivationalSparkAPI = [
 const zenquotesAPI = [
   'https://zenquotes.io/api/random',
   (quote) => {
+    // eslint-disable-next-line no-unused-vars
     const { q: text, a: author, h: hypertext } = quote;
-
-    console.log(hypertext);
-
     return { text, author };
   },
 ];

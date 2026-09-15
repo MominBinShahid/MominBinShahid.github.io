@@ -24,8 +24,8 @@
     "url": "https://github.com/MominBinShahid/MominBinShahid.github.io"
   },
   "engines": {
-    "node": ">=14.16.1",
-    "npm": "~6.14.12"
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   },
   "os": [
     "darwin",
@@ -33,7 +33,8 @@
     "win32"
   ],
   "cpu": [
-    "x64"
+    "x64",
+    "arm64"
   ],
   "private": true,
   "scripts": {
@@ -49,7 +50,8 @@
     "lint": "eslint --ext .js,.jsx .",
     "lint-fix": "npm run lint -- --fix",
     "init": "rm -rf node_modules && npm install && npm start",
-    "clean-install": "rm -rf node_modules && rm -f package-lock.json && npm i",
+    "clean-install": "rm -rf node_modules package-lock.json && npm i",
+    "install:apple-silicon": "npm install --ignore-scripts && npm rebuild sharp",
     "clean-install-start": "npm run clean-install && npm run start",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
@@ -101,7 +103,25 @@
     "gh-pages": "^3.2.0",
     "prettier": "^1.19.1"
   },
+  "overrides": {
+    "remark-mdx": "^1.6.22",
+    "cheerio": "1.0.0-rc.12",
+    "undici": "^5.28.4",
+    "whatwg-mimetype": "^3.0.0",
+    "whatwg-encoding": "^2.0.0",
+    "hast-util-raw": "6.1.0",
+    "sharp": "^0.32.6",
+    "gatsby-plugin-sharp": {
+      "sharp": "^0.32.6"
+    },
+    "gatsby-transformer-sharp": {
+      "sharp": "^0.32.6"
+    },
+    "gatsby-remark-images": {
+      "sharp": "^0.32.6"
+    }
+  },
   "volta": {
-    "node": "14.21.3"
+    "node": "16.20.2"
   }
 }
