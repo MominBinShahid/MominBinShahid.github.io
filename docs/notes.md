@@ -20,3 +20,37 @@
 - Make over all app less white as it will make dark mode less pitch black look
 - Skills color does not change on random color theme because of color is coming from JS and not CSS
 - Enable outline on focus to fix accessibility issues (see: Fixes ANT Design outline:none issue)
+
+---
+
+### Apple Silicon Mac Setup (Dec 2025)
+
+**Background:**  
+When migrating from Intel Mac to Apple Silicon (M1/M2/M3/M4), `npm install` fails because Gatsby 2.x depends on native modules (`sharp`, `mozjpeg`, `pngquant-bin`) that were built before Apple Silicon existed. These packages don't have prebuilt ARM64 binaries, and building from source fails without proper tools.
+
+**What was done:**
+
+1. **Node.js 14 → 16**  
+   Node 14 doesn't have official ARM64 binaries. Node 16+ has native Apple Silicon support.
+
+2. **Added `sharp` overrides in `package.json`**  
+   The old `sharp@0.27.x` (used by `gatsby-plugin-sharp`) lacks ARM64 binaries. We override it to `sharp@0.32.6` which has ARM64 support. See the `overrides` section in `package.json`.
+
+3. **Install build tools (one-time on your Mac)**  
+   Some packages (`mozjpeg`, `pngquant-bin`) still don't have ARM64 prebuilts and try to compile from source. This requires C/C++ build tools:
+
+   ```bash
+   brew install autoconf automake libtool nasm libpng pkg-config mozjpeg
+   ```
+
+4. **Use the Apple Silicon install script**  
+   Even with build tools, `mozjpeg` has hardcoded Intel paths that fail on ARM64. The workaround is to skip its install script and only rebuild `sharp`:
+
+   ```bash
+   npm run install:apple-silicon
+   ```
+
+   This runs: `npm install --ignore-scripts && npm rebuild sharp`
+
+**For other platforms:**  
+Windows, Intel Mac, and GitHub Actions (Linux) all have prebuilt binaries available, so they work with standard `npm install` - no special steps needed.
