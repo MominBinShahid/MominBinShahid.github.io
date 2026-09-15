@@ -71,6 +71,8 @@ jobs:
       # Deploy to Github Pages (defaults branch is `gh-pages`, and folder is `./public`)
       # for first deployment follow: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-first-deployment-with-github_token
       - name: GitHub Pages action
+        # Without this, pull request builds publish straight to the live site.
+        if: github.event_name != 'pull_request'
         uses: peaceiris/actions-gh-pages@v3
         with:
           # Set a generated GITHUB_TOKEN for pushing to the remote branch.
