@@ -172,6 +172,18 @@ Low stakes either way — he edits it maybe twice a year. Not yet decided.
 
 ---
 
+## Before publishing the MealUnits post
+
+- [ ] **Confirm `check-plan.py` is still Python.** MealUnits plans to rewrite it in
+      TypeScript. The post names the file, calls it Python, and carries a `python` code
+      block. If it has been rewritten, re-language the block and re-read it against the new
+      source rather than translating the old snippet. Same for every other path the post
+      names: `src/sw.ts`, `docs/PLAN.md`, `docs/CLINICAL.md`. Full note in `blog-plan.md`.
+- [ ] Flip `published: false` to `published: true` in `src/content/blog/mealunits.md`.
+      That is the entire publish step. Momin does this himself.
+
+---
+
 ## Cutover — do not lose
 
 - [x] **Port both `Sitemap:` lines into the Astro `robots.txt`** — DONE 2026-09-21. Real file at

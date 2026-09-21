@@ -210,6 +210,28 @@ as a property of this program — having no decay model, it cannot justify a sho
 so it does not offer one — rather than as a rule about insulin that a reader on a pump
 might apply to themselves. Keep that framing.
 
+### Re-check the language before publishing — `check-plan.py` may not be Python by then
+
+**Added 2026-09-21 at Momin's instruction.** MealUnits intends to rewrite `check-plan.py`
+in TypeScript or JavaScript at some point. The post names the file, describes it as Python,
+and carries a `python` fenced code block with `--self-test` semantics in it.
+
+So **before this post is published, confirm what that checker actually is.** If it has been
+rewritten:
+
+- change the filename wherever it appears in the prose
+- re-language the fenced block from ```python``` to ```ts``` or ```js```
+- re-check that `--self-test` is still the flag, and that the seed loop still has the same
+  two branches (mutation-changed-nothing, and checker-did-not-notice)
+- re-read it against the new source rather than translating the old snippet
+
+This is not cosmetic. The post's whole argument is that you check instead of assuming, and
+shipping a confident description of a file that no longer exists would undercut it in the
+most embarrassing way available.
+
+The same applies to `src/sw.ts`, `docs/PLAN.md` and `docs/CLINICAL.md` — every path the
+post names is a path that could move.
+
 ### Do not put a number on the escaped checks
 
 The self-test keeps finding checks that could never fail; the count goes up. The post says
