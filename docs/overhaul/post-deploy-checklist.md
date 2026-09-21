@@ -29,6 +29,22 @@ bash docs/overhaul/verify-deploy.sh http://localhost:4321 # or a local Astro pre
 | `/sw.js` | 200 | `gatsby-plugin-offline` | replaced | Self-destroyer. Must keep the gatsby-cache cleanup permanently. |
 | `/rss.xml` | **404** | nothing | decide | Already broken. `config.js` advertises it. Add `@astrojs/rss` or stop advertising. |
 
+### `static/` files that were real tracked files, enumerated 2026-09-21
+
+All five were live 200s. The first two were already ported; the next two are now.
+
+| URL | Now | After cutover |
+|---|---|---|
+| `/favicon.ico` | 200 | ported |
+| `/MominBinShahid_Resume.pdf` | 200 | ported |
+| `/logo.png` | 200 | **ported** — was missed on the first pass |
+| `/MominBinShahid_Legacy.pdf` | 200 | **ported** — the old résumé; someone may hold the link |
+| `/gatsby_favicon.ico` | 200 | **404 on purpose.** It is the Gatsby default favicon, branding for a framework we are leaving. Deliberate, not an oversight. |
+
+The two sources the build needs are kept too, in `site/src/assets/brand/`: `logo.png`, which
+all eight icons are generated from, and `momin.jpg`, which the real social card will use.
+Neither is served; they exist so the outputs stay regenerable.
+
 Confirmed absent now and expected to stay absent: `/sitemap-index.xml`, `/feed.xml`,
 `/humans.txt`, `/security.txt`, `/browserconfig.xml`, `/CNAME`.
 
