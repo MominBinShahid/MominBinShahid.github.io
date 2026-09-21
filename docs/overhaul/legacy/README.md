@@ -15,8 +15,13 @@ Apply it when building `legacy-site`, if the intent still holds:
 
 ```sh
 git checkout gatsby-final
-git apply docs/overhaul/legacy/uncommitted-gatsby-edit.patch
+git show overhaul:docs/overhaul/legacy/uncommitted-gatsby-edit.patch | git apply -
 ```
+
+Read the patch out of the branch with `git show`, not from a path. Checking out
+`gatsby-final` replaces the working tree with the Gatsby code, and `docs/overhaul/` does
+not exist there — so `git apply docs/overhaul/legacy/...` fails with "can't open patch".
+Tested, because the first version of these instructions had exactly that bug.
 
 Worth knowing either way: that post is **not live** today. `/blog/code-splitting-in-react/`
 returns 404 and the live `/blog/` lists zero posts, so the edit changes nothing about what
