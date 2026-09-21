@@ -252,6 +252,12 @@ Low stakes either way — he edits it maybe twice a year. Not yet decided.
 - [ ] **Build the Playwright test for the service-worker cutover.** Already agreed in
       `decisions.md` as the one real E2E worth having. Not built. Until it exists the
       manual rehearsal above is the only guard.
+- [ ] **Tag the cutover commit `v2.0.0`.** Momin's call, 2026-09-21. The Gatsby site's last
+      `package.json` version was **1.1.1** (tags go up to `v1.1.0`), so a full rewrite is a
+      clean major bump. `package.json` and `package-lock.json` already say `2.0.0`.
+      **Tag at the merge, not before** — a `v2.0.0` pointing at a commit that was never
+      deployed is worse than no tag. The release line then reads:
+      `v1.1.0` (Gatsby) → `gatsby-final` (archive point) → `v2.0.0` (Astro, live).
 - [ ] **Verify after cutover:** `bash docs/overhaul/verify-deploy.sh`. Checks all 9
       root files, all 8 icon PNGs, the 8 apple-touch-icon links, theme-color,
       og:image and the MealUnits entry inside robots.txt. Full enumeration and the

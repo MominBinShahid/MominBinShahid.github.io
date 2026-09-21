@@ -82,9 +82,22 @@ A holding page in the new site is a single `.astro` file with no dependencies, u
 tokens and layout that already exist. That is a shorter job than fixing the old one, and
 the result is actually his.
 
-### The `CNAME` thread
+### The `CNAME` thread — and a correction
 
-That branch's last commit removed a `CNAME` file, which is what GitHub Pages reads to serve
-a site on a custom domain. So a custom domain was configured around 2021 and then removed.
-Relevant to the still-open domain question in `decisions.md`, including the finding that a
-custom domain on the user site cascades onto `/MealUnits/` as well.
+`CNAME` is what GitHub Pages reads to serve a site on a custom domain. On first reading this
+branch I said a custom domain had been configured in 2021 and then removed. **That was
+wrong, and reading the file settled it.** It contained:
+
+```
+www.MominBinShahid.github.io
+MominBinShahid.github.io
+```
+
+No custom domain — it named the `github.io` hostname the site is served at by default.
+A `CNAME` file is unnecessary for that, and `www.` on a `github.io` address does not work,
+because `github.io` is on the Public Suffix List. So the file did nothing useful at best.
+Removing it in `1093616` was correct.
+
+The still-open domain question in `decisions.md` stands on its own merits and is unrelated
+to this file. Worth remembering from that section: a custom domain on the user site cascades
+onto `/MealUnits/` too.
