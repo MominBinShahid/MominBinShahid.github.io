@@ -1,7 +1,7 @@
 # Working in this project
 
 Astro 7 static site, deployed to GitHub Pages. The full reasoning for every choice
-lives in `../docs/overhaul/decisions.md` — read that before arguing with anything here.
+lives in `docs/overhaul/decisions.md` — read that before arguing with anything here.
 
 ## The invariants that are easy to break
 
@@ -67,7 +67,7 @@ Verify a build the way production is verified:
 
 ```sh
 npm run build && npm run preview &
-bash ../docs/overhaul/verify-deploy.sh http://localhost:4321
+bash docs/overhaul/verify-deploy.sh http://localhost:4321
 ```
 
 ## Pinned on purpose

@@ -1,127 +1,41 @@
 {
   "name": "mominbinshahid.github.io",
-  "version": "1.1.1",
-  "description": "Momin Bin Shahid's website",
-  "keywords": [
-    "MominBinShahid",
-    "Momin",
-    "Bin",
-    "Shahid"
-  ],
-  "homepage": "https://MominBinShahid.github.io",
-  "bugs": {
-    "url": "https://github.com/MominBinShahid/MominBinShahid.github.io/issues",
-    "email": "MominBinShahid@gmail.com"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Momin Bin Shahid",
-    "email": "MominBinShahid@gmail.com",
-    "url": "http://MominBinShahid.github.io/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/MominBinShahid/MominBinShahid.github.io"
-  },
-  "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
-  },
-  "os": [
-    "darwin",
-    "linux",
-    "win32"
-  ],
-  "cpu": [
-    "x64",
-    "arm64"
-  ],
+  "type": "module",
   "private": true,
-  "scripts": {
-    "prebuild": "rm -rf public",
-    "build": "gatsby build",
-    "gh-pages-help": "gh-pages --help",
-    "publish": "npm run build && gh-pages -d public -m 'Updated deployment'",
-    "develop": "gatsby develop --port 8765",
-    "start": "npm run develop",
-    "preserve": "npm run build",
-    "serve": "gatsby serve --port 9876",
-    "clean": "gatsby clean",
-    "lint": "eslint --ext .js,.jsx .",
-    "lint-fix": "npm run lint -- --fix",
-    "init": "rm -rf node_modules && npm install && npm start",
-    "clean-install": "rm -rf node_modules package-lock.json && npm i",
-    "install:apple-silicon": "npm install --ignore-scripts && npm rebuild sharp",
-    "clean-install-start": "npm run clean-install && npm run start",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "test-node-version": "node -v"
-  },
-  "dependencies": {
-    "antd": "^4.0.1",
-    "emoji-regex": "^10.2.1",
-    "font-awesome": "^4.7.0",
-    "gatsby": "^2.29.2",
-    "gatsby-image": "^2.3.1",
-    "gatsby-omni-font-loader": "^2.0.2",
-    "gatsby-plugin-antd": "^2.2.0",
-    "gatsby-plugin-dark-mode": "^1.1.2",
-    "gatsby-plugin-google-gtag": "^3.5.0",
-    "gatsby-plugin-i18n": "^1.0.1",
-    "gatsby-plugin-less": "^3.0.19",
-    "gatsby-plugin-manifest": "^2.9.1",
-    "gatsby-plugin-nprogress": "^2.2.1",
-    "gatsby-plugin-offline": "^3.1.2",
-    "gatsby-plugin-react-helmet": "^3.1.22",
-    "gatsby-plugin-robots-txt": "~1.5.5",
-    "gatsby-plugin-sharp": "^2.11.2",
-    "gatsby-plugin-sitemap": "^2.2.27",
-    "gatsby-remark-external-links": "0.0.4",
-    "gatsby-remark-images": "^3.1.44",
-    "gatsby-remark-prismjs": "^3.3.31",
-    "gatsby-source-filesystem": "^2.1.48",
-    "gatsby-transformer-remark": "^2.6.50",
-    "gatsby-transformer-sharp": "^2.4.2",
-    "less": "^3.11.1",
-    "moment": "^2.29.4",
-    "prismjs": "^1.29.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-fontawesome": "^1.7.1",
-    "react-helmet": "^5.2.1",
-    "react-pdf": "^4.1.0"
-  },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-loader": "^3.0.3",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.19.0",
-    "gatsby-plugin-eslint-v2": "^2.0.0-beta.0",
-    "gh-pages": "^3.2.0",
-    "prettier": "^1.19.1"
-  },
-  "overrides": {
-    "remark-mdx": "^1.6.22",
-    "cheerio": "1.0.0-rc.12",
-    "undici": "^5.28.4",
-    "whatwg-mimetype": "^3.0.0",
-    "whatwg-encoding": "^2.0.0",
-    "hast-util-raw": "6.1.0",
-    "sharp": "^0.32.6",
-    "gatsby-plugin-sharp": {
-      "sharp": "^0.32.6"
-    },
-    "gatsby-transformer-sharp": {
-      "sharp": "^0.32.6"
-    },
-    "gatsby-remark-images": {
-      "sharp": "^0.32.6"
-    }
+  "version": "0.0.0",
+  "description": "Personal site and blog of Momin Bin Shahid.",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=10.0.0"
   },
   "volta": {
-    "node": "16.20.2"
+    "node": "24.21.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "build:only": "astro build",
+    "preview": "astro preview --port 4321",
+    "check": "astro check",
+    "sync": "astro sync",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/rss": "4.0.19",
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.3.3",
+    "astro-expressive-code": "0.44.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "typescript": "~6.0.3"
+  },
+  "optionalDependencies": {
+    "sharp": "0.35.4"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "sharp": true
   }
 }

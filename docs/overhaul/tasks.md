@@ -175,10 +175,10 @@ Low stakes either way — he edits it maybe twice a year. Not yet decided.
 ## Cutover — do not lose
 
 - [x] **Port both `Sitemap:` lines into the Astro `robots.txt`** — DONE 2026-09-21. Real file at
-      `site/public/robots.txt`. CI fails if the MealUnits line goes missing.
+      `public/robots.txt`. CI fails if the MealUnits line goes missing.
 - [x] **Port the favicon and touch icons** — DONE 2026-09-21. All 8 regenerated from
       `src/images/logo.png` with sharp, plus `/favicon-32x32.png` and `/favicon.ico`, as real
-      files in `site/public/`. CI asserts every one.
+      files in `public/`. CI asserts every one.
 - [x] **Re-add `<meta name="theme-color">`** — DONE 2026-09-21, with `media` giving light and
       dark their own value. **Values are placeholders** (`#ffffff` / `#111111`) until the design
       pass picks real ones. Do not ship the stale `#333333`.
@@ -206,22 +206,25 @@ Low stakes either way — he edits it maybe twice a year. Not yet decided.
         Description is already good. Add the homepage and topics — see below.
 - [ ] **New social cards for the new look.** The old `og:image` was `src/images/momin.jpg`
       through `gatsby-plugin-sharp` and predates the redesign.
-      **Interim, shipped 2026-09-21:** `site/public/og-default.png`, 1200x630, name and role
+      **Interim, shipped 2026-09-21:** `public/og-default.png`, 1200x630, name and role
       on a plain dark ground. It exists because an `og:image` pointing at a 404 is worse than
       a plain card — not because it is the design. **Replace it in the design pass**, and give
       posts their own cards at the same time.
       `og:title` is fixed: the homepage now reports `Momin Bin Shahid` rather than `Home`
       (or the old `About`, which was only ever correct because the homepage *was* the about
       page).
-- [x] **Ship `/.nojekyll`** — DONE 2026-09-21. Zero-byte file in `site/public/`, asserted by CI
+- [x] **Ship `/.nojekyll`** — DONE 2026-09-21. Zero-byte file in `public/`, asserted by CI
       and by `verify-deploy.sh`.
-- [ ] **Delete `.github/workflows/deployment.yml` in the cutover commit.** Both it and
+- [x] **Delete `.github/workflows/deployment.yml`** — DONE 2026-09-21, removed with the
+      Gatsby tree. It still exists on `main`, so the live site keeps deploying until the
+      merge. `site.yml`'s interlock is kept anyway, in case a merge ever brings it back.
+- [ ] ~~Delete `.github/workflows/deployment.yml` in the cutover commit.~~ Both it and
       `site.yml` deploy from `main` and both push to `gh-pages`, so leaving it means two
       workflows race and the winner is whichever finishes last. `site.yml`'s deploy job
       hard-fails while that file exists, so the cutover cannot silently get this wrong —
       but it will also not deploy until the file is gone.
-- [ ] **Decide whether to flatten `site/` to the repo root before cutover.** The Astro
-      project sits in `site/` so both it and the Gatsby build can have their own
+- [ ] **Decide whether to flatten `` to the repo root before cutover.** The Astro
+      project sits in `` so both it and the Gatsby build can have their own
       `node_modules`. Flattening is `git mv site/* .` plus removing the Gatsby tree, and
       only three places know the path: `astro.config.mjs`, and the workflow's
       `working-directory` and `publish_dir`. **Needs Momin's explicit yes** — it deletes

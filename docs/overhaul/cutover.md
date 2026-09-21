@@ -134,7 +134,7 @@ So rehearse it deliberately, **before** the cutover, against a local preview.
    install. Confirm in DevTools → Application → Service Workers that `/sw.js` is
    *activated and running*, and note the `gatsby-plugin-offline-*` entries under Cache
    Storage.
-2. **Point that same profile at the new build.** Serve `site/dist` on the same origin the
+2. **Point that same profile at the new build.** Serve `dist` on the same origin the
    worker is scoped to. A different port is a different origin and proves nothing.
 3. **Navigate, do not hard-refresh.** The browser re-checks `/sw.js` on navigation. Hard
    refresh bypasses the worker and hides whether the replacement actually took over.

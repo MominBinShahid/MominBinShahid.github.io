@@ -877,7 +877,7 @@ The Astro site was scaffolded and built to the point where only visual design is
 left. Everything below was decided while building, and several of them are
 deviations from sections above — those say so explicitly.
 
-## The project lives in `site/`, not at the repo root
+## The project lives in ``, not at the repo root
 
 The branch could have replaced the repo root outright, since `main` still holds every
 Gatsby file and nothing would be lost. It does not, for one practical reason: there is
@@ -887,7 +887,7 @@ without reinstalling anything.
 
 **This is reversible and probably should be reversed before cutover.** Flattening is
 `git mv site/* .` plus removing the Gatsby files, and doing it early is better than
-doing it during the cutover. It needs Momin's explicit yes because it deletes the
+doing it during the cutover. That is what happened. It needs Momin's explicit yes because it deletes the
 Gatsby tree from the branch. Until then, `astro.config.mjs`, the workflow's
 `working-directory` and `publish_dir` are the only three places that know.
 
@@ -911,7 +911,7 @@ removes the assumption and replaces it with "every new page must be remembered".
 ## `.gitignore` had a bug that would have deleted the entire cutover
 
 The root `.gitignore` carried `public` unanchored, for Gatsby's build output. Unanchored,
-it also matched `site/public/` — which under Astro is a **source** directory holding
+it also matched `public/` — which under Astro is a **source** directory holding
 `.nojekyll`, `robots.txt`, `sw.js`, the favicon and all eight icons.
 
 Every ported static file was being silently excluded from every commit. It would have
@@ -921,7 +921,7 @@ failure that serves unstyled HTML and still returns 200.
 Fixed by anchoring it to `/public`. Gatsby's output is still ignored.
 
 **And it was not the only one.** A second rule, `Icon?`, was excluding the entire
-`site/public/icons/` directory. It exists to ignore the macOS custom-folder-icon file,
+`public/icons/` directory. It exists to ignore the macOS custom-folder-icon file,
 which is literally named `Icon` followed by a carriage return. But `?` matches any single
 character, and `core.ignorecase` defaults to **true** on macOS, so `Icon?` also matches a
 directory named `icons` — one of the most common directory names there is.
@@ -936,7 +936,7 @@ person would name. Verified both directions: the icons stage, and a literal `Ico
 still ignored.
 
 Then checked exhaustively rather than assuming those were the last two — every file under
-`site/` run through `git check-ignore`. Nothing else is excluded.
+`` run through `git check-ignore`. Nothing else is excluded.
 
 This one is worth remembering as a category: an ignore rule written for one purpose
 silently applying to another. Both of these were invisible locally, because the files
@@ -1014,3 +1014,40 @@ exactly 0.35.4. `npm audit` reports zero vulnerabilities.
 
 `typescript` pinned to `~6.0.3`. Verified rather than assumed: `@astrojs/check`'s peer
 range is `^5.0.0 || ^6.0.0`, so TS 7.0.2 would break it.
+
+## Sequencing: clean the branch first, `legacy-site` last — Momin's call, 2026-09-21
+
+Two orders were on the table. Create `legacy-site` now and then strip Gatsby from the
+branch, or strip the branch now and build `legacy-site` at cutover. Momin picked the
+second and was right.
+
+The earlier note said "create `legacy-site` before replacing the default branch". Stripping
+Gatsby from the `overhaul` branch is **not** replacing the default branch — `main` is
+untouched and pushed. So the constraint is satisfied as long as `legacy-site` exists before
+the **merge**, and nothing was violated.
+
+The real argument is that `legacy-site` is a *build* job, not a copy job: `pathPrefix`,
+`--prefix-paths`, dropping `gatsby-plugin-offline`, adding `noindex`, on Node 16, with
+`config.js` throwing in production unless two env vars are set. Doing that while the Astro
+branch was still in flight would have been two fragile things at once.
+
+**Nothing is lost by deleting Gatsby from this branch.** `git show main:config.js` and
+`git diff main -- src/` read straight out of `main` without restoring anything, and the
+`gatsby-final` tag names the exact commit to clone.
+
+### The secrets cannot be copied, by design
+
+GitHub's API exposes secret **names** and creation dates, never values. There are exactly
+two on this repo, both created 2022-01-02:
+
+- `CONTACT_FORM_ENDPOINT`
+- `GA_TRACKING_ID`
+
+Momin sets them by hand on `legacy-site`. This is not a permissions gap to work around.
+
+### One file was salvaged rather than discarded
+
+`git rm` refused to delete `content/2020-21-20-code-splitting-in-react/index.md` because it
+had an uncommitted change — correctly. That one-line edit existed nowhere else. It is saved
+as `docs/overhaul/legacy/uncommitted-gatsby-edit.patch` with instructions, rather than
+force-removed and lost.

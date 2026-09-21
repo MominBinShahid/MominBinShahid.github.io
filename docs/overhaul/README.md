@@ -20,8 +20,9 @@ cold — a future session, or me in three months — read these four files in or
 | `profile-readme-variants.md` | Three GitHub profile README drafts, plus widget research. |
 | `design/` | References, the selling study, the cross-round review, 15 rejected builds. |
 
-The code lives in [`../site/`](../../site/), which has its own `README.md` and an
-`AGENTS.md` listing the invariants that are easy to break by accident.
+The code lives at the repo root — this branch *is* the new site. `AGENTS.md` there lists
+the invariants that are easy to break by accident. The Gatsby code it replaced is preserved
+at the `gatsby-final` tag and is what `legacy-site` will be built from.
 
 ## Why rewrite
 
@@ -44,7 +45,7 @@ it is a landing page being built properly, with an empty blog waiting behind it.
 6. **Freeze the old site** → `legacy-site` repo, one final Gatsby 2 build with `pathPrefix`.
 7. **Design round** — multiple mockups as artifacts, Momin picks, then build.
 8. ~~**Build the Astro site**~~ — **structure done 2026-09-21**, on the `overhaul` branch,
-   in `site/`. Astro 7.3.3 on Node 24.21.0, content collections with a typed schema and the
+   in ``. Astro 7.3.3 on Node 24.21.0, content collections with a typed schema and the
    draft field, RSS, sitemap, every ported static file, CI that asserts them, and both blog
    posts. `verify-deploy.sh` passes 20/20 against a local preview.
    **Stopped before visual design**, as agreed — every page is semantic single-column flow
@@ -65,8 +66,7 @@ it is a landing page being built properly, with an empty blog waiting behind it.
 - Momin's decision on moving MealUnits (recommendation: yes, see decisions.md)
 - **Design direction — the only thing now blocking the site.** Needs Momin's reference
   sites and hints, then the mockup round.
-- Whether to flatten `site/` to the repo root before cutover (see `tasks.md`)
-- Whether post 1 says outright that the old blog had none of Momin's own posts
+- Whether to flatten `` to the repo root before cutover (see `tasks.md`)
 - Whether to buy a personal domain (~$10/yr) — optional, see decisions.md
 - `post-deploy-checklist.md` — every URL and `<head>` item the current build emits,
   enumerated live. What to check after the cutover and what may legitimately vanish.

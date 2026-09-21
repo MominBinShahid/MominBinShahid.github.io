@@ -1,44 +1,25 @@
-<p align="center">
-  <a href="https://MominBinShahid.github.io">
-    <img alt="man technologist smiley" src="./src/images/logo.png" width="60" />
-  </a>
-</p>
-<h1 align="center">Welcome 👋 to my new home on the web 🕸<br/> <a href='https://MominBinShahid.github.io/' target='_blank'>MominBinShahid.github.io</a> 🏠
-</h1>
-<h3 align="center">Created with ❤️ Using Gatsby.js ⚡️</h3>
+# mominbinshahid.github.io
 
-This project\* was built on new standard† architecture for the web [JAMstack](https://jamstack.org/) 🤩 using [React.js](https://reactjs.org/) via [Gatsby.js](https://www.gatsbyjs.com/) powered by `Github Pages`
+Personal site and blog. Astro 7, static, deployed to GitHub Pages.
 
-![Github Actions Deployment](https://github.com/MominBinShahid/MominBinShahid.github.io/actions/workflows/deployment.yml/badge.svg)
+Node 24 — `.nvmrc` pins the exact version and fnm/nvm/asdf/mise all read it.
 
-## Acknowledgements
+```sh
+npm ci
+npm run dev
+```
 
-Mentioned below are some of the technologies and contributors that make this possible and I wanted to present my tribute 🙏 and complete credit to all of them 👏
+`npm run build` runs `astro check` first, so a type error or a malformed post fails
+before anything is written.
 
-[**`rolwinreevan_gatsby_blog`**](https://github.com/rolwin100/rolwinreevan_gatsby_blog): Before we talk about any technologies involved I wanted to give a gigantic shout-out to this awesome starter project for Gatsby.js. This also includes [ant.design](https://ant.design/), and [LESS](https://lesscss.org/) and many more
+Posts carry `published: true` in their frontmatter. Leave it out, or set it to `false`,
+and the post stays off the built site entirely — no page, no feed entry, no sitemap row —
+while still being visible in `npm run dev` so you can read it back.
 
-For more details: visit [this starter on gatsby.js site](https://www.gatsbyjs.com/starters/rolwin100/rolwinreevan_gatsby_blog) do visit this starter and star this project 👍 as this is probably one of the best starters for gatsby.js till now, check for yourself and to the contributor I am eternally grateful for the time and effort you put in to create this awesome starter ✊
+The site currently has **no visual design**. Every page is semantic single-column
+document flow on purpose, because a plain document can become anything later and a
+designed layout can only become a similar layout. Design is the next piece of work.
 
-[**`Gatsby.js`**](https://www.gatsbyjs.com/): One of the best static site generator, 🚀 used to build blazing fast and modern apps and websites based on React.js and Node.js. And its awesome list of remarkable plugins makes adding a new feature hassle-free 👌
-
-[**`FormSubmit.co`**](https://formsubmit.co/): Magic forms for JAM Stack based apps, No backend/registration needed and it's unlimited hence, simply the best 🙌
-
-[**`Autoprefixer.github.io`**](https://autoprefixer.github.io/): Hassle-free way to add vendor prefixes to your CSS rules 🛠 using values from [Can I Use](https://caniuse.com/). It is recommended by Google and used on Twitter and Alibaba 🤯
-
-[**`VS Code`**](https://code.visualstudio.com/): Time for some biasness 😅 so, here it is "Best Code Editor of Milky Way and Andromeda" 😎
-
-With all these above, I would also like to mention ✍️ and show my eternal gratitude 🙇 to these awesome techs such as [**`Canva`**](https://canva.com) for stupendous resume, [**`icon8`**](https://icons8.com/) for astounding icons, [**`fontawesome`**](https://fontawesome.com/v4.7/icons/) for incredible icons, even wanted to mention this subtle button [effect](https://www.fabriziovanmarciano.com/button-styles/#:~:text=this%20button%20below.-,Button%20E%20Preview,-ADD%20CALL%20TO) and definitely [**`Github`**](https://github.com) for everything ❤️
-
-## Setup
-
-Follow [docs/setup.md](docs/setup.md) to setup for development
-
-## Notes
-
-\* Repo contains the code for the personal website
-<br/>
-† Opinionated statement based on the use-case
-
----
-
-### Visit the website at [MominBinShahid.github.io](https://MominBinShahid.github.io) and feel free to reach out if you have any questions or suggestions or just want to have a chat 🤟
+Everything about why this project exists and how it was decided is in
+[`docs/overhaul/`](docs/overhaul/). `AGENTS.md` lists the
+invariants that are easy to break by accident.

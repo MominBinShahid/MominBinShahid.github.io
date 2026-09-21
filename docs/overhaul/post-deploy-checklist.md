@@ -41,7 +41,7 @@ All five were live 200s. The first two were already ported; the next two are now
 | `/MominBinShahid_Legacy.pdf` | 200 | **ported** — the old résumé; someone may hold the link |
 | `/gatsby_favicon.ico` | 200 | **404 on purpose.** It is the Gatsby default favicon, branding for a framework we are leaving. Deliberate, not an oversight. |
 
-The two sources the build needs are kept too, in `site/src/assets/brand/`: `logo.png`, which
+The two sources the build needs are kept too, in `src/assets/brand/`: `logo.png`, which
 all eight icons are generated from, and `momin.jpg`, which the real social card will use.
 Neither is served; they exist so the outputs stay regenerable.
 
