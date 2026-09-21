@@ -44,3 +44,47 @@ Worth knowing either way: that post is **not live**. `/blog/code-splitting-in-re
 returns 404 and the live `/blog/` lists zero posts, so the edit changes nothing a visitor
 sees. It was preserved because discarding someone's uncommitted work without asking is not
 ours to do.
+
+
+---
+
+## The original coming-soon page — where it lives now
+
+`feature/coming-soon-page` was deleted during the 2026-09-21 branch cleanup. **The page
+itself was not lost**, because it was never unique to that branch.
+
+`index.html` was added in commit `fd2b80c`, which is an **ancestor of `main`**. So this
+works regardless of which branches exist:
+
+```sh
+git show fd2b80c:index.html > coming-soon.html
+```
+
+The only commit unique to that branch tip was `1093616`, which *deleted* a `CNAME` file.
+Nothing else.
+
+### Do not redeploy it as-is
+
+If a holding page is ever wanted again, write a new one rather than resurrecting this.
+Three reasons, all checked:
+
+1. **It is a third-party template** from comingsoonpage.com / SeedProd, licensed
+   **CC BY-NC-ND 4.0** — Attribution, NonCommercial, and crucially **NoDerivatives**.
+   Modifying it to say Momin's name is exactly what that licence forbids.
+2. **It was never configured.** The headline still reads "Coming Soon Page", the body
+   "Get ready! Something really cool is coming!", and the logo is SeedProd's own. The
+   nine-step checklist in its HTML comments was never done.
+3. **It depends on six external CDNs**, all pinned to 2016-era versions: Font Awesome 4.5,
+   Bootstrap 3.3.7, jQuery 1.12.4, Modernizr 2.8.3, Google Fonts, an Unsplash background,
+   plus SeedProd's own asset host. Any one going away breaks the page.
+
+A holding page in the new site is a single `.astro` file with no dependencies, using the
+tokens and layout that already exist. That is a shorter job than fixing the old one, and
+the result is actually his.
+
+### The `CNAME` thread
+
+That branch's last commit removed a `CNAME` file, which is what GitHub Pages reads to serve
+a site on a custom domain. So a custom domain was configured around 2021 and then removed.
+Relevant to the still-open domain question in `decisions.md`, including the finding that a
+custom domain on the user site cascades onto `/MealUnits/` as well.
