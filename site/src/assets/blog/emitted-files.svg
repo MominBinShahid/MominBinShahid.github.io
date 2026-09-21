@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" width="760" height="420"
+     role="img" aria-label="One file in git fanning out to ten files generated at build time.">
+  <style>
+    :root { color-scheme: light dark; }
+    .bg   { fill: #ffffff; }
+    .card { fill: #f6f6f7; stroke: #e2e2e6; }
+    .ink  { fill: #18181b; }
+    .dim  { fill: #5c5c66; }
+    .keep { fill: #1c7c4a; }
+    .gone { fill: #b0303a; }
+    .fan  { stroke: #b0303a; fill: none; opacity: .5; }
+    text  { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    @media (prefers-color-scheme: dark) {
+      .bg   { fill: #111111; }
+      .card { fill: #1a1a1c; stroke: #2c2c30; }
+      .ink  { fill: #e8e8ea; }
+      .dim  { fill: #a0a0aa; }
+      .keep { fill: #5fd08a; }
+      .gone { fill: #ff8a90; }
+      .fan  { stroke: #ff8a90; }
+    }
+  </style>
+
+  <rect class="bg" width="760" height="420"/>
+  <text class="ink" x="28" y="32" font-size="16" font-weight="600">One entry in gatsby-config.plugins.js</text>
+  <text class="dim" x="28" y="54" font-size="12.5">gatsby-plugin-manifest, with legacy: true</text>
+
+  <path class="fan" d="M278 222.0 C348 222.0, 360 96, 430 96" stroke-width="1"/>
+  <path class="fan" d="M278 222.0 C348 222.0, 360 124, 430 124" stroke-width="1"/>
+  <path class="fan" d="M278 222.0 C348 222.0, 360 152, 430 152" stroke-width="1"/>
+  <path class="fan" d="M278 222.0 C348 222.0, 360 180, 430 180" stroke-width="1"/>
+  <path class="fan" d="M278 222.0 C348 222.0, 360 208, 430 208" stroke-width="1"/>
+  <path class="fan" d="M278 222.0 C348 222.0, 360 236, 430 236" stroke-width="1"/>
+  <path class="fan" d="M278 222.0 C348 222.0, 360 264, 430 264" stroke-width="1"/>
+  <path class="fan" d="M278 222.0 C348 222.0, 360 292, 430 292" stroke-width="1"/>
+  <path class="fan" d="M278 222.0 C348 222.0, 360 320, 430 320" stroke-width="1"/>
+  <path class="fan" d="M278 222.0 C348 222.0, 360 348, 430 348" stroke-width="1"/>
+
+  <rect class="card" x="28" y="188.0" width="250" height="68" rx="9" stroke-width="1"/>
+  <text class="keep" x="48" y="210.0" font-size="10.5" font-weight="700" letter-spacing="1.3">TRACKED IN GIT</text>
+  <text class="mono ink" x="48" y="234.0" font-size="13">src/images/logo.png</text>
+
+  <rect class="card" x="430" y="52" width="302" height="334" rx="9" stroke-width="1"/>
+  <text class="gone" x="450" y="74" font-size="10.5" font-weight="700" letter-spacing="1.3">GENERATED AT BUILD TIME</text>
+    <text x="450" y="100" font-size="12.5" class="mono ink">/icons/icon-48x48.png</text>
+    <text x="450" y="128" font-size="12.5" class="mono ink">/icons/icon-72x72.png</text>
+    <text x="450" y="156" font-size="12.5" class="mono ink">/icons/icon-96x96.png</text>
+    <text x="450" y="184" font-size="12.5" class="mono ink">/icons/icon-144x144.png</text>
+    <text x="450" y="212" font-size="12.5" class="mono ink">/icons/icon-192x192.png</text>
+    <text x="450" y="240" font-size="12.5" class="mono ink">/icons/icon-256x256.png</text>
+    <text x="450" y="268" font-size="12.5" class="mono ink">/icons/icon-384x384.png</text>
+    <text x="450" y="296" font-size="12.5" class="mono ink">/icons/icon-512x512.png</text>
+    <text x="450" y="324" font-size="12.5" class="mono ink">/favicon-32x32.png</text>
+    <text x="450" y="352" font-size="12.5" class="mono ink">/manifest.webmanifest</text>
+
+  <text class="dim" x="28" y="386" font-size="12">Ten live URLs from one configured plugin. Remove the plugin</text>
+  <text class="dim" x="28" y="404" font-size="12">and every one of them 404s.</text>
+</svg>

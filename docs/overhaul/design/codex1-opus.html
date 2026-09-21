@@ -1,0 +1,848 @@
+<title>Beyond the Sample (Opus)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ── tokens ───────────────────────────────────────────────────────────── */
+:root{
+  --bg:#F2F5F7;
+  --surface:#FFFFFF;
+  --surface-2:#E8EEF2;
+  --border:#D3DCE3;
+  --hair:#E2E8ED;
+  --text:#151D24;
+  --muted:#56636E;
+  --on-accent:#FFFFFF;
+
+  --acc-l:#1250D6; --acc-d:#77A2FF;
+  --accent:var(--acc-l);
+
+  --ff-display:"Barlow Condensed","Oswald","Arial Narrow",Helvetica,Arial,sans-serif;
+  --ff-body:"IBM Plex Sans","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --ff-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --pad:clamp(20px,5vw,64px);
+  --rule:clamp(56px,9vh,104px);
+}
+:root[data-accent="raspberry"]{ --acc-l:#BE1352; --acc-d:#FF7FA5; }
+:root[data-accent="teal"]{ --acc-l:#00706A; --acc-d:#4BD9C7; }
+
+:root[data-theme="dark"]{
+  --bg:#061821;
+  --surface:#0B2531;
+  --surface-2:#0F2F3D;
+  --border:#1B4253;
+  --hair:#123344;
+  --text:#DEEAF0;
+  --muted:#8FAEBC;
+  --on-accent:#04141C;
+  --accent:var(--acc-d);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]):not([data-theme="dark"]){
+    --bg:#061821; --surface:#0B2531; --surface-2:#0F2F3D;
+    --border:#1B4253; --hair:#123344; --text:#DEEAF0; --muted:#8FAEBC;
+    --on-accent:#04141C; --accent:var(--acc-d);
+  }
+}
+
+/* ── base ─────────────────────────────────────────────────────────────── */
+*,*::before,*::after{ box-sizing:border-box; }
+.mbs{
+  font-family:var(--ff-body);
+  background:var(--bg);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  margin:0;
+  min-height:100vh;
+}
+.mbs p{ margin:0 0 1em; }
+.mbs p:last-child{ margin-bottom:0; }
+.mbs a{ color:inherit; }
+.mbs :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:1px; }
+.mbs ::selection{ background:var(--accent); color:var(--on-accent); }
+
+.wrap{ max-width:1200px; margin:0 auto; padding-left:var(--pad); padding-right:var(--pad); }
+
+.skip{
+  position:absolute; left:-9999px; top:0; z-index:50;
+  background:var(--accent); color:var(--on-accent);
+  padding:10px 16px; font:500 13px/1 var(--ff-mono); text-decoration:none;
+}
+.skip:focus{ left:12px; top:12px; }
+
+.kick{
+  font:500 11px/1.4 var(--ff-mono);
+  letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+  margin:0 0 6px;
+}
+.kick .n{ color:var(--accent); }
+
+/* ── nav ──────────────────────────────────────────────────────────────── */
+.nav{
+  position:sticky; top:0; z-index:30;
+  background:var(--bg);
+  background:color-mix(in srgb, var(--bg) 72%, transparent);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color .2s ease, background .2s ease;
+}
+.nav[data-stuck="1"]{ border-bottom-color:var(--hair); }
+.nav-in{
+  display:flex; align-items:center; gap:14px;
+  min-height:60px; flex-wrap:wrap;
+}
+.brand{
+  display:inline-flex; align-items:baseline; gap:8px;
+  text-decoration:none; font-size:15px; margin-right:auto; white-space:nowrap;
+}
+.brand .mark{ font-size:15px; line-height:1; }
+.brand b{ font-weight:600; letter-spacing:-.01em; }
+.brand span.l{ font-weight:400; color:var(--muted); }
+
+.tabs{ display:flex; gap:2px; background:transparent; }
+.tab{
+  font:500 13px/1 var(--ff-body);
+  background:none; border:0; color:var(--muted);
+  padding:8px 12px; cursor:pointer; border-radius:2px;
+  position:relative;
+}
+.tab:hover{ color:var(--text); }
+.tab[aria-selected="true"]{ color:var(--text); }
+.tab[aria-selected="true"]::after{
+  content:""; position:absolute; left:12px; right:12px; bottom:2px;
+  height:2px; background:var(--accent);
+}
+.nav-sep{ width:1px; height:18px; background:var(--border); }
+.nav-res{
+  font:500 13px/1 var(--ff-body); text-decoration:none; color:var(--muted);
+  padding:8px 4px; white-space:nowrap;
+}
+.nav-res:hover{ color:var(--text); }
+.nav-res .arw{ color:var(--accent); }
+.tgl{
+  width:32px; height:32px; display:grid; place-items:center;
+  background:none; border:1px solid var(--border); border-radius:2px;
+  color:var(--muted); cursor:pointer; padding:0;
+}
+.tgl:hover{ color:var(--text); border-color:var(--muted); }
+.tgl svg{ width:15px; height:15px; display:block; }
+
+/* ── buttons ──────────────────────────────────────────────────────────── */
+.cta-row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+.btn{
+  font:600 15px/1 var(--ff-body);
+  display:inline-flex; align-items:center; gap:10px;
+  padding:14px 20px; border-radius:2px; text-decoration:none; cursor:pointer;
+  border:1px solid transparent; white-space:nowrap;
+  transition:transform .12s ease, background .15s ease, border-color .15s ease;
+}
+.btn:active{ transform:translateY(1px); }
+.btn-1{ background:var(--accent); color:var(--on-accent); }
+.btn-1:hover{ background:color-mix(in srgb, var(--accent) 86%, var(--text)); }
+.btn-2{
+  background:transparent; color:var(--text); border-color:var(--border);
+}
+.btn-2:hover{ border-color:var(--accent); }
+.btn .arw{ font-family:var(--ff-mono); font-size:13px; opacity:.8; }
+.cta-note{ font:400 12px/1.5 var(--ff-mono); color:var(--muted); }
+
+/* ── panels / sections ────────────────────────────────────────────────── */
+.panel:focus{ outline:none; }
+.sec{ border-top:1px solid var(--hair); padding:var(--rule) 0; }
+.grid{ display:grid; grid-template-columns:minmax(0,1fr); gap:10px 40px; }
+@media (min-width:980px){
+  .grid{ grid-template-columns:172px minmax(0,1fr); }
+  .grid > .kick{ margin-top:8px; }
+}
+.prose{ max-width:64ch; }
+.h2{
+  font-family:var(--ff-display); font-weight:600;
+  font-size:clamp(30px,4.4vw,46px); line-height:1.02; letter-spacing:-.005em;
+  margin:0 0 18px; max-width:18ch;
+}
+.lede{ font-size:clamp(17px,1.9vw,20px); line-height:1.5; }
+.small{ font-size:15px; color:var(--muted); }
+
+/* ── hero ─────────────────────────────────────────────────────────────── */
+.hero{ position:relative; padding:clamp(40px,8vh,84px) 0 clamp(36px,6vh,64px); }
+.hero::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:repeating-linear-gradient(to right, var(--hair) 0 1px, transparent 1px 88px);
+  opacity:.55;
+  -webkit-mask-image:linear-gradient(to bottom, transparent, #000 18%, #000 62%, transparent);
+  mask-image:linear-gradient(to bottom, transparent, #000 18%, #000 62%, transparent);
+}
+.hero > *{ position:relative; z-index:1; }
+.eyebrow{
+  font:500 12px/1.5 var(--ff-mono); letter-spacing:.1em; color:var(--muted);
+  margin:0 0 clamp(16px,3vh,28px);
+}
+.h1{
+  font-family:var(--ff-display); font-weight:700;
+  font-size:clamp(46px,10.4vw,132px);
+  line-height:.86; letter-spacing:-.012em;
+  margin:0; overflow-wrap:break-word;
+}
+.h1 .lo{ font-weight:400; color:var(--muted); }
+.h1 .hi{ color:var(--text); }
+.h1 .acc{ color:var(--accent); display:block; }
+.h1 .lo, .h1 .hi{ display:block; }
+.h1 .hi{ text-indent:.055em; }
+
+.field{ margin:clamp(26px,4.5vh,44px) 0 0; }
+.field canvas{ display:block; width:100%; max-width:100%; height:92px; }
+.field figcaption{
+  font:400 11.5px/1.5 var(--ff-mono); color:var(--muted);
+  margin-top:10px; letter-spacing:.02em;
+  display:flex; gap:16px; justify-content:space-between; flex-wrap:wrap;
+}
+.field figcaption .r{ text-align:right; }
+
+.hero-sub{
+  margin:clamp(26px,4vh,40px) 0 0;
+  display:grid; gap:26px; align-items:start;
+  grid-template-columns:minmax(0,1fr);
+}
+@media (min-width:900px){
+  .hero-sub{ grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:44px; }
+}
+.hero-sub .sub{ font-size:clamp(17px,2vw,21px); line-height:1.45; max-width:46ch; margin:0; }
+.hero-sub .sub .ag{ color:var(--accent); }
+.hero-cta{ display:grid; gap:12px; justify-items:start; }
+
+/* ── problem list ─────────────────────────────────────────────────────── */
+.probs{ display:grid; gap:0; }
+.prob{ padding:22px 0; border-top:1px solid var(--hair); }
+.probs > .prob:first-child{ border-top:0; padding-top:0; }
+.prob h3{
+  font-family:var(--ff-display); font-weight:600; letter-spacing:-.005em;
+  font-size:clamp(21px,2.4vw,27px); line-height:1.1; margin:0 0 8px;
+}
+.prob.lead h3{ font-size:clamp(25px,3.2vw,36px); }
+.prob.lead p{ font-size:18px; }
+.prob p{ color:var(--muted); max-width:58ch; margin:0; }
+@media (min-width:760px){
+  .probs .pair{ display:grid; grid-template-columns:1fr 1fr; gap:0 40px; }
+  .probs .pair .prob{ border-top:1px solid var(--hair); }
+}
+.plain{
+  margin-top:30px; padding:20px 22px;
+  border:1px solid var(--border); border-radius:2px;
+  background:var(--surface);
+  font-family:var(--ff-display); font-weight:500;
+  font-size:clamp(19px,2.3vw,26px); line-height:1.25; letter-spacing:-.005em;
+}
+.plain span{ display:block; }
+.plain span + span{ margin-top:2px; }
+.plain .d{ color:var(--accent); }
+
+/* ── evidence ─────────────────────────────────────────────────────────── */
+.stack{
+  display:flex; flex-wrap:wrap; gap:6px; margin:22px 0 0; padding:0; list-style:none;
+}
+.stack li{
+  font:500 12px/1 var(--ff-mono); letter-spacing:.04em;
+  border:1px solid var(--border); border-radius:2px;
+  padding:7px 10px; color:var(--muted); background:var(--surface);
+}
+.caveat{
+  margin-top:28px; padding-left:14px; border-left:2px solid var(--border);
+  font-size:13.5px; color:var(--muted); max-width:56ch;
+}
+.pointer{
+  margin-top:28px; padding-top:22px; border-top:1px solid var(--hair);
+  display:grid; gap:14px; justify-items:start;
+}
+.pointer p{ font-size:17px; max-width:52ch; }
+
+/* ── steps ────────────────────────────────────────────────────────────── */
+.steps{ margin:0; padding:0; list-style:none; counter-reset:s; }
+.steps li{
+  display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 16px;
+  padding:20px 0; border-top:1px solid var(--hair);
+}
+.steps li:first-child{ border-top:0; padding-top:0; }
+.steps li::before{
+  counter-increment:s; content:"0" counter(s);
+  font:500 12px/1.9 var(--ff-mono); color:var(--accent); letter-spacing:.08em;
+}
+.steps h3{
+  font-family:var(--ff-display); font-weight:600; font-size:clamp(20px,2.2vw,25px);
+  line-height:1.15; margin:0 0 5px; letter-spacing:-.005em;
+}
+.steps p{ color:var(--muted); margin:0; max-width:56ch; }
+
+/* ── intro ────────────────────────────────────────────────────────────── */
+.intro p{ font-size:17.5px; max-width:60ch; }
+.intro .quote{
+  font-family:var(--ff-display); font-weight:500;
+  font-size:clamp(23px,3vw,34px); line-height:1.12; letter-spacing:-.005em;
+  color:var(--text); margin:26px 0; max-width:20ch;
+}
+.meal{
+  margin-top:26px; padding:18px 20px; border:1px solid var(--border);
+  border-radius:2px; background:var(--surface);
+}
+.meal .t{
+  font:500 11px/1.4 var(--ff-mono); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--accent); margin:0 0 8px;
+}
+.meal p{ font-size:15.5px; color:var(--muted); margin:0; max-width:58ch; }
+
+/* ── closing ──────────────────────────────────────────────────────────── */
+.close{ padding:clamp(70px,12vh,130px) 0 clamp(50px,8vh,80px); border-top:1px solid var(--hair); }
+.close .h1c{
+  font-family:var(--ff-display); font-weight:700;
+  font-size:clamp(40px,8vw,96px); line-height:.92; letter-spacing:-.012em;
+  margin:0 0 26px; max-width:14ch;
+}
+.close .h1c em{ font-style:normal; color:var(--accent); }
+
+/* ── footer ───────────────────────────────────────────────────────────── */
+.foot{ border-top:1px solid var(--hair); padding:26px 0 40px; }
+.foot-in{
+  display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center;
+  font:400 13px/1.6 var(--ff-mono); color:var(--muted);
+}
+.foot-in nav{ display:flex; flex-wrap:wrap; gap:18px; margin-right:auto; }
+.foot-in a{ color:var(--muted); text-decoration:none; }
+.foot-in a:hover{ color:var(--text); text-decoration:underline; text-underline-offset:3px; }
+
+/* ── contact ──────────────────────────────────────────────────────────── */
+.contact-top{ padding:clamp(40px,7vh,76px) 0 clamp(40px,8vh,90px); min-height:calc(100vh - 170px); }
+.contact-grid{
+  display:grid; gap:34px; margin-top:34px;
+  grid-template-columns:minmax(0,1fr);
+}
+@media (min-width:860px){
+  .contact-grid{ grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:56px; }
+}
+.prompts{ margin:0; padding:0; list-style:none; counter-reset:p; }
+.prompts li{
+  padding:16px 0; border-top:1px solid var(--hair); color:var(--muted); font-size:15.5px;
+}
+.prompts li:first-child{ border-top:0; padding-top:0; }
+.prompts li::before{
+  counter-increment:p; content:"0" counter(p);
+  font:500 11px/1 var(--ff-mono); color:var(--accent);
+  display:block; margin-bottom:6px; letter-spacing:.1em;
+}
+.prompts li b{ color:var(--text); font-weight:600; }
+
+.composer label{
+  display:block; font:500 11px/1.4 var(--ff-mono); letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:10px;
+}
+.composer textarea{
+  width:100%; min-height:190px; resize:vertical;
+  font:400 15.5px/1.6 var(--ff-body);
+  color:var(--text); background:var(--surface);
+  border:1px solid var(--border); border-radius:2px; padding:16px;
+}
+.composer textarea::placeholder{ color:var(--muted); opacity:.75; }
+.composer textarea:focus{ outline:2px solid var(--accent); outline-offset:1px; border-color:transparent; }
+.composer .row{ margin-top:16px; display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+.composer .note{ font:400 12.5px/1.55 var(--ff-mono); color:var(--muted); max-width:44ch; margin-top:14px; }
+
+.card-lines{
+  margin-top:40px; padding-top:26px; border-top:1px solid var(--hair);
+  display:flex; flex-wrap:wrap; gap:12px 44px;
+  font:400 13.5px/1.7 var(--ff-mono); color:var(--muted);
+}
+.card-lines .k{ color:var(--text); }
+.cmail{ color:var(--text); text-decoration:none; border-bottom:1px solid var(--accent); }
+.cmail:hover{ color:var(--accent); }
+.cmail .u::before{ content:"MominBinShahid"; }
+.cmail .d::before{ content:"\0040" "gmail" "\002E" "com"; }
+
+.hidden{ display:none !important; }
+
+@media (prefers-reduced-motion:reduce){
+  .mbs *{ transition:none !important; animation:none !important; }
+}
+</style>
+
+<div class="mbs">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#main">
+      <span class="mark" aria-hidden="true">👨‍💻</span>
+      <span><b>Momin</b> <span class="l">Bin Shahid</span></span>
+    </a>
+
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" role="tab" id="tab-home" aria-controls="view-home" aria-selected="true" type="button">Home</button>
+      <button class="tab" role="tab" id="tab-contact" aria-controls="view-contact" aria-selected="false" type="button">Contact</button>
+    </div>
+
+    <span class="nav-sep" aria-hidden="true"></span>
+    <a class="nav-res" href="/resume">Résumé <span class="arw" aria-hidden="true">↗</span></a>
+
+    <button class="tgl" type="button" id="themeBtn" aria-label="Switch to dark mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" id="themeIcon">
+        <circle cx="12" cy="12" r="4.2"></circle>
+        <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ════════════════════════════ HOME ════════════════════════════ -->
+<div class="panel" id="view-home" role="tabpanel" aria-labelledby="tab-home" tabindex="-1">
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Momin Bin Shahid · Full-Stack &amp; AI Engineer · Karachi, Pakistan</p>
+
+      <h1 class="h1">
+        <span class="lo">5–8 calls a day</span> <span class="hi">to hundreds daily.</span>
+        <span class="acc">92% accuracy.</span>
+      </h1>
+
+      <figure class="field">
+        <canvas id="callField" aria-hidden="true"></canvas>
+        <figcaption>
+          <span>Each mark is a call. Lit: 5–8 — one reviewer’s day.</span>
+          <span class="r">Call QA · Sastaticket.pk</span>
+        </figcaption>
+      </figure>
+
+      <div class="hero-sub">
+        <p class="sub">I built an <span class="ag">AI agent at Sastaticket.pk</span> that scaled customer-support call QA. Have an interesting AI problem? Let’s talk about building an agent into your product.</p>
+        <div class="hero-cta">
+          <div class="cta-row">
+            <a class="btn btn-1" href="/resume">Read the résumé <span class="arw" aria-hidden="true">↗</span></a>
+            <button class="btn btn-2 js-contact" type="button">Discuss your AI problem</button>
+          </div>
+          <p class="cta-note">Eight years of production software, in full. Then a conversation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap grid">
+      <p class="kick"><span class="n">01</span> &nbsp;Where this starts</p>
+      <div>
+        <div class="probs">
+          <div class="prob lead">
+            <h3>You review a sample, because a sample is all a person can reach.</h3>
+            <p>The material arrives faster than anyone can read it — calls, tickets, transcripts, documents. So a slice gets checked properly and the rest goes unread, and nobody can say what is in the part nobody looked at. That was the exact shape of the problem I took on.</p>
+          </div>
+          <div class="pair">
+            <div class="prob">
+              <h3>The AI feature has to live inside software that already exists.</h3>
+              <p>A model that works in a notebook still has to reach your database, your auth, your queue, and your on-call rotation.</p>
+            </div>
+            <div class="prob">
+              <h3>Your team has to own it after I stop typing.</h3>
+              <p>A foundation they can extend and debug, rather than one agent only the person who wrote it understands.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="plain">
+          <span>AI-agent development.</span>
+          <span>Production integration.</span>
+          <span class="d">A foundation your team can extend.</span>
+        </p>
+        <p class="small" style="margin-top:18px;">These are conversations I’d like to have — not claims about what every team needs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap grid">
+      <p class="kick"><span class="n">02</span> &nbsp;Evidence</p>
+      <div class="prose">
+        <h2 class="h2">The call-QA agent, built at Sastaticket.pk</h2>
+        <p class="lede">Sastaticket.pk is Pakistan’s leading OTA, processing thousands of flight bookings a day. Its support-call QA was a sampling exercise: a reviewer got through five to eight calls in a day, and the rest of the day’s calls were never heard again.</p>
+        <p>I built an agent that evaluates them at a different order of magnitude — hundreds daily, at 92% accuracy — which took 30% off the manual QA workload in its initial deployment.</p>
+        <p>It is a scheduled production system, not a demo: Airflow orchestrating Python on AWS, with Google GenAI and LangChain doing the evaluation. The agent structure underneath it was written to be extended, so the team adds new checks without rebuilding the thing.</p>
+        <ul class="stack">
+          <li>Python</li><li>Google GenAI</li><li>LangChain</li><li>Airflow</li><li>AWS</li>
+        </ul>
+        <p class="caveat">92% is the measured accuracy of that system on that workload. It is a record of what was built, not a number I can promise on anyone else’s material.</p>
+
+        <div class="pointer">
+          <p>Everything else — Securiti.ai, Folio3, Scayle, eight years of stack and the rest of the numbers — lives in the résumé rather than on this page.</p>
+          <a class="btn btn-1" href="/resume">Read the résumé <span class="arw" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap grid">
+      <p class="kick"><span class="n">03</span> &nbsp;Around the agent</p>
+      <div class="prose">
+        <h2 class="h2">The application it plugs into has to hold up too</h2>
+        <p class="lede">An agent is only as useful as the product carrying it, and at the same company I have spent the same years on that product: a React and TypeScript revamp that moved page loads from several seconds to under one, and Django provider-integration fixes that took booking failures from 40% to under 5%.</p>
+        <p class="small">Full-stack first, AI after. That order is the reason an agent I build can actually reach the rest of your system.</p>
+        <div class="cta-row" style="margin-top:28px;">
+          <a class="btn btn-1" href="/resume">Read the résumé <span class="arw" aria-hidden="true">↗</span></a>
+          <button class="btn btn-2 js-contact" type="button">Discuss your AI problem</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap grid">
+      <p class="kick"><span class="n">04</span> &nbsp;Prospective</p>
+      <div>
+        <h2 class="h2">How we could work together</h2>
+        <p class="small" style="max-width:56ch;margin-bottom:26px;">Nothing below is a packaged method or a timetable. It is how I would expect the work to go, and the first step is a conversation rather than a proposal.</p>
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Understand the workflow, and agree what success means.</h3>
+              <p>What gets reviewed today, by whom, and what a good outcome would actually look like to the people doing it.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Build it, and evaluate against representative examples.</h3>
+              <p>Your real material, not a benchmark — so the quality question gets answered on the work you care about.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Integrate into the application, then plan operation and ownership.</h3>
+              <p>Where it runs, how it is monitored, and which of your engineers can extend it once I am no longer the one editing it.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap grid">
+      <p class="kick"><span class="n">05</span> &nbsp;Who you’d talk to</p>
+      <div class="intro">
+        <p>I’m Momin. I’m in Karachi, I’m Lead Engineer at Sastaticket.pk, and I have eight years of shipping production software behind me. <strong>I love building things that live on the web and now, things that think 🤖.</strong></p>
+        <p class="quote">Great software is about understanding people, not just writing code.</p>
+        <div class="meal">
+          <p class="t">MealUnits</p>
+          <p>An offline insulin calculator I built for my brother. No accounts, no server, works without a connection. One person, one problem, and no product wrapped around it — which is the clearest version of that belief I can point at.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="close">
+    <div class="wrap">
+      <h2 class="h1c">Have an interesting <em>AI problem</em>?</h2>
+      <div class="cta-row">
+        <a class="btn btn-1" href="/resume">Read the résumé <span class="arw" aria-hidden="true">↗</span></a>
+        <button class="btn btn-2 js-contact" type="button">Discuss your AI problem</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════════════════════ CONTACT ════════════════════════════ -->
+<div class="panel hidden" id="view-contact" role="tabpanel" aria-labelledby="tab-contact" tabindex="-1">
+  <section class="contact-top">
+    <div class="wrap">
+      <p class="eyebrow">Momin Bin Shahid · Full-Stack &amp; AI Engineer · Karachi, Pakistan</p>
+      <h1 class="h1" style="font-size:clamp(42px,7.4vw,92px);">Discuss your <span class="acc" style="display:inline;">AI problem</span>.</h1>
+
+      <div class="contact-grid">
+        <div>
+          <p class="kick">Worth telling me</p>
+          <ol class="prompts">
+            <li><b>The workflow.</b> What the material is, where it comes from, and who looks at it now.</li>
+            <li><b>What is manual today.</b> How much gets reviewed, and how much arrives.</li>
+            <li><b>What a useful improvement looks like.</b> The version of this that would be worth doing.</li>
+          </ol>
+        </div>
+
+        <div class="composer">
+          <label for="note">Your note</label>
+          <textarea id="note" placeholder="A few lines is plenty — what the workflow is, what is manual today, and what a useful improvement would look like."></textarea>
+          <div class="row">
+            <button class="btn btn-1 js-mail" type="button">Discuss your AI problem <span class="arw" aria-hidden="true">↗</span></button>
+            <a class="btn btn-2" href="/resume">Read the résumé</a>
+          </div>
+          <p class="note">This opens a draft in your own email app with whatever you have written, addressed to me. Nothing is sent from this page, and nothing here is stored.</p>
+        </div>
+      </div>
+
+      <div class="card-lines">
+        <span><span class="k">Email</span> &nbsp;<a class="cmail" aria-label="Email Momin Bin Shahid" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#111;&#109;&#105;&#110;&#66;&#105;&#110;&#83;&#104;&#97;&#104;&#105;&#100;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;"><span class="u"></span><span class="d"></span></a></span>
+        <span><span class="k">Based in</span> &nbsp;Karachi, Pakistan</span>
+        <span><span class="k">Now</span> &nbsp;Lead Engineer, Sastaticket.pk</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <nav aria-label="Profiles">
+      <a href="https://github.com/MominBinShahid" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/mominbinshahid" rel="noopener">LinkedIn</a>
+      <a href="https://stackoverflow.com/users/9137804/MominBinShahid" rel="noopener">Stack Overflow</a>
+      <a href="https://twitter.com/MominBinShahid" rel="noopener">X</a>
+    </nav>
+    <span>Karachi, Pakistan</span>
+    <span>Momin Bin Shahid</span>
+  </div>
+</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ── accent: one family per visit, stable across tabs and theme ─────── */
+  var FAMILIES = ["cobalt","raspberry","teal"];
+  var fam;
+  try { fam = window.sessionStorage.getItem("mbs-accent"); } catch(e){ fam = null; }
+  if (FAMILIES.indexOf(fam) === -1) {
+    fam = FAMILIES[Math.floor(Math.random() * FAMILIES.length)];
+    try { window.sessionStorage.setItem("mbs-accent", fam); } catch(e){}
+  }
+  root.setAttribute("data-accent", fam);
+
+  /* ── theme: explicit, independent of the viewer's own setting ───────── */
+  var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  var theme = prefersDark ? "dark" : "light";
+  try {
+    var saved = window.sessionStorage.getItem("mbs-theme");
+    if (saved === "dark" || saved === "light") theme = saved;
+  } catch(e){}
+
+  var btn = document.getElementById("themeBtn");
+  var icon = document.getElementById("themeIcon");
+  var SUN = '<circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4L17 7M7 17l-1.6 1.6"></path>';
+  var MOON = '<path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2z"></path>';
+
+  function applyTheme(t){
+    theme = t;
+    root.setAttribute("data-theme", t);
+    document.body.style.background = getComputedStyle(root).getPropertyValue("--bg").trim() || "";
+    btn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    icon.innerHTML = t === "dark" ? MOON : SUN;
+    try { window.sessionStorage.setItem("mbs-theme", t); } catch(e){}
+    readColors();
+    paint();
+  }
+  applyTheme(theme);
+  btn.addEventListener("click", function(){ applyTheme(theme === "dark" ? "light" : "dark"); });
+
+  /* ── tabs ───────────────────────────────────────────────────────────── */
+  var tabs = [document.getElementById("tab-home"), document.getElementById("tab-contact")];
+  var views = [document.getElementById("view-home"), document.getElementById("view-contact")];
+
+  function show(i, focusPanel){
+    tabs.forEach(function(t, n){ t.setAttribute("aria-selected", n === i ? "true" : "false"); });
+    views.forEach(function(v, n){ v.classList.toggle("hidden", n !== i); });
+    window.scrollTo(0, 0);
+    if (focusPanel) views[i].focus();
+    if (i === 0) { size(); paint(); }
+  }
+  tabs.forEach(function(t, i){ t.addEventListener("click", function(){ show(i, true); }); });
+  tabs.forEach(function(t, i){
+    t.addEventListener("keydown", function(e){
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      e.preventDefault();
+      var n = (i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length;
+      tabs[n].focus(); show(n, false);
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".js-contact"), function(b){
+    b.addEventListener("click", function(){ show(1, true); });
+  });
+
+  /* ── nav hairline on scroll ─────────────────────────────────────────── */
+  var nav = document.getElementById("nav");
+  function onScroll(){ nav.setAttribute("data-stuck", window.scrollY > 8 ? "1" : "0"); }
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  /* ── email composer → the visitor's own mail app ─────────────────────── */
+  var C = String.fromCharCode;
+  var ADDR = C(77,111,109,105,110,66,105,110,83,104,97,104,105,100) + C(64) + C(103,109,97,105,108) + C(46) + C(99,111,109);
+  var TEMPLATE = [
+    "The workflow:",
+    "",
+    "What is manual today:",
+    "",
+    "What a useful improvement would look like:",
+    ""
+  ].join("\n");
+
+  Array.prototype.forEach.call(document.querySelectorAll(".js-mail"), function(b){
+    b.addEventListener("click", function(){
+      var ta = document.getElementById("note");
+      var body = (ta && ta.value.trim()) ? ta.value.trim() : TEMPLATE;
+      window.location.href = "mailto:" + ADDR +
+        "?subject=" + encodeURIComponent("An AI problem worth discussing") +
+        "&body=" + encodeURIComponent(body);
+    });
+  });
+
+  /* ── signature interaction: the sample widens into the field ─────────── */
+  var cv = document.getElementById("callField");
+  var ctx = cv.getContext("2d", { alpha: true });
+  var CELL = 10, ROWS = 8, PAD = 2;
+  var xs = [], ys = [], vs = [], sample = [], W = 0, H = 92, dpr = 1;
+  var box = null;
+  var col = { base: "#cfd8df", acc: "#1250D6" };
+  var pulses = [], running = false, lastSpawn = 0;
+
+  function readColors(){
+    if (!cv) return;
+    var cs = getComputedStyle(cv);
+    col.acc = cs.getPropertyValue("--accent").trim() || col.acc;
+    col.base = cs.getPropertyValue("--muted").trim() || col.base;
+  }
+
+  function size(){
+    var w = cv.clientWidth;
+    if (!w) return;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = w; H = cv.clientHeight || 92;
+    cv.width = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    var cols = Math.max(12, Math.floor((W - PAD * 2) / CELL));
+    var ox = PAD + (W - PAD * 2 - cols * CELL) / 2 + CELL / 2;
+    var oy = (H - ROWS * CELL) / 2 + CELL / 2;
+
+    xs = []; ys = []; vs = []; sample = [];
+    for (var r = 0; r < ROWS; r++){
+      for (var c = 0; c < cols; c++){
+        xs.push(ox + c * CELL);
+        ys.push(oy + r * CELL);
+        vs.push(0);
+      }
+    }
+    /* the 5–8 a human reaches: seven marks at the very start of the field */
+    var pick = [[0,3],[1,3],[2,3],[3,3],[0,4],[1,4],[2,4]];
+    for (var i = 0; i < pick.length; i++){
+      sample.push(pick[i][1] * cols + pick[i][0]);
+    }
+    box = { x: ox - CELL, y: oy + 3 * CELL - CELL, w: CELL * 5.2, h: CELL * 3 };
+  }
+
+  function paint(){
+    if (!ctx || !xs || !xs.length) return;
+    ctx.clearRect(0, 0, W, H);
+
+    ctx.globalAlpha = 0.34;
+    ctx.fillStyle = col.base;
+    for (var i = 0; i < xs.length; i++){
+      if (vs[i] > 0.03) continue;
+      ctx.fillRect(xs[i] - 1, ys[i] - 1, 2, 2);
+    }
+
+    ctx.fillStyle = col.acc;
+    for (var j = 0; j < xs.length; j++){
+      var v = vs[j];
+      if (v <= 0.03) continue;
+      ctx.globalAlpha = Math.min(1, 0.18 + v * 0.82);
+      var s = 2 + v * 1.6;
+      ctx.fillRect(xs[j] - s / 2, ys[j] - s / 2, s, s);
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = col.acc;
+    for (var k = 0; k < sample.length; k++){
+      var idx = sample[k];
+      if (xs[idx] === undefined) continue;
+      ctx.fillRect(xs[idx] - 1.75, ys[idx] - 1.75, 3.5, 3.5);
+    }
+    if (box){
+      ctx.globalAlpha = 0.5;
+      ctx.strokeStyle = col.acc;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(Math.round(box.x) + 0.5, Math.round(box.y) + 0.5, box.w, box.h);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  var SPEED = 0.46, LIFE = 1150, BAND = 34;
+
+  function tick(){
+    var now = performance.now(), alive = false;
+    for (var p = pulses.length - 1; p >= 0; p--){
+      var age = now - pulses[p].t;
+      if (age > LIFE) { pulses.splice(p, 1); continue; }
+      alive = true;
+      var rad = age * SPEED, fade = 1 - 0.55 * (age / LIFE);
+      for (var i = 0; i < xs.length; i++){
+        var dx = xs[i] - pulses[p].x, dy = (ys[i] - pulses[p].y) * 2.1;
+        var d = Math.abs(Math.sqrt(dx * dx + dy * dy) - rad);
+        if (d < BAND){
+          var charge = (1 - d / BAND) * fade;
+          if (charge > vs[i]) vs[i] = charge;
+        }
+      }
+    }
+    var peak = 0;
+    for (var m = 0; m < vs.length; m++){
+      vs[m] *= 0.991;
+      if (vs[m] > peak) peak = vs[m];
+    }
+    paint();
+    if (alive || peak > 0.03) { requestAnimationFrame(tick); }
+    else { running = false; }
+  }
+
+  function spawn(x, y){
+    var now = performance.now();
+    if (now - lastSpawn < 110) return;
+    lastSpawn = now;
+    if (pulses.length > 7) pulses.shift();
+    pulses.push({ x: x, y: y, t: now });
+    if (!running){ running = true; requestAnimationFrame(tick); }
+  }
+
+  readColors();
+  size();
+  paint();
+
+  if (!reduce && window.matchMedia && window.matchMedia("(hover: hover)").matches){
+    var hero = document.querySelector(".hero");
+    hero.addEventListener("pointermove", function(e){
+      if (e.pointerType === "touch") return;
+      var cr = cv.getBoundingClientRect();
+      var x = e.clientX - cr.left;
+      var y = Math.max(0, Math.min(H, e.clientY - cr.top));
+      if (x < -160 || x > cr.width + 160) return;
+      spawn(x, y);
+    }, { passive: true });
+  }
+
+  var rt;
+  window.addEventListener("resize", function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ size(); paint(); }, 120);
+  });
+
+  /* ── console ─────────────────────────────────────────────────────────── */
+  try {
+    console.log("%c5–8 → hundreds.%c You found the sample. Résumé: /resume",
+      "font-weight:700", "font-weight:400");
+  } catch(e){}
+})();
+</script>

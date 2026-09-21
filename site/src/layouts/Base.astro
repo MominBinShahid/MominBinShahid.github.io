@@ -1,0 +1,59 @@
+---
+import Head from '../components/Head.astro';
+import { SITE, NAV, UI } from '../consts';
+import { href } from '../lib/href';
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  path: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  noindex?: boolean;
+}
+
+const { path } = Astro.props;
+const current = (p: string) => (p === path ? 'page' : undefined);
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <Head {...Astro.props} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{UI.skipToContent}</a>
+
+    <div class="shell">
+      <header>
+        <nav aria-label="Primary">
+          <ul>
+            {
+              NAV.map((item) => (
+                <li>
+                  <a href={href(item.path)} aria-current={current(item.path)}>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </header>
+
+      <main id="main">
+        <slot />
+      </main>
+
+      <footer>
+        <p class="muted">
+          <a href={href('/rss.xml')}>{UI.feedLabel}</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

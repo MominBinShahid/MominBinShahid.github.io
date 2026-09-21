@@ -1,0 +1,894 @@
+<title>Things That Think</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gulzar&family=Martian+Mono:wght@300;400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* ============ THINGS THAT THINK ============ */
+body{margin:0;overflow-x:hidden;background:#0e1616}
+
+#site{
+  /* dark first — deep pine-slate ground, low-contrast field tones */
+  --ground:#0e1616;
+  --ground2:#132020;
+  --ink:#dbe3dc;
+  --dim:#8fa198;
+  --faint:#5b6b63;
+  --hair:#243430;
+  --markc:#41564f;
+  --tok-s:#93bfae;
+  --tok-f:#a9c2cc;
+  --tok-n:#cdb677;
+  font-family:'Source Serif 4',Georgia,'Times New Roman',serif;
+  font-size:16px;
+  color:var(--ink);
+  background:var(--ground);
+  min-height:100vh;
+  overflow-x:clip;
+  transition:background .4s ease,color .4s ease;
+}
+#site[data-theme="light"]{
+  /* day surface — sage paper, fine dark linework */
+  --ground:#edefe8;
+  --ground2:#e2e6db;
+  --ink:#1f2b26;
+  --dim:#4d5d54;
+  --faint:#87948a;
+  --hair:#ccd4c6;
+  --markc:#485a51;
+  --tok-s:#3e7a5e;
+  --tok-f:#47606b;
+  --tok-n:#7d651f;
+}
+
+/* the dealt accent — six curated voices, each a dark/light pair */
+#site[data-accent="kestrel"]{--accent:#d98e63}
+#site[data-theme="light"][data-accent="kestrel"]{--accent:#a34d1f}
+#site[data-accent="glasswing"]{--accent:#86bfcb}
+#site[data-theme="light"][data-accent="glasswing"]{--accent:#1f6e7e}
+#site[data-accent="lichen"]{--accent:#a9bd7d}
+#site[data-theme="light"][data-accent="lichen"]{--accent:#58702c}
+#site[data-accent="heliotrope"]{--accent:#b3a1e6}
+#site[data-theme="light"][data-accent="heliotrope"]{--accent:#6350a8}
+#site[data-accent="rosefinch"]{--accent:#dba0ab}
+#site[data-theme="light"][data-accent="rosefinch"]{--accent:#a04a5e}
+#site[data-accent="brasslamp"]{--accent:#cfb367}
+#site[data-theme="light"][data-accent="brasslamp"]{--accent:#7e651c}
+
+#site ::selection{background:var(--accent);color:var(--ground)}
+
+a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:1px}
+
+#field{position:fixed;inset:0;width:100%;height:100%;background:var(--ground);z-index:0;transition:background .4s ease}
+
+.page{position:relative;z-index:1;min-height:100vh;padding-bottom:5rem}
+.page[hidden]{display:none}
+
+/* ---------- instrument register ---------- */
+.mono,.nav,.kicker,.readout,.fineprint,.mock,.witness,.pr-date,.pr-tags,.meta,.h2m,.navlink,.launch-toggle{
+  font-family:'Martian Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+
+/* ---------- nav: a few plain text links ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:5;
+  display:flex;align-items:baseline;gap:1.7rem;
+  padding:1.15rem 5vw 2.2rem;
+  background:linear-gradient(to bottom,var(--ground) 30%,transparent);
+  pointer-events:none;
+  font-size:.68rem;letter-spacing:.14em;
+}
+.nav>*{pointer-events:auto}
+.navlink{
+  color:var(--dim);text-decoration:none;text-transform:lowercase;
+  background:none;border:0;padding:0;cursor:pointer;
+  font-size:.68rem;letter-spacing:.14em;
+}
+.navlink:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.navlink[aria-current="page"]{color:var(--accent);text-decoration:underline;text-underline-offset:4px}
+.nav-accent{margin-left:auto;color:var(--faint);font-size:.6rem;letter-spacing:.12em}
+
+/* ---------- mockup chrome ---------- */
+.mock{
+  position:fixed;bottom:.9rem;right:1.1rem;z-index:5;
+  font-size:.58rem;letter-spacing:.1em;color:var(--faint);
+  display:flex;gap:.9rem;align-items:baseline;
+}
+.mock a{color:var(--faint);text-decoration:none;border-bottom:1px dotted var(--faint)}
+.mock a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.mock span{opacity:.8}
+
+#toast{
+  position:fixed;bottom:3rem;left:50%;transform:translateX(-50%);z-index:6;
+  font-family:'Martian Mono',ui-monospace,monospace;font-size:.66rem;letter-spacing:.06em;
+  color:var(--ground);background:var(--accent);padding:.55rem 1rem;
+  opacity:0;pointer-events:none;transition:opacity .35s ease;max-width:86vw;text-align:center;
+}
+#toast.show{opacity:1}
+
+/* ---------- stations ---------- */
+.station{min-height:100vh;display:flex;align-items:center;box-sizing:border-box;padding:6rem 0}
+.station.tall{min-height:118vh}
+.copy{max-width:34rem;box-sizing:border-box;padding:0 1rem}
+
+.s-name .copy{margin-left:8vw}
+.s-agent .copy{margin-left:auto;margin-right:9vw}
+.s-arc .copy{margin-left:10vw}
+.s-ethos .copy{margin-left:auto;margin-right:15vw}
+.s-meal .copy{margin-left:18vw}
+.s-mind .copy{margin-left:auto;margin-right:8vw;max-width:37rem}
+.s-invite .copy{margin-left:9vw}
+
+.kicker{
+  font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 1.5rem;font-weight:400;
+}
+.readout{
+  font-size:.73rem;line-height:2.15;color:var(--dim);
+  margin:1.3rem 0;font-weight:400;
+}
+.readout .v{color:var(--ink);font-weight:500}
+.readout .k{color:var(--faint)}
+.fineprint{font-size:.6rem;line-height:1.9;color:var(--faint);letter-spacing:.04em;margin-top:1.6rem}
+.ann{font-size:.62rem;line-height:1.9;color:var(--faint);letter-spacing:.06em;margin-top:.7rem;font-family:'Martian Mono',ui-monospace,monospace}
+
+.serif{font-size:1.08rem;line-height:1.72;margin:1.1rem 0}
+.serif.big{font-size:1.32rem;line-height:1.6}
+.serif.small{font-size:.95rem;color:var(--dim)}
+.quote{
+  font-style:italic;border-left:1px solid var(--hair);
+  padding-left:1.25rem;margin:1.6rem 0;
+}
+.quote .ann{font-style:normal}
+
+/* name station */
+.mark-glyph{font-size:1.7rem;margin:0 0 .9rem;line-height:1}
+h1.name{
+  font-family:'Martian Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  font-size:clamp(2.3rem,6.4vw,4.4rem);font-weight:600;line-height:1.04;
+  letter-spacing:-.035em;margin:.2rem 0 1.2rem;text-transform:lowercase;
+}
+.desig{font-family:'Martian Mono',ui-monospace,monospace;font-size:.66rem;letter-spacing:.1em;line-height:2;color:var(--dim);margin:0 0 1.6rem}
+.scrollhint{font-size:.6rem;color:var(--faint);letter-spacing:.16em;margin-top:3rem}
+
+/* mealunits */
+.h2m{font-size:1.15rem;font-weight:500;letter-spacing:.02em;margin:.4rem 0 1rem;color:var(--ink)}
+
+/* nastaliq as material */
+.nastaliq{font-family:'Gulzar','Noto Nastaliq Urdu',serif;font-size:1.25em;line-height:2.1}
+
+/* witness — the moment of being understood */
+.witness{font-size:.7rem;line-height:2.2;color:var(--dim);margin:0 0 2.4rem;min-height:1rem}
+.witness .w-head{color:var(--ink)}
+.witness .w-act{color:var(--accent)}
+.witness .w-hint{color:var(--faint);font-size:.6rem}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.links-row{font-family:'Martian Mono',ui-monospace,monospace;font-size:.7rem;letter-spacing:.08em;line-height:2.4;margin-top:1.8rem}
+.links-row a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--hair);padding-bottom:2px;margin-right:1.4rem}
+.links-row a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.contact-cta{font-family:'Martian Mono',ui-monospace,monospace;font-size:.78rem;letter-spacing:.06em;display:inline-block;margin-top:1.4rem}
+.foot{font-family:'Martian Mono',ui-monospace,monospace;font-size:.58rem;letter-spacing:.08em;line-height:2;color:var(--faint);margin-top:6rem}
+
+/* ---------- blog index ---------- */
+.blog-head{padding:9.5rem 0 0;max-width:46rem;margin:0 auto;box-sizing:border-box}
+.blog-wrap{max-width:46rem;margin:0 auto;padding:0 1.2rem;box-sizing:border-box}
+h1.pagetitle{
+  font-family:'Martian Mono',ui-monospace,monospace;
+  font-size:1.5rem;font-weight:500;letter-spacing:-.01em;margin:0 0 .8rem;text-transform:lowercase;
+}
+.pagesub{font-size:.98rem;color:var(--dim);font-style:italic;margin:0 0 1.4rem}
+.launch-toggle{
+  background:none;border:1px solid var(--hair);color:var(--faint);
+  font-size:.6rem;letter-spacing:.12em;padding:.45rem .8rem;cursor:pointer;margin:0 0 2.6rem;
+}
+.launch-toggle:hover{color:var(--accent);border-color:var(--accent)}
+
+.postlist{border-top:1px solid var(--hair)}
+.post-row{
+  display:grid;grid-template-columns:8.2rem 1fr;gap:1.2rem;align-items:baseline;
+  padding:1.45rem .2rem;border-bottom:1px solid var(--hair);
+  text-decoration:none;color:inherit;
+}
+.pr-date{font-size:.62rem;letter-spacing:.08em;color:var(--faint)}
+.pr-title{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:1.22rem;font-weight:600;line-height:1.4;color:var(--ink)}
+.post-row:hover .pr-title{color:var(--accent)}
+.pr-tags{display:block;font-size:.58rem;letter-spacing:.1em;color:var(--faint);margin-top:.45rem}
+.pr-tags i{font-style:normal;color:var(--accent);margin-right:.3rem}
+
+.launch{padding:2.5rem 0 0}
+.launch .readout{font-size:.78rem}
+.caret{color:var(--accent);animation:blink 1.15s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ---------- post ---------- */
+.article{max-width:41rem;margin:0 auto;padding:9.5rem 1.2rem 3rem;box-sizing:border-box}
+.backlink{font-family:'Martian Mono',ui-monospace,monospace;font-size:.64rem;letter-spacing:.12em;text-decoration:none;color:var(--faint)}
+.backlink:hover{color:var(--accent)}
+h1.posttitle{font-size:clamp(1.7rem,4vw,2.35rem);font-weight:600;line-height:1.25;margin:1.4rem 0 .9rem;letter-spacing:-.01em}
+.meta{font-size:.62rem;letter-spacing:.1em;color:var(--faint);margin:0 0 3rem}
+.meta i{font-style:normal;color:var(--accent);margin-right:.3rem}
+.article p{font-size:1.05rem;line-height:1.78;margin:1.35rem 0}
+.article h2{
+  font-family:'Martian Mono',ui-monospace,monospace;
+  font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dim);margin:3.2rem 0 1.2rem;
+}
+.article h2::before{content:'\2044\2044 ';color:var(--accent);letter-spacing:0}
+.article blockquote{
+  margin:2rem 0;padding:.2rem 0 .2rem 1.35rem;border-left:2px solid var(--accent);
+  font-style:italic;font-size:1.12rem;line-height:1.7;color:var(--ink);
+}
+.article blockquote p{margin:.4rem 0;font-size:inherit}
+.article ul{margin:1.4rem 0;padding-left:0;list-style:none}
+.article ul li{
+  margin:.85rem 0;padding-left:1.6rem;position:relative;font-size:1.02rem;line-height:1.7;
+}
+.article ul li::before{
+  content:'\2013';position:absolute;left:.2rem;color:var(--accent);
+  font-family:'Martian Mono',ui-monospace,monospace;
+}
+.article strong{font-weight:600}
+pre.code{
+  background:var(--ground2);border:1px solid var(--hair);border-radius:3px;
+  padding:1.15rem 1.3rem;overflow-x:auto;margin:2rem 0;
+}
+pre.code code{
+  font-family:'Martian Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  font-size:.72rem;line-height:1.95;color:var(--dim);white-space:pre;
+}
+.tk{color:var(--accent)}
+.tf{color:var(--tok-f)}
+.ts{color:var(--tok-s)}
+.tn{color:var(--tok-n)}
+.tc{color:var(--faint)}
+.postfoot{margin-top:3.5rem;padding-top:1.6rem;border-top:1px solid var(--hair);font-family:'Martian Mono',ui-monospace,monospace;font-size:.64rem;letter-spacing:.08em;color:var(--faint);line-height:2.1}
+
+/* ---------- responsive ---------- */
+@media (max-width:760px){
+  .s-name .copy,.s-agent .copy,.s-arc .copy,.s-ethos .copy,.s-meal .copy,.s-mind .copy,.s-invite .copy{
+    margin-left:6vw;margin-right:6vw;max-width:none;
+  }
+  .station{padding:4.5rem 0}
+  .nav{gap:1.1rem;padding:1rem 6vw 2rem}
+  .nav-accent{display:none}
+  .post-row{grid-template-columns:1fr;gap:.3rem;padding:1.3rem .2rem}
+  .mock{font-size:.54rem;gap:.7rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .caret{animation:none}
+  #site,#field{transition:none}
+}
+</style>
+
+<div id="site" data-theme="dark" data-accent="glasswing" data-page="home">
+<canvas id="field" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <a href="#home" data-go="home" data-nav="home" class="navlink" aria-current="page">home</a>
+  <a href="#blog" data-go="blog" data-nav="blog" class="navlink">blog</a>
+  <a href="#contact" class="navlink contact-link" title="contact is its own destination page — not part of this mockup">contact</a>
+  <button id="themeBtn" class="navlink" type="button" aria-pressed="false">&#9680; theme</button>
+  <span class="nav-accent" id="accentTag">dealt: &mdash;</span>
+</header>
+
+<main>
+
+<!-- ================= HOME ================= -->
+<section class="page" id="page-home" data-page="home">
+
+  <div class="station s-name" data-s="name">
+    <div class="copy mask">
+      <p class="kicker">01 &middot; nameplate</p>
+      <p class="mark-glyph">&#128104;&#8205;&#128187;</p>
+      <h1 class="name">momin<br>bin shahid</h1>
+      <p class="desig">full-stack engineer &amp; ai engineer &middot; lead engineer at sastaticket.pk &middot; karachi, pakistan</p>
+      <p class="serif big">I love building things that live on the web and now, things that think &#129302;</p>
+      <p class="serif small" style="font-style:italic">Momin Bin Shahid&rsquo;s home on web. Momin Bin Shahid is a curious software engineer &#128104;&#8205;&#128187;, let&rsquo;s connect &#129305; <a href="https://twitter.com/MominBinShahid" target="_blank" rel="noopener">@MominBinShahid</a></p>
+      <p class="readout scrollhint">&darr; the surface below is live &mdash; it follows you down</p>
+    </div>
+  </div>
+
+  <div class="station s-agent" data-s="agent">
+    <div class="copy mask">
+      <p class="kicker">02 &middot; what the machine does all day</p>
+      <p class="readout">
+        <span class="k">subject</span> &nbsp;<span class="v">one AI agent, in production</span><br>
+        <span class="k">workload</span> &nbsp;<span class="v">hundreds of customer support calls &middot; daily</span><br>
+        <span class="k">exchange rate</span> &nbsp;<span class="v">one agent-day &asymp; several human-team days</span>
+      </p>
+      <p class="serif">At Sastaticket.pk I build AI-powered systems and work directly with stakeholders. The one I keep coming back to reviews hundreds of customer support calls every day &mdash; doing in one day what would take a team of humans several days, and with a consistency humans simply can&rsquo;t match.</p>
+      <div class="quote">
+        <p class="serif">There&rsquo;s something magical about teaching machines to understand context and take action &#10024;</p>
+        <p class="ann">&mdash; also the spec for the surface this page sits on</p>
+      </div>
+      <p class="readout"><a href="#post" data-go="post">&rarr; teaching an agent to listen to 400 support calls a day</a></p>
+    </div>
+  </div>
+
+  <div class="station s-arc" data-s="arc">
+    <div class="copy mask">
+      <p class="kicker">03 &middot; the long arc</p>
+      <p class="readout">
+        <span class="k">years shipping production software</span> &nbsp;<span class="v">8</span><br>
+        <span class="k">trajectory</span> &nbsp;<span class="v">full-stack javascript &rarr; ai agents &amp; llms</span><br>
+        <span class="k">securiti.ai</span> &nbsp;<span class="v">internet privacy &amp; security &middot; a unicorn</span><br>
+        <span class="k">also</span> &nbsp;<span class="v">metadata platforms &middot; erp &middot; hrms &middot; edtech &middot; travel tech</span><br>
+        <span class="k">users across</span> &nbsp;<span class="v">usa &middot; europe &middot; middle east &middot; south asia</span><br>
+        <span class="k">degree</span> &nbsp;<span class="v">bachelor&rsquo;s in computer science</span><br>
+        <span class="k">now</span> &nbsp;<span class="v">leads a team of awesome engineers</span>
+      </p>
+      <p class="serif">Architecting web applications from scratch; recently expanded into AI agents and LLMs. Service consultancies on one side, product companies on the other &mdash; &ldquo;Both have taught me that great software is about understanding people, not just writing code &#128161;&rdquo;</p>
+      <div class="quote">
+        <p class="serif">&ldquo;the thrill of solving gnarly problems &#9889;&#65039;, the satisfaction of mentoring engineers and watching them grow &#127793;, and the never-ending rabbit hole of learning new technologies &#128200;&rdquo;</p>
+        <p class="ann">&mdash; what keeps this going</p>
+      </div>
+      <p class="serif small">I&rsquo;m that person who reads documentation for fun (well, sometimes&hellip; now I let AI summarize it for me)</p>
+      <p class="fineprint">React/Vue/Angular &middot; Node/Python/Django &middot; LangChain/GenAI/OpenAI/Anthropic &middot; Docker/K8s/AWS/GCP/Azure &middot; JS/TS/Python</p>
+    </div>
+  </div>
+
+  <div class="station s-ethos" data-s="arc">
+    <div class="copy mask">
+      <p class="kicker">03 &middot; continued &mdash; working rules</p>
+      <p class="serif">I believe in leaving codebases better than I found them &#127957;&#65039;, call it the Boy Scout Rule of programming.</p>
+      <p class="serif">While most of my professional work has been closed-source &#128274;, I&rsquo;m increasingly contributing to and learning from the open-source community &#127808;. The web taught me everything I know, and I want to give back.</p>
+    </div>
+  </div>
+
+  <div class="station s-meal tall" data-s="meal">
+    <div class="copy mask">
+      <p class="kicker">04 &middot; for one person</p>
+      <p class="h2m">MealUnits</p>
+      <p class="serif">An insulin calculator, built for my brother.</p>
+      <p class="readout"><span class="v">private</span> &middot; <span class="v">no accounts</span> &middot; <span class="v">works offline</span></p>
+      <p class="ann">the surface nearly stops here. that&rsquo;s the design.</p>
+    </div>
+  </div>
+
+  <div class="station s-mind tall" data-s="mind">
+    <div class="copy mask">
+      <p class="kicker">05 &middot; code &amp; consciousness</p>
+      <p class="serif big" style="font-style:italic">Equally fascinated by philosophy and esoteric discussions about the nature of reality, consciousness, and what it means to be alive in this strange universe.</p>
+      <p class="ann">the script drifting in the field is just a name &mdash; <span lang="ur" dir="rtl" class="nastaliq">&#1605;&#1608;&#1605;&#1606; &#1576;&#1606; &#1588;&#1575;&#1729;&#1583;</span> &mdash; momin bin shahid, as drawn material</p>
+    </div>
+  </div>
+
+  <div class="station s-invite" data-s="invite">
+    <div class="copy mask">
+      <p class="kicker">06 &middot; the invitation</p>
+      <div class="witness" id="witness" hidden></div>
+      <p class="serif big">Want to build something together? Have an interesting AI problem? Or just want to geek out about the latest in LLMs and web tech?</p>
+      <a class="contact-cta contact-link" href="#contact" title="contact is its own destination page — not part of this mockup">&rarr; contact <span style="color:var(--faint)">(a destination, not a form)</span></a>
+      <p class="links-row">
+        <a href="https://github.com/MominBinShahid" target="_blank" rel="noopener">github</a>
+        <a href="https://linkedin.com/in/mominbinshahid" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://stackoverflow.com/users/9137804/MominBinShahid" target="_blank" rel="noopener">stack overflow</a>
+        <a href="https://twitter.com/MominBinShahid" target="_blank" rel="noopener">x</a>
+      </p>
+      <p class="foot">&copy; 2026 momin bin shahid &mdash; the field is local: no network, no storage, one file.<br>still legible with the surface switched off.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= BLOG INDEX ================= -->
+<section class="page" id="page-blog" data-page="blog" hidden>
+  <div class="blog-wrap mask">
+    <div class="blog-head">
+      <h1 class="pagetitle">blog</h1>
+      <p class="pagesub">notes from building things that live on the web &mdash; and now, things that think &#129302;</p>
+      <button class="launch-toggle" id="launchBtn" type="button" aria-pressed="false">[ preview the launch state ]</button>
+    </div>
+
+    <div class="postlist" id="postlist">
+      <a class="post-row" href="#post" data-go="post">
+        <span class="pr-date">aug 30, 2026</span>
+        <span class="pr-main">
+          <span class="pr-title">Teaching an agent to listen to 400 support calls a day</span>
+          <span class="pr-tags"><i>&#8226;</i>python</span>
+        </span>
+      </a>
+      <a class="post-row" href="#post" data-go="post">
+        <span class="pr-date">nov 14, 2025</span>
+        <span class="pr-main">
+          <span class="pr-title">MealUnits &mdash; an insulin calculator for my brother</span>
+          <span class="pr-tags"><i>&#8226;</i>javascript &nbsp;<i>&#8226;</i>reactjs</span>
+        </span>
+      </a>
+      <a class="post-row" href="#post" data-go="post">
+        <span class="pr-date">mar 02, 2025</span>
+        <span class="pr-main">
+          <span class="pr-title">The service worker that wouldn&rsquo;t die</span>
+          <span class="pr-tags"><i>&#8226;</i>javascript</span>
+        </span>
+      </a>
+      <a class="post-row" href="#post" data-go="post">
+        <span class="pr-date">jun 19, 2024</span>
+        <span class="pr-main">
+          <span class="pr-title">What IndexedDB taught me about the same-origin policy</span>
+          <span class="pr-tags"><i>&#8226;</i>javascript</span>
+        </span>
+      </a>
+      <a class="post-row" href="#post" data-go="post">
+        <span class="pr-date">oct 05, 2023</span>
+        <span class="pr-main">
+          <span class="pr-title">Your pull request is deploying to production</span>
+          <span class="pr-tags"><i>&#8226;</i>Node.js</span>
+        </span>
+      </a>
+      <a class="post-row" href="#post" data-go="post">
+        <span class="pr-date">apr 11, 2021</span>
+        <span class="pr-main">
+          <span class="pr-title">Getting Gatsby 2 to build on Apple Silicon</span>
+          <span class="pr-tags"><i>&#8226;</i>Gatsby.js &nbsp;<i>&#8226;</i>javascript</span>
+        </span>
+      </a>
+    </div>
+
+    <div class="launch" id="launchState" hidden>
+      <p class="readout">
+        <span class="k">posts</span> &nbsp;<span class="v">0</span><br>
+        <span class="k">surface</span> &nbsp;<span class="v">active</span><br>
+        <span class="k">status</span> &nbsp;<span class="v">listening<span class="caret">&#9615;</span></span>
+      </p>
+      <p class="serif small">Nothing published yet &mdash; the field keeps the lights on until there&rsquo;s something worth reading.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POST ================= -->
+<section class="page" id="page-post" data-page="post" hidden>
+  <article class="article mask">
+    <a class="backlink" href="#blog" data-go="blog">&larr; blog</a>
+    <h1 class="posttitle">Teaching an agent to listen to 400 support calls a day</h1>
+    <p class="meta">aug 30, 2026 &nbsp;&middot;&nbsp; 8 min read &nbsp;&middot;&nbsp; <i>&#8226;</i>python</p>
+
+    <p>The support floor at a travel company is loud in a specific way. Hundreds of calls a day: reschedules, refunds, a flight that moved by forty minutes, somebody&rsquo;s mother flying alone for the first time. Every one of those calls is a promise made on behalf of the company &mdash; and until recently, we could check almost none of them.</p>
+
+    <p>QA worked the way it works everywhere. A small team samples a handful of calls, scores them against a rubric, and files the scores days after the conversation happened. Honest work, but a keyhole. So we made a bet: an agent that listens to every call, every day, and shows its evidence.</p>
+
+    <h2>What listening actually means</h2>
+
+    <p>A phone line in Karachi is not a podcast studio. Calls code-switch between Urdu and English mid-sentence, agents talk over customers, and half of every recording is hold music at 8&nbsp;kHz. The transcription layer has exactly one job: produce a diarised transcript faithful enough to <em>quote</em>. We spent more time on that layer than on anything you would call AI.</p>
+
+    <p>The design decision that mattered came after transcription: <strong>facts before judgement</strong>. The agent first extracts what verifiably happened &mdash; was the customer greeted, what was promised, did the agent read back the booking reference &mdash; and only then scores the call. Ask a model to &ldquo;rate this call out of five&rdquo; and you get vibes. Vibes are not QA.</p>
+
+    <h2>The rubric is the product</h2>
+
+    <p>The scoring rubric wasn&rsquo;t mine to invent. The QA team already had one, sharpened by years of actually listening. Our job was to encode it, section by section, and then hold the agent to a standard human reviewers are rarely held to:</p>
+
+    <blockquote><p>Every score must cite its evidence. If the reviewer can&rsquo;t point at the sentence in the transcript, the score doesn&rsquo;t count.</p></blockquote>
+
+    <p>That one rule did more for accuracy than any prompt trick. It turns &ldquo;the agent was polite&rdquo; into &ldquo;the agent said this, at 02:41&rdquo; &mdash; which a human can verify in ten seconds. The shape of a review, heavily simplified:</p>
+
+    <pre class="code" tabindex="0"><code><span class="tn">SAMPLE_RATE</span> = <span class="tn">8_000</span>                          <span class="tc"># phone-line audio, not studio audio</span>
+RUBRIC = load_rubric(<span class="ts">"qa/rubric.yaml"</span>)      <span class="tc"># the QA team&rsquo;s, not mine</span>
+
+<span class="tk">async def</span> <span class="tf">review</span>(call: CallAudio) -&gt; Review:
+    transcript = <span class="tk">await</span> <span class="tf">transcribe</span>(call)     <span class="tc"># diarised, urdu + english</span>
+    facts = <span class="tf">extract_facts</span>(transcript)       <span class="tc"># greetings, promises, read-backs</span>
+    scores = [
+        section.<span class="tf">apply</span>(facts, transcript)    <span class="tc"># every score carries a citation</span>
+        <span class="tk">for</span> section <span class="tk">in</span> RUBRIC
+    ]
+    <span class="tk">return</span> <span class="tf">Review</span>(call.id, scores,
+                  evidence=[s.citation <span class="tk">for</span> s <span class="tk">in</span> scores])</code></pre>
+
+    <h2>What broke along the way</h2>
+
+    <ul>
+      <li><strong>Code-switched speech.</strong> Early transcripts turned perfectly polite Urdu into confident nonsense. Fixing the ears mattered more than upgrading the brain.</li>
+      <li><strong>Long calls versus context windows.</strong> A forty-minute call, holds included, does not fit anywhere comfortably. We learned to segment and summarise without ever losing the quotable evidence &mdash; the citation has to survive compression.</li>
+      <li><strong>Agreement, not accuracy.</strong> There is no ground truth for &ldquo;was this call handled well&rdquo;, only the QA team&rsquo;s judgement. So we measured agreement with human reviewers and kept calibrating until the disagreements were the interesting kind &mdash; the ones where a human, shown the evidence, changed their mind about half the time.</li>
+      <li><strong>Cost.</strong> Reviewing hundreds of calls daily only works if a review costs less than the tea trolley. Cheap models everywhere the rubric permits; the expensive one only where judgement is genuinely hard.</li>
+    </ul>
+
+    <h2>Where the humans went</h2>
+
+    <p>Nobody was replaced by this thing. The QA team stopped being samplers and became editors: they spot-check the agent, own the rubric, and handle appeals. The agent does in one day what would take a team of humans several days &mdash; and with a consistency humans simply can&rsquo;t match. The humans, meanwhile, do the one thing only humans can: decide what <em>good</em> means this quarter, and change the rubric when the answer changes.</p>
+
+    <p>That trade &mdash; machines for coverage, humans for judgement &mdash; is the whole trick. There&rsquo;s something magical about teaching machines to understand context and take action &#10024;, but the magic only holds if a person can always say to the machine: <em>show me the sentence.</em></p>
+
+    <p class="postfoot">found a hole in the approach? tell me &mdash; <a href="https://twitter.com/MominBinShahid" target="_blank" rel="noopener">@MominBinShahid</a> on x<br><a href="#blog" data-go="blog" class="backlink">&larr; back to the blog</a></p>
+  </article>
+</section>
+
+</main>
+
+<div class="mock" aria-label="mockup page switcher">
+  <span>mockup</span>
+  <a href="#home" data-go="home">home</a>
+  <a href="#blog" data-go="blog">blog</a>
+  <a href="#post" data-go="post">post</a>
+</div>
+
+<div id="toast" role="status"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var site=document.getElementById('site');
+var canvas=document.getElementById('field');
+var ctx=canvas.getContext('2d',{alpha:false});
+var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var TAU=Math.PI*2;
+var visitStart=performance.now();
+
+/* ---- the deal: one of six accents per visit ---- */
+var ACCENTS=['kestrel','glasswing','lichen','heliotrope','rosefinch','brasslamp'];
+var accent=ACCENTS[Math.floor(Math.random()*ACCENTS.length)];
+site.dataset.accent=accent;
+document.getElementById('accentTag').textContent='dealt: '+accent;
+
+/* ---- colors, read from CSS so themes/accents stay in one place ---- */
+var C={};
+function hx(v){v=v.trim();if(v[0]==='#')v=v.slice(1);var n=parseInt(v,16);return[n>>16&255,n>>8&255,n&255];}
+function readColors(){
+  var s=getComputedStyle(site);
+  C.ground=s.getPropertyValue('--ground').trim();
+  C.mark=hx(s.getPropertyValue('--markc'));
+  C.acc=hx(s.getPropertyValue('--accent'));
+  C.ink=hx(s.getPropertyValue('--ink'));
+  var light=site.dataset.theme==='light';
+  C.lw=light?0.85:1.1;      /* day surface: fine dark linework */
+  C.as=light?0.95:1;
+  document.body.style.background=C.ground;
+}
+
+/* ---- marks: a loose grid of oriented strokes ---- */
+var W,H,marks=[];
+function build(){
+  var dpr=Math.min(window.devicePixelRatio||1,2);
+  W=window.innerWidth;H=window.innerHeight;
+  canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  marks.length=0;
+  var cell=Math.max(46,Math.sqrt(W*H/540));
+  for(var y=cell*0.6;y<H;y+=cell)
+    for(var x=cell*0.6;x<W;x+=cell)
+      marks.push({x:x+(Math.random()-.5)*cell*.5,y:y+(Math.random()-.5)*cell*.5,
+        a:Math.random()*TAU,al:0,g:0,ph:Math.random()*TAU});
+}
+
+/* ---- station presets: how the field behaves at each stop ----
+   sp speed · tu turbulence · la laminar · spr spiral · len stroke length
+   al alpha · res resolve-event rate · br breathing · nast nastaliq visibility */
+var PRE={
+  name:  {sp:.14,tu:1.1,la:.15,spr:0,len:8,  al:.5, res:.012,br:1,nast:0},
+  agent: {sp:.55,tu:1.7,la:0,  spr:0,len:7,  al:.62,res:.42, br:0,nast:0},
+  arc:   {sp:.3, tu:.3, la:1,  spr:0,len:12, al:.55,res:.03, br:0,nast:0},
+  meal:  {sp:.03,tu:.25,la:.1, spr:0,len:2.4,al:.32,res:0,   br:1,nast:0},
+  mind:  {sp:.24,tu:.6, la:0,  spr:1,len:9,  al:.55,res:.04, br:0,nast:1},
+  invite:{sp:.12,tu:.9, la:.2, spr:0,len:7,  al:.45,res:.015,br:1,nast:0},
+  blog:  {sp:.09,tu:.3, la:.85,spr:0,len:7,  al:.3, res:.008,br:1,nast:0},
+  post:  {sp:.05,tu:.35,la:.7, spr:0,len:6,  al:.26,res:0,   br:1,nast:0}
+};
+function clone(o){var r={};for(var k in o)r[k]=o[k];return r;}
+var P=clone(PRE.name),target=PRE.name,inviteOverride=null;
+var mode='home',ft=8.2;
+
+/* ---- legibility: the field parts around the prose ---- */
+var rects=[],artOn=false,artL=0,artR=0;
+function updateRects(){
+  rects.length=0;artOn=false;
+  var page=document.querySelector('.page:not([hidden])');
+  if(!page)return;
+  var els=page.querySelectorAll('.mask');
+  for(var i=0;i<els.length;i++){
+    var r=els[i].getBoundingClientRect();
+    if(r.bottom<-30||r.top>H+30||r.width===0)continue;
+    rects.push(r.left-26,r.top-16,r.right+26,r.bottom+16);
+  }
+  var nav=document.querySelector('.nav');
+  if(nav){var nr=nav.getBoundingClientRect();rects.push(nr.left-10,nr.top-10,nr.right+10,nr.bottom-4);}
+  if(mode==='post'){
+    var art=document.querySelector('#page-post .article');
+    if(art){var ar=art.getBoundingClientRect();artOn=true;artL=ar.left-40;artR=ar.right+40;}
+  }
+}
+function inMask(m){
+  for(var i=0;i<rects.length;i+=4)
+    if(m.x>rects[i]&&m.y>rects[i+1]&&m.x<rects[i+2]&&m.y<rects[i+3])return true;
+  return false;
+}
+
+/* ---- which station is speaking ---- */
+var stationEls=[].slice.call(document.querySelectorAll('#page-home .station'));
+function retarget(){
+  if(mode==='home'){
+    var mid=H*.5,bk='name',bd=1e9;
+    for(var i=0;i<stationEls.length;i++){
+      var r=stationEls[i].getBoundingClientRect();
+      var d=Math.abs((r.top+r.bottom)/2-mid);
+      if(d<bd){bd=d;bk=stationEls[i].dataset.s;}
+    }
+    target=(bk==='invite'&&inviteOverride)?inviteOverride:PRE[bk];
+    if(bk==='invite'&&!witnessed&&performance.now()-visitStart>6000)witness();
+  }else target=PRE[mode]||PRE.blog;
+}
+
+/* ---- pointer attention ---- */
+var ptr={x:-1e4,y:-1e4},ptrOn=false,ATR=150,AT2=ATR*ATR;
+var idleAt=performance.now();
+function wake(){idleAt=performance.now();}
+addEventListener('pointermove',function(e){ptr.x=e.clientX;ptr.y=e.clientY;ptrOn=true;wake();},{passive:true});
+addEventListener('pointerdown',wake,{passive:true});
+addEventListener('keydown',wake);
+document.addEventListener('pointerleave',function(){ptrOn=false;});
+
+function angLerp(a,b,w){var d=(b-a)%TAU;if(d>Math.PI)d-=TAU;if(d<-Math.PI)d+=TAU;return a+d*w;}
+
+function spark(){
+  for(var t=0;t<6;t++){
+    var m=marks[(Math.random()*marks.length)|0];
+    if(!inMask(m)&&!(artOn&&m.x>artL&&m.x<artR)){m.g=1;return;}
+  }
+}
+
+/* ---- one step of the surface ---- */
+function step(dt,t,still){
+  ft+=dt*(.25+P.sp*1.6);
+  if(!still)for(var k in target)P[k]+=(target[k]-P[k])*.055;
+  ctx.fillStyle=C.ground;ctx.fillRect(0,0,W,H);
+  ctx.lineWidth=C.lw;ctx.lineCap='round';
+  var mr=C.mark,ar=C.acc;
+  if(!still){if(Math.random()<P.res)spark();if(Math.random()<P.res*.5)spark();}
+  else if(P.res>.05)for(var i2=0;i2<24;i2++)marks[(i2*37+11)%marks.length].g=.35+((i2*53)%40)/100;
+  var scx=W*.6+Math.sin(ft*.11)*W*.08,scy=H*.42+Math.cos(ft*.09)*H*.07;
+  for(var i=0;i<marks.length;i++){
+    var m=marks[i];
+    if(artOn&&m.x>artL&&m.x<artR){m.g=0;continue;}
+    var wN=Math.max(0,1-P.la-P.spr);
+    var an=(Math.sin(m.x*.0062+ft*.9)+Math.sin(m.y*.0081-ft*.66)+Math.sin((m.x+m.y)*.0037+ft*.31))*.72*P.tu;
+    var vx=Math.cos(an)*wN,vy=Math.sin(an)*wN;
+    if(P.la>.001){var ba=Math.sin(m.y*.021+ft*.25)*.16;vx+=Math.cos(ba)*P.la;vy+=Math.sin(ba)*P.la;}
+    if(P.spr>.001){var sa=Math.atan2(m.y-scy,m.x-scx)+1.5708+Math.sin(ft*.18)*.35;vx+=Math.cos(sa)*P.spr;vy+=Math.sin(sa)*P.spr;}
+    var ta=Math.atan2(vy,vx),boost=0;
+    if(ptrOn){
+      var dx=ptr.x-m.x,dy=ptr.y-m.y,d2=dx*dx+dy*dy;
+      if(d2<AT2){var wgt=1-Math.sqrt(d2)/ATR;ta=angLerp(ta,Math.atan2(dy,dx),wgt*.8);boost=wgt;}
+    }
+    var base=P.al*(P.br>.01?1+P.br*.16*Math.sin(t*.55+m.ph):1);
+    if(inMask(m))base*=.06;
+    base+=boost*.28;
+    if(m.g>0)base=Math.max(base,.25+m.g*.6);
+    base*=C.as;
+    if(still){m.a=ta;m.al=base;}
+    else{m.a=angLerp(m.a,ta,.1+P.sp*.08);m.al+=(base-m.al)*.12;m.g*=.93;if(m.g<.02)m.g=0;}
+    if(m.al<.015)continue;
+    var L=P.len*(1-m.g*.25),g=m.g,r,gg,b;
+    if(g>0){r=(mr[0]+(ar[0]-mr[0])*g)|0;gg=(mr[1]+(ar[1]-mr[1])*g)|0;b=(mr[2]+(ar[2]-mr[2])*g)|0;}
+    else{r=mr[0];gg=mr[1];b=mr[2];}
+    var col='rgba('+r+','+gg+','+b+','+(m.al<1?m.al.toFixed(2):1)+')';
+    if(L<3.2){ctx.fillStyle=col;ctx.beginPath();ctx.arc(m.x,m.y,1.1+g,0,TAU);ctx.fill();}
+    else{
+      var c=Math.cos(m.a)*L/2,s=Math.sin(m.a)*L/2;
+      ctx.strokeStyle=col;ctx.beginPath();ctx.moveTo(m.x-c,m.y-s);ctx.lineTo(m.x+c,m.y+s);ctx.stroke();
+    }
+    if(g>.55){
+      ctx.strokeStyle='rgba('+ar[0]+','+ar[1]+','+ar[2]+','+(g*.35).toFixed(2)+')';
+      ctx.beginPath();ctx.arc(m.x,m.y,3+(1-g)*13,0,TAU);ctx.stroke();
+    }
+  }
+  if(nast&&P.nast>.02){
+    var nw=Math.min(700,W*.85),nh=nw*(nast.height/nast.width);
+    ctx.globalAlpha=P.nast*(site.dataset.theme==='light'?.16:.12);
+    ctx.drawImage(nast,W*.56-nw/2+Math.sin(ft*.07)*34,H*.3-nh/2+Math.cos(ft*.055)*22,nw,nh);
+    ctx.globalAlpha=1;
+  }
+}
+
+/* ---- nastaliq, pre-rendered once the font arrives ---- */
+var nast=null;
+function buildNast(){
+  if(!document.fonts||!document.fonts.load)return;
+  document.fonts.load('500 72px Gulzar','مومن').then(function(){
+    if(!document.fonts.check('500 72px Gulzar','مومن'))return;
+    var c=document.createElement('canvas');c.width=760;c.height=300;
+    var x=c.getContext('2d');
+    x.font='500 72px Gulzar';x.textAlign='center';x.textBaseline='middle';
+    x.fillStyle='rgb('+C.ink.join(',')+')';
+    x.fillText('مومن بن شاہد',380,150);
+    nast=c;
+    if(reduced||stillFlag)renderStill();
+  }).catch(function(){});
+}
+
+/* ---- loop with an idle governor: 30fps, 12fps when nobody moves ---- */
+var last=0,stillFlag=false,scrolled=true;
+function frame(now){
+  requestAnimationFrame(frame);
+  if(stillFlag)return;
+  var interval=(now-idleAt>6000)?83:33;
+  if(now-last<interval)return;
+  var dt=Math.min(.1,(now-last)/1000);last=now;
+  if(scrolled){scrolled=false;updateRects();retarget();}
+  step(dt,now/1000,false);
+}
+function renderStill(){
+  for(var k in target)P[k]=target[k];
+  updateRects();
+  step(0,8.2,true);
+}
+
+addEventListener('scroll',function(){scrolled=true;wake();if(reduced||stillFlag)stillSoon();},{passive:true});
+var stillTimer=null;
+function stillSoon(){clearTimeout(stillTimer);stillTimer=setTimeout(function(){retarget();renderStill();},130);}
+var rsTimer=null;
+addEventListener('resize',function(){
+  clearTimeout(rsTimer);
+  rsTimer=setTimeout(function(){build();updateRects();retarget();if(reduced||stillFlag)renderStill();},150);
+});
+
+/* ---- attention ledger: dwell per station, local only ---- */
+var LABELS={name:'the nameplate',agent:'the agent’s day',arc:'the long arc',meal:'MealUnits',mind:'code & consciousness',invite:'the invitation'};
+var ledger={},open={};
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    var k=e.target.dataset.s;
+    if(e.isIntersecting)open[k]=performance.now();
+    else if(open[k]){ledger[k]=(ledger[k]||0)+performance.now()-open[k];delete open[k];}
+  });
+},{threshold:.45});
+stationEls.forEach(function(el){io.observe(el);});
+function dwellSnapshot(){
+  var out={},now=performance.now(),k;
+  for(k in ledger)out[k]=ledger[k];
+  for(k in open)out[k]=(out[k]||0)+(now-open[k]);
+  return out;
+}
+function bestDwell(){
+  var s=dwellSnapshot(),bk=null,bm=0;
+  for(var k in s){if(k==='invite')continue;if(s[k]>bm){bm=s[k];bk=k;}}
+  return bk?{key:bk,ms:bm,label:LABELS[bk]}:null;
+}
+
+/* ---- the signature moment: context understood, action taken ---- */
+var witnessed=false,flips=0;
+function clock(){
+  var d=new Date(),h=d.getHours(),m=d.getMinutes(),ap=h<12?'am':'pm';
+  h=h%12||12;return h+':'+(m<10?'0':'')+m+' '+ap;
+}
+function typeLines(el,lines,done){
+  var vis=document.createElement('div');vis.setAttribute('aria-hidden','true');
+  var sr=document.createElement('div');sr.className='sr-only';
+  sr.textContent=lines.map(function(l){return l.t;}).join(' ');
+  el.appendChild(sr);el.appendChild(vis);
+  if(reduced||stillFlag){
+    lines.forEach(function(l){var d=document.createElement('div');d.textContent=l.t;d.className=l.c||'';vis.appendChild(d);});
+    if(done)done();return;
+  }
+  var li=0;
+  (function nextLine(){
+    if(li>=lines.length){if(done)done();return;}
+    var l=lines[li++],d=document.createElement('div');
+    d.className=l.c||'';vis.appendChild(d);
+    var i=0;
+    var iv=setInterval(function(){
+      d.textContent=l.t.slice(0,++i);
+      if(i>=l.t.length){clearInterval(iv);setTimeout(nextLine,240);}
+    },14);
+  })();
+}
+function witness(){
+  if(witnessed)return;witnessed=true;
+  try{wIO.disconnect();}catch(e){}
+  var el=document.getElementById('witness');el.hidden=false;
+  var w=bestDwell(),fast=!(w&&w.ms>4500);
+  var L=[{t:'the surface has been paying attention —',c:'w-head'}];
+  L.push({t:'· it’s '+clock()+' where you are',c:'w-obs'});
+  if(fast)L.push({t:'· you came straight through — '+Math.max(1,Math.round((performance.now()-visitStart)/1000))+'s door to door',c:'w-obs'});
+  else L.push({t:'· you stayed longest with '+w.label+' — '+Math.round(w.ms/1000)+'s',c:'w-obs'});
+  if(flips>0)L.push({t:'· you flipped the lights '+(flips===1?'once':flips+' times'),c:'w-obs'});
+  L.push({t:'· the accent you were dealt: '+accent,c:'w-obs'});
+  L.push({t:fast?'→ keeping the send-off brief, then':'→ retuning the surface to what held you',c:'w-act'});
+  L.push({t:'(how? open the console — nothing left this tab)',c:'w-hint'});
+  typeLines(el,L,function(){
+    inviteOverride=clone(fast?PRE.name:PRE[w.key]);
+    inviteOverride.al=Math.min(inviteOverride.al,.5);
+    inviteOverride.nast=0;
+    retarget();
+    if(reduced||stillFlag)renderStill();
+  });
+}
+var wIO=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting&&!witnessed&&mode==='home'&&performance.now()-visitStart>6000)witness();
+  });
+},{threshold:.3});
+wIO.observe(document.querySelector('.s-invite'));
+
+/* ---- routing (mockup tabs) ---- */
+var pages=[].slice.call(document.querySelectorAll('.page'));
+var navlinks=[].slice.call(document.querySelectorAll('[data-nav]'));
+function go(p){
+  mode=p;site.dataset.page=p;
+  pages.forEach(function(el){el.hidden=el.dataset.page!==p;});
+  navlinks.forEach(function(a){
+    var on=a.dataset.nav===p||(p==='post'&&a.dataset.nav==='blog');
+    if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+  });
+  window.scrollTo(0,0);
+  scrolled=true;updateRects();retarget();
+  if(reduced||stillFlag)renderStill();
+}
+var toastTimer=null;
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.classList.remove('show');},2600);
+}
+document.addEventListener('click',function(e){
+  var c=e.target.closest?e.target.closest('.contact-link'):null;
+  if(c){e.preventDefault();toast('contact is its own destination page — not part of this mockup');return;}
+  var a=e.target.closest?e.target.closest('[data-go]'):null;
+  if(a){e.preventDefault();go(a.dataset.go);}
+});
+
+/* ---- theme: the mockup's own toggle, independent of the viewer ---- */
+document.getElementById('themeBtn').addEventListener('click',function(){
+  var light=site.dataset.theme!=='light';
+  site.dataset.theme=light?'light':'dark';
+  this.setAttribute('aria-pressed',light?'true':'false');
+  flips++;
+  readColors();buildNast();
+  if(reduced||stillFlag)renderStill();
+});
+
+/* ---- launch-state toggle on the blog index ---- */
+document.getElementById('launchBtn').addEventListener('click',function(){
+  var pl=document.getElementById('postlist'),ls=document.getElementById('launchState');
+  var showingLaunch=pl.hidden=!pl.hidden;
+  ls.hidden=!showingLaunch;
+  this.setAttribute('aria-pressed',showingLaunch?'true':'false');
+  this.textContent=showingLaunch?'[ back to the populated index ]':'[ preview the launch state ]';
+  updateRects();
+  if(reduced||stillFlag)renderStill();
+});
+
+/* ---- the room behind the page ---- */
+try{
+  console.log('%cمومن بن شاہد','font-family:Gulzar,serif;font-size:26px;color:#86bfcb;');
+  console.log('%cyou found the room behind the page 🤙 @MominBinShahid','font-weight:bold;font-size:12px;');
+  console.log('the surface reads: scroll · pointer · dwell time · your clock · your theme.\n'+
+    'all of it stays in this tab — no network, no storage. view source; it’s one file.\n\n'+
+    '__field.ledger()   what it noticed so far (seconds per station)\n'+
+    '__field.deal(name) redeal the accent — '+ACCENTS.join(' · ')+'\n'+
+    '__field.still()    freeze / wake the surface\n'+
+    '__field.seed       the accent this visit was dealt');
+}catch(e){}
+window.__field={
+  get seed(){return accent;},
+  presets:Object.keys(PRE),
+  ledger:function(){
+    var s=dwellSnapshot(),out={};
+    for(var k in s)out[LABELS[k]||k]=Math.round(s[k]/100)/10;
+    return out;
+  },
+  deal:function(n){
+    if(ACCENTS.indexOf(n)<0)return 'accents: '+ACCENTS.join(', ');
+    accent=n;site.dataset.accent=n;
+    document.getElementById('accentTag').textContent='dealt: '+n;
+    readColors();buildNast();
+    if(reduced||stillFlag)renderStill();
+    return 'dealt: '+n;
+  },
+  still:function(){
+    stillFlag=!stillFlag;
+    if(stillFlag)renderStill();
+    return stillFlag?'field: still':'field: running';
+  }
+};
+
+/* ---- init ---- */
+build();readColors();updateRects();retarget();buildNast();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){
+  updateRects();if(reduced||stillFlag)renderStill();
+});
+if(reduced){renderStill();}
+else requestAnimationFrame(frame);
+})();
+</script>

@@ -1,0 +1,306 @@
+<title>Meem and Monogram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;800&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap">
+
+<style>
+:root{
+  --bg:#f3f4f7; --panel:#ffffff; --ink:#14171d; --dim:#5f6775;
+  --line:#dee1e8; --acc:#1f5fd6; --swatch:#14171d; --knock:#ffffff;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0d11; --panel:#13161c; --ink:#e6e9ef; --dim:#8a92a1;
+    --line:#232831; --acc:#7fa4ff; --swatch:#e6e9ef; --knock:#13161c;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0d11; --panel:#13161c; --ink:#e6e9ef; --dim:#8a92a1;
+  --line:#232831; --acc:#7fa4ff; --swatch:#e6e9ef; --knock:#13161c;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.5;
+}
+:focus-visible{outline:2px solid var(--acc); outline-offset:3px; border-radius:3px}
+.wrap{max-width:1200px; margin:0 auto; padding:clamp(22px,4vw,48px) clamp(16px,3vw,30px) 76px}
+
+h1{font-size:clamp(23px,3.2vw,32px); font-weight:800; letter-spacing:-.028em; margin:0 0 10px; text-wrap:balance}
+.sub{font-size:14.5px; color:var(--dim); max-width:70ch; margin:0}
+.sub b{color:var(--ink); font-weight:600}
+
+.controls{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:20px 0 0}
+.ctl{font:inherit; font-size:13px; font-weight:500; cursor:pointer; padding:7px 14px;
+  border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--dim); transition:.15s}
+.ctl:hover{color:var(--ink)}
+.ctl[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.lbl{font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); font-weight:700; margin-right:2px}
+
+.sec{margin-top:36px}
+.sec__h{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim);
+  font-weight:700; padding-bottom:8px; border-bottom:1px solid var(--line); margin-bottom:18px}
+
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(258px,1fr)); gap:16px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px;
+  display:flex; flex-direction:column; gap:15px}
+.card__id{display:flex; align-items:baseline; gap:8px; font-family:"Spline Sans Mono",ui-monospace,monospace;
+  font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--dim)}
+.card__id b{color:var(--acc); font-weight:600}
+.stage{display:grid; place-items:center; min-height:128px; border:1px dashed var(--line);
+  border-radius:10px; padding:14px; overflow:hidden}
+.stage svg{width:90px; height:90px; display:block}
+.sizes{display:flex; align-items:flex-end; gap:15px; padding-left:2px}
+.sizes figure{margin:0; display:flex; flex-direction:column; align-items:center; gap:5px}
+.sizes figcaption{font-family:"Spline Sans Mono",ui-monospace,monospace; font-size:9px; color:var(--dim)}
+.s32 svg{width:32px; height:32px} .s16 svg{width:16px; height:16px}
+.nm{font-size:14.5px; font-weight:600; letter-spacing:-.01em}
+.nt{font-size:12.5px; color:var(--dim); line-height:1.5; margin:4px 0 0}
+
+.mk{fill:none; stroke:var(--swatch); stroke-width:8; stroke-linecap:butt; stroke-linejoin:miter}
+.mk--f{fill:var(--swatch); stroke:none}
+.mk--k{fill:none; stroke:var(--knock)}
+.onacc .mk{stroke:var(--acc)} .onacc .mk--f{fill:var(--acc)}
+
+.word{display:grid; place-items:center; min-height:128px; border:1px dashed var(--line);
+  border-radius:10px; padding:14px 18px; overflow:hidden}
+.nastaliq{font-family:"Noto Nastaliq Urdu",serif; direction:rtl; color:var(--swatch); line-height:2.1}
+.onacc .nastaliq{color:var(--acc)}
+.w-lg{font-size:44px} .w-sm{font-size:19px} .w-xs{font-size:12px}
+.wordrow{display:flex; align-items:baseline; gap:18px; flex-wrap:wrap}
+
+.foot{margin-top:32px; padding-top:18px; border-top:1px solid var(--line);
+  font-size:13px; color:var(--dim); max-width:74ch}
+.foot strong{color:var(--ink); font-weight:600}
+</style>
+
+<div class="wrap">
+  <h1>Meem and monogram</h1>
+  <p class="sub">
+    Second round. Urdu as design material — <b>م</b> is the Urdu letter M, and its isolated form is already
+    a logo: a bowl and a tail. Plus MBS monograms and M ideas that are not just the letter drawn plainly.
+    No religious content anywhere; the script is used as a shape, nothing more.
+  </p>
+  <div class="controls">
+    <span class="lbl">Theme</span>
+    <button class="ctl" data-theme-set="light" aria-pressed="true">Light</button>
+    <button class="ctl" data-theme-set="dark" aria-pressed="false">Dark</button>
+    <span class="lbl" style="margin-left:8px">Colour</span>
+    <button class="ctl" data-col="ink" aria-pressed="true">Mono</button>
+    <button class="ctl" data-col="acc" aria-pressed="false">Accent</button>
+  </div>
+
+  <div id="all">
+
+  <section class="sec">
+    <h2 class="sec__h">Urdu</h2>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card__id"><b>09</b><span>Meem</span></div>
+        <div class="stage">
+          <svg viewBox="0 0 100 100" aria-label="The Urdu letter meem">
+            <circle class="mk" cx="46" cy="38" r="20" stroke-width="9"/>
+            <path class="mk" d="M60 52 Q66 70 58 88" stroke-width="9" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="mk" cx="46" cy="38" r="20" stroke-width="9"/><path class="mk" d="M60 52 Q66 70 58 88" stroke-width="9" stroke-linecap="round"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="mk" cx="46" cy="38" r="20" stroke-width="9"/><path class="mk" d="M60 52 Q66 70 58 88" stroke-width="9" stroke-linecap="round"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Meem</div><p class="nt">The isolated م, drawn geometrically. A circle and a tail — it was always a logo. Reads as an abstract mark to anyone who doesn't know the script.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card__id"><b>10</b><span>Seal</span></div>
+        <div class="stage">
+          <svg viewBox="0 0 100 100" aria-label="Meem inside a ring">
+            <circle class="mk" cx="50" cy="50" r="42" stroke-width="5"/>
+            <circle class="mk--f" cx="46" cy="44" r="13"/>
+            <circle class="mk--k" cx="46" cy="44" r="5.5" stroke-width="0" style="fill:var(--knock)"/>
+            <path class="mk" d="M57 54 Q62 66 56 76" stroke-width="7" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="mk" cx="50" cy="50" r="42" stroke-width="5"/><circle class="mk--f" cx="46" cy="44" r="13"/><circle cx="46" cy="44" r="5.5" style="fill:var(--knock)"/><path class="mk" d="M57 54 Q62 66 56 76" stroke-width="7" stroke-linecap="round"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="mk" cx="50" cy="50" r="42" stroke-width="5"/><circle class="mk--f" cx="46" cy="44" r="13"/><circle cx="46" cy="44" r="5.5" style="fill:var(--knock)"/><path class="mk" d="M57 54 Q62 66 56 76" stroke-width="7" stroke-linecap="round"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Seal</div><p class="nt">Meem set in a ring, like a stamp. Self-contained, so it needs no avatar frame anywhere it appears.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card__id"><b>11</b><span>Bilingual</span></div>
+        <div class="stage">
+          <svg viewBox="0 0 100 100" aria-label="Latin M whose centre is the meem bowl">
+            <path class="mk" d="M12 84 V26" stroke-width="9"/>
+            <path class="mk" d="M88 84 V26" stroke-width="9"/>
+            <path class="mk" d="M12 26 L38 54" stroke-width="9"/>
+            <path class="mk" d="M88 26 L62 54" stroke-width="9"/>
+            <circle class="mk" cx="50" cy="60" r="14" stroke-width="9"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M12 84 V26"/><path class="mk" d="M88 84 V26"/><path class="mk" d="M12 26 L38 54"/><path class="mk" d="M88 26 L62 54"/><circle class="mk" cx="50" cy="60" r="14"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M12 84 V26"/><path class="mk" d="M88 84 V26"/><path class="mk" d="M12 26 L38 54"/><path class="mk" d="M88 26 L62 54"/><circle class="mk" cx="50" cy="60" r="14"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Bilingual</div><p class="nt">A Latin M whose middle vertex is replaced by the meem's bowl. Two alphabets in one form. The most original mark in either round.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card__id"><b>12</b><span>Wordmark</span></div>
+        <div class="word">
+          <div class="wordrow">
+            <span class="nastaliq w-lg">مومن</span>
+          </div>
+        </div>
+        <div class="sizes" style="align-items:baseline">
+          <figure><span class="nastaliq w-sm">مومن</span><figcaption>small</figcaption></figure>
+          <figure><span class="nastaliq w-xs">مومن</span><figcaption>tiny</figcaption></figure>
+        </div>
+        <div><div class="nm">Momin, in Nastaliq</div><p class="nt">Your name as a wordmark. Gorgeous large, illegible small — so it pairs with an icon rather than replacing one. Would be outlined to paths for production.</p></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec__h">MBS</h2>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card__id"><b>13</b><span>Stack</span></div>
+        <div class="stage">
+          <svg viewBox="0 0 100 100" aria-label="M B S stacked">
+            <g class="mk--f" font-family="Spline Sans Mono, monospace" font-weight="600" font-size="30" text-anchor="middle">
+              <text x="50" y="32">M</text><text x="50" y="60">B</text><text x="50" y="88">S</text>
+            </g>
+          </svg>
+        </div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><g class="mk--f" font-family="Spline Sans Mono, monospace" font-weight="600" font-size="30" text-anchor="middle"><text x="50" y="32">M</text><text x="50" y="60">B</text><text x="50" y="88">S</text></g></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><g class="mk--f" font-family="Spline Sans Mono, monospace" font-weight="600" font-size="30" text-anchor="middle"><text x="50" y="32">M</text><text x="50" y="60">B</text><text x="50" y="88">S</text></g></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Stack</div><p class="nt">Three letters in a column, monospaced so they align optically. Quiet and systematic. Works as a rail signature down the side of a page.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card__id"><b>14</b><span>Interlock</span></div>
+        <div class="stage">
+          <svg viewBox="0 0 100 100" aria-label="M B S sharing a stem">
+            <path class="mk" d="M10 78 V30 L30 50 L50 30 V78" stroke-width="8"/>
+            <path class="mk" d="M50 30 H72 Q84 30 84 42 Q84 54 72 54 H50" stroke-width="8" fill="none"/>
+            <path class="mk" d="M84 60 Q84 78 68 78 H50" stroke-width="8" fill="none"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M10 78 V30 L30 50 L50 30 V78"/><path class="mk" d="M50 30 H72 Q84 30 84 42 Q84 54 72 54 H50"/><path class="mk" d="M84 60 Q84 78 68 78 H50"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M10 78 V30 L30 50 L50 30 V78"/><path class="mk" d="M50 30 H72 Q84 30 84 42 Q84 54 72 54 H50"/><path class="mk" d="M84 60 Q84 78 68 78 H50"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Interlock</div><p class="nt">M, B and S sharing one vertical stem. Proper monogram craft — the letters are dependent on each other rather than sitting side by side.</p></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec__h">M, less obviously</h2>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card__id"><b>15</b><span>Unicursal</span></div>
+        <div class="stage">
+          <svg viewBox="0 0 100 100" aria-label="M drawn in one unbroken stroke">
+            <path class="mk" d="M14 82 C14 30 26 20 38 30 C48 39 44 70 54 70 C66 70 62 28 74 24 C84 21 86 42 86 82"
+                  stroke-width="8" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M14 82 C14 30 26 20 38 30 C48 39 44 70 54 70 C66 70 62 28 74 24 C84 21 86 42 86 82" stroke-linecap="round"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M14 82 C14 30 26 20 38 30 C48 39 44 70 54 70 C66 70 62 28 74 24 C84 21 86 42 86 82" stroke-linecap="round"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Unicursal</div><p class="nt">One unbroken line, never lifting. Handwritten rather than constructed — and it can draw itself on page load without looking gimmicky.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card__id"><b>16</b><span>Counter</span></div>
+        <div class="stage">
+          <svg viewBox="0 0 100 100" aria-label="M as negative space in a solid square">
+            <mask id="cm"><rect width="100" height="100" fill="#fff"/>
+              <path d="M24 78 V32 L50 58 L76 32 V78" fill="none" stroke="#000" stroke-width="11" stroke-linejoin="miter"/></mask>
+            <rect class="mk--f" x="8" y="8" width="84" height="84" rx="8" mask="url(#cm)"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><mask id="cm2"><rect width="100" height="100" fill="#fff"/><path d="M24 78 V32 L50 58 L76 32 V78" fill="none" stroke="#000" stroke-width="11"/></mask><rect class="mk--f" x="8" y="8" width="84" height="84" rx="8" mask="url(#cm2)"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><mask id="cm3"><rect width="100" height="100" fill="#fff"/><path d="M24 78 V32 L50 58 L76 32 V78" fill="none" stroke="#000" stroke-width="11"/></mask><rect class="mk--f" x="8" y="8" width="84" height="84" rx="8" mask="url(#cm3)"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Counter</div><p class="nt">The M exists only as the gap. Solid enough to hold a dark ground and read at favicon size — the strongest of the abstract set at 16px.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card__id"><b>17</b><span>Isometric</span></div>
+        <div class="stage">
+          <svg viewBox="0 0 100 100" aria-label="M as an extruded block">
+            <path class="mk--f" d="M16 70 L36 58 L50 66 L64 58 L84 70 L84 82 L64 70 L50 78 L36 70 L16 82 Z"/>
+            <path class="mk" d="M16 70 V40 L36 28 L50 36 L64 28 L84 40 V70" stroke-width="7" fill="none" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk--f" d="M16 70 L36 58 L50 66 L64 58 L84 70 L84 82 L64 70 L50 78 L36 70 L16 82 Z"/><path class="mk" d="M16 70 V40 L36 28 L50 36 L64 28 L84 40 V70" stroke-width="7" stroke-linejoin="round"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk--f" d="M16 70 L36 58 L50 66 L64 58 L84 70 L84 82 L64 70 L50 78 L36 70 L16 82 Z"/><path class="mk" d="M16 70 V40 L36 28 L50 36 L64 28 L84 40 V70" stroke-width="7" stroke-linejoin="round"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Isometric</div><p class="nt">An M with depth, seen slightly from above. Has real presence at large sizes; the shadow plane collapses below about 24px.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card__id"><b>18</b><span>Levels</span></div>
+        <div class="stage">
+          <svg viewBox="0 0 100 100" aria-label="M implied by five bars">
+            <g class="mk--f">
+              <rect x="10" y="26" width="13" height="58" rx="3"/>
+              <rect x="30" y="48" width="13" height="36" rx="3"/>
+              <rect x="50" y="62" width="13" height="22" rx="3"/>
+              <rect x="70" y="48" width="13" height="36" rx="3"/>
+              <rect x="86" y="26" width="8"  height="58" rx="3" opacity=".35"/>
+            </g>
+          </svg>
+        </div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><g class="mk--f"><rect x="10" y="26" width="13" height="58" rx="3"/><rect x="30" y="48" width="13" height="36" rx="3"/><rect x="50" y="62" width="13" height="22" rx="3"/><rect x="70" y="48" width="13" height="36" rx="3"/><rect x="86" y="26" width="8" height="58" rx="3" opacity=".35"/></g></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><g class="mk--f"><rect x="10" y="26" width="13" height="58" rx="3"/><rect x="30" y="48" width="13" height="36" rx="3"/><rect x="50" y="62" width="13" height="22" rx="3"/><rect x="70" y="48" width="13" height="36" rx="3"/><rect x="86" y="26" width="8" height="58" rx="3" opacity=".35"/></g></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Levels</div><p class="nt">Bar heights trace the M silhouette. Reads as audio levels — the agent listening to calls — and animates naturally as a loading state.</p></div>
+      </article>
+
+    </div>
+  </section>
+
+  </div>
+
+  <p class="foot">
+    <strong>My picks:</strong> <b>11 Bilingual</b> is the most original thing across both rounds — a Latin M
+    holding an Urdu meem, legible to everyone, meaningful to you. <b>09 Meem</b> is the most elegant and the
+    best favicon. <b>16 Counter</b> is the strongest purely abstract option.
+    <br><br>
+    <strong>12 Wordmark pairs rather than replaces</strong> — Nastaliq is beautiful at headline size and gone
+    at 16px, so it would sit in a header or footer alongside an icon, not act as one.
+  </p>
+</div>
+
+<script>
+(function(){
+  var t = document.querySelectorAll('[data-theme-set]');
+  t.forEach(function(b){ b.addEventListener('click', function(){
+    document.documentElement.setAttribute('data-theme', b.getAttribute('data-theme-set'));
+    t.forEach(function(x){ x.setAttribute('aria-pressed', String(x===b)); });
+  });});
+  var c = document.querySelectorAll('[data-col]'), all = document.getElementById('all');
+  c.forEach(function(b){ b.addEventListener('click', function(){
+    all.classList.toggle('onacc', b.getAttribute('data-col') === 'acc');
+    c.forEach(function(x){ x.setAttribute('aria-pressed', String(x===b)); });
+  });});
+  document.documentElement.setAttribute('data-theme','light');
+})();
+</script>

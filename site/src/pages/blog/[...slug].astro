@@ -1,0 +1,30 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import PostLayout from '../../layouts/Post.astro';
+import { getPosts, type Post } from '../../lib/posts';
+
+interface Props {
+  post: Post;
+}
+
+/**
+ * getStaticPaths is what makes the draft rule real. It calls the same filter as
+ * the index and the sitemap, so in a production build a draft has no route at
+ * all - it 404s rather than sitting at a guessable URL.
+ */
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { slug: post.data.slug },
+    props: { post },
+  }));
+};
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<PostLayout post={post}>
+  <Content />
+</PostLayout>

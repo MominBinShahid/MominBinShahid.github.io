@@ -1,0 +1,1269 @@
+<title>Signal to Sense</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&amp;family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&amp;display=swap">
+
+<style>
+/* ============================================================
+   SIGNAL TO SENSE — Momin Bin Shahid
+   Human voice: Newsreader (serif). Machine annotation: Spline Sans Mono.
+   One live accent per visit, drawn from four curated pairs.
+   ============================================================ */
+
+:root {
+  /* light (paper) — complete palette */
+  --bg:      #F5F5F2;
+  --surface: #FCFCFA;
+  --sunken:  #EDEEE9;
+  --ink:     #20242A;
+  --muted:   #5D646E;
+  --faint:   #8A9098;
+  --line:    #D9DAD3;
+  --code-bg: #EEEFEA;
+
+  /* live accent: JS may swap these two at load (random-accent feature, kept) */
+  --live-l:  #1E6FB8;
+  --live-d:  #6FB3EE;
+  --live:    var(--live-l);
+
+  /* semantic verdict colors */
+  --ok:      #177A5B;
+  --bad:     #A6491F;
+
+  /* code tokens */
+  --tok-kw:  #A6491F;
+  --tok-fn:  #1E6FB8;
+  --tok-str: #177A5B;
+  --tok-num: #9A6A00;
+  --tok-cm:  #7A8188;
+
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono:  "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:      #171A1F;
+    --surface: #1E222A;
+    --sunken:  #12151A;
+    --ink:     #E7E7E2;
+    --muted:   #9BA1A8;
+    --faint:   #6C737C;
+    --line:    #2F343C;
+    --code-bg: #14171C;
+    --live:    var(--live-d);
+    --ok:      #55C9A2;
+    --bad:     #E2926B;
+    --tok-kw:  #E2926B;
+    --tok-fn:  #6FB3EE;
+    --tok-str: #55C9A2;
+    --tok-num: #E8C24A;
+    --tok-cm:  #7C838C;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:      #171A1F;
+  --surface: #1E222A;
+  --sunken:  #12151A;
+  --ink:     #E7E7E2;
+  --muted:   #9BA1A8;
+  --faint:   #6C737C;
+  --line:    #2F343C;
+  --code-bg: #14171C;
+  --live:    var(--live-d);
+  --ok:      #55C9A2;
+  --bad:     #E2926B;
+  --tok-kw:  #E2926B;
+  --tok-fn:  #6FB3EE;
+  --tok-str: #55C9A2;
+  --tok-num: #E8C24A;
+  --tok-cm:  #7C838C;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: color-mix(in srgb, var(--live) 28%, transparent); }
+
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--live); outline-offset: 3px; border-radius: 1px; }
+
+.skip {
+  position: absolute; left: 12px; top: -48px; z-index: 50;
+  font: 500 0.8rem var(--mono);
+  background: var(--ink); color: var(--bg);
+  padding: 8px 14px; text-decoration: none;
+  transition: top 120ms ease;
+}
+.skip:focus-visible { top: 12px; }
+
+/* ---------- machine annotation vocabulary ---------- */
+
+.m {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.m .arrow { color: var(--live); }
+
+.seclabel {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 26px;
+}
+.seclabel::after {
+  content: ""; flex: 1; height: 1px; background: var(--line);
+}
+.seclabel .tick { color: var(--live); }
+
+/* ---------- top bar ---------- */
+
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  max-width: 1180px; margin: 0 auto;
+  padding: 0 24px;
+  display: flex; align-items: stretch; gap: 20px;
+  min-height: 54px;
+}
+.brand {
+  display: flex; align-items: center;
+  font: 500 0.78rem var(--mono);
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand b { color: var(--ink); font-weight: 600; }
+.brand .caret {
+  display: inline-block; width: 7px; height: 15px;
+  background: var(--live); margin-left: 5px;
+  animation: blink 1.15s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.tabs {
+  display: flex; gap: 4px; margin-left: auto;
+  align-items: stretch;
+}
+.tab {
+  appearance: none; background: none; border: none;
+  border-bottom: 2px solid transparent;
+  font: 500 0.8rem var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding: 0 14px; cursor: pointer;
+}
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--live);
+}
+
+.theme-toggle {
+  appearance: none; background: none;
+  border: 1px solid var(--line); border-radius: 50%;
+  width: 32px; height: 32px; align-self: center;
+  cursor: pointer; color: var(--ink);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.theme-toggle:hover { border-color: var(--muted); }
+.theme-toggle svg { display: block; }
+
+/* ---------- shell: rail + content ---------- */
+
+.shell {
+  max-width: 1180px; margin: 0 auto;
+  padding: 40px 24px 80px;
+  display: grid;
+  grid-template-columns: 272px minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.rail {
+  position: sticky; top: 86px;
+  display: flex; flex-direction: column; gap: 22px;
+}
+
+.avatar { display: block; }
+.avatar circle { fill: var(--surface); stroke: var(--line); }
+.avatar .wave { stroke: var(--muted); fill: none; }
+.avatar .tok  { fill: var(--live); }
+.avatar text  {
+  font-family: var(--serif); font-weight: 500; font-size: 30px;
+  fill: var(--ink);
+}
+
+.rail h1 {
+  font: 500 1.55rem/1.15 var(--serif);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.role { margin-top: 8px; }
+.role .from { color: var(--muted); }
+.role .to   { color: var(--ink); font-weight: 600; }
+
+.rail-block { border-top: 1px solid var(--line); padding-top: 16px; }
+.rail-block .m + .m { margin-top: 4px; }
+.rail dt {
+  font: 500 0.68rem var(--mono);
+  letter-spacing: 0.1em; text-transform: lowercase;
+  color: var(--faint); margin-bottom: 8px;
+}
+.rail dd { margin: 0; }
+
+.links { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.links a {
+  font: 500 0.8rem var(--mono);
+  color: var(--muted); text-decoration: none;
+  display: inline-flex; gap: 8px; align-items: baseline;
+}
+.links a .at { color: var(--faint); }
+.links a:hover { color: var(--live); }
+.links a:hover .at { color: var(--live); }
+
+/* scraper-proof email: visible text injected via CSS, entities in the mailto */
+.email { font: 500 0.8rem var(--mono); color: var(--muted); text-decoration: none; }
+.email::after { content: "MominBinShahid" "\0040" "gmail" "\002E" "com"; }
+.email:hover { color: var(--live); }
+
+.cv {
+  display: inline-block;
+  font: 600 0.8rem var(--mono); letter-spacing: 0.05em;
+  color: var(--bg); background: var(--ink);
+  text-decoration: none;
+  padding: 10px 16px;
+  border: 1px solid var(--ink);
+}
+.cv:hover { background: var(--live); border-color: var(--live); color: #FFFFFF; }
+:root[data-theme="dark"] .cv:hover { color: #14171C; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .cv:hover { color: #14171C; }
+}
+
+/* ---------- pages ---------- */
+
+.page[hidden] { display: none; }
+.page > section + section { margin-top: 72px; }
+
+/* ---------- home: hero ---------- */
+
+.hero .m { margin-bottom: 18px; }
+.hero h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.4vw, 3.1rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  max-width: 21ch;
+}
+.hero h2 em { font-style: italic; color: var(--live); }
+
+.strip-wrap { margin: 34px 0 0; }
+.strip {
+  display: block; width: 100%; height: 120px;
+}
+.strip-caption {
+  display: flex; justify-content: space-between;
+  margin-top: 6px;
+}
+
+.proof {
+  margin-top: 34px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  max-width: 62ch;
+}
+.proof p {
+  font: 400 1.22rem/1.5 var(--serif);
+}
+.proof p strong { font-weight: 600; }
+.proof .m { display: block; margin-bottom: 10px; }
+.proof-link {
+  display: inline-block; margin-top: 14px;
+  font: 500 0.8rem var(--mono);
+  color: var(--live); text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--live) 40%, transparent);
+  padding-bottom: 1px;
+}
+.proof-link:hover { border-bottom-color: var(--live); }
+
+/* ---------- home: annotated about ---------- */
+
+.annot { display: grid; grid-template-columns: 118px minmax(0, 1fr); column-gap: 26px; row-gap: 26px; }
+.annot .tag { padding-top: 5px; }
+.annot .txt { max-width: 62ch; }
+.annot .txt p + p { margin-top: 10px; }
+.pull {
+  font: 400 1.28rem/1.45 var(--serif);
+  font-style: italic;
+}
+.pull .q { color: var(--live); font-style: normal; }
+
+/* ---------- home: domains ---------- */
+
+.domains {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: 8px 10px;
+  font: 500 0.82rem var(--mono);
+  color: var(--ink);
+}
+.domains .sep { color: var(--live); }
+.domains .note { color: var(--faint); }
+.reach { margin-top: 12px; }
+
+/* ---------- home: facets (six tiles, reordered) ---------- */
+
+.facets {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--line);
+  border: 1px solid var(--line);
+}
+.facet { background: var(--bg); padding: 22px 24px 24px; }
+.facet .m { display: block; margin-bottom: 8px; }
+.facet h3 {
+  font: 500 1.28rem/1.25 var(--serif);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.facet.feature { grid-column: 1 / -1; background: var(--surface); }
+.facet.feature h3 { font-size: 1.6rem; }
+.facet.feature .m .tick { color: var(--live); }
+.facet.feature p {
+  margin-top: 10px; max-width: 58ch;
+  font-style: italic; color: var(--muted);
+}
+
+/* ---------- home: stack ---------- */
+
+.stack-scroll { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+.stack { border-collapse: collapse; width: 100%; min-width: 560px; }
+.stack th, .stack td { text-align: left; padding: 11px 18px; border-top: 1px solid var(--line); }
+.stack tr:first-child th, .stack tr:first-child td { border-top: none; }
+.stack th {
+  font: 500 0.72rem var(--mono); letter-spacing: 0.1em;
+  color: var(--faint); white-space: nowrap; width: 1%;
+  vertical-align: baseline;
+}
+.stack td { font: 500 0.84rem var(--mono); color: var(--ink); }
+.stack td .dot { color: var(--faint); padding: 0 4px; }
+.stack td .now { color: var(--live); }
+
+/* ---------- home: quotes widget ---------- */
+
+.quotes {
+  border: 1px solid var(--line); background: var(--surface);
+  padding: 26px 28px;
+}
+.quotes-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  margin-bottom: 16px;
+}
+.quotes-next {
+  appearance: none; border: 1px solid var(--line); background: var(--bg);
+  font: 500 0.74rem var(--mono); letter-spacing: 0.05em;
+  color: var(--muted); padding: 6px 12px; cursor: pointer;
+}
+.quotes-next:hover { color: var(--live); border-color: var(--live); }
+.quotes blockquote p {
+  font: 400 1.18rem/1.5 var(--serif); font-style: italic;
+  max-width: 56ch;
+}
+.quotes figcaption { margin-top: 10px; }
+
+/* ---------- home: outro ---------- */
+
+.outro { border-top: 1px solid var(--line); padding-top: 26px; }
+.outro p {
+  font: 400 1.3rem/1.45 var(--serif);
+  max-width: 30ch; text-wrap: balance;
+}
+.outro .m { display: block; margin-top: 16px; }
+.outro a.mail-inline { color: var(--live); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--live) 40%, transparent); }
+.outro a.mail-inline:hover { border-bottom-color: var(--live); }
+
+/* ---------- blog index ---------- */
+
+.posts { list-style: none; }
+.post-row { border-top: 1px solid var(--line); }
+.post-row:last-child { border-bottom: 1px solid var(--line); }
+.post-row a {
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  column-gap: 26px;
+  padding: 22px 8px;
+  text-decoration: none;
+}
+.post-row a:hover { background: var(--surface); }
+.post-row .date { padding-top: 5px; white-space: nowrap; }
+.post-row h3 {
+  font: 500 1.42rem/1.25 var(--serif);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.post-row a:hover h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--live);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.post-row .dek { margin-top: 6px; color: var(--muted); max-width: 58ch; }
+.post-meta { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.tagchip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 500 0.72rem var(--mono); color: var(--muted);
+}
+.tagchip .swatch {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+  display: inline-block;
+}
+.post-row.feature a { background: var(--surface); }
+.post-row.feature a:hover { background: var(--sunken); }
+.post-row.feature .flag { color: var(--live); }
+
+/* ---------- post page ---------- */
+
+.crumb {
+  display: inline-block; margin-bottom: 26px;
+  font: 500 0.78rem var(--mono);
+  color: var(--muted); text-decoration: none;
+}
+.crumb:hover { color: var(--live); }
+
+.post-head h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  max-width: 24ch;
+}
+.post-head .m { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+
+.banner { margin: 30px 0 44px; }
+.banner .strip { height: 140px; border: 1px solid var(--line); background: var(--surface); }
+
+.article { max-width: 66ch; }
+.article > p + p { margin-top: 16px; }
+.article h3 {
+  margin: 44px 0 14px;
+  font: 500 1.45rem/1.3 var(--serif);
+}
+.article h3 .stage {
+  display: block;
+  font: 500 0.72rem var(--mono); letter-spacing: 0.1em;
+  color: var(--live); margin-bottom: 6px;
+}
+.article a { color: var(--live); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--live) 40%, transparent); }
+.article a:hover { border-bottom-color: var(--live); }
+.article code {
+  font: 500 0.84em var(--mono);
+  background: var(--code-bg);
+  padding: 1px 5px; border-radius: 3px;
+}
+.article ul { margin: 16px 0 16px 2px; list-style: none; }
+.article ul li {
+  padding-left: 22px; position: relative;
+  margin-top: 8px;
+}
+.article ul li::before {
+  content: "—"; position: absolute; left: 0;
+  color: var(--live); font-family: var(--mono); font-size: 0.85em;
+}
+
+.article blockquote {
+  margin: 30px 0; padding-left: 24px;
+  border-left: 1px solid var(--line);
+  position: relative;
+}
+.article blockquote::before {
+  content: ""; position: absolute; left: -1px; top: 0;
+  width: 1px; height: 2.2em; background: var(--live);
+}
+.article blockquote p {
+  font: 400 1.3rem/1.45 var(--serif); font-style: italic;
+}
+.article blockquote footer { margin-top: 10px; }
+
+/* code block, hand-highlighted */
+.codeblock {
+  margin: 26px 0;
+  border: 1px solid var(--line);
+  background: var(--code-bg);
+}
+.codeblock .codebar {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.codeblock pre {
+  overflow-x: auto;
+  padding: 16px 14px;
+}
+.codeblock pre code {
+  background: none; padding: 0; border-radius: 0;
+  font: 400 0.82rem/1.62 var(--mono);
+  color: var(--ink);
+  display: block; min-width: max-content;
+}
+.tok-kw  { color: var(--tok-kw); font-weight: 500; }
+.tok-fn  { color: var(--tok-fn); }
+.tok-str { color: var(--tok-str); }
+.tok-num { color: var(--tok-num); }
+.tok-cm  { color: var(--tok-cm); font-style: italic; }
+
+/* redacted transcript figure */
+.transcript {
+  margin: 26px 0;
+  border: 1px solid var(--line); background: var(--surface);
+}
+.transcript .codebar {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 8px 14px; border-bottom: 1px solid var(--line);
+}
+.transcript-scroll { overflow-x: auto; }
+.transcript-rows { padding: 14px; min-width: 420px; display: flex; flex-direction: column; gap: 9px; }
+.tr-line {
+  display: grid; grid-template-columns: 58px minmax(0,1fr) auto;
+  gap: 14px; align-items: center;
+}
+.tr-line .who { text-align: left; }
+.redact { display: flex; gap: 5px; align-items: center; min-width: 0; }
+.redact i {
+  display: inline-block; height: 9px; border-radius: 1px;
+  background: color-mix(in srgb, var(--muted) 32%, transparent);
+}
+.redact .hi { background: color-mix(in srgb, var(--live) 45%, transparent); }
+.verdict { font: 500 0.72rem var(--mono); white-space: nowrap; }
+.verdict.ok  { color: var(--ok); }
+.verdict.bad { color: var(--bad); }
+.transcript figcaption { padding: 10px 14px; border-top: 1px solid var(--line); }
+
+/* ---------- footer ---------- */
+
+.foot {
+  border-top: 1px solid var(--line);
+}
+.foot-inner {
+  max-width: 1180px; margin: 0 auto;
+  padding: 22px 24px;
+  display: flex; flex-wrap: wrap; gap: 10px 28px;
+  justify-content: space-between;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 920px) {
+  .shell { grid-template-columns: 1fr; gap: 44px; }
+  .rail { position: static; }
+  .facets { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .topbar-inner { padding: 0 16px; gap: 10px; }
+  .brand span.host { display: none; }
+  .shell { padding: 28px 16px 64px; }
+  .annot { grid-template-columns: 1fr; row-gap: 6px; }
+  .annot .tag { padding-top: 0; margin-top: 18px; }
+  .annot .tag:first-child { margin-top: 0; }
+  .post-row a { grid-template-columns: 1fr; row-gap: 4px; }
+  .tr-line { grid-template-columns: 48px minmax(0,1fr) auto; gap: 8px; }
+}
+</style>
+
+<a class="skip" href="#main">skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#home" data-goto="home"><b>mominbinshahid</b><span class="host">.github.io</span><span class="caret" aria-hidden="true"></span></a>
+    <nav class="tabs" role="tablist" aria-label="Site pages">
+      <button class="tab" role="tab" id="tab-home" aria-controls="page-home" aria-selected="true">home</button>
+      <button class="tab" role="tab" id="tab-blog" aria-controls="page-blog" aria-selected="false">blog</button>
+      <button class="tab" role="tab" id="tab-post" aria-controls="page-post" aria-selected="false">post</button>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+        <circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+        <path d="M 7 1.5 A 5.5 5.5 0 0 1 7 12.5 Z" fill="currentColor"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- ================= persistent rail ================= -->
+  <aside class="rail" aria-label="Profile">
+    <svg class="avatar" width="76" height="76" viewBox="0 0 76 76" role="img" aria-label="Momin Bin Shahid monogram">
+      <circle cx="38" cy="38" r="36.5" stroke-width="1"></circle>
+      <polyline class="wave" stroke-width="1.3"
+        points="10,52 14,48 18,55 22,44 26,53 30,47 34,52 38,49"></polyline>
+      <rect class="tok" x="44" y="47" width="5" height="5"></rect>
+      <rect class="tok" x="53" y="49" width="4" height="4"></rect>
+      <rect class="tok" x="61" y="50" width="3" height="3"></rect>
+      <text x="38" y="38" text-anchor="middle">M</text>
+    </svg>
+
+    <div>
+      <h1>Momin Bin Shahid</h1>
+      <p class="m role"><span class="from">full-stack engineer</span> <span class="arrow">&rarr;</span> <span class="to">ai engineer</span></p>
+    </div>
+
+    <div class="rail-block">
+      <p class="m">lead engineer &middot; sastaticket.pk</p>
+      <p class="m">karachi, pakistan</p>
+      <p class="m">8 yrs shipping &middot; bs computer science</p>
+    </div>
+
+    <dl class="rail-block">
+      <dt>elsewhere</dt>
+      <dd>
+        <ul class="links">
+          <li><a href="https://github.com/MominBinShahid"><span class="at">gh:</span>MominBinShahid</a></li>
+          <li><a href="https://linkedin.com/in/mominbinshahid"><span class="at">in:</span>mominbinshahid</a></li>
+          <li><a href="https://stackoverflow.com/users/9137804/MominBinShahid"><span class="at">so:</span>9137804</a></li>
+          <li><a href="https://twitter.com/MominBinShahid"><span class="at">x:</span>MominBinShahid</a></li>
+        </ul>
+      </dd>
+    </dl>
+
+    <dl class="rail-block">
+      <dt>contact</dt>
+      <dd><a class="email" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#111;&#109;&#105;&#110;&#66;&#105;&#110;&#83;&#104;&#97;&#104;&#105;&#100;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" aria-label="Email Momin"></a></dd>
+    </dl>
+
+    <div>
+      <a class="cv" href="#" onclick="return false;">download cv &darr;</a>
+    </div>
+  </aside>
+
+  <!-- ================= content column ================= -->
+  <main id="main">
+
+    <!-- ========== PAGE: HOME ========== -->
+    <div class="page" id="page-home" role="tabpanel" aria-labelledby="tab-home" tabindex="0">
+
+      <section class="hero" aria-label="Introduction">
+        <p class="m">eight years full-stack <span class="arrow">&rarr;</span> now: ai agents &amp; llms</p>
+        <h2>&ldquo;I love building things that live on the web and now, <em>things that think</em>&nbsp;&#129302;&rdquo;</h2>
+
+        <div class="strip-wrap">
+          <canvas class="strip" id="stripHome" aria-label="A waveform being quantized into tokens and, finally, words" role="img"></canvas>
+          <div class="strip-caption">
+            <span class="m">in: signal (a support call)</span>
+            <span class="m">out: sense</span>
+          </div>
+        </div>
+
+        <div class="proof">
+          <span class="m"><span class="tick" style="color: var(--live);">&#9646;</span> in production &middot; qa agent &middot; hundreds of calls reviewed daily</span>
+          <p>He built an AI agent that reviews hundreds of customer support calls every day &mdash; <strong>&ldquo;accomplishing in a single day what would take a team of humans several days, and with a consistency humans simply can&rsquo;t match.&rdquo;</strong></p>
+          <a class="proof-link" href="#post" data-goto="post">read the write-up &rarr;</a>
+        </div>
+      </section>
+
+      <section aria-label="About me">
+        <div class="seclabel"><span class="m"><span class="tick">&sect;</span> about &middot; annotated by the machine</span></div>
+        <div class="annot">
+
+          <span class="m tag">[work]</span>
+          <div class="txt">
+            <p>Architecting web applications from scratch for eight years, recently expanded into <strong>AI Agents</strong> and <strong>LLMs</strong>. At Sastaticket.pk he builds AI-powered systems, works directly with stakeholders, and leads a team of awesome engineers.</p>
+          </div>
+
+          <span class="m tag">[belief]</span>
+          <div class="txt">
+            <p class="pull"><span class="q">&ldquo;</span>There&rsquo;s something magical about teaching machines to understand context and take action &#10024;<span class="q">&rdquo;</span></p>
+          </div>
+
+          <span class="m tag">[lesson]</span>
+          <div class="txt">
+            <p>He has worked both service consultancies and product companies. &ldquo;Both have taught me that great software is about understanding people, not just writing code &#128161;&rdquo;</p>
+          </div>
+
+          <span class="m tag">[drives]</span>
+          <div class="txt">
+            <p>&ldquo;The thrill of solving gnarly problems &#9889;&#65039;, the satisfaction of mentoring engineers and watching them grow &#127793;, and the never-ending rabbit hole of learning new technologies &#128200;&rdquo; &mdash; and yes: &ldquo;I&rsquo;m that person who reads documentation for fun (well, sometimes&hellip; now I let AI summarize it for me).&rdquo;</p>
+          </div>
+
+          <span class="m tag">[method]</span>
+          <div class="txt">
+            <p>&ldquo;I believe in leaving codebases better than I found them &#127957;&#65039;, call it the <strong>Boy Scout Rule</strong> of programming.&rdquo;</p>
+          </div>
+
+          <span class="m tag">[open]</span>
+          <div class="txt">
+            <p>&ldquo;While most of my professional work has been closed-source &#128274;, I&rsquo;m increasingly contributing to and learning from the open-source community &#127808;. <strong>The web taught me everything I know, and I want to give back.</strong>&rdquo;</p>
+          </div>
+
+        </div>
+      </section>
+
+      <section aria-label="Domains">
+        <div class="seclabel"><span class="m"><span class="tick">&sect;</span> the road here &middot; domains, in order of appearance</span></div>
+        <p class="domains">
+          <span>Internet Privacy &amp; Security <span class="note">(Securiti.ai, a unicorn)</span></span> <span class="sep">&rarr;</span>
+          <span>Metadata Platforms</span> <span class="sep">&rarr;</span>
+          <span>ERP</span> <span class="sep">&rarr;</span>
+          <span>HRMS</span> <span class="sep">&rarr;</span>
+          <span>EdTech</span> <span class="sep">&rarr;</span>
+          <span>Travel Tech</span> <span class="sep">&rarr;</span>
+          <span><strong>AI / Agentic Systems</strong></span>
+        </p>
+        <p class="m reach">users across the usa, europe, the middle east and south asia</p>
+      </section>
+
+      <section aria-label="Facets">
+        <div class="seclabel"><span class="m"><span class="tick">&sect;</span> facets &middot; six, one promoted</span></div>
+        <div class="facets">
+          <div class="facet feature">
+            <span class="m"><span class="tick">&#9646;</span> forever curious</span>
+            <h3>Code &amp; Consciousness</h3>
+            <p>&ldquo;Equally fascinated by philosophy and esoteric discussions about the nature of reality, consciousness, and what it means to be alive in this strange universe.&rdquo;</p>
+          </div>
+          <div class="facet">
+            <span class="m">8 years building</span>
+            <h3>Full-Stack to AI Agents</h3>
+          </div>
+          <div class="facet">
+            <span class="m">javascript + python</span>
+            <h3>Full-Stack &amp; AI Ecosystems</h3>
+          </div>
+          <div class="facet">
+            <span class="m">lead engineer</span>
+            <h3>Mentoring Engineers Daily</h3>
+          </div>
+          <div class="facet">
+            <span class="m">learn &amp; solve</span>
+            <h3>The Never-Ending Loop</h3>
+          </div>
+          <div class="facet">
+            <span class="m">customer focused</span>
+            <h3>Building What Users Need</h3>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Stack">
+        <div class="seclabel"><span class="m"><span class="tick">&sect;</span> stack</span></div>
+        <div class="stack-scroll">
+          <table class="stack">
+            <tbody>
+              <tr>
+                <th scope="row">frontend</th>
+                <td>React.js<span class="dot">&middot;</span>Vue.js<span class="dot">&middot;</span>Angular<span class="dot">&middot;</span>JAMstack</td>
+              </tr>
+              <tr>
+                <th scope="row">stacks</th>
+                <td>MERN<span class="dot">&middot;</span>MEVN<span class="dot">&middot;</span>MEAN</td>
+              </tr>
+              <tr>
+                <th scope="row">backend</th>
+                <td>Node.js<span class="dot">&middot;</span>Python<span class="dot">&middot;</span>Django</td>
+              </tr>
+              <tr>
+                <th scope="row">ai</th>
+                <td><span class="now">LangChain</span><span class="dot">&middot;</span><span class="now">Google GenAI</span><span class="dot">&middot;</span><span class="now">OpenAI</span><span class="dot">&middot;</span><span class="now">Anthropic Claude</span><span class="dot">&middot;</span><span class="now">AI Agents</span><span class="dot">&middot;</span><span class="now">LLMs</span></td>
+              </tr>
+              <tr>
+                <th scope="row">infra</th>
+                <td>Docker<span class="dot">&middot;</span>Kubernetes<span class="dot">&middot;</span>AWS<span class="dot">&middot;</span>GCP<span class="dot">&middot;</span>Azure<span class="dot">&middot;</span>On-prem &amp; cloud<span class="dot">&middot;</span>CI/CD</td>
+              </tr>
+              <tr>
+                <th scope="row">languages</th>
+                <td>JavaScript<span class="dot">&middot;</span>TypeScript<span class="dot">&middot;</span>Python</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-label="Quotes">
+        <figure class="quotes">
+          <div class="quotes-head">
+            <span class="m"><span style="color: var(--live);">&sect;</span> quotes.random()</span>
+            <button class="quotes-next" id="quoteNext">next &rarr;</button>
+          </div>
+          <blockquote>
+            <p id="quoteText">The question of whether a computer can think is no more interesting than the question of whether a submarine can swim.</p>
+          </blockquote>
+          <figcaption class="m" id="quoteBy">&mdash; Edsger W. Dijkstra</figcaption>
+        </figure>
+      </section>
+
+      <section class="outro" aria-label="Invitation">
+        <p>&ldquo;Want to build something together? Have an interesting AI problem? Or just want to geek out about the latest in LLMs and web tech?&rdquo;</p>
+        <span class="m">say hello <span class="arrow">&rarr;</span> <a class="mail-inline" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#111;&#109;&#105;&#110;&#66;&#105;&#110;&#83;&#104;&#97;&#104;&#105;&#100;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mail</a> &middot; or any of the links in the rail</span>
+      </section>
+
+    </div>
+
+    <!-- ========== PAGE: BLOG INDEX ========== -->
+    <div class="page" id="page-blog" role="tabpanel" aria-labelledby="tab-blog" tabindex="0" hidden>
+
+      <section aria-label="Blog index">
+        <div class="seclabel"><span class="m"><span class="tick">&sect;</span> blog &middot; 6 entries &middot; newest first</span></div>
+
+        <ul class="posts">
+
+          <li class="post-row feature">
+            <a href="#post" data-goto="post">
+              <span class="m date">2026-06-10</span>
+              <div class="cell">
+                <span class="m flag">&#9646; latest</span>
+                <h3>Teaching an agent to listen to 400 support calls a day</h3>
+                <p class="dek">Audio in, judgment out: the pipeline behind a QA agent that reviews every call, not a sample.</p>
+                <span class="post-meta">
+                  <span class="tagchip"><span class="swatch" style="background: #3776AB;"></span>python</span>
+                  <span class="m">9 min read</span>
+                </span>
+              </div>
+            </a>
+          </li>
+
+          <li class="post-row">
+            <a href="#post" data-goto="post">
+              <span class="m date">2024-11-03</span>
+              <div class="cell">
+                <h3>MealUnits &mdash; an insulin calculator for my brother</h3>
+                <p class="dek">Private, offline, no accounts. Engineering in service of one specific person.</p>
+                <span class="post-meta">
+                  <span class="tagchip"><span class="swatch" style="background: #61dbfa;"></span>reactjs</span>
+                  <span class="tagchip"><span class="swatch" style="background: #f0da50;"></span>javascript</span>
+                  <span class="m">6 min read</span>
+                </span>
+              </div>
+            </a>
+          </li>
+
+          <li class="post-row">
+            <a href="#post" data-goto="post">
+              <span class="m date">2023-05-18</span>
+              <div class="cell">
+                <h3>Your pull request is deploying to production</h3>
+                <p class="dek">What merge-equals-deploy changes about how a team writes, reviews, and trusts code.</p>
+                <span class="post-meta">
+                  <span class="tagchip"><span class="swatch" style="background: #90c53f;"></span>Node.js</span>
+                  <span class="tagchip"><span class="swatch" style="background: #f0da50;"></span>javascript</span>
+                  <span class="m">7 min read</span>
+                </span>
+              </div>
+            </a>
+          </li>
+
+          <li class="post-row">
+            <a href="#post" data-goto="post">
+              <span class="m date">2022-08-27</span>
+              <div class="cell">
+                <h3>The service worker that wouldn&rsquo;t die</h3>
+                <p class="dek">Cache invalidation is hard. Un-registering a service worker your users already have is harder.</p>
+                <span class="post-meta">
+                  <span class="tagchip"><span class="swatch" style="background: #f0da50;"></span>javascript</span>
+                  <span class="m">5 min read</span>
+                </span>
+              </div>
+            </a>
+          </li>
+
+          <li class="post-row">
+            <a href="#post" data-goto="post">
+              <span class="m date">2022-02-14</span>
+              <div class="cell">
+                <h3>What IndexedDB taught me about the same-origin policy</h3>
+                <p class="dek">Origins, storage, and the oldest security boundary in the browser.</p>
+                <span class="post-meta">
+                  <span class="tagchip"><span class="swatch" style="background: #f0da50;"></span>javascript</span>
+                  <span class="tagchip"><span class="swatch" style="background: #E34C26;"></span>html</span>
+                  <span class="m">8 min read</span>
+                </span>
+              </div>
+            </a>
+          </li>
+
+          <li class="post-row">
+            <a href="#post" data-goto="post">
+              <span class="m date">2021-06-30</span>
+              <div class="cell">
+                <h3>Getting Gatsby 2 to build on Apple Silicon</h3>
+                <p class="dek">An M1, a native dependency, and a build that would not.</p>
+                <span class="post-meta">
+                  <span class="tagchip"><span class="swatch" style="background: #6f309f;"></span>Gatsby.js</span>
+                  <span class="tagchip"><span class="swatch" style="background: #f0da50;"></span>javascript</span>
+                  <span class="m">4 min read</span>
+                </span>
+              </div>
+            </a>
+          </li>
+
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- ========== PAGE: POST ========== -->
+    <div class="page" id="page-post" role="tabpanel" aria-labelledby="tab-post" tabindex="0" hidden>
+
+      <a class="crumb" href="#blog" data-goto="blog">&larr; back to index</a>
+
+      <article>
+        <header class="post-head">
+          <h2>Teaching an agent to listen to 400 support calls a day</h2>
+          <div class="m">
+            <span>2026-06-10</span>
+            <span>9 min read</span>
+            <span class="tagchip"><span class="swatch" style="background: #3776AB;"></span>python</span>
+          </div>
+        </header>
+
+        <div class="banner">
+          <canvas class="strip" id="stripPost" aria-label="A waveform being quantized into tokens and words" role="img"></canvas>
+          <div class="strip-caption">
+            <span class="m">a call, becoming a verdict</span>
+            <span class="m">fig. 01</span>
+          </div>
+        </div>
+
+        <div class="article">
+
+          <p>Our support team takes hundreds of calls a day. Before this project, quality review meant a small group of human reviewers sampling a handful of them: listen to a recording, fill in a scorecard, move to the next. On a good day they covered a few percent of the queue. Everything else went unheard.</p>
+
+          <p>I spent the better part of a year building the thing that hears the rest: an agent that reviews every call, every day, against the same rubric a human reviewer would use. This is roughly how it works, and what building it taught me.</p>
+
+          <h3><span class="stage">stage 01</span>Listen</h3>
+
+          <p>Everything downstream depends on the transcript, and a transcript is a lossy artifact. Real support calls have crosstalk, hold music, a customer on a motorbike in traffic, and conversations that switch between Urdu and English mid-sentence. The first job is honest transcription with speaker labels and timestamps. The second, less obvious job is knowing when the transcript can&rsquo;t be trusted &mdash; a review built on a garbled transcript is worse than no review, because it arrives wearing the costume of a fact.</p>
+
+          <p>So the pipeline&rsquo;s first verdict is about itself: is this audio good enough to judge? If not, the call is routed out, flagged, and counted. Skipped work you can see is fine. Skipped work you can&rsquo;t see is how trust dies.</p>
+
+          <h3><span class="stage">stage 02</span>Read</h3>
+
+          <p>The rubric lives in code and is versioned like an API, because it <em>is</em> an API &mdash; the contract between what the business means by &ldquo;a good call&rdquo; and what the agent checks. Each section is evaluated independently: greeting, verification, the actual resolution, closing. And every verdict must quote its evidence back from the transcript. A verdict without a quote is an opinion, and the agent is not paid for opinions.</p>
+
+          <figure class="transcript">
+            <div class="codebar">
+              <span class="m">call_7841 &middot; transcript (redacted) &middot; 04:12</span>
+              <span class="m">rubric v4</span>
+            </div>
+            <div class="transcript-scroll">
+              <div class="transcript-rows">
+                <div class="tr-line">
+                  <span class="m who">00:04</span>
+                  <span class="redact"><i style="width: 18%;"></i><i class="hi" style="width: 24%;"></i><i style="width: 12%;"></i></span>
+                  <span class="verdict ok">&#10003; greeting</span>
+                </div>
+                <div class="tr-line">
+                  <span class="m who">00:41</span>
+                  <span class="redact"><i style="width: 30%;"></i><i style="width: 9%;"></i><i class="hi" style="width: 16%;"></i></span>
+                  <span class="verdict ok">&#10003; verification</span>
+                </div>
+                <div class="tr-line">
+                  <span class="m who">02:17</span>
+                  <span class="redact"><i style="width: 14%;"></i><i style="width: 26%;"></i><i style="width: 8%;"></i></span>
+                  <span class="verdict bad">&#10007; hold protocol</span>
+                </div>
+                <div class="tr-line">
+                  <span class="m who">03:58</span>
+                  <span class="redact"><i class="hi" style="width: 21%;"></i><i style="width: 17%;"></i><i style="width: 11%;"></i></span>
+                  <span class="verdict ok">&#10003; resolution</span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="m">every verdict carries a quoted span; the words stay private, the judgment doesn&rsquo;t</figcaption>
+          </figure>
+
+          <p>The evaluation loop itself is almost embarrassingly plain. That&rsquo;s deliberate: all of the difficulty lives in the rubric prompts and in the plumbing around failure, not in clever orchestration.</p>
+
+          <div class="codeblock">
+            <div class="codebar">
+              <span class="m">review.py</span>
+              <span class="m">python</span>
+            </div>
+            <pre><code><span class="tok-kw">RUBRIC</span> = <span class="tok-fn">load_rubric</span>(<span class="tok-str">"support-call.v4"</span>)
+
+<span class="tok-kw">async def</span> <span class="tok-fn">review</span>(call: Call) -&gt; Review:
+    transcript = <span class="tok-kw">await</span> <span class="tok-fn">transcribe</span>(call.audio)      <span class="tok-cm"># stage 01 — listen</span>
+    <span class="tok-kw">if not</span> transcript.trustworthy:
+        <span class="tok-kw">return</span> Review.<span class="tok-fn">skipped</span>(call.id, reason=transcript.reason)
+
+    findings = []
+    <span class="tok-kw">for</span> section <span class="tok-kw">in</span> RUBRIC.sections:               <span class="tok-cm"># stage 02 — read</span>
+        verdict = <span class="tok-kw">await</span> <span class="tok-fn">evaluate</span>(section, transcript)
+        <span class="tok-kw">assert</span> verdict.evidence, <span class="tok-str">"no quote, no verdict"</span>
+        findings.<span class="tok-fn">append</span>(verdict)
+
+    <span class="tok-kw">return</span> Review(                                <span class="tok-cm"># stage 03 — judge</span>
+        call_id=call.id,
+        score=<span class="tok-fn">score</span>(findings),
+        findings=findings,
+    )</code></pre>
+          </div>
+
+          <h3><span class="stage">stage 03</span>Judge</h3>
+
+          <p>Here is the uncomfortable thing I learned while calibrating: two trained human reviewers scoring the same call disagree more often than anyone likes to admit, and the same reviewer disagrees with themselves depending on whether it&rsquo;s the third call of the morning or the thirtieth of the afternoon. The agent brings something humans structurally cannot: the four-hundredth call of the day is scored with exactly the same patience as the first.</p>
+
+          <blockquote>
+            <p>Accomplishing in a single day what would take a team of humans several days, and with a consistency humans simply can&rsquo;t match.</p>
+            <footer class="m">&mdash; the claim I now get to stand behind</footer>
+          </blockquote>
+
+          <p>That is not a knock on the human reviewers. They moved up the stack: instead of listening to a 3% sample, they now audit the agent &mdash; spot-checking its verdicts, arguing with its rubric, catching the cases where it&rsquo;s confidently wrong. The humans review the reviewer. That loop is the actual product.</p>
+
+          <h3><span class="stage">appendix</span>What I&rsquo;d tell you before you build one</h3>
+
+          <ul>
+            <li><strong>No quote, no verdict.</strong> Force the agent to cite the transcript span behind every judgment. It converts hallucination from a silent failure into a visible one.</li>
+            <li><strong>Version the rubric like an API.</strong> When scores shift, you need to know whether the calls changed or the judge did.</li>
+            <li><strong>Budget for the transcript lying.</strong> Measure transcription quality as its own metric, and let the pipeline decline to judge.</li>
+            <li><strong>Keep humans reviewing the reviewer.</strong> Consistency is not the same thing as correctness; you need people auditing the agent to tell them apart.</li>
+            <li><strong>Long audio does strange things to SDKs.</strong> Own your timeouts. Trust no default.</li>
+          </ul>
+
+          <p>I used to say I love building things that live on the web. Some of those things now listen, read, and judge. Teaching machines to understand context and take action still feels like magic &#10024; &mdash; but it&rsquo;s the boring engineering above that makes the magic hold.</p>
+
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span class="m">&copy; 2026 Momin Bin Shahid &middot; karachi, pakistan</span>
+    <span class="m">signal <span class="arrow">&rarr;</span> sense &middot; open the console &#128075;</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var root = document.documentElement;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var sysDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+  /* ---------- random live accent (kept from the current site) ---------- */
+  var ACCENTS = {
+    blue:  ["#1E6FB8", "#6FB3EE"],
+    jade:  ["#177A5B", "#55C9A2"],
+    amber: ["#9A6A00", "#E8C24A"],
+    rust:  ["#A6491F", "#E2926B"]
+  };
+  var accentNames = Object.keys(ACCENTS);
+  var accentKey = accentNames[Math.floor(Math.random() * accentNames.length)];
+  root.style.setProperty("--live-l", ACCENTS[accentKey][0]);
+  root.style.setProperty("--live-d", ACCENTS[accentKey][1]);
+
+  /* ---------- theme toggle (independent of viewer theme) ---------- */
+  function resolvedTheme() {
+    if (root.dataset.theme) { return root.dataset.theme; }
+    return sysDark.matches ? "dark" : "light";
+  }
+  var toggle = document.getElementById("themeToggle");
+  toggle.addEventListener("click", function () {
+    root.dataset.theme = resolvedTheme() === "dark" ? "light" : "dark";
+    drawAll();
+  });
+  sysDark.addEventListener("change", function () { drawAll(); });
+
+  /* ---------- tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  function show(name) {
+    tabs.forEach(function (t) {
+      var on = t.id === "tab-" + name;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    window.scrollTo(0, 0);
+    drawAll();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () {
+      var name = t.id.replace("tab-", "");
+      if ("#" + name !== location.hash) { history.replaceState(null, "", "#" + name); }
+      show(name);
+    });
+    t.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) { return; }
+      e.preventDefault();
+      var next = tabs[(i + d + tabs.length) % tabs.length];
+      next.focus();
+      next.click();
+    });
+  });
+  document.querySelectorAll("[data-goto]").forEach(function (el) {
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      var name = el.getAttribute("data-goto");
+      history.replaceState(null, "", "#" + name);
+      show(name);
+    });
+  });
+  var initial = location.hash.replace("#", "");
+  if (initial === "blog" || initial === "post") { show(initial); }
+
+  /* ---------- quotes widget ---------- */
+  var QUOTES = [
+    ["The question of whether a computer can think is no more interesting than the question of whether a submarine can swim.", "Edsger W. Dijkstra"],
+    ["Programs must be written for people to read, and only incidentally for machines to execute.", "Abelson & Sussman, SICP"],
+    ["Everyone knows that debugging is twice as hard as writing a program in the first place.", "Brian Kernighan"],
+    ["The best way to predict the future is to invent it.", "Alan Kay"]
+  ];
+  var qi = 0;
+  document.getElementById("quoteNext").addEventListener("click", function () {
+    qi = (qi + 1) % QUOTES.length;
+    document.getElementById("quoteText").textContent = QUOTES[qi][0];
+    document.getElementById("quoteBy").textContent = "— " + QUOTES[qi][1];
+  });
+
+  /* ---------- the strip: signal -> tokens -> words ---------- */
+  var canvases = Array.prototype.slice.call(document.querySelectorAll("canvas.strip"));
+  var PHRASE = "things that think";
+
+  function hexRgb(h) {
+    return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+  }
+  function mix(a, b, u) {
+    var A = hexRgb(a), B = hexRgb(b);
+    return "rgb(" + Math.round(A[0] + (B[0] - A[0]) * u) + "," +
+                    Math.round(A[1] + (B[1] - A[1]) * u) + "," +
+                    Math.round(A[2] + (B[2] - A[2]) * u) + ")";
+  }
+  function noise(x) {
+    var s = Math.sin(x * 12.9898) * 43758.5453;
+    return (s - Math.floor(s)) * 2 - 1;
+  }
+  function wave(x, t) {
+    return Math.sin(x * 0.020 + t) * 0.52 +
+           Math.sin(x * 0.0071 - t * 0.7) * 0.30 +
+           Math.sin(x * 0.033 + t * 1.35) * 0.12 +
+           noise(Math.floor(x / 3)) * 0.10;
+  }
+
+  function draw(canvas, t) {
+    if (!canvas.offsetParent) { return; } /* hidden panel */
+    var dpr = window.devicePixelRatio || 1;
+    var W = canvas.clientWidth, H = canvas.clientHeight;
+    if (W === 0 || H === 0) { return; }
+    if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(H * dpr)) {
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+    }
+    var ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    var cs = getComputedStyle(root);
+    var ink = cs.getPropertyValue("--ink").trim();
+    var live = cs.getPropertyValue("--live").trim();
+    if (live.slice(0, 4) === "var(") { live = ACCENTS[accentKey][resolvedTheme() === "dark" ? 1 : 0]; }
+
+    var mid = H / 2;
+    var amp = H * 0.34;
+    var wordZone = 128;
+    var aEnd = W * 0.38;              /* continuous signal */
+    var bEnd = Math.min(W * 0.70, W - wordZone - 40); /* sampled bars */
+    var cEnd = W - wordZone;          /* tokens */
+
+    /* A — continuous line (the analog years) */
+    ctx.beginPath();
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = ink;
+    var x;
+    for (x = 0; x <= aEnd; x += 2) {
+      var y = mid + wave(x, t) * amp;
+      if (x === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
+    }
+    ctx.stroke();
+
+    /* B — sample & hold (the transition) */
+    for (x = aEnd; x < bEnd; x += 7) {
+      var u = (x - aEnd) / (bEnd - aEnd);
+      var v = wave(x, t) * amp * (1 - u * 0.25);
+      ctx.strokeStyle = mix(ink, live, u);
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x, mid);
+      ctx.lineTo(x, mid + v);
+      ctx.stroke();
+    }
+
+    /* C — discrete tokens */
+    ctx.fillStyle = live;
+    for (x = bEnd; x < cEnd; x += 13) {
+      var w2 = wave(x, t);
+      var lvl = Math.round(w2 * 2.4);          /* quantized: -2..2 */
+      var size = 3 + Math.min(Math.abs(lvl), 2);
+      var y2 = mid + lvl * (amp * 0.32) - size / 2;
+      ctx.fillRect(x, y2, size, size);
+    }
+
+    /* D — the words the signal becomes */
+    ctx.font = "500 11px 'Spline Sans Mono', monospace";
+    ctx.fillStyle = live;
+    var startX = W - wordZone + 6;
+    var i;
+    for (i = 0; i < PHRASE.length; i++) {
+      var cx = startX + i * 7.2;
+      var settle = 1 - i / PHRASE.length;      /* jitter decays to flat */
+      var jy = wave(cx, t) * amp * 0.22 * settle;
+      ctx.fillText(PHRASE[i], cx, mid + 4 + jy);
+    }
+  }
+
+  var t0 = Math.random() * 100;
+  function drawAll() {
+    canvases.forEach(function (c) { draw(c, t0); });
+  }
+
+  if (reduced.matches) {
+    drawAll();
+  } else {
+    var frame = 0;
+    (function loop() {
+      frame++;
+      if (frame % 2 === 0) {  /* ~30fps is plenty */
+        t0 += 0.024;
+        drawAll();
+      }
+      requestAnimationFrame(loop);
+    })();
+  }
+  window.addEventListener("resize", drawAll);
+  reduced.addEventListener("change", drawAll);
+
+  /* ---------- console easter egg (kept, of course) ---------- */
+  var addr = ["MominBinShahid", "gmail.com"].join("@");
+  console.log(
+    "%csignal → sense%c\n\nWant to build something together? Have an interesting AI problem?\nOr just want to geek out about the latest in LLMs and web tech?\n\n→ " + addr +
+    "\n\naccent of this visit: " + accentKey,
+    "font-family: monospace; font-size: 14px; font-weight: bold; color: " + ACCENTS[accentKey][0] + ";",
+    "font-family: monospace; font-size: 12px;"
+  );
+})();
+</script>

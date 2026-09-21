@@ -1,0 +1,1059 @@
+<title>The Engineer Behind the Outcome (Opus)</title>
+<meta name="description" content="Momin Bin Shahid, Lead Engineer at Sastaticket.pk. Eight years of production engineering, hands-on team leadership, and AI agents in production.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════════════
+   MOMIN BIN SHAHID — hiring page
+   Newsreader for statements · Public Sans for evidence
+   One accent per visit: petrol / mulberry / ochre, shaded per theme
+   ══════════════════════════════════════════════════════════════════ */
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+
+:root{
+  --serif: 'Newsreader', 'Iowan Old Style', 'Charter', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --sans: 'Public Sans', 'Helvetica Neue', Helvetica, Arial, 'Segoe UI', system-ui, sans-serif;
+
+  --gutter: clamp(20px, 5vw, 64px);
+  --maxw: 1180px;
+  --measure: 62ch;
+
+  --ease: cubic-bezier(.2,.86,.24,1);
+}
+
+/* ── themes ─────────────────────────────────────────────────────── */
+:root[data-theme="light"]{
+  --paper:   #F1F4F8;
+  --paper-2: #E8EDF4;
+  --panel:   #FFFFFF;
+  --ink:     #0E1626;
+  --ink-2:   #38445C;
+  --ink-3:   #6B7890;
+  --ink-4:   #97A2B6;
+  --rule:    #D3DBE7;
+  --rule-2:  #E2E8F0;
+  --btn-fg:  #FFFFFF;
+  --sel:     rgba(14,22,38,.10);
+  --nav-bg:  rgba(241,244,248,.72);
+  --shadow:  0 1px 0 rgba(14,22,38,.04), 0 18px 40px -28px rgba(14,22,38,.34);
+}
+:root[data-theme="dark"]{
+  --paper:   #080D18;
+  --paper-2: #0C1424;
+  --panel:   #0E1829;
+  --ink:     #DEE5F0;
+  --ink-2:   #9EACC2;
+  --ink-3:   #6D7C95;
+  --ink-4:   #4E5C74;
+  --rule:    #1C2840;
+  --rule-2:  #151E31;
+  --btn-fg:  #060B14;
+  --sel:     rgba(222,229,240,.16);
+  --nav-bg:  rgba(8,13,24,.68);
+  --shadow:  0 1px 0 rgba(0,0,0,.4), 0 22px 50px -30px rgba(0,0,0,.9);
+}
+
+/* accent families — theme-specific shades, all AA against their ground */
+:root[data-theme="light"][data-accent="petrol"]  { --accent:#0A6B74; --accent-soft:rgba(10,107,116,.16); }
+:root[data-theme="light"][data-accent="mulberry"]{ --accent:#93205C; --accent-soft:rgba(147,32,92,.15); }
+:root[data-theme="light"][data-accent="ochre"]   { --accent:#8A5600; --accent-soft:rgba(138,86,0,.16); }
+:root[data-theme="dark"][data-accent="petrol"]   { --accent:#45C7D2; --accent-soft:rgba(69,199,210,.18); }
+:root[data-theme="dark"][data-accent="mulberry"] { --accent:#EC8FBC; --accent-soft:rgba(236,143,188,.18); }
+:root[data-theme="dark"][data-accent="ochre"]    { --accent:#DFAA4E; --accent-soft:rgba(223,170,78,.18); }
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.62;
+  font-synthesis-weight:none;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  transition:background-color .3s var(--ease), color .3s var(--ease);
+}
+::selection{background:var(--sel)}
+
+a{color:inherit}
+h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
+ul{padding:0;list-style:none}
+button{font:inherit;color:inherit}
+
+.wrap{max-width:var(--maxw); margin:0 auto; padding-inline:var(--gutter)}
+.measure{max-width:var(--measure)}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* ── navigation: transparent, blurred, no rail ──────────────────── */
+.nav{
+  position:sticky; top:0; z-index:60;
+  background:var(--nav-bg);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  backdrop-filter:blur(16px) saturate(160%);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s var(--ease), background-color .3s var(--ease);
+}
+.nav.is-stuck{border-bottom-color:var(--rule)}
+.nav-in{
+  max-width:var(--maxw); margin:0 auto; padding:14px var(--gutter);
+  display:flex; align-items:center; gap:18px;
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; margin-right:auto; white-space:nowrap;
+  font-weight:600; font-size:.83rem; letter-spacing:.005em;
+}
+@media (max-width:460px){
+  .nav-in{gap:8px; padding-inline:clamp(16px,4vw,24px)}
+  .brand{font-size:.78rem; gap:7px}
+  .navlink{padding:7px 8px; font-size:.72rem; letter-spacing:.05em}
+  .themebtn{width:30px;height:30px;margin-left:2px}
+}
+.brand .glyph{font-size:1.05rem; line-height:1; filter:saturate(.92)}
+.brand .dot{
+  width:5px;height:5px;border-radius:50%;background:var(--accent);
+  margin-left:2px; flex:none;
+}
+.brand .who{color:var(--ink)}
+.brand .rolebit{color:var(--ink-3); font-weight:400; display:none}
+@media (min-width:680px){ .brand .rolebit{display:inline} }
+
+.navlinks{display:flex; align-items:center; gap:4px}
+.navlink{
+  appearance:none; background:none; border:0; cursor:pointer;
+  padding:7px 11px; border-radius:2px;
+  font-size:.78rem; font-weight:500; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--ink-3);
+  transition:color .18s var(--ease), background-color .18s var(--ease);
+}
+.navlink:hover{color:var(--ink)}
+.navlink[aria-current="page"]{color:var(--ink)}
+.navlink[aria-current="page"]::after{
+  content:''; display:block; height:1px; background:var(--accent);
+  margin-top:3px;
+}
+.navlink:focus-visible,.themebtn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.themebtn{
+  appearance:none; background:none; cursor:pointer;
+  border:1px solid var(--rule); border-radius:999px;
+  width:34px;height:34px; display:grid; place-items:center;
+  color:var(--ink-2); margin-left:6px;
+  transition:border-color .18s var(--ease), color .18s var(--ease);
+}
+.themebtn:hover{border-color:var(--ink-3); color:var(--ink)}
+.themebtn svg{width:15px;height:15px}
+
+/* ── hero ───────────────────────────────────────────────────────── */
+.hero{padding:clamp(56px,11vh,120px) 0 clamp(48px,8vh,96px)}
+.eyebrow{
+  font-size:.68rem; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--ink-3); display:flex; align-items:center; gap:10px; margin-bottom:26px;
+}
+.eyebrow::before{content:''; width:34px; height:1px; background:var(--accent); flex:none}
+
+/* headline + measuring rig */
+.hero-type{position:relative; display:inline-block; max-width:100%; margin-bottom:28px}
+.hero-h{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(2.35rem, 7.9vw, 6.4rem);
+  line-height:1.0;
+  letter-spacing:-.035em;
+  color:var(--ink);
+  font-variant-numeric:lining-nums tabular-nums;
+  margin:0;
+  position:relative; z-index:2;
+  cursor:default;
+  outline:none;
+}
+.hero-h .hl{display:block}
+.hero-h .w{position:relative; white-space:nowrap}
+.hero-h .probe{display:inline-block; width:0; height:0; overflow:hidden; vertical-align:baseline}
+.hero-h:focus-visible{outline:2px solid var(--accent); outline-offset:8px; border-radius:2px}
+
+.rig{position:absolute; inset:-16px -26px -44px -26px; pointer-events:none; z-index:1;
+  opacity:0; transition:opacity .28s var(--ease)}
+.hero-type.rig-on .rig{opacity:1}
+.rig .gh{
+  position:absolute; top:0; left:0; right:0; height:1px; background:var(--accent);
+  opacity:.55; transform:translateY(-100px);
+  transition:transform .26s var(--ease), opacity .2s var(--ease);
+}
+.rig .gh.is-base{opacity:.85}
+/* specimen legend — sits clear of the type, never over it */
+.rig .legend{
+  position:absolute; top:0; left:26px; display:flex; flex-wrap:wrap; gap:6px 20px;
+  transform:translateY(-300px); transition:transform .26s var(--ease);
+  font-size:9px; font-weight:600; letter-spacing:.17em; text-transform:uppercase;
+  color:var(--accent); line-height:1; white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.rig .legend span{display:inline-flex; align-items:center; gap:7px}
+.rig .legend span::before{content:''; width:16px; height:1px; background:var(--accent); flex:none}
+.rig .legend span[data-lg="x"]::before,
+.rig .legend span[data-lg="cap"]::before{opacity:.55}
+.rig .gv{
+  position:absolute; top:0; left:0; width:1px; background:var(--accent); opacity:.8;
+  transform:translateX(-200px);
+  transition:transform .26s var(--ease), height .26s var(--ease), top .26s var(--ease);
+}
+.rig .gv::before,.rig .gv::after{
+  content:''; position:absolute; left:-3px; width:7px; height:1px; background:var(--accent);
+}
+.rig .gv::before{top:0} .rig .gv::after{bottom:0}
+.rig .gvl{
+  position:absolute; top:0; left:0; transform:translate(-200px,-100px);
+  font-size:9px; font-weight:600; letter-spacing:.17em; text-transform:uppercase;
+  color:var(--accent); line-height:1; white-space:nowrap; padding-left:6px;
+  transition:transform .26s var(--ease);
+}
+/* below this width there is no clean runway for it — the hairline speaks alone */
+@media (max-width:660px){ .rig .gvl{display:none} }
+
+.scope{
+  margin-top:26px; max-width:52ch;
+  font-size:.83rem; line-height:1.68; color:var(--ink-3);
+  border-left:1px solid var(--rule); padding-left:16px;
+}
+.hero-sub{
+  margin-top:34px; max-width:56ch;
+  font-family:var(--serif); font-size:clamp(1.06rem,1.9vw,1.34rem); line-height:1.56;
+  color:var(--ink-2);
+}
+.identity{
+  margin-top:26px; font-size:.82rem; font-weight:500; letter-spacing:.02em; color:var(--ink-2);
+}
+.identity b{font-weight:600; color:var(--ink)}
+
+/* ── calls to action ────────────────────────────────────────────── */
+.cta-row{display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; margin-top:34px}
+.cta{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:14px 22px; border-radius:2px;
+  font-size:.83rem; font-weight:600; letter-spacing:.03em;
+  text-decoration:none; cursor:pointer; border:1px solid transparent;
+  transition:transform .2s var(--ease), box-shadow .2s var(--ease), background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+}
+.cta-primary{background:var(--accent); color:var(--btn-fg); border-color:var(--accent)}
+.cta-primary:hover{transform:translateY(-1px); box-shadow:0 10px 24px -14px var(--accent)}
+.cta-primary .arrow{transition:transform .22s var(--ease)}
+.cta-primary:hover .arrow{transform:translateX(3px)}
+.cta-secondary{background:none; color:var(--ink); border-color:var(--rule); padding:13px 20px}
+.cta-secondary:hover{border-color:var(--ink-3); background:var(--panel)}
+.cta:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+.cta-note{font-size:.74rem; color:var(--ink-4); letter-spacing:.01em; flex-basis:100%; margin-top:-2px}
+
+/* ── section furniture ──────────────────────────────────────────── */
+.sec{padding:clamp(56px,9vh,104px) 0}
+.sec-head{
+  position:relative; display:flex; justify-content:space-between; align-items:baseline;
+  gap:20px; border-top:1px solid var(--rule); padding-top:15px; margin-bottom:clamp(30px,5vh,52px);
+}
+.sec-head::before{
+  content:''; position:absolute; top:-1px; left:0; width:58px; height:1px; background:var(--accent);
+}
+.sec-label{
+  font-size:.7rem; font-weight:700; letter-spacing:.19em; text-transform:uppercase; color:var(--ink-2);
+}
+.sec-num{
+  font-family:var(--serif); font-size:.86rem; font-weight:500; color:var(--accent);
+  font-variant-numeric:lining-nums tabular-nums; letter-spacing:.04em;
+}
+.sec-intro{
+  font-family:var(--serif); font-size:clamp(1.24rem,2.5vw,1.72rem); line-height:1.42;
+  letter-spacing:-.012em; color:var(--ink); max-width:44ch; margin-bottom:clamp(32px,5vh,56px);
+}
+.sec-intro em{font-style:italic; color:var(--ink-2)}
+
+/* ── 01 what your team gains ────────────────────────────────────── */
+.gains{display:grid; gap:0}
+.gain{
+  display:grid; gap:10px 44px; padding:30px 0;
+  border-top:1px solid var(--rule-2);
+  grid-template-columns:minmax(0,1fr);
+}
+.gain:first-child{border-top:0; padding-top:0}
+@media (min-width:860px){
+  .gain{grid-template-columns:minmax(0,5fr) minmax(0,6fr); align-items:start}
+}
+.gain-i{
+  font-family:var(--serif); font-size:.8rem; font-style:italic; color:var(--accent);
+  letter-spacing:.02em; grid-column:1/-1; margin-bottom:-4px;
+}
+.gain-lead{
+  font-family:var(--serif); font-size:clamp(1.12rem,2vw,1.42rem); line-height:1.34;
+  letter-spacing:-.014em; color:var(--ink); font-weight:500;
+}
+.gain-body{font-size:.94rem; line-height:1.68; color:var(--ink-2)}
+.gain-body b{font-weight:600; color:var(--ink)}
+
+/* ── 02 outcomes ledger ─────────────────────────────────────────── */
+.ledger{border-top:1px solid var(--rule)}
+.row{
+  display:grid; gap:14px 36px; padding:28px 0 30px;
+  border-bottom:1px solid var(--rule-2);
+  grid-template-columns:minmax(0,1fr);
+  align-items:start;
+}
+@media (min-width:900px){
+  .row{grid-template-columns:132px minmax(0,1fr) 304px}
+}
+.row-k{
+  font-size:.68rem; font-weight:700; letter-spacing:.17em; text-transform:uppercase;
+  color:var(--ink-3); padding-top:6px;
+}
+.row-t{font-size:.97rem; line-height:1.66; color:var(--ink-2); max-width:56ch}
+.row-t b{color:var(--ink); font-weight:600}
+
+.fig{text-align:left}
+@media (min-width:900px){ .fig{text-align:right} }
+.fig-n{
+  font-family:var(--serif); font-weight:600; letter-spacing:-.03em;
+  font-size:clamp(1.85rem,4.3vw,2.7rem); line-height:1.02; color:var(--ink);
+  font-variant-numeric:lining-nums tabular-nums; display:block;
+}
+.fig-n .to{color:var(--accent); font-weight:500; padding:0 .12em}
+.fig-c{
+  display:block; margin-top:9px;
+  font-size:.73rem; letter-spacing:.065em; text-transform:uppercase; color:var(--ink-3);
+}
+.fig-held{
+  display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+  font-size:.78rem; font-weight:600; letter-spacing:.04em; color:var(--ink-3);
+  padding-top:8px; transition:color .2s var(--ease);
+}
+.fig-held .bar{width:38px; height:1px; background:var(--rule); transition:background-color .2s var(--ease)}
+.fig-held:hover{color:var(--accent)}
+.fig-held:hover .bar{background:var(--accent)}
+.fig-held:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+.fig-n--word{font-size:clamp(1.5rem,3.3vw,2.15rem)}
+
+.ledger-foot{
+  margin-top:34px; display:flex; flex-wrap:wrap; gap:18px 30px; align-items:center;
+}
+
+/* ── 03 organisations ───────────────────────────────────────────── */
+.org{
+  display:grid; gap:8px 44px; padding:26px 0;
+  border-top:1px solid var(--rule-2); grid-template-columns:minmax(0,1fr);
+}
+.org:first-of-type{border-top:1px solid var(--rule)}
+@media (min-width:860px){ .org{grid-template-columns:minmax(0,4fr) minmax(0,7fr)} }
+.org-n{
+  font-family:var(--serif); font-size:1.24rem; font-weight:600; letter-spacing:-.018em; color:var(--ink);
+}
+.org-r{
+  font-size:.77rem; color:var(--ink-3); margin-top:5px; letter-spacing:.015em;
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.org-d{font-size:.94rem; line-height:1.68; color:var(--ink-2); max-width:58ch}
+.org-note{margin-top:26px; font-size:.79rem; color:var(--ink-4); max-width:52ch}
+
+/* ── 04 process ─────────────────────────────────────────────────── */
+.steps{display:grid; gap:0}
+.step{
+  display:grid; gap:10px 44px; padding:28px 0;
+  border-top:1px solid var(--rule-2); grid-template-columns:minmax(0,1fr);
+}
+.step:first-child{border-top:1px solid var(--rule)}
+@media (min-width:860px){ .step{grid-template-columns:52px minmax(0,5fr) minmax(0,6fr)} }
+.step-n{
+  font-family:var(--serif); font-size:.9rem; font-weight:500; color:var(--accent);
+  font-variant-numeric:lining-nums tabular-nums; padding-top:5px;
+}
+.step-lead{
+  font-family:var(--serif); font-size:clamp(1.06rem,1.8vw,1.3rem); line-height:1.36;
+  letter-spacing:-.012em; color:var(--ink); font-weight:500;
+}
+.step-body{font-size:.94rem; line-height:1.68; color:var(--ink-2)}
+
+/* ── 05 person ──────────────────────────────────────────────────── */
+.person{display:grid; gap:34px 56px; grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){ .person{grid-template-columns:minmax(0,6fr) minmax(0,5fr); align-items:start} }
+.person p{font-size:.97rem; line-height:1.72; color:var(--ink-2); margin-bottom:18px; max-width:56ch}
+.person p b{color:var(--ink); font-weight:600}
+.pq{
+  border-left:2px solid var(--accent); padding:4px 0 4px 22px;
+  font-family:var(--serif); font-style:italic; font-weight:400;
+  font-size:clamp(1.28rem,2.6vw,1.78rem); line-height:1.38; letter-spacing:-.014em;
+  color:var(--ink);
+}
+.pq cite{display:block; margin-top:14px; font-style:normal; font-family:var(--sans);
+  font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3)}
+.mu{
+  margin-top:28px; border:1px solid var(--rule-2); background:var(--panel);
+  border-radius:3px; padding:20px 22px; box-shadow:var(--shadow);
+}
+.mu h4{font-family:var(--serif); font-size:1.02rem; font-weight:600; letter-spacing:-.01em; margin-bottom:8px}
+.mu p{font-size:.88rem; line-height:1.64; color:var(--ink-2); margin:0}
+
+/* ── close ──────────────────────────────────────────────────────── */
+.close{padding:clamp(64px,10vh,120px) 0 clamp(50px,7vh,84px); border-top:1px solid var(--rule)}
+.close-h{
+  font-family:var(--serif); font-weight:600; letter-spacing:-.03em;
+  font-size:clamp(1.9rem,5.2vw,3.5rem); line-height:1.06; color:var(--ink); max-width:17ch;
+}
+.close-p{margin-top:22px; max-width:50ch; font-size:1rem; line-height:1.68; color:var(--ink-2)}
+
+/* ── footer ─────────────────────────────────────────────────────── */
+.foot{border-top:1px solid var(--rule); padding:34px 0 54px}
+.foot-in{display:flex; flex-wrap:wrap; gap:20px 32px; align-items:baseline; justify-content:space-between}
+.foot-id{font-size:.8rem; color:var(--ink-3)}
+.foot-id b{color:var(--ink-2); font-weight:600}
+.profiles{display:flex; flex-wrap:wrap; gap:6px 4px}
+.profiles a{
+  font-size:.77rem; color:var(--ink-3); text-decoration:none; padding:5px 10px; border-radius:2px;
+  transition:color .18s var(--ease), background-color .18s var(--ease);
+}
+.profiles a:hover{color:var(--accent); background:var(--accent-soft)}
+.profiles a:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+.foot-fine{margin-top:26px; font-size:.72rem; color:var(--ink-4); max-width:60ch}
+
+/* ── contact tab ────────────────────────────────────────────────── */
+.contact{padding:clamp(52px,10vh,104px) 0 clamp(60px,9vh,110px)}
+.contact-h{
+  font-family:var(--serif); font-weight:600; letter-spacing:-.033em;
+  font-size:clamp(2.1rem,5.6vw,3.7rem); line-height:1.04; color:var(--ink); max-width:15ch;
+}
+.contact-p{margin-top:24px; max-width:50ch; font-size:1rem; line-height:1.68; color:var(--ink-2)}
+.form{margin-top:clamp(36px,6vh,56px); max-width:640px; display:grid; gap:22px}
+.field label{
+  display:block; font-size:.68rem; font-weight:700; letter-spacing:.17em; text-transform:uppercase;
+  color:var(--ink-3); margin-bottom:9px;
+}
+.field .hint{display:block; font-weight:400; letter-spacing:.01em; text-transform:none;
+  font-size:.79rem; color:var(--ink-4); margin-top:5px}
+.field input,.field textarea{
+  width:100%; font:inherit; font-size:.95rem; color:var(--ink);
+  background:var(--panel); border:1px solid var(--rule); border-radius:2px;
+  padding:12px 14px; resize:vertical;
+  transition:border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.field textarea{min-height:112px; line-height:1.62}
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-4)}
+.field input:focus,.field textarea:focus{
+  outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);
+}
+.contact-meta{
+  margin-top:clamp(44px,7vh,72px); border-top:1px solid var(--rule); padding-top:28px;
+  display:grid; gap:26px 48px; grid-template-columns:minmax(0,1fr);
+}
+@media (min-width:760px){ .contact-meta{grid-template-columns:repeat(3,minmax(0,1fr))} }
+.meta-k{font-size:.66rem; font-weight:700; letter-spacing:.19em; text-transform:uppercase; color:var(--ink-3); margin-bottom:10px}
+.meta-v{font-size:.92rem; color:var(--ink-2); line-height:1.6}
+.meta-links a{text-decoration:none; border-bottom:1px solid var(--rule); padding-bottom:1px;
+  transition:color .18s var(--ease), border-color .18s var(--ease)}
+.meta-links a:hover{color:var(--accent); border-color:var(--accent)}
+.meta-links a:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+/* CSS-generated visible address; destination is entity-encoded in the markup */
+.email{
+  font-size:.92rem; color:var(--ink); text-decoration:none;
+  border-bottom:1px solid var(--rule); padding-bottom:2px;
+  transition:color .18s var(--ease), border-color .18s var(--ease);
+}
+.email::after{content:"MominBinShahid" "\0040" "gmail" "\002E" "com"}
+.email:hover{color:var(--accent); border-color:var(--accent)}
+.email:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+/* ── tabs ───────────────────────────────────────────────────────── */
+[data-tab]{display:none}
+[data-tab].is-active{display:block}
+
+/* ── reduced motion ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:.001ms !important; animation-duration:.001ms !important}
+  .rig .gh,.rig .gl,.rig .gv,.rig .gvl{transition:none !important}
+}
+
+/* ── touch: the rig rests, visible and settled, instead of tracking ── */
+@media (hover: none){
+  .hero-type.rig-on .rig{opacity:.58}
+}
+</style>
+
+<!-- ══ navigation ═══════════════════════════════════════════════ -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#" data-goto="home">
+      <span class="glyph" aria-hidden="true">&#128104;&#8205;&#128187;</span>
+      <span class="who">Momin Bin Shahid</span>
+      <span class="rolebit">&middot; Lead Engineer</span>
+      <span class="dot" aria-hidden="true"></span>
+    </a>
+    <div class="navlinks">
+      <button class="navlink" type="button" data-goto="home" aria-current="page">Home</button>
+      <button class="navlink" type="button" data-goto="contact">Contact</button>
+      <button class="themebtn" type="button" id="themeBtn" aria-label="Switch to dark theme" aria-pressed="false">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M8 1.8a6.2 6.2 0 0 0 0 12.4z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HOME ═════════════════════════════════════════════════════ -->
+<main id="home" data-tab class="is-active">
+
+  <!-- hero -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Production result &middot; Sastaticket.pk</p>
+
+      <div class="hero-type" id="heroType">
+        <h1 class="hero-h" id="heroH" tabindex="0" aria-describedby="rigHelp">
+          <span class="hl"><span class="w">40%<i class="probe" aria-hidden="true"></i></span> <span class="w">booking<i class="probe" aria-hidden="true"></i></span> <span class="w">failures<i class="probe" aria-hidden="true"></i></span></span>
+          <span class="hl"><span class="w">to<i class="probe" aria-hidden="true"></i></span> <span class="w">under<i class="probe" aria-hidden="true"></i></span> <span class="w">5%.<i class="probe" aria-hidden="true"></i></span></span>
+        </h1>
+        <div class="rig" id="rig" aria-hidden="true">
+          <div class="gh is-cap" data-g="cap"></div>
+          <div class="gh is-x"   data-g="x"></div>
+          <div class="gh is-base" data-g="base"></div>
+          <div class="gv"></div><span class="gvl"></span>
+          <div class="legend"><span data-lg="base"></span><span data-lg="cap"></span><span data-lg="x"></span></div>
+        </div>
+      </div>
+      <p class="vh" id="rigHelp">Typographic guides are drawn over this headline. With the headline focused, press the left and right arrow keys to step the vertical guide across the words. The guides are decorative and do not change the figures.</p>
+
+      <p class="scope">The measurement is the booking failure rate across those airline-provider integrations at Sastaticket.pk. It is not a claim about company-wide revenue, uptime, or every booking the business takes.</p>
+
+      <p class="hero-sub">At Sastaticket.pk, I fixed airline-provider integrations across multiple providers. I bring eight years of production engineering, hands-on team leadership, and experience building AI agents. Let&rsquo;s talk about your next lead engineer.</p>
+
+      <p class="identity"><b>Momin Bin Shahid</b> &middot; Lead Engineer at Sastaticket.pk &middot; Karachi, Pakistan</p>
+
+      <div class="cta-row">
+        <a class="cta cta-primary" href="../../../static/MominBinShahid_Resume.pdf" target="_blank" rel="noopener">Read the r&eacute;sum&eacute; <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <button class="cta cta-secondary" type="button" data-goto="contact">Discuss a lead engineering role</button>
+        <span class="cta-note">The r&eacute;sum&eacute; is a PDF and opens in a new tab. It carries the full record &mdash; every role, every stack, every figure.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 — what your team gains -->
+  <section class="sec">
+    <div class="wrap">
+      <header class="sec-head">
+        <h2 class="sec-label">What your team gains</h2>
+        <span class="sec-num">01</span>
+      </header>
+
+      <p class="sec-intro">Three things a lead engineer is actually on the hook for, and what each one looks like when I am the one doing it.</p>
+
+      <div class="gains">
+        <article class="gain">
+          <span class="gain-i">i.</span>
+          <h3 class="gain-lead">Production applications get better while they stay up.</h3>
+          <p class="gain-body">Nearly everything I have shipped was work on software that already had people on it &mdash; integrations failing at the provider boundary, a front end that took several seconds to become useful, errors nobody saw until a customer reported one. That work is diagnosis first, then a change small enough to ship without holding the product still.</p>
+        </article>
+
+        <article class="gain">
+          <span class="gain-i">ii.</span>
+          <h3 class="gain-lead">Architecture decisions get made by someone who is still in the code.</h3>
+          <p class="gain-body">At Sastaticket.pk I <b>lead code reviews and architectural decisions</b>, and I stay hands-on in the codebases those decisions land in. Reviewing the change and writing the change are the same job to me; a decision made away from the code is a decision made without the evidence.</p>
+        </article>
+
+        <article class="gain">
+          <span class="gain-i">iii.</span>
+          <h3 class="gain-lead">Your engineers get better, and your team gets an AI capability that is not just mine.</h3>
+          <p class="gain-body">I mentor <b>three to five engineers</b> day to day. When I built the AI-agent work at Sastaticket.pk I built a foundational agent structure for the team to extend, deliberately, so that every agent idea afterwards did not have to route through one person. Capability that lives in one head is not capability.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 — production outcomes -->
+  <section class="sec">
+    <div class="wrap">
+      <header class="sec-head">
+        <h2 class="sec-label">A range of production outcomes</h2>
+        <span class="sec-num">02</span>
+      </header>
+
+      <p class="sec-intro">Four places the product at Sastaticket.pk measurably improved, in the order I would defend them. <em>Two carry their figure here. The other two are in the r&eacute;sum&eacute; &mdash; that is what a r&eacute;sum&eacute; is for.</em></p>
+
+      <div class="ledger">
+        <article class="row">
+          <div class="row-k">Reliability</div>
+          <p class="row-t">Django airline-provider integration fixes, across multiple providers. Bookings that had been dying at the provider boundary stopped dying there. This is the number in the headline, and the one I would put first in any conversation.</p>
+          <div class="fig">
+            <span class="fig-n">40%<span class="to">&rarr;</span>&lt;5%</span>
+            <span class="fig-c">Booking failure rate</span>
+          </div>
+        </article>
+
+        <article class="row">
+          <div class="row-k">Speed</div>
+          <p class="row-t">A React/TypeScript application revamp serving thousands of daily users, rebuilt around what a page genuinely needs before it can be useful &mdash; and what can wait.</p>
+          <div class="fig">
+            <a class="fig-held" href="../../../static/MominBinShahid_Resume.pdf" target="_blank" rel="noopener"><span class="bar" aria-hidden="true"></span>Figure in the r&eacute;sum&eacute; &#8599;</a>
+          </div>
+        </article>
+
+        <article class="row">
+          <div class="row-k">Observability</div>
+          <p class="row-t">Sentry, instrumented so that a failure reaches the engineers before it reaches the support queue. Detection you can act on ahead of the complaint changes what a small team can carry.</p>
+          <div class="fig">
+            <a class="fig-held" href="../../../static/MominBinShahid_Resume.pdf" target="_blank" rel="noopener"><span class="bar" aria-hidden="true"></span>Figure in the r&eacute;sum&eacute; &#8599;</a>
+          </div>
+        </article>
+
+        <article class="row">
+          <div class="row-k">AI</div>
+          <p class="row-t">An agent that evaluates customer support calls &mdash; Python, Google GenAI and LangChain, orchestrated with Airflow on AWS. It reads every call rather than a sample, and it holds all of them to the same standard. <b>This is the evidence that the AI work is real and in production</b>, not a side interest.</p>
+          <div class="fig">
+            <span class="fig-n fig-n--word">5&ndash;8<span class="to">&rarr;</span>hundreds</span>
+            <span class="fig-c">Calls reviewed daily &middot; 92% accuracy</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="ledger-foot">
+        <a class="cta cta-primary" href="../../../static/MominBinShahid_Resume.pdf" target="_blank" rel="noopener">Read the r&eacute;sum&eacute; <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <button class="cta cta-secondary" type="button" data-goto="contact">Discuss a lead engineering role</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — evidence across organisations -->
+  <section class="sec">
+    <div class="wrap">
+      <header class="sec-head">
+        <h2 class="sec-label">Evidence across organisations</h2>
+        <span class="sec-num">03</span>
+      </header>
+
+      <p class="sec-intro">Four employers, four genuinely different problems. What matters here is the range; the detail sits in the r&eacute;sum&eacute;.</p>
+
+      <article class="org">
+        <div>
+          <h3 class="org-n">Sastaticket.pk</h3>
+          <p class="org-r">Lead Engineer, Jul 2024 &ndash; present<br>Senior Software Engineer, Aug 2023 &ndash; Jun 2024</p>
+        </div>
+        <p class="org-d">Pakistan&rsquo;s leading online travel agency. Travel tech at booking volume &mdash; the reliability, speed, observability and AI work above, plus code review, architecture and mentoring.</p>
+      </article>
+
+      <article class="org">
+        <div>
+          <h3 class="org-n">Securiti.ai</h3>
+          <p class="org-r">Senior Software Development Engineer, Sep 2020 &ndash; Feb 2023</p>
+        </div>
+        <p class="org-d">A unicorn data privacy and security platform. I built the Compliance Catalog module end to end, and integrated LinkedIn&rsquo;s open-source DataHub metadata platform into the product. Mentored two to three engineers daily. Enterprise privacy is where I learned what it costs to be wrong about data.</p>
+      </article>
+
+      <article class="org">
+        <div>
+          <h3 class="org-n">Folio3</h3>
+          <p class="org-r">Software Engineer, Aug 2019 &ndash; Sep 2020</p>
+        </div>
+        <p class="org-d">Oracle NetSuite ERP consulting. I built an in-house HRMS as an installable NetSuite package that Middle-East clients moved onto in place of NetSuite&rsquo;s own. ERP is where you learn that a business process is the real specification.</p>
+      </article>
+
+      <article class="org">
+        <div>
+          <h3 class="org-n">Scayle</h3>
+          <p class="org-r">Software Engineer, Mar 2018 &ndash; Aug 2019</p>
+        </div>
+        <p class="org-d">LearnerPal, an EdTech platform used by students and teachers across US schools, primarily in New York. My first production users, and the first time software I wrote was somebody&rsquo;s whole Tuesday morning.</p>
+      </article>
+
+      <p class="org-note">These are employers, not clients and not endorsements. It is where the work was done.</p>
+    </div>
+  </section>
+
+  <!-- 04 — how a role conversation would work -->
+  <section class="sec">
+    <div class="wrap">
+      <header class="sec-head">
+        <h2 class="sec-label">How a role conversation would work</h2>
+        <span class="sec-num">04</span>
+      </header>
+
+      <p class="sec-intro">No process theatre. Three steps, and it is reasonable to stop after any of them.</p>
+
+      <div class="steps">
+        <article class="step">
+          <span class="step-n">01</span>
+          <h3 class="step-lead">Tell me about the product and its hardest problem.</h3>
+          <p class="step-body">What it is, who is on it, and the thing your engineers keep circling back to. Bring the problem you would actually hand a new lead in month one &mdash; not the tidied version.</p>
+        </article>
+
+        <article class="step">
+          <span class="step-n">02</span>
+          <h3 class="step-lead">I walk you through shipped work that resembles it.</h3>
+          <p class="step-body">Which decisions I made, what I traded away to make them, and what I would do differently now. Most of my work has been closed-source, so this is me talking you through it rather than opening a demo. Ask the awkward questions here; that is the point of the step.</p>
+        </article>
+
+        <article class="step">
+          <span class="step-n">03</span>
+          <h3 class="step-lead">We work out what the role actually owns.</h3>
+          <p class="step-body">Scope, who I would be leading, how architectural decisions get made and by whom, and whether this is a fit in both directions. A lead role that nobody has defined is the most expensive hire a team can make.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 — the person -->
+  <section class="sec">
+    <div class="wrap">
+      <header class="sec-head">
+        <h2 class="sec-label">The person you would work with</h2>
+        <span class="sec-num">05</span>
+      </header>
+
+      <div class="person">
+        <div>
+          <p>I live and work in <b>Karachi, Pakistan</b>. I hold a BS in Computer Science from the <b>University of Karachi</b>, where I was a <b>Bronze Medalist</b> and a merit scholarship holder.</p>
+          <p>The part of this job I enjoy most is mentoring engineers and watching them get better at it. That is not a line I added to sound like a lead &mdash; it is the reason the lead role was worth taking.</p>
+          <blockquote class="pq">
+            &ldquo;I believe in leaving codebases better than I found them.&rdquo;
+            <cite>Momin Bin Shahid</cite>
+          </blockquote>
+        </div>
+
+        <div>
+          <div class="mu">
+            <h4>MealUnits</h4>
+            <p>An offline insulin calculator I built for my brother. No accounts, no sign-in, nothing leaves the device. Every design decision in it came from one specific person needing it to work that way &mdash; which is roughly how I think about product work at any size.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- close -->
+  <section class="close">
+    <div class="wrap">
+      <h2 class="close-h">Bring your team&rsquo;s hardest engineering problem.</h2>
+      <p class="close-p">If you are hiring a hands-on lead engineer for a product that already has users on it, the r&eacute;sum&eacute; carries the full record &mdash; every role, every stack, and the figures this page left out on purpose. Then tell me what your team is building.</p>
+      <div class="cta-row">
+        <a class="cta cta-primary" href="../../../static/MominBinShahid_Resume.pdf" target="_blank" rel="noopener">Read the r&eacute;sum&eacute; <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <button class="cta cta-secondary" type="button" data-goto="contact">Discuss a lead engineering role</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ CONTACT ══════════════════════════════════════════════════ -->
+<main id="contact" data-tab>
+  <section class="contact">
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h1 class="contact-h">Discuss a lead engineering role.</h1>
+      <p class="contact-p">Three things make a first email immediately useful. None of them are required, and none of them need to be long &mdash; a sentence each is plenty.</p>
+
+      <div class="form">
+        <div class="field">
+          <label for="f-company">Company or product</label>
+          <input id="f-company" type="text" autocomplete="organization" placeholder="What you are building, and roughly who uses it">
+        </div>
+        <div class="field">
+          <label for="f-role">The role</label>
+          <input id="f-role" type="text" placeholder="Lead engineer, staff, engineering manager &mdash; and how the team is shaped today">
+        </div>
+        <div class="field">
+          <label for="f-problem">The engineering challenge
+            <span class="hint">The thing you would hand a new lead in month one.</span>
+          </label>
+          <textarea id="f-problem" rows="4" placeholder="Reliability, performance, an AI capability you want in the product, a team that needs a senior hand &mdash; whatever is actually at the top of the list"></textarea>
+        </div>
+
+        <div class="cta-row" style="margin-top:6px">
+          <button class="cta cta-primary" type="button" id="composeBtn">Discuss a lead engineering role <span class="arrow" aria-hidden="true">&rarr;</span></button>
+          <span class="cta-note">This opens a draft in your own email app with whatever you have typed above. Nothing is sent from this page.</span>
+        </div>
+      </div>
+
+      <div class="contact-meta">
+        <div>
+          <p class="meta-k">Email</p>
+          <p class="meta-v"><a class="email" id="mailLink" aria-label="Email Momin Bin Shahid" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#111;&#109;&#105;&#110;&#66;&#105;&#110;&#83;&#104;&#97;&#104;&#105;&#100;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;"></a></p>
+        </div>
+        <div>
+          <p class="meta-k">Based in</p>
+          <p class="meta-v">Karachi, Pakistan</p>
+        </div>
+        <div>
+          <p class="meta-k">Elsewhere</p>
+          <p class="meta-v meta-links">
+            <a href="https://github.com/MominBinShahid" target="_blank" rel="noopener">GitHub</a><span aria-hidden="true">, </span><a href="https://linkedin.com/in/mominbinshahid" target="_blank" rel="noopener">LinkedIn</a><span aria-hidden="true">, </span><a href="https://stackoverflow.com/users/9137804/MominBinShahid" target="_blank" rel="noopener">Stack&nbsp;Overflow</a><span aria-hidden="true">, </span><a href="https://twitter.com/MominBinShahid" target="_blank" rel="noopener">X</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ══ footer ═══════════════════════════════════════════════════ -->
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p class="foot-id"><b>Momin Bin Shahid</b> &middot; Lead Engineer at Sastaticket.pk &middot; Karachi, Pakistan</p>
+    <nav class="profiles" aria-label="Profiles">
+      <a href="https://github.com/MominBinShahid" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/mominbinshahid" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://stackoverflow.com/users/9137804/MominBinShahid" target="_blank" rel="noopener">Stack Overflow</a>
+      <a href="https://twitter.com/MominBinShahid" target="_blank" rel="noopener">X</a>
+    </nav>
+  </div>
+  <div class="wrap">
+    <p class="foot-fine">Every figure on this page is from work at Sastaticket.pk and is stated with its scope. The remaining measurements, and the full employment record, are in the r&eacute;sum&eacute;.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  var root = document.documentElement;
+
+  /* ── accent: one family per visit, held across tabs and themes ── */
+  var ACCENTS = ['petrol','mulberry','ochre'];
+  var accent = ACCENTS[Math.floor(Math.random()*ACCENTS.length)];
+  root.setAttribute('data-accent', accent);
+
+  /* ── theme ─────────────────────────────────────────────────────── */
+  var themeBtn = document.getElementById('themeBtn');
+  function setTheme(t){
+    root.setAttribute('data-theme', t);
+    var next = t === 'dark' ? 'light' : 'dark';
+    themeBtn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+    themeBtn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+  }
+  setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  themeBtn.addEventListener('click', function(){
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    requestAnimationFrame(measure);
+  });
+
+  /* ── tabs ──────────────────────────────────────────────────────── */
+  var panes = document.querySelectorAll('[data-tab]');
+  var navBtns = document.querySelectorAll('.navlink[data-goto]');
+  function goto(id){
+    for (var i=0;i<panes.length;i++) panes[i].classList.toggle('is-active', panes[i].id === id);
+    for (var j=0;j<navBtns.length;j++){
+      var on = navBtns[j].getAttribute('data-goto') === id;
+      if (on) navBtns[j].setAttribute('aria-current','page');
+      else navBtns[j].removeAttribute('aria-current');
+    }
+    window.scrollTo(0,0);
+    if (id === 'home') requestAnimationFrame(measure);
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-goto]');
+    if (!t) return;
+    e.preventDefault();
+    goto(t.getAttribute('data-goto'));
+  });
+
+  /* ── nav hairline on scroll ────────────────────────────────────── */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('is-stuck', window.scrollY > 8); };
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* ═══════════════════════════════════════════════════════════════
+     SIGNATURE INTERACTION — the measuring rig
+
+     Hairlines that snap to the headline's real typography: the
+     baseline read off a zero-height inline-block that sits on it,
+     cap-height and x-height from canvas TextMetrics at the live
+     computed font, word edges from the rendered word boxes.
+     Nothing is hard-coded, so it survives resize, font load,
+     theme change and wrapping. It never touches the figures.
+     ═══════════════════════════════════════════════════════════════ */
+
+  var wrapEl = document.getElementById('heroType');
+  var headEl = document.getElementById('heroH');
+  var rig    = document.getElementById('rig');
+  var gCap   = rig.querySelector('[data-g="cap"]');
+  var gX     = rig.querySelector('[data-g="x"]');
+  var gBase  = rig.querySelector('[data-g="base"]');
+  var lCap   = rig.querySelector('[data-lg="cap"]');
+  var lX     = rig.querySelector('[data-lg="x"]');
+  var lBase  = rig.querySelector('[data-lg="base"]');
+  var legend = rig.querySelector('.legend');
+  var gv     = rig.querySelector('.gv');
+  var gvl    = rig.querySelector('.gvl');
+
+  var words  = Array.prototype.slice.call(headEl.querySelectorAll('.w'));
+  var lines  = [];      /* [{ baseline, cap, x, edges:[{x,label}] }] */
+  var flat   = [];      /* every edge across every line, in reading order */
+  var kbIdx  = 0;
+
+  var canvas = document.createElement('canvas');
+  var ctx    = canvas.getContext('2d');
+
+  function metricsFor(el){
+    var cs = getComputedStyle(el);
+    ctx.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+    var px = parseFloat(cs.fontSize) || 16;
+    var cap, xh;
+    try {
+      cap = ctx.measureText('H').actualBoundingBoxAscent;
+      xh  = ctx.measureText('x').actualBoundingBoxAscent;
+    } catch(err){ cap = null; xh = null; }
+    if (!cap || !isFinite(cap)) cap = px * 0.70;
+    if (!xh  || !isFinite(xh))  xh  = px * 0.46;
+    return { cap: cap, x: xh };
+  }
+
+  function measure(){
+    if (!wrapEl.offsetParent && wrapEl.offsetWidth === 0) return;
+    var box = wrapEl.getBoundingClientRect();
+    var m = metricsFor(headEl);
+    var buckets = {};
+
+    words.forEach(function(w){
+      var probe = w.querySelector('.probe');
+      if (!probe) return;
+      var pr = probe.getBoundingClientRect();
+      var wr = w.getBoundingClientRect();
+      var baseline = Math.round((pr.bottom - box.top) * 10) / 10;
+      var key = Math.round(baseline);
+      if (!buckets[key]) buckets[key] = { baseline: baseline, edges: [] };
+      buckets[key].edges.push({ x: wr.left - box.left, label: 'word start' });
+      buckets[key].edges.push({ x: wr.right - box.left, label: 'word end' });
+    });
+
+    lines = Object.keys(buckets)
+      .map(function(k){ return buckets[k]; })
+      .sort(function(a,b){ return a.baseline - b.baseline; })
+      .map(function(l){
+        l.cap = l.baseline - m.cap;
+        l.x   = l.baseline - m.x;
+        l.edges.sort(function(a,b){ return a.x - b.x; });
+        return l;
+      });
+
+    flat = [];
+    lines.forEach(function(l, li){
+      l.edges.forEach(function(e){ flat.push({ line: li, x: e.x, label: e.label }); });
+    });
+
+    lCap.textContent  = 'cap height ' + Math.round(m.cap) + 'px';
+    lX.textContent    = 'x-height ' + Math.round(m.x) + 'px';
+    lBase.textContent = 'baseline';
+
+    if (!lines.length) return;
+    legend.style.transform = 'translateY(' + (headEl.offsetHeight + 32) + 'px)';
+    draw(0, lines[0].edges[lines[0].edges.length - 1].x, 'word end');
+  }
+
+  function draw(lineIdx, x, label){
+    var l = lines[lineIdx];
+    if (!l) return;
+    var pad = 16;                      /* rig inset, matches CSS */
+    var top = l.cap + pad, bottom = l.baseline + pad;
+
+    gCap.style.transform  = 'translateY(' + top + 'px)';
+    gX.style.transform    = 'translateY(' + (l.x + pad) + 'px)';
+    gBase.style.transform = 'translateY(' + bottom + 'px)';
+
+    gv.style.top       = (top - 10) + 'px';
+    gv.style.height    = (bottom - top + 20) + 'px';
+    gv.style.transform = 'translateX(' + (x + 26) + 'px)';
+
+    /* the guide's label tucks back in rather than running off the page */
+    gvl.textContent = label;
+    var lw = gvl.offsetWidth || 74;
+    var lx = Math.max(0, Math.min(x + 26, rig.clientWidth - lw));
+    gvl.style.transform = 'translate(' + lx + 'px,' + (top - 22) + 'px)';
+  }
+
+  function nearest(px, py){
+    if (!lines.length) return;
+    var pad = 16;
+    var li = 0, best = Infinity;
+    for (var i=0;i<lines.length;i++){
+      var mid = (lines[i].cap + lines[i].baseline) / 2 + pad;
+      var d = Math.abs(py - mid);
+      if (d < best){ best = d; li = i; }
+    }
+    var edges = lines[li].edges, ex = edges[0], bd = Infinity;
+    for (var j=0;j<edges.length;j++){
+      var dd = Math.abs((edges[j].x + 26) - px);
+      if (dd < bd){ bd = dd; ex = edges[j]; }
+    }
+    kbIdx = flat.findIndex(function(f){ return f.line === li && f.x === ex.x; });
+    draw(li, ex.x, ex.label);
+  }
+
+  var fine = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : {matches:true};
+
+  wrapEl.addEventListener('pointermove', function(e){
+    if (!fine.matches) return;
+    var box = wrapEl.getBoundingClientRect();
+    wrapEl.classList.add('rig-on');
+    nearest(e.clientX - box.left, e.clientY - box.top);
+  });
+  wrapEl.addEventListener('pointerleave', function(){
+    if (fine.matches) wrapEl.classList.remove('rig-on');
+  });
+
+  /* keyboard parity: focus the headline, step the guide word by word */
+  headEl.addEventListener('focusin', function(){ wrapEl.classList.add('rig-on'); });
+  headEl.addEventListener('focusout', function(){ if (fine.matches) wrapEl.classList.remove('rig-on'); });
+  headEl.addEventListener('keydown', function(e){
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    if (!flat.length) return;
+    e.preventDefault();
+    wrapEl.classList.add('rig-on');
+    kbIdx = (kbIdx + (e.key === 'ArrowRight' ? 1 : -1) + flat.length) % flat.length;
+    var f = flat[kbIdx];
+    draw(f.line, f.x, f.label);
+  });
+
+  /* touch and coarse pointers: the rig simply rests, visible */
+  if (!fine.matches) wrapEl.classList.add('rig-on');
+
+  var rAF;
+  window.addEventListener('resize', function(){
+    cancelAnimationFrame(rAF);
+    rAF = requestAnimationFrame(measure);
+  });
+
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ measure(); setTimeout(measure, 120); });
+  } else {
+    window.addEventListener('load', measure);
+  }
+  measure();
+
+  /* ── contact: compose a real draft, no simulated submission ───── */
+  var mailLink = document.getElementById('mailLink');
+  var composeBtn = document.getElementById('composeBtn');
+  if (composeBtn && mailLink){
+    composeBtn.addEventListener('click', function(){
+      var base = mailLink.getAttribute('href');          /* decoded by the parser, never in source */
+      var company = document.getElementById('f-company').value.trim();
+      var role    = document.getElementById('f-role').value.trim();
+      var problem = document.getElementById('f-problem').value.trim();
+
+      var subject = 'Lead engineering role' + (company ? ' — ' + company : '');
+      var body = [];
+      body.push('Hi Momin,');
+      body.push('');
+      if (company) body.push('Company or product: ' + company);
+      if (role)    body.push('The role: ' + role);
+      if (problem){ body.push('The engineering challenge:'); body.push(problem); }
+      if (!company && !role && !problem) body.push('(Nothing filled in on the site — writing from scratch.)');
+      body.push('');
+
+      window.location.href = base
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(body.join('\n'));
+    });
+  }
+
+  /* ── console easter egg ───────────────────────────────────────── */
+  console.log('%cThe guides on that headline are not hard-coded.',
+    'font:600 13px ui-sans-serif,system-ui;');
+  console.log('Baseline: a zero-height inline-block sitting in the line box — its bottom margin edge IS the baseline.\nCap-height and x-height: canvas TextMetrics.actualBoundingBoxAscent on the live computed font, after document.fonts.ready.\nWord edges: getBoundingClientRect on the rendered words. Resize the window and watch the px readout change.');
+  console.log('Boy Scout Rule in effect — I believe in leaving codebases better than I found them. This visit was set in ' + accent + '.');
+})();
+</script>

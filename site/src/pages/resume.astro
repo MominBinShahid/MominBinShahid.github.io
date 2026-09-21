@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { UI } from '../consts';
+import { href } from '../lib/href';
+
+/**
+ * Skeleton. The real page renders the Google Docs HTML export through a parser
+ * that reads structure from `title` / `subtitle` / `h1` / `h2` and re-emits it
+ * with the site's own classes - see decisions.md. That work is queued behind the
+ * résumé change list in tasks.md, because there is no point parsing a document
+ * that is about to be rewritten.
+ *
+ * The PDF link works today, which is what the old /resume/ page mostly was.
+ */
+---
+
+<Base title={UI.resumeTitle} path="/resume/">
+  <h1>{UI.resumeTitle}</h1>
+  <p>
+    <a href={href('/MominBinShahid_Resume.pdf')}>{UI.resumeDownload}</a>
+  </p>
+</Base>

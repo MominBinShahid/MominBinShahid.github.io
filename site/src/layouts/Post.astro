@@ -1,0 +1,60 @@
+---
+import Base from './Base.astro';
+import { UI } from '../consts';
+import { href } from '../lib/href';
+import { postPath, readingMinutes, type Post } from '../lib/posts';
+import { Image } from 'astro:assets';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, published, tags, heroImage, heroAlt } = post.data;
+
+const minutes = readingMinutes(post.body ?? '');
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base
+  title={title}
+  description={description}
+  path={postPath(post)}
+  type="article"
+  publishedTime={pubDate}
+  modifiedTime={updatedDate}
+  noindex={!published}
+>
+  <article>
+    <header>
+      {!published && <p><strong>{UI.draftBadge}</strong></p>}
+      <h1>{title}</h1>
+      <p class="muted">
+        <time datetime={pubDate.toISOString()}>{UI.postedOn} {fmt(pubDate)}</time>
+        {
+          updatedDate && (
+            <>
+              {' · '}
+              <time datetime={updatedDate.toISOString()}>
+                {UI.updatedOn} {fmt(updatedDate)}
+              </time>
+            </>
+          )
+        }
+        {` · ${minutes} ${UI.readingTimeSuffix}`}
+      </p>
+      {
+        tags.length > 0 && (
+          <p class="muted">{tags.join(', ')}</p>
+        )
+      }
+    </header>
+
+    {heroImage && heroAlt && <Image src={heroImage} alt={heroAlt} />}
+
+    <slot />
+  </article>
+
+  <p><a href={href('/blog/')}>{UI.backToBlog}</a></p>
+</Base>

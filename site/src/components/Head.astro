@@ -1,0 +1,96 @@
+---
+import { SITE } from '../consts';
+import { href, abs } from '../lib/href';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Route-relative path of the current page, for canonical and og:url. */
+  path: string;
+  image?: string;
+  /** 'website' for pages, 'article' for posts. */
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  path,
+  image = SITE.ogImage,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = path === '/' ? SITE.title : `${title} · ${SITE.title}`;
+// Social cards want the name on the homepage, not the word "Home".
+const socialTitle = path === '/' ? SITE.title : title;
+const canonical = abs(path, Astro.site);
+const imageUrl = abs(image, Astro.site);
+
+/**
+ * All eight were emitted by gatsby-plugin-manifest's `legacy: true`. iOS ignores
+ * the web manifest and reads these, so dropping the plugin without re-adding
+ * them by hand is a visible regression on every iPhone home screen.
+ */
+const TOUCH_ICON_SIZES = [48, 72, 96, 144, 192, 256, 384, 512] as const;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+
+{/* Icons. Every one of these is a real file in public/ - see
+    post-deploy-checklist.md for why that matters more than it sounds like it should. */}
+<link rel="icon" href={href('/favicon.ico')} sizes="any" />
+<link rel="icon" type="image/png" href={href('/favicon-32x32.png')} sizes="32x32" />
+{
+  TOUCH_ICON_SIZES.map((s) => (
+    <link rel="apple-touch-icon" sizes={`${s}x${s}`} href={href(`/icons/icon-${s}x${s}.png`)} />
+  ))
+}
+
+{/* Android address bar. The old value (#333333) predated the palette; these are
+    placeholders until the design pass picks real ones. */}
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111" />
+<meta name="color-scheme" content="light dark" />
+
+{/* Feed autodiscovery. /rss.xml was advertised and 404ing for years; now it exists. */}
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={`${SITE.title} feed`}
+  href={href('/rss.xml')}
+/>
+<link rel="sitemap" type="application/xml" href={href('/sitemap.xml')} />
+
+<meta property="og:site_name" content={SITE.title} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={socialTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:locale" content="en_US" />
+{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={socialTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={description} />
+
+{/* Search Console ownership. The HTML tag proves control of the HOST, and the
+    MealUnits property sits on this same host - so this token authenticates both.
+    Dropping it de-verifies two properties, not one. */}
+<meta name="google-site-verification" content="fkilO4peF6pbwOrFAy7QqM0HV9ccL8A2dH58RYnGfTc" />

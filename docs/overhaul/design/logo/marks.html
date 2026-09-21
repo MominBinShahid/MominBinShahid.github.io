@@ -1,0 +1,303 @@
+<title>Eight Marks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap">
+
+<style>
+:root{
+  --bg:#f4f5f7; --panel:#ffffff; --ink:#15181e; --dim:#626a78;
+  --line:#dfe2e8; --acc:#2a3ad0;
+  --swatch:#15181e;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c0e12; --panel:#14171d; --ink:#e7e9ee; --dim:#8c94a3;
+    --line:#242932; --acc:#9aa8ff; --swatch:#e7e9ee;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0c0e12; --panel:#14171d; --ink:#e7e9ee; --dim:#8c94a3;
+  --line:#242932; --acc:#9aa8ff; --swatch:#e7e9ee;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.5;
+}
+:focus-visible{outline:2px solid var(--acc); outline-offset:3px; border-radius:3px}
+
+.wrap{max-width:1180px; margin:0 auto; padding:clamp(24px,4vw,52px) clamp(18px,3vw,32px) 80px}
+
+header.top{margin-bottom:38px}
+h1{
+  font-size:clamp(24px,3.4vw,34px); font-weight:700; letter-spacing:-.025em;
+  margin:0 0 10px; text-wrap:balance;
+}
+.sub{font-size:15px; color:var(--dim); max-width:66ch; margin:0}
+.sub code{
+  font-family:"Spline Sans Mono",ui-monospace,monospace; font-size:13px;
+  background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:1px 5px;
+}
+
+.controls{display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin:22px 0 0}
+.ctl{
+  font:inherit; font-size:13px; font-weight:500; cursor:pointer;
+  padding:7px 14px; border-radius:999px; border:1px solid var(--line);
+  background:var(--panel); color:var(--dim); transition:.15s;
+}
+.ctl:hover{color:var(--ink)}
+.ctl[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.ctl__lbl{font-size:10.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); font-weight:600; margin-right:3px}
+
+.grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(266px,1fr));
+  gap:18px; margin-top:30px;
+}
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:14px;
+  padding:22px; display:flex; flex-direction:column; gap:16px;
+}
+.card__id{
+  display:flex; align-items:baseline; gap:9px;
+  font-family:"Spline Sans Mono",ui-monospace,monospace; font-size:11px;
+  letter-spacing:.09em; text-transform:uppercase; color:var(--dim);
+}
+.card__id b{color:var(--acc); font-weight:600}
+.card__big{
+  display:grid; place-items:center; min-height:132px;
+  border:1px dashed var(--line); border-radius:10px; padding:16px;
+}
+.card__big svg{width:92px; height:92px; display:block}
+.card__sizes{display:flex; align-items:flex-end; gap:16px; padding-left:2px}
+.card__sizes figure{margin:0; display:flex; flex-direction:column; align-items:center; gap:6px}
+.card__sizes figcaption{
+  font-family:"Spline Sans Mono",ui-monospace,monospace; font-size:9.5px; color:var(--dim);
+}
+.s32 svg{width:32px; height:32px; display:block}
+.s16 svg{width:16px; height:16px; display:block}
+.card__name{font-size:15px; font-weight:600; letter-spacing:-.01em}
+.card__note{font-size:13px; color:var(--dim); line-height:1.5; margin:0}
+
+/* every mark inherits one colour so it is proven monochrome-safe */
+.mark{fill:none; stroke:var(--swatch); stroke-width:8; stroke-linecap:square; stroke-linejoin:miter}
+.mark--fill{fill:var(--swatch); stroke:none}
+.onacc .mark{stroke:var(--acc)}
+.onacc .mark--fill{fill:var(--acc)}
+
+.footnote{
+  margin-top:34px; padding-top:20px; border-top:1px solid var(--line);
+  font-size:13.5px; color:var(--dim); max-width:72ch;
+}
+.footnote strong{color:var(--ink); font-weight:600}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Eight marks for Momin Bin Shahid</h1>
+    <p class="sub">
+      All drawn as plain SVG with a single stroke colour, so each one survives being printed in one ink,
+      embossed, or rendered at 16&nbsp;pixels. Source files are in
+      <code>docs/overhaul/design/logo/</code> — they export to PNG at any size.
+    </p>
+    <div class="controls">
+      <span class="ctl__lbl">Theme</span>
+      <button class="ctl" data-theme-set="light" aria-pressed="true">Light</button>
+      <button class="ctl" data-theme-set="dark" aria-pressed="false">Dark</button>
+      <span class="ctl__lbl" style="margin-left:10px">Colour</span>
+      <button class="ctl" data-col="ink" aria-pressed="true">Monochrome</button>
+      <button class="ctl" data-col="acc" aria-pressed="false">Accent</button>
+    </div>
+  </header>
+
+  <div class="grid" id="grid">
+
+    <!-- 1 — STACKED M -->
+    <article class="card">
+      <div class="card__id"><b>01</b><span>Stacked</span></div>
+      <div class="card__big">
+        <svg viewBox="0 0 100 100" aria-label="Stacked M mark">
+          <path class="mark" d="M14 82 V26 L50 62 L86 26 V82"/>
+        </svg>
+      </div>
+      <div class="card__sizes">
+        <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M14 82 V26 L50 62 L86 26 V82"/></svg><figcaption>32</figcaption></figure>
+        <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M14 82 V26 L50 62 L86 26 V82"/></svg><figcaption>16</figcaption></figure>
+      </div>
+      <div>
+        <div class="card__name">Stacked M</div>
+        <p class="card__note">The letter reduced to four strokes. Reads instantly at any size. Safest of the eight — and the least distinctive.</p>
+      </div>
+    </article>
+
+    <!-- 2 — SIGNAL -->
+    <article class="card">
+      <div class="card__id"><b>02</b><span>Signal</span></div>
+      <div class="card__big">
+        <svg viewBox="0 0 100 100" aria-label="M drawn as a signal trace">
+          <path class="mark" d="M10 50 H20 L26 22 L34 74 L42 34 L50 62 L58 30 L66 70 L74 40 L80 50 H90" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/>
+        </svg>
+      </div>
+      <div class="card__sizes">
+        <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M10 50 H20 L26 22 L34 74 L42 34 L50 62 L58 30 L66 70 L74 40 L80 50 H90" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/></svg><figcaption>32</figcaption></figure>
+        <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M10 50 H20 L26 22 L34 74 L42 34 L50 62 L58 30 L66 70 L74 40 L80 50 H90" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/></svg><figcaption>16</figcaption></figure>
+      </div>
+      <div>
+        <div class="card__name">Signal</div>
+        <p class="card__note">A waveform whose peaks spell an M. Ties to the agent work — machines listening. Gets muddy below about 20px.</p>
+      </div>
+    </article>
+
+    <!-- 3 — CARET -->
+    <article class="card">
+      <div class="card__id"><b>03</b><span>Caret</span></div>
+      <div class="card__big">
+        <svg viewBox="0 0 100 100" aria-label="M formed from two carets">
+          <path class="mark" d="M12 66 L30 38 L48 66"/>
+          <path class="mark" d="M52 66 L70 38 L88 66"/>
+          <rect class="mark--fill" x="12" y="76" width="76" height="9"/>
+        </svg>
+      </div>
+      <div class="card__sizes">
+        <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M12 66 L30 38 L48 66"/><path class="mark" d="M52 66 L70 38 L88 66"/><rect class="mark--fill" x="12" y="76" width="76" height="9"/></svg><figcaption>32</figcaption></figure>
+        <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M12 66 L30 38 L48 66"/><path class="mark" d="M52 66 L70 38 L88 66"/><rect class="mark--fill" x="12" y="76" width="76" height="9"/></svg><figcaption>16</figcaption></figure>
+      </div>
+      <div>
+        <div class="card__name">Caret</div>
+        <p class="card__note">Two chevrons over a cursor rule. Reads as M and as a prompt at once. Developer-coded without a terminal cliché.</p>
+      </div>
+    </article>
+
+    <!-- 4 — APERTURE -->
+    <article class="card">
+      <div class="card__id"><b>04</b><span>Aperture</span></div>
+      <div class="card__big">
+        <svg viewBox="0 0 100 100" aria-label="M in the negative space of a circle">
+          <circle class="mark--fill" cx="50" cy="50" r="42"/>
+          <path d="M28 70 V34 L50 56 L72 34 V70" fill="none" stroke="var(--panel)" stroke-width="9" stroke-linejoin="miter"/>
+        </svg>
+      </div>
+      <div class="card__sizes">
+        <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="mark--fill" cx="50" cy="50" r="42"/><path d="M28 70 V34 L50 56 L72 34 V70" fill="none" stroke="var(--panel)" stroke-width="9"/></svg><figcaption>32</figcaption></figure>
+        <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="mark--fill" cx="50" cy="50" r="42"/><path d="M28 70 V34 L50 56 L72 34 V70" fill="none" stroke="var(--panel)" stroke-width="9"/></svg><figcaption>16</figcaption></figure>
+      </div>
+      <div>
+        <div class="card__name">Aperture</div>
+        <p class="card__note">Knocked out of a solid disc. The only one that works as an avatar without a container — it already is one.</p>
+      </div>
+    </article>
+
+    <!-- 5 — ASCENT -->
+    <article class="card">
+      <div class="card__id"><b>05</b><span>Ascent</span></div>
+      <div class="card__big">
+        <svg viewBox="0 0 100 100" aria-label="M with a rising arc">
+          <path class="mark" d="M14 80 V34 L44 62 L74 34 V80"/>
+          <path class="mark" d="M20 24 Q52 4 88 22" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <circle class="mark--fill" cx="88" cy="22" r="7"/>
+        </svg>
+      </div>
+      <div class="card__sizes">
+        <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M14 80 V34 L44 62 L74 34 V80"/><path class="mark" d="M20 24 Q52 4 88 22" stroke-width="7" stroke-linecap="round"/><circle class="mark--fill" cx="88" cy="22" r="7"/></svg><figcaption>32</figcaption></figure>
+        <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M14 80 V34 L44 62 L74 34 V80"/><path class="mark" d="M20 24 Q52 4 88 22" stroke-width="7" stroke-linecap="round"/><circle class="mark--fill" cx="88" cy="22" r="7"/></svg><figcaption>16</figcaption></figure>
+      </div>
+      <div>
+        <div class="card__name">Ascent</div>
+        <p class="card__note">An M under a rising arc ending in a point. The career arc, full-stack into AI, without saying so.</p>
+      </div>
+    </article>
+
+    <!-- 6 — MATRIX -->
+    <article class="card">
+      <div class="card__id"><b>06</b><span>Matrix</span></div>
+      <div class="card__big">
+        <svg viewBox="0 0 100 100" aria-label="M rendered as a dot matrix">
+          <g class="mark--fill">
+            <circle cx="20" cy="24" r="6"/><circle cx="80" cy="24" r="6"/>
+            <circle cx="20" cy="42" r="6"/><circle cx="36" cy="40" r="6"/><circle cx="64" cy="40" r="6"/><circle cx="80" cy="42" r="6"/>
+            <circle cx="20" cy="60" r="6"/><circle cx="50" cy="56" r="6"/><circle cx="80" cy="60" r="6"/>
+            <circle cx="20" cy="78" r="6"/><circle cx="80" cy="78" r="6"/>
+          </g>
+        </svg>
+      </div>
+      <div class="card__sizes">
+        <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><g class="mark--fill"><circle cx="20" cy="24" r="6"/><circle cx="80" cy="24" r="6"/><circle cx="20" cy="42" r="6"/><circle cx="36" cy="40" r="6"/><circle cx="64" cy="40" r="6"/><circle cx="80" cy="42" r="6"/><circle cx="20" cy="60" r="6"/><circle cx="50" cy="56" r="6"/><circle cx="80" cy="60" r="6"/><circle cx="20" cy="78" r="6"/><circle cx="80" cy="78" r="6"/></g></svg><figcaption>32</figcaption></figure>
+        <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><g class="mark--fill"><circle cx="20" cy="24" r="6"/><circle cx="80" cy="24" r="6"/><circle cx="20" cy="42" r="6"/><circle cx="36" cy="40" r="6"/><circle cx="64" cy="40" r="6"/><circle cx="80" cy="42" r="6"/><circle cx="20" cy="60" r="6"/><circle cx="50" cy="56" r="6"/><circle cx="80" cy="60" r="6"/><circle cx="20" cy="78" r="6"/><circle cx="80" cy="78" r="6"/></g></svg><figcaption>16</figcaption></figure>
+      </div>
+      <div>
+        <div class="card__name">Matrix</div>
+        <p class="card__note">Departure-board dots. Warm, a little nostalgic, and it animates beautifully — dots can settle into place on load.</p>
+      </div>
+    </article>
+
+    <!-- 7 — FOLD -->
+    <article class="card">
+      <div class="card__id"><b>07</b><span>Fold</span></div>
+      <div class="card__big">
+        <svg viewBox="0 0 100 100" aria-label="M as a folded ribbon">
+          <path class="mark--fill" d="M12 84 V22 L34 22 L50 48 L66 22 L88 22 V84 L70 84 V46 L54 72 L46 72 L30 46 V84 Z"/>
+        </svg>
+      </div>
+      <div class="card__sizes">
+        <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark--fill" d="M12 84 V22 L34 22 L50 48 L66 22 L88 22 V84 L70 84 V46 L54 72 L46 72 L30 46 V84 Z"/></svg><figcaption>32</figcaption></figure>
+        <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark--fill" d="M12 84 V22 L34 22 L50 48 L66 22 L88 22 V84 L70 84 V46 L54 72 L46 72 L30 46 V84 Z"/></svg><figcaption>16</figcaption></figure>
+      </div>
+      <div>
+        <div class="card__name">Fold</div>
+        <p class="card__note">Solid, letterpress-weight. The only one with real mass — holds up small and looks deliberate on a dark ground.</p>
+      </div>
+    </article>
+
+    <!-- 8 — BRACKET -->
+    <article class="card">
+      <div class="card__id"><b>08</b><span>Bracket</span></div>
+      <div class="card__big">
+        <svg viewBox="0 0 100 100" aria-label="M held between two brackets">
+          <path class="mark" d="M30 18 H16 V82 H30" stroke-width="8"/>
+          <path class="mark" d="M70 18 H84 V82 H70" stroke-width="8"/>
+          <path class="mark" d="M38 68 V36 L50 50 L62 36 V68" stroke-width="8"/>
+        </svg>
+      </div>
+      <div class="card__sizes">
+        <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M30 18 H16 V82 H30"/><path class="mark" d="M70 18 H84 V82 H70"/><path class="mark" d="M38 68 V36 L50 50 L62 36 V68"/></svg><figcaption>32</figcaption></figure>
+        <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mark" d="M30 18 H16 V82 H30"/><path class="mark" d="M70 18 H84 V82 H70"/><path class="mark" d="M38 68 V36 L50 50 L62 36 V68"/></svg><figcaption>16</figcaption></figure>
+      </div>
+      <div>
+        <div class="card__name">Bracket</div>
+        <p class="card__note">Contained between brackets. The most literally "developer" of the set, which is either the point or the problem.</p>
+      </div>
+    </article>
+
+  </div>
+
+  <p class="footnote">
+    <strong>The 16px column is the real test.</strong> A mark that survives there works as a favicon,
+    which is where a personal site's logo actually lives most of the time. 01, 04, 07 hold up best;
+    02 and 06 lose detail; 08 gets crowded.
+    <br><br>
+    <strong>Keeping 👨‍💻 is still an option.</strong> These aren't a replacement decision — the emoji
+    could stay as the favicon while one of these becomes the site's own mark.
+  </p>
+</div>
+
+<script>
+(function(){
+  var themeBtns = document.querySelectorAll('[data-theme-set]');
+  themeBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      document.documentElement.setAttribute('data-theme', b.getAttribute('data-theme-set'));
+      themeBtns.forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  });
+  var colBtns = document.querySelectorAll('[data-col]');
+  var grid = document.getElementById('grid');
+  colBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      grid.classList.toggle('onacc', b.getAttribute('data-col') === 'acc');
+      colBtns.forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  });
+  document.documentElement.setAttribute('data-theme','light');
+})();
+</script>

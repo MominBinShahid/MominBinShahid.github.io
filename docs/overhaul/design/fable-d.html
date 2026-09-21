@@ -1,0 +1,900 @@
+<title>Code &amp; Consciousness</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&amp;display=swap">
+
+<style>
+/* ============================================================
+   CODE & CONSCIOUSNESS
+   Two registers, both his: the serif is the person thinking,
+   the mono is the machine's record. Warm for the human voice,
+   cool for the instrument. Nothing cosmic; a study, not a shrine.
+   ============================================================ */
+
+#cc-root {
+  /* ---- dark: the primary mode. Iron-gall slate, not near-black ---- */
+  --bg:        #12171e;
+  --bg-panel:  #171e27;
+  --bg-inset:  #0e1319;
+  --line:      #242e3a;
+  --line-soft: #1c2530;
+  --ink:       #d4dae1;
+  --ink-mute:  #8b95a3;
+  --ink-faint: #5d6875;
+  --warm:      #c9a262;   /* burnished amber — the human voice */
+  --warm-hi:   #dcbb82;
+  --cool:      #84aecb;   /* steel — the machine voice */
+  --cool-hi:   #a3c6dd;
+  --focus:     #dcbb82;
+  --code-bg:   #0e1319;
+  --code-line: #1e2833;
+  --shadow: 0 1px 0 rgba(0,0,0,.35);
+  --tab-bg: rgba(18,23,30,.88);
+}
+#cc-root[data-mode="light"] {
+  /* ---- light: cool paper-grey, never cream. The terminal keeps
+         its own dark ground — the machine does not change rooms. ---- */
+  --bg:        #f2f3f4;
+  --bg-panel:  #fafbfb;
+  --bg-inset:  #e9ebed;
+  --line:      #d6dade;
+  --line-soft: #e2e5e8;
+  --ink:       #232932;
+  --ink-mute:  #5b6572;
+  --ink-faint: #8b95a1;
+  --warm:      #8d672c;
+  --warm-hi:   #6f4f1d;
+  --cool:      #35648c;
+  --cool-hi:   #24506f;
+  --focus:     #35648c;
+  --code-bg:   #12171e;   /* deliberately dark in light mode */
+  --code-line: #1e2833;
+  --shadow: 0 1px 0 rgba(35,41,50,.06);
+  --tab-bg: rgba(242,243,244,.9);
+}
+
+#cc-root {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  font-size: 1.075rem;
+  line-height: 1.62;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+#cc-root * { box-sizing: border-box; margin: 0; padding: 0; }
+#cc-root ::selection { background: var(--warm); color: var(--bg); }
+
+#cc-root .mono,
+#cc-root code, #cc-root pre, #cc-root kbd {
+  font-family: 'IBM Plex Mono', 'SF Mono', Menlo, Consolas, monospace;
+}
+
+#cc-root a { color: inherit; }
+#cc-root :is(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------------- top bar: tabs + mode ---------------- */
+.cc-topbar {
+  position: sticky; top: 0; z-index: 60;
+  background: var(--tab-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.cc-topbar-in {
+  max-width: 1180px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: stretch; gap: 4px; min-height: 52px;
+}
+.cc-brand {
+  display: flex; align-items: center;
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-faint); margin-right: 20px; white-space: nowrap;
+}
+.cc-tabs { display: flex; align-items: stretch; gap: 2px; }
+.cc-tab {
+  appearance: none; border: 0; background: none; cursor: pointer;
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .78rem; letter-spacing: .08em;
+  color: var(--ink-mute);
+  padding: 0 14px; position: relative;
+}
+.cc-tab .tn { color: var(--ink-faint); margin-right: .5em; }
+.cc-tab::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px;
+  height: 2px; background: transparent;
+}
+.cc-tab:hover { color: var(--ink); }
+.cc-tab[aria-selected="true"] { color: var(--ink); }
+.cc-tab[aria-selected="true"]::after { background: var(--warm); }
+.cc-mode {
+  margin-left: auto; align-self: center;
+  appearance: none; cursor: pointer;
+  background: none; border: 1px solid var(--line);
+  color: var(--ink-mute);
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .72rem; letter-spacing: .1em;
+  padding: 6px 12px; border-radius: 3px;
+}
+.cc-mode:hover { color: var(--ink); border-color: var(--ink-faint); }
+
+/* ---------------- shell: rail + content ---------------- */
+.cc-shell {
+  max-width: 1180px; margin: 0 auto; padding: 48px 24px 96px;
+  display: grid; grid-template-columns: 268px minmax(0, 1fr); gap: 60px;
+  align-items: start;
+}
+.cc-rail { position: sticky; top: 84px; }
+
+.cc-mark {
+  border: 1px solid var(--line); background: var(--bg-panel);
+  padding: 26px 20px 0; box-shadow: var(--shadow);
+}
+.cc-mark-mono {
+  font-size: 3.4rem; font-weight: 300; line-height: 1;
+  letter-spacing: .02em; color: var(--ink);
+}
+.cc-mark-mono i { font-style: italic; color: var(--warm); }
+.cc-trace { display: block; width: 100%; height: 44px; margin-top: 18px; }
+
+.cc-rail h2.name {
+  font-size: 1.5rem; font-weight: 500; line-height: 1.2;
+  margin-top: 22px; letter-spacing: -.01em;
+}
+.cc-rail .role {
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--cool); margin-top: 8px;
+}
+.cc-badges { list-style: none; margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+.cc-badges li {
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .68rem; letter-spacing: .05em;
+  border: 1px solid var(--line); color: var(--ink-mute);
+  padding: 4px 8px; border-radius: 3px; white-space: nowrap;
+}
+.cc-badges li.lead { color: var(--warm); border-color: var(--warm); border-style: solid; opacity: .95; }
+
+.cc-social { list-style: none; margin-top: 26px; border-top: 1px solid var(--line-soft); }
+.cc-social li { border-bottom: 1px solid var(--line-soft); }
+.cc-social a {
+  display: flex; justify-content: space-between; align-items: baseline;
+  text-decoration: none; padding: 9px 2px;
+  font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .78rem;
+  color: var(--ink-mute);
+}
+.cc-social a .arrow { color: var(--ink-faint); }
+.cc-social a:hover { color: var(--ink); }
+.cc-social a:hover .arrow { color: var(--warm); }
+
+.cc-contact { margin-top: 24px; }
+.cc-contact .lbl {
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .66rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+/* scraper-proof address: the visible text exists only in CSS content,
+   the href is assembled on click. Nothing for a crawler to lift. */
+a.cc-mail {
+  display: inline-block; margin-top: 6px; text-decoration: none;
+  font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .82rem;
+  color: var(--ink); border-bottom: 1px dotted var(--ink-faint);
+  padding-bottom: 1px;
+}
+a.cc-mail::after { content: attr(data-u) "\0040" attr(data-d); }
+a.cc-mail:hover { color: var(--warm-hi); border-bottom-color: var(--warm); }
+
+.cc-cv {
+  display: inline-block; margin-top: 20px; text-decoration: none;
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .76rem; letter-spacing: .1em;
+  color: var(--bg); background: var(--ink);
+  padding: 10px 18px; border-radius: 3px;
+}
+.cc-cv:hover { background: var(--warm); }
+
+/* ---------------- pages ---------------- */
+.cc-page { display: none; }
+.cc-page.on { display: block; }
+
+.kicker {
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink-faint);
+  display: flex; align-items: center; gap: 12px;
+}
+.kicker::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+.kicker .kn { color: var(--warm); }
+
+/* ---- commonplace epigraph ---- */
+.cc-commonplace { margin-bottom: 60px; }
+.cc-commonplace .q-body {
+  border-left: 2px solid var(--warm);
+  padding: 4px 0 4px 22px; margin-top: 18px;
+}
+.cc-commonplace blockquote p {
+  font-size: 1.45rem; line-height: 1.42; font-weight: 300; font-style: italic;
+  letter-spacing: .002em; color: var(--ink);
+  transition: opacity .35s ease;
+}
+.cc-commonplace .q-attr {
+  margin-top: 12px;
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .74rem; letter-spacing: .06em; color: var(--ink-mute);
+}
+.cc-commonplace .q-again {
+  appearance: none; background: none; border: 0; cursor: pointer;
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .7rem; letter-spacing: .1em;
+  color: var(--ink-faint); margin-top: 14px; padding: 2px 0;
+}
+.cc-commonplace .q-again:hover { color: var(--warm-hi); }
+
+/* ---- opening line ---- */
+.cc-open {
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  font-weight: 300; line-height: 1.22; letter-spacing: -.012em;
+  margin: 26px 0 0;
+}
+.cc-open em { font-style: italic; color: var(--warm-hi); font-weight: 400; }
+
+/* ---- annotated prose: text + margin pulls ---- */
+.annotated { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 44px; margin-top: 34px; }
+.annotated .para { max-width: 62ch; margin-bottom: 1.5em; }
+.annotated .para strong { font-weight: 600; color: var(--ink); }
+.annotated aside.pull {
+  border-left: 1px solid var(--line);
+  padding-left: 18px; margin: 0 0 1.6em; max-width: 34ch;
+  font-style: italic; font-weight: 300; font-size: 1.05rem; line-height: 1.5;
+  color: var(--warm);
+}
+.annotated aside.pull .src { display: block; margin-top: 6px; font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .64rem; font-style: normal; letter-spacing: .12em; color: var(--ink-faint); text-transform: uppercase; }
+@media (min-width: 1100px) {
+  .annotated { grid-template-columns: minmax(0, 1fr) 210px; }
+  .annotated .para { grid-column: 1; }
+  .annotated aside.pull { grid-column: 2; align-self: start; margin-bottom: 0; }
+}
+
+.cc-h2 {
+  font-size: 1.45rem; font-weight: 500; letter-spacing: -.01em;
+  margin: 8px 0 16px;
+}
+.cc-section { margin-top: 68px; }
+
+/* ---- the ledger (former tiles + stack) ---- */
+.ledger { border-top: 1px solid var(--line); margin-top: 22px; }
+.ledger-row {
+  display: grid; grid-template-columns: 200px minmax(0,1fr);
+  gap: 20px; padding: 13px 2px;
+  border-bottom: 1px solid var(--line-soft);
+  align-items: baseline;
+}
+.ledger-row dt {
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--cool);
+}
+.ledger-row dd { font-size: 1rem; color: var(--ink); }
+.ledger-row dd .sub { color: var(--ink-mute); }
+.ledger-wrap { overflow-x: auto; }
+
+/* ---- code & consciousness centerpiece ---- */
+.cc-conscious {
+  margin-top: 76px; border-top: 1px solid var(--line);
+  padding-top: 40px;
+}
+.cc-conscious .big {
+  font-size: clamp(1.5rem, 2.9vw, 2.15rem);
+  font-weight: 300; font-style: italic; line-height: 1.35;
+  max-width: 30em; margin-top: 24px;
+}
+.cc-conscious .big strong { font-weight: 500; font-style: italic; color: var(--warm-hi); }
+.cc-conscious .after { max-width: 62ch; margin-top: 26px; color: var(--ink-mute); }
+.cc-conscious .after a { color: var(--ink); text-decoration-color: var(--warm); }
+
+/* ---- footer ---- */
+.cc-foot {
+  margin-top: 90px; border-top: 1px solid var(--line-soft); padding-top: 18px;
+  display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between;
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .68rem; letter-spacing: .08em; color: var(--ink-faint);
+}
+
+/* ---------------- writing index ---------------- */
+.toc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 24px; }
+.toc-head h1 { font-size: clamp(2rem, 4vw, 2.7rem); font-weight: 300; letter-spacing: -.015em; }
+.toc-meta { font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .72rem; color: var(--ink-faint); letter-spacing: .08em; }
+.toc { list-style: none; margin-top: 34px; border-top: 1px solid var(--line); }
+.toc li { border-bottom: 1px solid var(--line-soft); }
+.toc a.entry {
+  display: grid; text-decoration: none;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  gap: 6px 20px; padding: 22px 4px; align-items: baseline;
+}
+.toc .no {
+  font-family: 'IBM Plex Mono', Menlo, monospace;
+  font-size: .74rem; color: var(--ink-faint);
+}
+.toc .t { font-size: 1.35rem; font-weight: 400; line-height: 1.3; letter-spacing: -.008em; }
+.toc a.entry:hover .t { color: var(--warm-hi); }
+.toc .d {
+  grid-column: 2; font-size: .98rem; color: var(--ink-mute); max-width: 58ch;
+  font-weight: 300;
+}
+.toc .m {
+  grid-column: 3; grid-row: 1 / span 2; text-align: right;
+  font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .7rem;
+  color: var(--ink-faint); letter-spacing: .06em; line-height: 2;
+  white-space: nowrap;
+}
+.tagdot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-left: 8px; vertical-align: baseline; }
+@media (max-width: 700px) {
+  .toc a.entry { grid-template-columns: minmax(0,1fr); }
+  .toc .no { display: none; }
+  .toc .d, .toc .m { grid-column: 1; grid-row: auto; text-align: left; }
+}
+
+/* ---------------- post page ---------------- */
+.crumb {
+  font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .72rem;
+  letter-spacing: .08em; color: var(--ink-faint);
+}
+.crumb button {
+  appearance: none; background: none; border: 0; cursor: pointer;
+  font: inherit; color: var(--cool); padding: 0;
+}
+.crumb button:hover { color: var(--cool-hi); text-decoration: underline; }
+.post-title {
+  font-size: clamp(2rem, 4.4vw, 3rem); font-weight: 300;
+  line-height: 1.14; letter-spacing: -.018em; margin-top: 22px; max-width: 18em;
+}
+.post-deck {
+  margin-top: 18px; max-width: 56ch;
+  font-size: 1.2rem; font-weight: 300; font-style: italic; line-height: 1.5;
+  color: var(--ink-mute);
+}
+.post-meta {
+  margin-top: 20px; display: flex; flex-wrap: wrap; gap: 6px 18px;
+  font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .72rem;
+  letter-spacing: .08em; color: var(--ink-faint);
+}
+.post-banner {
+  margin-top: 34px; border: 1px solid var(--line); background: var(--bg-panel);
+  padding: 18px 16px 10px;
+}
+.post-banner canvas { display: block; width: 100%; height: 110px; }
+.post-banner figcaption {
+  padding: 8px 2px 6px;
+  font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .66rem;
+  letter-spacing: .1em; color: var(--ink-faint); text-transform: uppercase;
+}
+.article { margin-top: 44px; max-width: 66ch; }
+.article p { margin-bottom: 1.45em; }
+.article h2 {
+  font-size: 1.4rem; font-weight: 500; letter-spacing: -.01em;
+  margin: 2.2em 0 .8em;
+}
+.article ul, .article ol { margin: 0 0 1.45em 1.35em; }
+.article li { margin-bottom: .5em; }
+.article li::marker { color: var(--warm); font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .85em; }
+.article strong { font-weight: 600; }
+.article blockquote {
+  border-left: 2px solid var(--warm); padding: 4px 0 4px 22px;
+  margin: 2em 0; font-style: italic; font-weight: 300; font-size: 1.22rem;
+  line-height: 1.45;
+}
+.article blockquote footer {
+  margin-top: 10px; font-style: normal;
+  font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .72rem;
+  color: var(--ink-mute); letter-spacing: .06em;
+}
+.article code.inline {
+  background: var(--bg-inset); border: 1px solid var(--line-soft);
+  border-radius: 3px; padding: .1em .35em; font-size: .84em; color: var(--cool-hi);
+}
+#cc-root[data-mode="light"] .article code.inline { color: var(--cool); background: var(--bg-inset); }
+
+/* the terminal window — dark in both modes, on purpose */
+.codeblock { margin: 2em 0; border-radius: 5px; overflow: hidden; border: 1px solid var(--code-line); }
+.codeblock .cb-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--code-bg); border-bottom: 1px solid var(--code-line);
+  padding: 8px 14px;
+  font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .66rem;
+  letter-spacing: .14em; text-transform: uppercase; color: #5d6875;
+}
+.codeblock pre {
+  background: var(--code-bg); overflow-x: auto;
+  padding: 16px 18px; font-size: .82rem; line-height: 1.65;
+  color: #c7cfd8;
+}
+.codeblock .k { color: #84aecb; }                 /* keyword — machine cool */
+.codeblock .s { color: #c9a262; }                 /* string — human warm   */
+.codeblock .c { color: #5d6875; font-style: italic; } /* comment — the doubt */
+.codeblock .f { color: #dde4ea; font-weight: 500; }   /* callables */
+.codeblock .n { color: #dcbb82; }                 /* numbers */
+
+.post-end {
+  margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--line-soft);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  font-family: 'IBM Plex Mono', Menlo, monospace; font-size: .74rem;
+  color: var(--ink-faint); letter-spacing: .06em;
+}
+.post-end button {
+  appearance: none; background: none; border: 0; cursor: pointer;
+  font: inherit; color: var(--cool); padding: 0;
+}
+.post-end button:hover { color: var(--cool-hi); text-decoration: underline; }
+
+/* ---------------- responsive shell ---------------- */
+@media (max-width: 960px) {
+  .cc-shell { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 32px; }
+  .cc-rail { position: static; display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 8px 26px; align-items: start; }
+  .cc-mark { grid-row: 1 / span 4; padding: 18px 14px 0; }
+  .cc-mark-mono { font-size: 2.2rem; }
+  .cc-rail h2.name { margin-top: 0; }
+  .cc-social { margin-top: 14px; }
+  .cc-social a { padding: 7px 2px; }
+  .cc-contact { margin-top: 12px; }
+}
+@media (max-width: 560px) {
+  .cc-rail { grid-template-columns: minmax(0,1fr); }
+  .cc-mark { grid-row: auto; max-width: 180px; }
+  .cc-brand { display: none; }
+  .ledger-row { grid-template-columns: minmax(0,1fr); gap: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #cc-root * { transition: none !important; animation: none !important; }
+}
+</style>
+
+<div id="cc-root" data-mode="dark">
+
+  <!-- ================= top bar ================= -->
+  <header class="cc-topbar">
+    <div class="cc-topbar-in">
+      <span class="cc-brand">Momin Bin Shahid</span>
+      <nav class="cc-tabs" role="tablist" aria-label="Pages">
+        <button class="cc-tab" id="tab-home" role="tab" aria-selected="true" aria-controls="page-home"><span class="tn">01</span>Home</button>
+        <button class="cc-tab" id="tab-blog" role="tab" aria-selected="false" aria-controls="page-blog"><span class="tn">02</span>Writing</button>
+        <button class="cc-tab" id="tab-post" role="tab" aria-selected="false" aria-controls="page-post"><span class="tn">03</span>Post</button>
+      </nav>
+      <button class="cc-mode" id="modeToggle" aria-pressed="false">mode: dark</button>
+    </div>
+  </header>
+
+  <div class="cc-shell">
+
+    <!-- ================= profile rail ================= -->
+    <aside class="cc-rail" aria-label="Profile">
+      <div class="cc-mark" aria-hidden="true">
+        <div class="cc-mark-mono">M<i>B</i>S</div>
+        <canvas class="cc-trace" id="railTrace" width="240" height="44"></canvas>
+      </div>
+      <h2 class="name">Momin Bin Shahid</h2>
+      <p class="role">Full-Stack Engineer &amp; AI Engineer</p>
+      <ul class="cc-badges">
+        <li class="lead">Lead Engineer &middot; Sastaticket.pk</li>
+        <li>Karachi, Pakistan</li>
+        <li>8 yrs shipping</li>
+        <li>BSc Computer Science</li>
+      </ul>
+      <ul class="cc-social">
+        <li><a href="https://github.com/MominBinShahid" rel="nofollow">GitHub <span class="arrow">&#8599;</span></a></li>
+        <li><a href="https://linkedin.com/in/mominbinshahid" rel="nofollow">LinkedIn <span class="arrow">&#8599;</span></a></li>
+        <li><a href="https://stackoverflow.com/users/9137804/MominBinShahid" rel="nofollow">Stack Overflow <span class="arrow">&#8599;</span></a></li>
+        <li><a href="https://twitter.com/MominBinShahid" rel="nofollow">X / Twitter <span class="arrow">&#8599;</span></a></li>
+      </ul>
+      <div class="cc-contact">
+        <span class="lbl">Write to me</span><br>
+        <a class="cc-mail" id="ccMail" href="#" data-u="MominBinShahid" data-d="gmail.com" aria-label="Email Momin Bin Shahid"></a>
+      </div>
+      <a class="cc-cv" href="#" aria-label="Download CV as PDF">Download CV &darr;</a>
+    </aside>
+
+    <!-- ================= main column ================= -->
+    <main>
+
+      <!-- ========== PAGE 1 · HOME ========== -->
+      <section class="cc-page on" id="page-home" role="tabpanel" aria-labelledby="tab-home" tabindex="-1">
+
+        <!-- the commonplace book: the site opens on a kept passage -->
+        <div class="cc-commonplace">
+          <p class="kicker"><span class="kn">&sect;</span> Commonplace &middot; passages kept while reading</p>
+          <div class="q-body">
+            <blockquote>
+              <p id="qText">What is a number, that a man may know it, and a man, that he may know a number?</p>
+            </blockquote>
+            <p class="q-attr" id="qAttr">&mdash; Warren S. McCulloch</p>
+          </div>
+          <button class="q-again" id="qAgain">[ draw another ]</button>
+        </div>
+
+        <p class="kicker"><span class="kn">01</span> About me</p>
+        <h1 class="cc-open">I love building things that live on the web and now, <em>things that think</em>.</h1>
+
+        <div class="annotated">
+          <p class="para">My name is <strong>Momin Bin Shahid</strong>, and I am a <strong>Full-Stack Engineer &amp; AI Engineer</strong> with a deep enthusiasm for software engineering and cutting-edge technologies. With <strong>8 years</strong> of shipping production software and a Bachelor&rsquo;s Degree in Computer Science, I&rsquo;ve spent my career architecting web applications from scratch and recently expanded into the fascinating world of <strong>AI Agents</strong> and <strong>LLMs</strong>. Currently, I&rsquo;m a <strong>Lead Engineer</strong> at <strong>Sastaticket.pk</strong> where I build AI-powered systems, work directly with stakeholders to understand their needs, and lead a team of awesome engineers.</p>
+          <aside class="pull">&ldquo;great software is about understanding people, not just writing code&rdquo;<span class="src">from the paragraph below</span></aside>
+
+          <p class="para">I&rsquo;ve had the privilege of building across <strong>diverse domains</strong> including Internet Privacy &amp; Security (at the unicorn <strong>Securiti.ai</strong>), Metadata Platforms, ERP, HRMS, EdTech, Travel Tech, and now AI/Agentic Systems &mdash; serving users across the <strong>USA</strong>, <strong>Europe</strong>, <strong>Middle East</strong>, and <strong>South Asia</strong>. I&rsquo;ve shipped code in both service-based consultancies (where you learn to adapt fast and interact with clients daily) and product-based companies (where you own features end-to-end). Both have taught me that great software is about understanding people, not just writing code.</p>
+
+          <p class="para">These days, I&rsquo;m obsessed with building <strong>AI Agents</strong> that actually solve real business problems. For example, I built a QA agent that reviews <strong>hundreds of customer support calls daily</strong> with remarkable accuracy, accomplishing in a single day what would take a team of humans several days, and with a consistency humans simply can&rsquo;t match. There&rsquo;s something magical about teaching machines to understand context and take action.</p>
+          <aside class="pull">&ldquo;a consistency humans simply can&rsquo;t match&rdquo;<span class="src">on the QA agent</span></aside>
+
+          <p class="para"><strong>What drives me?</strong> The thrill of solving gnarly problems, the satisfaction of <strong>mentoring engineers</strong> and watching them grow, and the never-ending rabbit hole of learning new technologies. I&rsquo;m that person who reads documentation for fun (well, sometimes&hellip; now I let AI summarize it for me). I believe in leaving codebases better than I found them &mdash; call it the <strong>Boy Scout Rule</strong> of programming.</p>
+          <aside class="pull">&ldquo;I&rsquo;m that person who reads documentation for fun&rdquo;<span class="src">honestly</span></aside>
+
+          <p class="para">While most of my professional work has been closed-source, I&rsquo;m increasingly contributing to and learning from the <strong>open-source community</strong>. The web taught me everything I know, and I want to give back.</p>
+        </div>
+
+        <!-- the ledger: the machine's record of the person -->
+        <section class="cc-section">
+          <p class="kicker"><span class="kn">02</span> The ledger</p>
+          <div class="ledger-wrap">
+            <dl class="ledger">
+              <div class="ledger-row"><dt>8 years building</dt><dd>Full-Stack to AI Agents</dd></div>
+              <div class="ledger-row"><dt>JavaScript + Python</dt><dd>Full-Stack &amp; AI Ecosystems</dd></div>
+              <div class="ledger-row"><dt>Lead Engineer</dt><dd>Mentoring Engineers Daily</dd></div>
+              <div class="ledger-row"><dt>Learn &amp; solve</dt><dd>The Never-Ending Loop</dd></div>
+              <div class="ledger-row"><dt>Customer focused</dt><dd>Building What Users Need</dd></div>
+              <div class="ledger-row"><dt>Frontend</dt><dd>React.js &middot; Vue.js &middot; Angular &middot; <span class="sub">MERN / MEVN / MEAN / JAMstack</span></dd></div>
+              <div class="ledger-row"><dt>Backend</dt><dd>Node.js &middot; Python &middot; Django</dd></div>
+              <div class="ledger-row"><dt>AI</dt><dd>LangChain &middot; Google GenAI &middot; OpenAI &middot; Anthropic Claude &middot; <span class="sub">Agents &amp; LLMs</span></dd></div>
+              <div class="ledger-row"><dt>Infra</dt><dd>Docker &middot; Kubernetes &middot; AWS &middot; GCP &middot; Azure &middot; <span class="sub">on-prem &amp; cloud, CI/CD</span></dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <!-- the centerpiece: tile six, promoted to the organising idea -->
+        <section class="cc-conscious">
+          <p class="kicker"><span class="kn">03</span> Forever curious &middot; Code &amp; Consciousness</p>
+          <p class="big">Beyond code, I&rsquo;m equally fascinated by <strong>philosophy</strong> and esoteric discussions about the nature of reality, consciousness, and what it means to be alive in this strange universe.</p>
+          <p class="after">Want to build something together? Have an interesting <strong>AI problem</strong>? Or just want to geek out about the latest in LLMs and web tech? I&rsquo;m always up for a good conversation, whether it&rsquo;s about software architecture or the mysteries of existence. <a href="#" id="ccLetsConnect">Let&rsquo;s connect.</a></p>
+        </section>
+
+        <footer class="cc-foot">
+          <span>&copy; <span id="ccYear">2026</span> Momin Bin Shahid &middot; Karachi</span>
+          <span>there is a note for you in the console</span>
+        </footer>
+      </section>
+
+      <!-- ========== PAGE 2 · WRITING ========== -->
+      <section class="cc-page" id="page-blog" role="tabpanel" aria-labelledby="tab-blog" tabindex="-1">
+        <p class="kicker"><span class="kn">02</span> Writing</p>
+        <div class="toc-head">
+          <h1>Notes, kept in the open</h1>
+          <span class="toc-meta">6 entries &middot; 2021&ndash;2026</span>
+        </div>
+
+        <ol class="toc">
+          <li>
+            <a class="entry" href="#" data-open-post="true">
+              <span class="no">06</span>
+              <span class="t">Teaching an agent to listen to 400 support calls a day</span>
+              <span class="d">What building a QA agent taught me about rubrics, timeouts, and what &ldquo;listening&rdquo; even means.</span>
+              <span class="m">Aug 2026 &middot; 9 min<span class="tagdot" style="background:#3572a5;" title="python"></span></span>
+            </a>
+          </li>
+          <li>
+            <a class="entry" href="#">
+              <span class="no">05</span>
+              <span class="t">Your pull request is deploying to production</span>
+              <span class="d">Notes on CI/CD, blast radius, and practising the Boy Scout Rule under a deadline.</span>
+              <span class="m">Nov 2025 &middot; 7 min<span class="tagdot" style="background:#90c53f;" title="Node.js"></span></span>
+            </a>
+          </li>
+          <li>
+            <a class="entry" href="#">
+              <span class="no">04</span>
+              <span class="t">MealUnits &mdash; an insulin calculator for my brother</span>
+              <span class="d">Offline, private, no accounts. What changes when the software is for exactly one person.</span>
+              <span class="m">May 2024 &middot; 6 min<span class="tagdot" style="background:#61dbfa;" title="reactjs"></span></span>
+            </a>
+          </li>
+          <li>
+            <a class="entry" href="#">
+              <span class="no">03</span>
+              <span class="t">What IndexedDB taught me about the same-origin policy</span>
+              <span class="d">A storage bug that turned into a tour of the browser&rsquo;s oldest trust boundary.</span>
+              <span class="m">Mar 2023 &middot; 8 min<span class="tagdot" style="background:#f0da50;" title="javascript"></span></span>
+            </a>
+          </li>
+          <li>
+            <a class="entry" href="#">
+              <span class="no">02</span>
+              <span class="t">The service worker that wouldn&rsquo;t die</span>
+              <span class="d">Debugging a cache that outlived three deploys of the site it was supposed to serve.</span>
+              <span class="m">Jun 2022 &middot; 5 min<span class="tagdot" style="background:#f0da50;" title="javascript"></span></span>
+            </a>
+          </li>
+          <li>
+            <a class="entry" href="#">
+              <span class="no">01</span>
+              <span class="t">Getting Gatsby 2 to build on Apple Silicon</span>
+              <span class="d">Native arm64 or bust: a build log from the sharp-edged early days of the M1.</span>
+              <span class="m">Sep 2021 &middot; 6 min<span class="tagdot" style="background:#6f309f;" title="Gatsby.js"></span></span>
+            </a>
+          </li>
+        </ol>
+
+        <footer class="cc-foot">
+          <span>&copy; <span class="yr">2026</span> Momin Bin Shahid &middot; Karachi</span>
+          <span>rss coming with the rebuild</span>
+        </footer>
+      </section>
+
+      <!-- ========== PAGE 3 · POST ========== -->
+      <section class="cc-page" id="page-post" role="tabpanel" aria-labelledby="tab-post" tabindex="-1">
+        <p class="crumb"><button type="button" data-back-to-blog="true">Writing</button> / teaching-an-agent-to-listen</p>
+        <h1 class="post-title">Teaching an agent to listen to 400 support calls a day</h1>
+        <p class="post-deck">Our QA team could sample a handful of the day&rsquo;s calls. The agent hears all of them. Notes on rubrics, timeouts, and what &ldquo;listening&rdquo; means.</p>
+        <div class="post-meta">
+          <span>Aug 2026</span><span>9 min read</span>
+          <span>python<span class="tagdot" style="background:#3572a5;"></span></span>
+          <span>AI agents</span>
+        </div>
+
+        <figure class="post-banner">
+          <canvas id="bannerTrace" width="800" height="110" role="img" aria-label="A quantized audio timeline of one support call. Most bars are faint; a few, drawn in amber, mark the moments the agent flagged."></canvas>
+          <figcaption>fig. 1 &mdash; one call, quantized &middot; amber marks are flagged moments</figcaption>
+        </figure>
+
+        <article class="article">
+          <p>A travel company&rsquo;s support line takes hundreds of calls a day. Quality assurance, done by people, means sampling: a reviewer picks a call, listens end to end, scores it against a checklist, writes it up. Forty minutes of audio takes about forty minutes to hear. On a good day a small team covers a sliver of what happened, and which sliver depends on who felt like clicking what.</p>
+          <p>So I built an agent to do the listening. It reviews hundreds of customer support calls daily, accomplishing in a single day what would take a team of humans several days &mdash; and with a consistency humans simply can&rsquo;t match. That last clause is the interesting one, and I&rsquo;ll come back to it.</p>
+
+          <h2>The pipeline</h2>
+          <p>The architecture is deliberately boring. Boring is what you want when the output can affect how someone&rsquo;s work is judged.</p>
+          <ol>
+            <li>Pull the day&rsquo;s call recordings and their ticket context from the helpdesk.</li>
+            <li>Transcribe the audio &mdash; bilingual, code-switching mid-sentence, on a phone line.</li>
+            <li>Evaluate the transcript against a written rubric, with the order history alongside it.</li>
+            <li>Emit a report a human can challenge: every score cites the line it heard.</li>
+          </ol>
+          <p>The shape of the review step, roughly:</p>
+
+          <div class="codeblock">
+            <div class="cb-bar"><span>review.py</span><span>python</span></div>
+            <pre><code><span class="c"># The rubric is the real product. The model is a commodity;</span>
+<span class="c"># an agreed definition of a good call is not.</span>
+<span class="k">RUBRIC</span> = [
+    <span class="s">"greeting_and_verification"</span>,
+    <span class="s">"issue_understood_correctly"</span>,
+    <span class="s">"policy_quoted_accurately"</span>,
+    <span class="s">"action_matches_promise"</span>,   <span class="c"># the one humans miss most</span>
+    <span class="s">"tone_under_pressure"</span>,
+]
+
+<span class="k">def</span> <span class="f">review</span>(call: Call) -&gt; Verdict:
+    transcript = <span class="f">transcribe</span>(call.audio, deadline=<span class="n">8</span> * MINUTES)
+    <span class="c"># An SDK timeout is a request, not a promise. The watchdog</span>
+    <span class="c"># kills and re-queues anything that stalls past the deadline.</span>
+    evaluation = <span class="f">judge</span>(
+        transcript,
+        rubric=RUBRIC,
+        context=<span class="f">order_history</span>(call.order_id),
+    )
+    <span class="k">return</span> <span class="f">Verdict</span>(
+        call=call.id,
+        scores=evaluation.scores,
+        evidence=evaluation.quotes,  <span class="c"># every score cites its line</span>
+    )</code></pre>
+          </div>
+
+          <p>Two of those comments were earned the hard way. The transcription SDK accepts a timeout parameter and, under certain failure modes, ignores it &mdash; a run would sit at <code class="inline">Transcribing call audio</code> forever while the queue backed up behind it. The fix wasn&rsquo;t clever: an external watchdog that treats any stall as a failure and re-queues the work. Trust boundaries apply to your own dependencies too.</p>
+
+          <h2>What the rubric taught me</h2>
+          <p>I expected the model to be the hard part. It wasn&rsquo;t. The hard part was the rubric &mdash; sitting with the QA team and turning &ldquo;we know a good call when we hear one&rdquo; into criteria precise enough that two readers, human or machine, reach the same verdict. Every ambiguity we left in the document came back as a dispute later.</p>
+          <ul>
+            <li><strong>Judgment is mostly definition.</strong> Once &ldquo;did the action match the promise&rdquo; was written down carefully, scoring it stopped being interesting. The disagreement had lived in the vagueness.</li>
+            <li><strong>Evidence beats scores.</strong> Nobody accepts a number from a machine. Everybody engages with a quoted sentence from their own call. Citations turned the report from a verdict into a conversation.</li>
+            <li><strong>Consistency is the actual superpower.</strong> The agent scores call number 380 with exactly the attention it gave call number 1. No human reviewer can say that, and no human should be embarrassed by it &mdash; boredom is not a character flaw, it&rsquo;s a property of consciousness that the agent simply doesn&rsquo;t have.</li>
+          </ul>
+
+          <h2>Does it listen?</h2>
+          <p>Here is the part I keep turning over. The agent processes every call and misses none. It never has a bad day, never brings its last argument into this one, never tunes out at minute thirty-four. By any operational definition, it is the best listener the team has ever had. And yet &ldquo;listening,&rdquo; as people use the word, seems to mean something more than lossless intake &mdash; something like attention that costs the attender something.</p>
+          <blockquote>
+            <p>The question of whether Machines Can Think&hellip; is about as relevant as the question of whether Submarines Can Swim.</p>
+            <footer>&mdash; Edsger W. Dijkstra, EWD898</footer>
+          </blockquote>
+          <p>Dijkstra&rsquo;s point cuts both ways. The submarine really does cross the ocean; the agent really does the QA. Whether that counts as swimming, or listening, is a question about our words, not about the machine&rsquo;s performance. As an engineer I can leave it there. As a person I can&rsquo;t quite, which is probably why the evidence citations exist: they are institutionalized doubt, the system admitting that its own understanding should be checked against the recording.</p>
+          <p>There&rsquo;s something magical about teaching machines to understand context and take action. I wrote that on my About page and I stand by it &mdash; with the footnote that &ldquo;understand&rdquo; is carrying a lot of weight in that sentence, and I intend to keep an eye on it.</p>
+        </article>
+
+        <div class="post-end">
+          <button type="button" data-back-to-blog="true">&larr; All writing</button>
+          <span>next: your pull request is deploying to production</span>
+        </div>
+
+        <footer class="cc-foot">
+          <span>&copy; <span class="yr">2026</span> Momin Bin Shahid &middot; Karachi</span>
+          <span>replies welcome by email</span>
+        </footer>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.getElementById('cc-root');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------------- tabs ---------------- */
+  var tabs = [
+    { tab: 'tab-home', page: 'page-home' },
+    { tab: 'tab-blog', page: 'page-blog' },
+    { tab: 'tab-post', page: 'page-post' }
+  ];
+  function show(idx) {
+    tabs.forEach(function (t, i) {
+      var tabEl = document.getElementById(t.tab);
+      var pageEl = document.getElementById(t.page);
+      tabEl.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+      pageEl.classList.toggle('on', i === idx);
+    });
+    window.scrollTo(0, 0);
+    if (typeof drawAll === 'function') { drawAll(); } /* redraw traces at the now-visible size */
+  }
+  tabs.forEach(function (t, i) {
+    document.getElementById(t.tab).addEventListener('click', function () { show(i); });
+  });
+  document.querySelector('.cc-tabs').addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') { return; }
+    var cur = tabs.findIndex(function (t) {
+      return document.getElementById(t.tab).getAttribute('aria-selected') === 'true';
+    });
+    var next = (cur + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
+    show(next);
+    document.getElementById(tabs[next].tab).focus();
+  });
+  document.querySelectorAll('[data-open-post]').forEach(function (el) {
+    el.addEventListener('click', function (e) { e.preventDefault(); show(2); });
+  });
+  document.querySelectorAll('[data-back-to-blog]').forEach(function (el) {
+    el.addEventListener('click', function () { show(1); });
+  });
+  var connect = document.getElementById('ccLetsConnect');
+  if (connect) {
+    connect.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.getElementById('ccMail').focus();
+    });
+  }
+
+  /* ---------------- mode toggle (independent of system theme) ---------------- */
+  var modeBtn = document.getElementById('modeToggle');
+  modeBtn.addEventListener('click', function () {
+    var dark = root.getAttribute('data-mode') === 'dark';
+    root.setAttribute('data-mode', dark ? 'light' : 'dark');
+    modeBtn.textContent = 'mode: ' + (dark ? 'light' : 'dark');
+    modeBtn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    drawAll();
+  });
+
+  /* ---------------- scraper-proof mail: href assembled only on click ---------------- */
+  var mail = document.getElementById('ccMail');
+  mail.addEventListener('click', function () {
+    mail.href = 'mailto:' + mail.getAttribute('data-u') + '@' + mail.getAttribute('data-d');
+  });
+
+  /* ---------------- commonplace book: baked pool, no network ---------------- */
+  var QUOTES = [
+    ['What is a number, that a man may know it, and a man, that he may know a number?', 'Warren S. McCulloch'],
+    ['The limits of my language mean the limits of my world.', 'Ludwig Wittgenstein'],
+    ['Attention is the rarest and purest form of generosity.', 'Simone Weil'],
+    ['We can only see a short distance ahead, but we can see plenty there that needs to be done.', 'Alan Turing'],
+    ['Beware of bugs in the above code; I have only proved it correct, not tried it.', 'Donald Knuth'],
+    ['The computer programmer is a creator of universes for which he alone is the lawgiver.', 'Joseph Weizenbaum'],
+    ['Programs must be written for people to read, and only incidentally for machines to execute.', 'Abelson & Sussman, SICP'],
+    ['Beyond the stars there are worlds yet more.', 'Allama Iqbal, tr.'],
+    ['A distributed system is one in which the failure of a computer you didn’t even know existed can render your own computer unusable.', 'Leslie Lamport']
+  ];
+  var qText = document.getElementById('qText');
+  var qAttr = document.getElementById('qAttr');
+  var qIdx = 0;
+  function setQuote(i) {
+    qIdx = i;
+    qText.textContent = QUOTES[i][0];
+    qAttr.innerHTML = '&mdash; ' + QUOTES[i][1];
+  }
+  function drawQuote() {
+    var i;
+    do { i = Math.floor(Math.random() * QUOTES.length); } while (i === qIdx && QUOTES.length > 1);
+    if (reduced) { setQuote(i); return; }
+    qText.style.opacity = '0';
+    setTimeout(function () { setQuote(i); qText.style.opacity = '1'; }, 300);
+  }
+  setQuote(Math.floor(Math.random() * QUOTES.length));
+  document.getElementById('qAgain').addEventListener('click', drawQuote);
+
+  /* ---------------- traces: a voice, quantized ----------------
+     The rail trace drifts slowly (the day's calls, still coming in).
+     The banner trace is a still: one call, with flagged moments. */
+  function css(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
+
+  function drawTrace(canvas, opts) {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (!canvas.dataset.bw) {          /* remember authored size: clientWidth is 0 while a tab is hidden */
+      canvas.dataset.bw = canvas.width;
+      canvas.dataset.bh = canvas.height;
+    }
+    var w = canvas.clientWidth || Number(canvas.dataset.bw);
+    var h = canvas.clientHeight || Number(canvas.dataset.bh);
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    var n = opts.bars;
+    var gap = w / n;
+    var mid = h / 2;
+    for (var i = 0; i < n; i++) {
+      var u = i / n;
+      var env = Math.sin(u * Math.PI);
+      var v = Math.abs(
+        Math.sin(i * 0.83 + opts.t) * 0.55 +
+        Math.sin(i * 0.37 + opts.t * 0.6) * 0.45
+      ) * env;
+      var bh = Math.max(1.5, v * (h * 0.82));
+      var flagged = opts.flags && opts.flags.indexOf(i) !== -1;
+      ctx.fillStyle = flagged ? css('--warm') : css('--cool');
+      ctx.globalAlpha = flagged ? 0.95 : (opts.alpha || 0.35);
+      ctx.fillRect(i * gap + gap * 0.22, mid - bh / 2, Math.max(1, gap * 0.42), bh);
+      if (flagged) {
+        ctx.fillRect(i * gap + gap * 0.22, h - 2.5, Math.max(1, gap * 0.42), 2.5);
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  var railCanvas = document.getElementById('railTrace');
+  var bannerCanvas = document.getElementById('bannerTrace');
+  var t0 = Math.random() * 40;
+
+  function drawAll() {
+    if (railCanvas) { drawTrace(railCanvas, { bars: 44, t: t0, alpha: 0.34 }); }
+    if (bannerCanvas) {
+      drawTrace(bannerCanvas, { bars: 96, t: 7.3, alpha: 0.3, flags: [11, 12, 37, 58, 59, 60, 83] });
+    }
+  }
+  drawAll();
+
+  if (!reduced && railCanvas) {
+    var last = 0;
+    function tick(ts) {
+      if (ts - last > 90) {           /* ~11fps: a drift, not an animation */
+        t0 += 0.045;
+        drawTrace(railCanvas, { bars: 44, t: t0, alpha: 0.34 });
+        last = ts;
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  window.addEventListener('resize', drawAll);
+
+  /* ---------------- year + the console note ---------------- */
+  var y = String(new Date().getFullYear());
+  document.getElementById('ccYear').textContent = y;
+  document.querySelectorAll('.yr').forEach(function (el) { el.textContent = y; });
+
+  try {
+    console.log(
+      '%cYou read source for fun too, then.%c\n' +
+      'Momin Bin Shahid — full-stack & AI engineer, Karachi.\n' +
+      'The interesting conversations are about software architecture\n' +
+      'or the mysteries of existence, and I’m up for either.\n' +
+      'github.com/MominBinShahid',
+      'font-style: italic; font-size: 14px;', 'font-size: 12px;'
+    );
+  } catch (e) { /* consoles differ; the note is optional */ }
+})();
+</script>

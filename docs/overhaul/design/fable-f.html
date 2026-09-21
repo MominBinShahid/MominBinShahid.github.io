@@ -1,0 +1,842 @@
+<title>Fihrist — فہرست</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&amp;family=Gulzar&amp;display=swap">
+<style>
+/* ——————————————————————— FIHRIST · فہرست — the index ——————————————————————— */
+body{margin:0;background:#EDEFE8}
+
+#fh{
+  --paper:#EDEFE8; --ink:#171B17; --ink2:#4E574F; --ink3:#7B857B;
+  --hair:#C9CEC0; --codebg:rgba(23,27,23,.055);
+  --acc-l:#0A7580; --acc-d:#5AC6CF; --accent:var(--acc-l);
+  --gut:4.8rem; --gap:1.25rem; --measure:42rem;
+  --pl:clamp(1.1rem,6vw,5.5rem);
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+  --mono:'Spline Sans Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --nasta:'Gulzar','Noto Nastaliq Urdu','Times New Roman',serif;
+  font-family:var(--serif); font-size:17px; line-height:1.58;
+  font-optical-sizing:auto; text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  color:var(--ink); background:var(--paper);
+  min-height:100vh; overflow-x:hidden; color-scheme:light;
+}
+#fh[data-mode="dark"]{
+  --paper:#111614; --ink:#D8DED2; --ink2:#9AA69B; --ink3:#6A756B;
+  --hair:#2A332C; --codebg:rgba(216,222,210,.055);
+  --accent:var(--acc-d); color-scheme:dark;
+}
+#fh *,#fh *::before,#fh *::after{box-sizing:border-box}
+#fh :focus{outline:none}
+#fh :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+#fh ::selection{background:var(--accent);color:var(--paper)}
+#fh a{color:var(--accent);text-underline-offset:.18em;text-decoration-thickness:1px}
+#fh a:hover{text-decoration-thickness:2px}
+#fh mark{background:none;color:inherit;border-bottom:2px solid var(--accent)}
+#fh button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+#fh [hidden]{display:none!important}
+#fh h1,#fh h2,#fh p{margin:0}
+
+/* —— mockup chrome (scaffolding, not the site) —— */
+.chrome{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;
+  padding:.5rem clamp(1rem,4vw,2.2rem);
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink2);background:var(--paper);border-bottom:1px dashed var(--hair)}
+.chrome .brand{color:var(--ink3)}
+.chrome .brand [lang="ur"]{font-family:var(--nasta);text-transform:none;letter-spacing:0;font-size:.9rem}
+.chrome .sp{flex:1}
+.tabs{display:flex;gap:.15rem}
+.tab{padding:.28rem .6rem;letter-spacing:inherit;text-transform:inherit;color:var(--ink3);border-bottom:2px solid transparent}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.cbtn{font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
+  padding:.28rem .45rem;color:var(--ink3);border:1px dashed transparent}
+.cbtn:hover{color:var(--ink);border-color:var(--hair)}
+.cbtn b{font-weight:500;color:var(--accent)}
+
+/* —— the page column: left-set, never centered —— */
+.page{max-width:calc(var(--pl) + var(--gut) + var(--gap) + var(--measure));
+  padding:0 clamp(1.1rem,4vw,3rem) 4.5rem var(--pl)}
+.view{display:none}
+.view.on{display:block}
+
+/* —— the shared row grid: one gutter axis for the whole site —— */
+.row{display:grid;grid-template-columns:var(--gut) minmax(0,1fr);column-gap:var(--gap);padding:.4rem 0;margin:0}
+.g{grid-column:1;font-family:var(--mono);font-size:.68rem;letter-spacing:.03em;text-align:right;
+  color:var(--ink3);line-height:calc(1rem * 1.58);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cb{grid-column:2;min-width:0}
+.wrap .cb{overflow-wrap:anywhere}
+.cb strong{font-weight:600}
+.tail{color:var(--ink3)}
+
+/* —— full-bleed rules, two deliberate weights —— */
+.bleed{position:relative}
+.bleed::before{content:"";position:absolute;top:0;left:calc(-1 * var(--pl));width:100vw;border-top:1px solid var(--hair)}
+.bleed.strong::before{border-top:2px solid var(--ink)}
+
+/* —— masthead —— */
+.mast{padding-top:2.9rem}
+.mast .row{padding:.1rem 0}
+.mark{width:1.1rem;height:1.1rem;color:var(--accent);justify-self:end;align-self:baseline;transform:translateY(.18em)}
+.mini .mark{width:.85rem;height:.85rem}
+.name{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;
+  font-size:1.62rem;font-weight:500;line-height:1.25;letter-spacing:-.008em}
+.mini .name{font-size:1.05rem}
+.sig{font-family:var(--nasta);font-size:1.02rem;font-weight:400;color:var(--ink2);line-height:2.2}
+.desig{color:var(--ink2);font-size:.95rem;text-wrap:pretty}
+.mast-close{height:2px;margin-top:1.15rem}
+.mini{padding-top:1.6rem}
+.crumb{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);text-decoration-color:var(--hair)}
+#fh a.crumb{color:var(--ink3)}
+#fh a.crumb:hover{color:var(--accent)}
+
+/* —— groups —— */
+.group{margin-top:2.1rem;padding-top:.95rem}
+.ghead{padding:.15rem 0 .3rem}
+.g.cnt{color:var(--accent);font-weight:500}
+.gh-line{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.gname{font-style:italic;font-size:1.13rem;font-weight:500;letter-spacing:.005em}
+.ghx{margin-left:auto}
+.ghx .cbtn{font-size:.58rem;letter-spacing:.1em;border-color:var(--hair);color:var(--ink3)}
+.gu{font-family:var(--nasta);font-size:.8rem;color:var(--ink3);line-height:2.2}
+.rows{list-style:none;margin:0;padding:0}
+.group.mute .gname,.group.mute .gu{opacity:.4}
+.group.mute .g.cnt{color:var(--ink3)}
+
+/* —— row flavours —— */
+.hq .cb{text-indent:-.45em}   /* hung opening quote */
+.ga{color:var(--accent);font-size:.8rem}
+.fine .cb{font-family:var(--mono);font-size:.68rem;line-height:1.95;letter-spacing:.02em;color:var(--ink2)}
+.ghost .cb{color:var(--ink3);font-style:italic}
+.shelfrow .cb .shelf{height:1.1rem;border-bottom:1px dashed var(--hair);margin:0 0 .3rem}
+.help .cb{font-size:.92rem;color:var(--ink2)}
+.help code,.prose code{font-family:var(--mono);font-size:.8em;background:var(--codebg);padding:.1em .32em}
+
+/* —— the query line —— */
+.qrow{padding-top:.9rem}
+.qrow .g{color:var(--accent);font-weight:600;font-size:.8rem}
+.qrow .cb{display:flex;align-items:baseline;gap:.9rem}
+.qi{flex:1;min-width:0;font-family:var(--serif);font-size:1rem;color:var(--ink);
+  background:transparent;border:0;border-bottom:1px dashed var(--hair);padding:0 0 .18em;caret-color:var(--accent)}
+.qi::placeholder{color:var(--ink3);font-style:italic;opacity:1}
+.qi:focus{border-bottom-style:solid;border-bottom-color:var(--accent)}
+.qi:focus-visible{outline:none}
+.qs{font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;color:var(--ink3);white-space:nowrap}
+
+/* —— writing rows —— */
+.post-line{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.ptags{font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;color:var(--ink3);white-space:nowrap}
+
+/* —— footer —— */
+.foot{margin-top:3.2rem;padding-top:1.05rem}
+.foot .row{padding:.14rem 0}
+.foot [lang="ur"]{font-family:var(--nasta);font-size:.85rem;line-height:1}
+.inkname{font-weight:500;color:var(--accent)}
+
+/* —— the entry (post) —— */
+.title-row{padding-top:1.7rem}
+.ptitle{font-size:1.7rem;font-weight:500;line-height:1.22;letter-spacing:-.01em;text-wrap:balance}
+.pmeta{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;color:var(--ink3)}
+.prose{counter-reset:sec;margin-top:1.2rem;padding-left:calc(var(--gut) + var(--gap))}
+.prose p{margin:.9rem 0;font-size:1.02rem;line-height:1.62;text-wrap:pretty;hanging-punctuation:first allow-end}
+.prose h2{position:relative;counter-increment:sec;font-style:italic;font-weight:500;font-size:1.2rem;
+  margin:2.1rem 0 .7rem;letter-spacing:.004em}
+.prose h2::before{content:"§" counter(sec);position:absolute;left:calc(-1 * (var(--gut) + var(--gap)));width:var(--gut);
+  text-align:right;top:.34em;font-family:var(--mono);font-style:normal;font-weight:400;
+  font-size:.66rem;letter-spacing:.05em;color:var(--accent)}
+.prose blockquote{position:relative;margin:1.5rem 0;font-size:1.06rem;font-style:italic;color:var(--ink2);line-height:1.6}
+.prose blockquote::before{content:"—";position:absolute;left:calc(-1 * (var(--gut) + var(--gap)));width:var(--gut);
+  text-align:right;font-style:normal;color:var(--ink3)}
+.prose blockquote p{margin:0;font-size:inherit}
+.prose ol,.prose ul{margin:.9rem 0;padding-left:1.15rem}
+.prose li{margin:.45rem 0;line-height:1.6;text-wrap:pretty}
+.prose li::marker{color:var(--accent);font-family:var(--mono);font-size:.8em}
+.prose pre{margin:1.5rem 0 1.5rem calc(-1 * (var(--gut) + var(--gap)));padding:1rem 1.2rem;
+  background:var(--codebg);overflow-x:auto;font-family:var(--mono);font-size:.74rem;line-height:1.75;color:var(--ink2)}
+.prose pre code{background:none;padding:0;font-size:inherit}
+.tk{font-weight:600;color:var(--ink)}
+.tc{color:var(--ink3);font-style:italic}
+.ts{color:var(--accent)}
+.tf{font-weight:500;color:var(--ink)}
+.tn{color:var(--ink)}
+.endrow{margin-top:2.2rem}
+
+/* —— mockup toast —— */
+.toast{position:fixed;left:var(--pl);bottom:1.2rem;z-index:20;max-width:26rem;
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;line-height:1.6;color:var(--ink2);
+  background:var(--paper);border:1px dashed var(--hair);padding:.55rem .8rem}
+.toast b{color:var(--accent);font-weight:500}
+
+/* —— blog launch-state switch —— */
+#fh[data-blog="empty"] .when-pop{display:none!important}
+#fh[data-blog="populated"] .when-empty{display:none!important}
+
+/* —— small screens —— */
+@media (max-width:640px){
+  #fh{--gut:3.3rem;--gap:.75rem;font-size:16px}
+  .name{font-size:1.38rem}
+  .chrome{gap:.5rem;letter-spacing:.09em}
+  .qrow .cb{flex-wrap:wrap}
+  .post-line{flex-direction:column;align-items:flex-start;gap:.05rem}
+  .ptags{white-space:normal}
+  .prose{padding-left:0}
+  .prose h2::before{position:static;width:auto;display:inline-block;margin-right:.6rem}
+  .prose blockquote{padding-left:.9rem;border-left:1px solid var(--hair)}
+  .prose blockquote::before{content:none}
+  .prose pre{margin-left:0}
+}
+@media (prefers-reduced-motion:no-preference){
+  .tab,.cbtn,#fh a{transition:color .12s ease,border-color .12s ease,text-decoration-color .12s ease}
+}
+@media (prefers-reduced-motion:reduce){
+  #fh *,#fh *::before,#fh *::after{transition:none!important;animation:none!important}
+}
+</style>
+
+<div id="fh" lang="en" data-mode="light" data-blog="populated" data-ink="ferozi">
+
+<header class="chrome">
+  <span class="brand"><span lang="ur" dir="rtl">فہرست</span> fihrist · mockup</span>
+  <nav class="tabs" role="tablist" aria-label="Mockup pages">
+    <button class="tab" role="tab" id="tab-home" aria-selected="true" aria-controls="sec-home" data-v="home">index</button>
+    <button class="tab" role="tab" id="tab-blog" aria-selected="false" aria-controls="sec-blog" data-v="blog">writing</button>
+    <button class="tab" role="tab" id="tab-post" aria-selected="false" aria-controls="sec-post" data-v="post">entry</button>
+  </nav>
+  <span class="sp"></span>
+  <button class="cbtn" id="dealbtn" title="deal a new ink">ink · <b class="inkname">ferozi</b></button>
+  <button class="cbtn" id="modebtn" aria-pressed="false">mode · <b id="modename">light</b></button>
+</header>
+
+<main>
+
+<!-- ———————————————————— INDEX (home) ———————————————————— -->
+<section class="view on page" id="sec-home" role="tabpanel" aria-labelledby="tab-home">
+
+  <header class="mast">
+    <div class="row">
+      <span class="g"><svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5.5h18M3 12h11.5M3 18.5h15.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="20.5" cy="12" r="1.7" fill="currentColor"/></svg></span>
+      <h1 class="cb name"><span>Momin Bin Shahid</span> <span class="sig" lang="ur" dir="rtl">مومن بن شاہد</span></h1>
+    </div>
+    <div class="row">
+      <span class="g"></span>
+      <p class="cb desig">Full-Stack Engineer &amp; AI Engineer · Lead Engineer, <a href="https://www.sastaticket.pk" rel="noopener">Sastaticket.pk</a>, Karachi</p>
+    </div>
+    <div class="bleed strong mast-close" role="presentation"></div>
+  </header>
+
+  <div class="row qrow" id="q-home" hidden>
+    <span class="g" aria-hidden="true">/</span>
+    <div class="cb">
+      <input class="qi" id="qi-home" type="text" autocomplete="off" spellcheck="false"
+             aria-label="Filter the index" placeholder="filter the index — try agent, group:about, :help">
+      <output class="qs" id="qs-home" role="status">24 rows · 6 groups</output>
+    </div>
+  </div>
+
+  <section class="group bleed help" id="help-home" hidden aria-label="Query help">
+    <div class="row ghead">
+      <span class="g cnt" data-total="6">06</span>
+      <div class="cb gh-line"><h2 class="gname">help</h2><span class="gu" lang="ur" dir="rtl">مدد</span></div>
+    </div>
+    <ol class="rows">
+      <li class="row"><span class="g">/</span><p class="cb">focuses the query line — <em>esc</em> clears it, then closes it</p></li>
+      <li class="row"><span class="g">text</span><p class="cb">filters every row, live — matches get an underline in the dealt ink</p></li>
+      <li class="row"><span class="g">group:</span><p class="cb">narrows to one group — <code>group:about</code> · now · work · projects · writing · about · elsewhere</p></li>
+      <li class="row"><span class="g">tag:</span><p class="cb">rows carrying a tag — try <code>tag:python</code> on the writing page</p></li>
+      <li class="row"><span class="g">:light</span><p class="cb"><code>:light</code> · <code>:dark</code> — set the mode from the keyboard</p></li>
+      <li class="row"><span class="g">:deal</span><p class="cb">deal a new ink — this visit came up <b class="inkname">ferozi</b></p></li>
+    </ol>
+  </section>
+
+  <section class="group bleed" data-g="now">
+    <div class="row ghead">
+      <span class="g cnt" data-total="3">03</span>
+      <div class="cb gh-line"><h2 class="gname">now</h2><span class="gu" lang="ur" dir="rtl">اب</span></div>
+    </div>
+    <ol class="rows">
+      <li class="row" data-f data-n data-g="now"><span class="g">2026</span>
+        <p class="cb">Building AI-powered systems at <a href="https://www.sastaticket.pk" rel="noopener">Sastaticket.pk</a>, working directly with stakeholders.</p></li>
+      <li class="row" data-f data-n data-g="now"><span class="g">2026</span>
+        <p class="cb">Leading a team of awesome engineers.</p></li>
+      <li class="row" data-f data-n data-g="now"><span class="g">daily</span>
+        <p class="cb">The QA agent: reviews hundreds of customer support calls every day, doing in one day what would take a human team several days — “with a consistency humans simply can’t match.”</p></li>
+    </ol>
+  </section>
+
+  <section class="group bleed" data-g="work">
+    <div class="row ghead">
+      <span class="g cnt" data-total="7">07</span>
+      <div class="cb gh-line"><h2 class="gname">work</h2><span class="gu" lang="ur" dir="rtl">کام</span></div>
+    </div>
+    <ol class="rows">
+      <li class="row" data-f data-n data-g="work"><span class="g">01</span>
+        <p class="cb">Internet Privacy &amp; Security — <a href="https://securiti.ai" rel="noopener">Securiti.ai</a>, a unicorn</p></li>
+      <li class="row" data-f data-n data-g="work"><span class="g">02</span>
+        <p class="cb">Metadata Platforms</p></li>
+      <li class="row" data-f data-n data-g="work"><span class="g">03</span>
+        <p class="cb">ERP</p></li>
+      <li class="row" data-f data-n data-g="work"><span class="g">04</span>
+        <p class="cb">HRMS</p></li>
+      <li class="row" data-f data-n data-g="work"><span class="g">05</span>
+        <p class="cb">EdTech</p></li>
+      <li class="row" data-f data-n data-g="work"><span class="g">06</span>
+        <p class="cb">Travel Tech — <a href="https://www.sastaticket.pk" rel="noopener">Sastaticket.pk</a></p></li>
+      <li class="row" data-f data-n data-g="work"><span class="g">07</span>
+        <p class="cb">AI &amp; Agentic Systems — current</p></li>
+      <li class="row fine" data-f data-g="work"><span class="g">all</span>
+        <p class="cb">users across the USA · Europe · the Middle East · South Asia</p></li>
+      <li class="row fine" data-f data-g="work" data-tags="javascript typescript python node.js"><span class="g">stack</span>
+        <p class="cb">React.js · Vue.js · Angular · JAMstack · MERN / MEVN / MEAN · Node.js · Python · Django<br>
+        LangChain · Google GenAI · OpenAI · Anthropic Claude · AI Agents · LLMs · Docker · Kubernetes · AWS · GCP · Azure · CI/CD · JavaScript · TypeScript</p></li>
+    </ol>
+  </section>
+
+  <section class="group bleed" data-g="projects">
+    <div class="row ghead">
+      <span class="g cnt" data-total="1">01</span>
+      <div class="cb gh-line"><h2 class="gname">projects</h2><span class="gu" lang="ur" dir="rtl">منصوبے</span></div>
+    </div>
+    <ol class="rows">
+      <li class="row" data-f data-n data-g="projects"><span class="g">01</span>
+        <p class="cb"><strong>MealUnits</strong> — an offline insulin calculator, built for my brother. Private, no accounts, works offline.</p></li>
+    </ol>
+  </section>
+
+  <section class="group bleed" data-g="writing">
+    <div class="row ghead">
+      <span class="g cnt" data-total="0">00</span>
+      <div class="cb gh-line"><h2 class="gname">writing</h2><span class="gu" lang="ur" dir="rtl">تحریر</span></div>
+    </div>
+    <ol class="rows">
+      <li class="row ghost" data-f data-g="writing"><span class="g">—</span>
+        <p class="cb">Nothing here yet — the shelf is up, and the first entry is being set.</p></li>
+      <li class="row shelfrow" aria-hidden="true"><span class="g"></span>
+        <div class="cb"><div class="shelf" style="width:76%"></div><div class="shelf" style="width:58%"></div><div class="shelf" style="width:67%"></div></div></li>
+    </ol>
+  </section>
+
+  <section class="group bleed" data-g="about">
+    <div class="row ghead">
+      <span class="g cnt" data-total="8">08</span>
+      <div class="cb gh-line"><h2 class="gname">about</h2><span class="gu" lang="ur" dir="rtl">تعارف</span></div>
+    </div>
+    <ol class="rows">
+      <li class="row hq" data-f data-n data-g="about"><span class="g ga">٭</span>
+        <p class="cb">“I love building things that live on the web and now, things that think 🤖”</p></li>
+      <li class="row hq" data-f data-n data-g="about"><span class="g ga">٭</span>
+        <p class="cb">“There’s something magical about teaching machines to understand context and take action ✨”</p></li>
+      <li class="row" data-f data-n data-g="about"><span class="g ga">٭</span>
+        <p class="cb">What drives me — “the thrill of solving gnarly problems ⚡️, the satisfaction of mentoring engineers and watching them grow 🌱, and the never-ending rabbit hole of learning new technologies 📈”</p></li>
+      <li class="row hq" data-f data-n data-g="about"><span class="g ga">٭</span>
+        <p class="cb">“Both have taught me that great software is about understanding people, not just writing code 💡” <span class="tail">· on service consultancies vs product companies</span></p></li>
+      <li class="row hq" data-f data-n data-g="about"><span class="g ga">٭</span>
+        <p class="cb">“I’m that person who reads documentation for fun (well, sometimes… now I let AI summarize it for me)”</p></li>
+      <li class="row hq" data-f data-n data-g="about"><span class="g ga">٭</span>
+        <p class="cb">“I believe in leaving codebases better than I found them 🏕️, call it the Boy Scout Rule of programming”</p></li>
+      <li class="row hq" data-f data-n data-g="about"><span class="g ga">٭</span>
+        <p class="cb">“While most of my professional work has been closed-source 🔒, I’m increasingly contributing to and learning from the open-source community 🍀. The web taught me everything I know, and I want to give back.”</p></li>
+      <li class="row" data-f data-n data-g="about"><span class="g ga">∞</span>
+        <p class="cb">Equally fascinated by philosophy and esoteric discussions about the nature of reality, consciousness, and what it means to be alive in this strange universe.</p></li>
+    </ol>
+  </section>
+
+  <section class="group bleed" data-g="elsewhere">
+    <div class="row ghead">
+      <span class="g cnt" data-total="5">05</span>
+      <div class="cb gh-line"><h2 class="gname">elsewhere</h2><span class="gu" lang="ur" dir="rtl">اور کہیں</span></div>
+    </div>
+    <ol class="rows">
+      <li class="row wrap" data-f data-n data-g="elsewhere"><span class="g">gh</span>
+        <p class="cb"><a href="https://github.com/MominBinShahid" rel="noopener">github.com/MominBinShahid</a></p></li>
+      <li class="row wrap" data-f data-n data-g="elsewhere"><span class="g">in</span>
+        <p class="cb"><a href="https://linkedin.com/in/mominbinshahid" rel="noopener">linkedin.com/in/mominbinshahid</a></p></li>
+      <li class="row wrap" data-f data-n data-g="elsewhere"><span class="g">so</span>
+        <p class="cb"><a href="https://stackoverflow.com/users/9137804/MominBinShahid" rel="noopener">stackoverflow.com/users/9137804</a></p></li>
+      <li class="row wrap" data-f data-n data-g="elsewhere"><span class="g">x</span>
+        <p class="cb"><a href="https://twitter.com/MominBinShahid" rel="noopener">twitter.com/MominBinShahid</a></p></li>
+      <li class="row" data-f data-n data-g="elsewhere"><span class="g">→</span>
+        <p class="cb"><a href="#/contact" data-mock="contact">Want to build something together? Have an interesting AI problem? Or just want to geek out about the latest in LLMs and web tech?</a></p></li>
+    </ol>
+  </section>
+
+  <footer class="foot bleed strong">
+    <div class="row fine"><span class="g">site</span>
+      <p class="cb">Momin Bin Shahid’s home on web. Momin Bin Shahid is a curious software engineer 👨‍💻, let’s connect 🤙 @MominBinShahid</p></div>
+    <div class="row fine"><span class="g">set</span>
+      <p class="cb">Karachi <span lang="ur" dir="rtl">کراچی</span> · set in Newsreader &amp; Spline Sans Mono · ink this visit: <b class="inkname">ferozi</b></p></div>
+  </footer>
+
+</section>
+
+<!-- ———————————————————— WRITING (blog index) ———————————————————— -->
+<section class="view page" id="sec-blog" role="tabpanel" aria-labelledby="tab-blog" hidden>
+
+  <header class="mast mini">
+    <div class="row">
+      <span class="g"><svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5.5h18M3 12h11.5M3 18.5h15.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="20.5" cy="12" r="1.7" fill="currentColor"/></svg></span>
+      <div class="cb name"><span>Momin Bin Shahid</span> <a class="crumb" href="#/" data-nav data-v="home">← index</a></div>
+    </div>
+    <div class="bleed strong mast-close" role="presentation"></div>
+  </header>
+
+  <div class="row qrow" id="q-blog" hidden>
+    <span class="g" aria-hidden="true">/</span>
+    <div class="cb">
+      <input class="qi" id="qi-blog" type="text" autocomplete="off" spellcheck="false"
+             aria-label="Filter the entries" placeholder="filter the entries — try worker, tag:python, :help">
+      <output class="qs" id="qs-blog" role="status">6 entries</output>
+    </div>
+  </div>
+
+  <section class="group bleed help" id="help-blog" hidden aria-label="Query help">
+    <div class="row ghead">
+      <span class="g cnt" data-total="6">06</span>
+      <div class="cb gh-line"><h2 class="gname">help</h2><span class="gu" lang="ur" dir="rtl">مدد</span></div>
+    </div>
+    <ol class="rows">
+      <li class="row"><span class="g">/</span><p class="cb">focuses the query line — <em>esc</em> clears it, then closes it</p></li>
+      <li class="row"><span class="g">text</span><p class="cb">filters every row, live — matches get an underline in the dealt ink</p></li>
+      <li class="row"><span class="g">group:</span><p class="cb">narrows to one group — here there is only <code>group:writing</code></p></li>
+      <li class="row"><span class="g">tag:</span><p class="cb">rows carrying a tag — <code>tag:python</code>, <code>tag:node</code>, <code>tag:gatsby</code></p></li>
+      <li class="row"><span class="g">:light</span><p class="cb"><code>:light</code> · <code>:dark</code> — set the mode from the keyboard</p></li>
+      <li class="row"><span class="g">:deal</span><p class="cb">deal a new ink — this visit came up <b class="inkname">ferozi</b></p></li>
+    </ol>
+  </section>
+
+  <section class="group bleed" data-g="writing">
+    <div class="row ghead">
+      <span class="g cnt" id="bcnt" data-total="6">06</span>
+      <div class="cb gh-line"><h2 class="gname">writing</h2>
+        <span class="ghx"><button class="cbtn" id="blogstate">mockup · launch state: <b id="bsname">populated</b></button></span>
+        <span class="gu" lang="ur" dir="rtl">تحریر</span></div>
+    </div>
+    <ol class="rows">
+      <li class="row when-pop" data-f data-n data-g="writing" data-tags="javascript html"><span class="g">2026·08</span>
+        <div class="cb post-line"><a href="#/blog/indexeddb-same-origin" data-nav data-v="post">What IndexedDB taught me about the same-origin policy</a>
+        <span class="ptags">#javascript · #html · 5 min</span></div></li>
+      <li class="row when-pop" data-f data-n data-g="writing" data-tags="python"><span class="g">2026·06</span>
+        <div class="cb post-line"><a href="#/blog/agent-400-calls" data-mock="post">Teaching an agent to listen to 400 support calls a day</a>
+        <span class="ptags">#python · 8 min</span></div></li>
+      <li class="row when-pop" data-f data-n data-g="writing" data-tags="reactjs javascript"><span class="g">2026·03</span>
+        <div class="cb post-line"><a href="#/blog/mealunits" data-mock="post">MealUnits — an insulin calculator for my brother</a>
+        <span class="ptags">#reactjs · #javascript · 6 min</span></div></li>
+      <li class="row when-pop" data-f data-n data-g="writing" data-tags="javascript"><span class="g">2025·11</span>
+        <div class="cb post-line"><a href="#/blog/service-worker" data-mock="post">The service worker that wouldn’t die</a>
+        <span class="ptags">#javascript · 7 min</span></div></li>
+      <li class="row when-pop" data-f data-n data-g="writing" data-tags="node.js"><span class="g">2025·09</span>
+        <div class="cb post-line"><a href="#/blog/pr-to-production" data-mock="post">Your pull request is deploying to production</a>
+        <span class="ptags">#node.js · 4 min</span></div></li>
+      <li class="row when-pop" data-f data-n data-g="writing" data-tags="gatsby.js node.js"><span class="g">2025·04</span>
+        <div class="cb post-line"><a href="#/blog/gatsby-apple-silicon" data-mock="post">Getting Gatsby 2 to build on Apple Silicon</a>
+        <span class="ptags">#gatsby.js · #node.js · 5 min</span></div></li>
+      <li class="row ghost when-empty" data-f data-g="writing"><span class="g">—</span>
+        <p class="cb">Nothing here yet — the shelf is up, and the first entry is being set.</p></li>
+      <li class="row shelfrow when-empty" aria-hidden="true"><span class="g"></span>
+        <div class="cb"><div class="shelf" style="width:76%"></div><div class="shelf" style="width:58%"></div><div class="shelf" style="width:67%"></div></div></li>
+    </ol>
+  </section>
+
+  <footer class="foot bleed strong">
+    <div class="row fine"><span class="g">set</span>
+      <p class="cb">Karachi <span lang="ur" dir="rtl">کراچی</span> · set in Newsreader &amp; Spline Sans Mono · ink this visit: <b class="inkname">ferozi</b></p></div>
+  </footer>
+
+</section>
+
+<!-- ———————————————————— ENTRY (blog post) ———————————————————— -->
+<section class="view page" id="sec-post" role="tabpanel" aria-labelledby="tab-post" hidden>
+
+  <header class="mast mini">
+    <div class="row">
+      <span class="g"><svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5.5h18M3 12h11.5M3 18.5h15.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="20.5" cy="12" r="1.7" fill="currentColor"/></svg></span>
+      <div class="cb name"><span>Momin Bin Shahid</span> <span><a class="crumb" href="#/" data-nav data-v="home">← index</a> <a class="crumb" href="#/blog" data-nav data-v="blog">· writing</a></span></div>
+    </div>
+    <div class="bleed strong mast-close" role="presentation"></div>
+  </header>
+
+  <article>
+    <header>
+      <div class="row title-row">
+        <span class="g" aria-hidden="true">§</span>
+        <h1 class="cb ptitle">What IndexedDB taught me about the same-origin policy</h1>
+      </div>
+      <div class="row">
+        <span class="g"></span>
+        <p class="cb pmeta">2026·08·21 · 5 min · #javascript · #html</p>
+      </div>
+    </header>
+
+    <div class="prose">
+      <p><strong>MealUnits</strong> is an insulin calculator I built for my brother. It is deliberately boring software: no accounts, no server, no sync — the food log, the carb ratios, the entire history live in IndexedDB on his device, because the only person that data belongs to is him. An app like that makes exactly one promise: <em>the data is always there</em>.</p>
+      <p>So the message I got one evening — “it’s all gone” — was the worst message that app can receive.</p>
+
+      <h2>Nothing was lost</h2>
+      <p>Every byte was exactly where the browser had put it. He hadn’t cleared anything, the OS hadn’t evicted anything, and my migration code hadn’t eaten anything (I checked twice 😅). He was simply standing at a different door.</p>
+      <p>That morning he had opened the app from an old link — same site, same screen, same everything, except the address bar said <code>www.</code> The app he had been using for months lived at the apex domain. Two URLs, four characters of difference, and IndexedDB treats them as strangers.</p>
+
+      <h2>An origin is three things</h2>
+      <p>The same-origin policy is one of the oldest load-bearing walls on the web, and it is stricter than intuition wants it to be:</p>
+      <blockquote><p>Two URLs share an origin when the scheme, the host, and the port all match — exactly. Everything else, the path, the query, the fragment, your good intentions, is irrelevant.</p></blockquote>
+      <p>IndexedDB is origin-scoped. So are <code>localStorage</code>, Cache Storage, service worker registrations, and the Origin Private File System. There is no “nearby storage” lookup, no fuzzy matching, no inheritance from a parent domain. <code>https://www.example.com</code> and <code>https://example.com</code> are two databases. <code>http://</code> and <code>https://</code> are two databases. A different port is a different database, as every developer discovers the day the dev server moves from <code>:3000</code> to <code>:5173</code>.</p>
+
+      <h2>Three ways to lose data that isn’t lost</h2>
+      <ol>
+        <li><strong>The scheme changes.</strong> You migrate to HTTPS and the new origin starts empty; the old database sits behind the <code>http://</code> origin forever — reachable, and invisible.</li>
+        <li><strong>The host changes.</strong> Apex vs <code>www.</code>, <code>localhost</code> vs <code>127.0.0.1</code> — the host is compared as a string, not resolved. Same machine, different worlds.</li>
+        <li><strong>The port changes.</strong> Two dev servers, two databases, one confused engineer at 1 a.m.</li>
+      </ol>
+      <p>And the honourable mentions that aren’t the same-origin policy but wear its jersey: browser profiles, private windows, and in-app browsers. The browser inside a chat app is frequently its own storage universe — a link opened there writes to a database nobody will ever see again. Safari adds a rule of its own: script-writable storage can be evicted after seven days without interaction, unless the origin has been granted persistence.</p>
+
+      <h2>What MealUnits does now</h2>
+      <p>The fixes were far less code than the debugging. One canonical origin, enforced with a redirect at the edge — the apex is the only door, and every other spelling of the address forwards to it before a byte of JavaScript runs. Then, on the first meaningful write, the app asks the browser to take the data seriously:</p>
+      <pre><code><span class="tc">// boot — know which door you came in through</span>
+<span class="tk">const</span> here = self.location.origin;   <span class="tc">// scheme + host + port, nothing else</span>
+<span class="tk">if</span> (here !== CANONICAL_ORIGIN) {
+  <span class="tf">banner</span>(<span class="ts">`You're at ${here} — your history lives at ${CANONICAL_ORIGIN}.`</span>);
+}
+
+<span class="tc">// ask politely to be kept out of eviction sweeps</span>
+<span class="tk">if</span> (navigator.storage?.persist) {
+  <span class="tk">const</span> kept = <span class="tk">await</span> navigator.storage.<span class="tf">persist</span>();
+  <span class="tk">const</span> { usage = <span class="tn">0</span>, quota = <span class="tn">0</span> } = <span class="tk">await</span> navigator.storage.<span class="tf">estimate</span>();
+  console.<span class="tf">info</span>(kept ? <span class="ts">"storage: persistent"</span> : <span class="ts">"storage: best-effort"</span>,
+               <span class="ts">`${(usage / 1024).toFixed(1)} KiB of ~${Math.round(quota / 2 ** 20)} MiB`</span>);
+}</code></pre>
+      <p>And an export button. A file in the hand beats a promise in the address bar — the same history, serialised to JSON, saved wherever he likes. Local-first should mean <em>the user holds the data</em>, not <em>the browser holds the user</em>.</p>
+
+      <h2>The wall is the feature</h2>
+      <p>It is easy to resent a rule that just cost you an evening. But the wall that confused my brother is the only thing standing between an insulin history and every third-party iframe on the web. The same-origin policy never promised convenience; it promised that a random tab cannot read a medical log 🔒. I’ll take that trade every time.</p>
+      <p>He didn’t need a lecture on origins, though he got most of one anyway. He needed the app to have exactly one door. Now it does.</p>
+    </div>
+
+    <div class="row endrow"><span class="g">←</span>
+      <p class="cb"><a href="#/blog" data-nav data-v="blog">all writing</a> · <a href="#/" data-nav data-v="home">the index</a></p></div>
+    <div class="row fine"><span class="g">tags</span>
+      <p class="cb">#javascript · #html</p></div>
+  </article>
+
+  <footer class="foot bleed strong">
+    <div class="row fine"><span class="g">set</span>
+      <p class="cb">Karachi <span lang="ur" dir="rtl">کراچی</span> · set in Newsreader &amp; Spline Sans Mono · ink this visit: <b class="inkname">ferozi</b></p></div>
+  </footer>
+
+</section>
+
+</main>
+</div>
+
+<script>
+(function () {
+  var fh = document.getElementById('fh');
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  /* ————— the inks: six, dealt one per visit, light/dark pairs ————— */
+  var INKS = [
+    { k: 'ferozi',   l: '#0A7580', d: '#5AC6CF' },
+    { k: 'neelam',   l: '#2D55A9', d: '#8FABEC' },
+    { k: 'zamurrad', l: '#1B7A4E', d: '#63C494' },
+    { k: 'baingani', l: '#7A3E9D', d: '#C79DEA' },
+    { k: 'anaari',   l: '#AD2E4E', d: '#EE8AA4' },
+    { k: 'sarson',   l: '#7A5D05', d: '#D9B23F' }
+  ];
+  var ink = INKS[Math.floor(Math.random() * INKS.length)];
+  function applyInk(a) {
+    ink = a;
+    fh.dataset.ink = a.k;
+    fh.style.setProperty('--acc-l', a.l);
+    fh.style.setProperty('--acc-d', a.d);
+    $$('.inkname').forEach(function (el) { el.textContent = a.k; });
+  }
+  function deal() {
+    var next = ink;
+    while (next.k === ink.k) next = INKS[Math.floor(Math.random() * INKS.length)];
+    applyInk(next);
+    return next.k;
+  }
+  applyInk(ink);
+
+  /* ————— mode: the mockup's own toggle, independent of the viewer ————— */
+  function setMode(m) {
+    fh.dataset.mode = m;
+    document.body.style.background = getComputedStyle(fh).getPropertyValue('--paper');
+    $('#modename').textContent = m;
+    $('#modebtn').setAttribute('aria-pressed', m === 'dark' ? 'true' : 'false');
+  }
+  setMode(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  $('#modebtn').addEventListener('click', function () {
+    setMode(fh.dataset.mode === 'dark' ? 'light' : 'dark');
+  });
+  $('#dealbtn').addEventListener('click', function () { deal(); });
+
+  /* ————— views ————— */
+  var VIEWS = { home: 'sec-home', blog: 'sec-blog', post: 'sec-post' };
+  var cur = 'home';
+  function setView(v) {
+    if (!VIEWS[v]) return;
+    Object.keys(VIEWS).forEach(function (k) {
+      var sec = document.getElementById(VIEWS[k]);
+      var on = k === v;
+      sec.classList.toggle('on', on);
+      if (on) sec.removeAttribute('hidden'); else sec.setAttribute('hidden', '');
+    });
+    $$('.tab').forEach(function (t) {
+      t.setAttribute('aria-selected', t.dataset.v === v ? 'true' : 'false');
+    });
+    cur = v;
+    closeQuery('home'); closeQuery('blog');
+    window.scrollTo(0, 0);
+  }
+  $$('.tab').forEach(function (t) {
+    t.addEventListener('click', function () { setView(t.dataset.v); });
+  });
+
+  /* ————— the signature: the index answers back ————— */
+  var SCOPES = {
+    home: { sec: 'sec-home', input: 'qi-home', row: 'q-home', out: 'qs-home', help: 'help-home' },
+    blog: { sec: 'sec-blog', input: 'qi-blog', row: 'q-blog', out: 'qs-blog', help: 'help-blog' }
+  };
+
+  $$('.row[data-f]').forEach(function (r) {
+    var cb = $('.cb', r);
+    r._cb = cb;
+    r._orig = cb.innerHTML;
+    r._text = cb.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
+    r._tags = (r.getAttribute('data-tags') || '').toLowerCase();
+  });
+
+  function stateOk(r) {
+    if (r.classList.contains('when-pop') && fh.dataset.blog === 'empty') return false;
+    if (r.classList.contains('when-empty') && fh.dataset.blog === 'populated') return false;
+    return true;
+  }
+
+  function parse(q) {
+    var out = { text: [], group: null, tag: null, cmd: null };
+    q = q.trim();
+    if (q.charAt(0) === ':') { out.cmd = q.slice(1).toLowerCase().trim(); return out; }
+    q.toLowerCase().split(/\s+/).forEach(function (tok) {
+      if (!tok) return;
+      if (tok.indexOf('group:') === 0) out.group = tok.slice(6);
+      else if (tok.indexOf('tag:') === 0) out.tag = tok.slice(4).replace(/^#/, '');
+      else out.text.push(tok);
+    });
+    return out;
+  }
+
+  function markIn(el, q) {
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    var nodes = [], n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(function (node) {
+      var t = node.nodeValue, tl = t.toLowerCase();
+      var i = tl.indexOf(q);
+      if (i < 0) return;
+      var frag = document.createDocumentFragment(), pos = 0;
+      while (i >= 0) {
+        frag.appendChild(document.createTextNode(t.slice(pos, i)));
+        var m = document.createElement('mark');
+        m.textContent = t.slice(i, i + q.length);
+        frag.appendChild(m);
+        pos = i + q.length;
+        i = tl.indexOf(q, pos);
+      }
+      frag.appendChild(document.createTextNode(t.slice(pos)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+
+  function idleStatus(scope) {
+    if (scope === 'home') return '24 rows · 6 groups';
+    return (fh.dataset.blog === 'empty' ? '0' : '6') + ' entries';
+  }
+
+  function apply(scope, override) {
+    var S = SCOPES[scope];
+    var sec = document.getElementById(S.sec);
+    var q = parse(override !== undefined ? override : $('#' + S.input).value);
+    if (q.cmd !== null) q = { text: [], group: null, tag: null, cmd: null };
+    var active = !!(q.text.length || q.group || q.tag);
+    var shown = 0;
+
+    $$('.row[data-f]', sec).forEach(function (r) {
+      r._cb.innerHTML = r._orig; /* reset marks */
+      if (!stateOk(r)) { r.removeAttribute('hidden'); return; } /* CSS state rules own these */
+      var ok = true;
+      if (q.group) ok = ok && r.getAttribute('data-g') === q.group;
+      if (q.tag) ok = ok && r._tags.indexOf(q.tag) !== -1;
+      if (q.text.length) ok = ok && q.text.every(function (t) { return r._text.indexOf(t) !== -1; });
+      if (active && !ok) { r.setAttribute('hidden', ''); return; }
+      r.removeAttribute('hidden');
+      if (active) {
+        shown++;
+        q.text.forEach(function (t) { if (t.length >= 2) markIn(r._cb, t); });
+      }
+    });
+
+    $$('.group[data-g]', sec).forEach(function (g) {
+      var vis = $$('.row[data-n]', g).filter(function (r) {
+        return !r.hasAttribute('hidden') && stateOk(r);
+      }).length;
+      var anyVis = $$('.row[data-f]', g).some(function (r) {
+        return !r.hasAttribute('hidden') && stateOk(r);
+      });
+      var cnt = $('.cnt', g);
+      if (cnt) {
+        var tot = parseInt(cnt.getAttribute('data-total'), 10) || 0;
+        cnt.textContent = active ? pad(vis) + '/' + pad(tot) : pad(tot);
+      }
+      g.classList.toggle('mute', active && !anyVis);
+      $$('.row[aria-hidden]', g).forEach(function (r) {
+        if (active) r.setAttribute('hidden', ''); else r.removeAttribute('hidden');
+      });
+    });
+
+    var out = $('#' + S.out);
+    out.textContent = active ? shown + (shown === 1 ? ' row matches' : ' rows match') : idleStatus(scope);
+  }
+
+  function exec(cmd, scope) {
+    var S = SCOPES[scope];
+    var out = $('#' + S.out);
+    var help = document.getElementById(S.help);
+    var inp = $('#' + S.input);
+    inp.value = '';
+    apply(scope);
+    if (cmd === 'help') {
+      help.hidden = !help.hidden;
+      out.textContent = help.hidden ? idleStatus(scope) : 'the index answers back';
+    } else if (cmd === 'dark' || cmd === 'light') {
+      setMode(cmd);
+      out.textContent = 'mode · ' + cmd;
+    } else if (cmd === 'deal') {
+      out.textContent = 'dealt · ' + deal();
+    } else if (cmd === 'clear' || cmd === '') {
+      help.hidden = true;
+      out.textContent = idleStatus(scope);
+    } else {
+      out.textContent = 'unknown — try :help';
+    }
+  }
+
+  function openQuery(scope) {
+    var S = SCOPES[scope];
+    var row = document.getElementById(S.row);
+    row.hidden = false;
+    $('#' + S.out).textContent = idleStatus(scope);
+    $('#' + S.input).focus();
+  }
+  function closeQuery(scope) {
+    var S = SCOPES[scope];
+    var inp = $('#' + S.input);
+    inp.value = '';
+    apply(scope);
+    document.getElementById(S.help).hidden = true;
+    document.getElementById(S.row).hidden = true;
+  }
+
+  Object.keys(SCOPES).forEach(function (scope) {
+    var S = SCOPES[scope];
+    var inp = $('#' + S.input);
+    inp.addEventListener('input', function () {
+      var v = inp.value;
+      if (v.trim().charAt(0) === ':') {
+        apply(scope, '');
+        $('#' + S.out).textContent = '⏎ to run ' + v.trim();
+      } else {
+        apply(scope);
+      }
+    });
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && inp.value.trim().charAt(0) === ':') {
+        e.preventDefault();
+        exec(inp.value.trim().slice(1).toLowerCase(), scope);
+      }
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    var t = e.target;
+    var typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+    if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey && SCOPES[cur]) {
+      e.preventDefault();
+      openQuery(cur);
+    } else if (e.key === 'Escape' && typing && t.classList.contains('qi')) {
+      var scope = t.id === 'qi-home' ? 'home' : 'blog';
+      if (t.value) {
+        t.value = '';
+        apply(scope);
+        document.getElementById(SCOPES[scope].help).hidden = true;
+      } else {
+        closeQuery(scope);
+        t.blur();
+      }
+    }
+  });
+
+  /* ————— blog launch-state switch (mockup control) ————— */
+  $('#blogstate').addEventListener('click', function () {
+    var empty = fh.dataset.blog !== 'empty';
+    fh.dataset.blog = empty ? 'empty' : 'populated';
+    $('#bsname').textContent = empty ? 'empty' : 'populated';
+    var bc = $('#bcnt');
+    bc.setAttribute('data-total', empty ? '0' : '6');
+    apply('blog');
+  });
+
+  /* ————— nav + mockup notes ————— */
+  var toastEl = null, toastTimer = null;
+  function toast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'toast';
+      toastEl.setAttribute('role', 'status');
+      fh.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.style.display = 'block';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.style.display = 'none'; }, 3200);
+  }
+  document.addEventListener('click', function (e) {
+    var nav = e.target.closest ? e.target.closest('[data-nav]') : null;
+    if (nav) { e.preventDefault(); setView(nav.dataset.v); return; }
+    var mock = e.target.closest ? e.target.closest('[data-mock]') : null;
+    if (mock) {
+      e.preventDefault();
+      toast(mock.dataset.mock === 'contact'
+        ? '→ /contact — its own page on the real site; not part of this mockup'
+        : '→ only the IndexedDB entry is built out in this mockup');
+    }
+  });
+
+  /* ————— console easter egg ————— */
+  try {
+    console.log(
+      '%c فہرست %c fihrist — the index answers back. press / and ask it something (then :help).',
+      'font-family:Georgia,serif;font-size:15px;padding:2px 10px;background:' + ink.l + ';color:#EDEFE8;',
+      'font-family:monospace;color:' + ink.l + ';'
+    );
+    window.fihrist = {
+      ink: function () { return ink.k; },
+      deal: function () { return 'dealt · ' + deal(); },
+      mode: function (m) { setMode(m === 'dark' ? 'dark' : 'light'); return 'mode · ' + fh.dataset.mode; },
+      grep: function (q) {
+        setView('home'); openQuery('home');
+        var i = $('#qi-home'); i.value = String(q); apply('home');
+        return 'filtered · ' + q;
+      },
+      ls: function () {
+        var rows = $$('#sec-home .group[data-g]').map(function (g) {
+          return { group: g.getAttribute('data-g'), entries: parseInt($('.cnt', g).getAttribute('data-total'), 10) || 0 };
+        });
+        (console.table || console.log).call(console, rows);
+        return rows.length + ' groups — try fihrist.grep("agent")';
+      }
+    };
+  } catch (err) { /* the index stays quiet */ }
+
+  apply('home');
+  apply('blog');
+})();
+</script>

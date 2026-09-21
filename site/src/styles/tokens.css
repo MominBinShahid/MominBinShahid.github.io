@@ -1,0 +1,60 @@
+/*
+  Design tokens. This file and the components that read it are the layer a
+  redesign replaces - nothing below is meant to survive the design pass.
+
+  The values are deliberately plain. The *mechanism* is the point:
+
+  - `color-scheme: light dark` plus `light-dark()` means visitors who have not
+    overridden their OS preference get the correct theme from pure CSS. No
+    blocking script, no flash. Only an explicit override needs JS.
+  - `[data-theme]` on <html> is that override, and it wins in both directions.
+  - Every value is a custom property, so a full palette-and-type revamp is edits
+    to this one file. (It cannot turn one column into a masonry grid - layout is
+    markup. That limit is real and known.)
+*/
+
+:root {
+  color-scheme: light dark;
+
+  /* ---- colour ------------------------------------------------------- */
+  --c-bg: light-dark(#ffffff, #111111);
+  --c-surface: light-dark(#f6f6f7, #1a1a1c);
+  --c-text: light-dark(#18181b, #e8e8ea);
+  --c-muted: light-dark(#5c5c66, #a0a0aa);
+  --c-line: light-dark(#e2e2e6, #2c2c30);
+  --c-accent: light-dark(#1f4fd8, #7aa2ff);
+
+  /* ---- type --------------------------------------------------------- */
+  --f-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  --t-base: 1rem;
+  --t-sm: 0.875rem;
+  --t-lg: 1.25rem;
+  --t-xl: 1.75rem;
+  --t-2xl: 2.25rem;
+
+  --lh-body: 1.65;
+  --lh-tight: 1.2;
+
+  /* ---- space -------------------------------------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-6: 1.5rem;
+  --s-8: 2rem;
+  --s-12: 3rem;
+
+  /* ---- measure ------------------------------------------------------ */
+  --measure: 68ch;
+}
+
+/* Explicit overrides. `light-dark()` reads color-scheme, so setting it is enough
+   - the token values above do not need restating. */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}

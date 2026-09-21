@@ -1,0 +1,592 @@
+<title>Four Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&family=Karla:wght@300;400;500;600&display=swap">
+
+<style>
+/* ============================================================
+   CHROME — follows the viewer's theme, all three states
+   ============================================================ */
+:root{
+  --ch-bg:#eceef2; --ch-panel:#ffffff; --ch-ink:#181b22; --ch-dim:#5d6470;
+  --ch-line:#d2d6de; --ch-accent:#2f4bdb; --ch-shadow:0 1px 2px rgba(20,24,34,.10),0 8px 24px rgba(20,24,34,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ch-bg:#0d0f14; --ch-panel:#161a22; --ch-ink:#e8eaf0; --ch-dim:#949cab;
+    --ch-line:#272d38; --ch-accent:#8fa2ff; --ch-shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ch-bg:#0d0f14; --ch-panel:#161a22; --ch-ink:#e8eaf0; --ch-dim:#949cab;
+  --ch-line:#272d38; --ch-accent:#8fa2ff; --ch-shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ch-bg); color:var(--ch-ink);
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--ch-accent); outline-offset:3px; border-radius:2px}
+
+.bar{
+  position:sticky; top:0; z-index:100;
+  display:flex; flex-wrap:wrap; align-items:center; gap:14px;
+  padding:10px 16px; background:var(--ch-panel);
+  border-bottom:1px solid var(--ch-line); box-shadow:var(--ch-shadow);
+}
+.bar__label{
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ch-dim); font-weight:600; margin-right:2px;
+}
+.tabs{display:flex; flex-wrap:wrap; gap:6px}
+.tab{
+  font:inherit; font-size:13px; font-weight:500; cursor:pointer;
+  padding:7px 14px; border-radius:999px; border:1px solid var(--ch-line);
+  background:transparent; color:var(--ch-dim); transition:all .16s ease;
+}
+.tab:hover{color:var(--ch-ink); border-color:var(--ch-dim)}
+.tab[aria-selected="true"]{background:var(--ch-accent); border-color:var(--ch-accent); color:#fff}
+:root[data-theme="dark"] .tab[aria-selected="true"],
+:root:not([data-theme="light"]) .tab[aria-selected="true"]{color:#0d0f14}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .tab[aria-selected="true"]{color:#fff}}
+
+.bar__right{margin-left:auto; display:flex; align-items:center; gap:10px}
+.modeswitch{display:flex; border:1px solid var(--ch-line); border-radius:999px; overflow:hidden}
+.modeswitch button{
+  font:inherit; font-size:12px; font-weight:500; cursor:pointer; border:0;
+  padding:6px 13px; background:transparent; color:var(--ch-dim);
+}
+.modeswitch button[aria-pressed="true"]{background:var(--ch-ink); color:var(--ch-bg)}
+
+.note{
+  max-width:none; padding:14px 18px; font-size:13px; line-height:1.55;
+  color:var(--ch-dim); background:var(--ch-panel); border-bottom:1px solid var(--ch-line);
+}
+.note strong{color:var(--ch-ink); font-weight:600}
+
+.stage{padding:18px; display:grid; gap:18px}
+.frame{
+  border:1px solid var(--ch-line); border-radius:14px; overflow:hidden;
+  box-shadow:var(--ch-shadow); background:var(--ch-panel);
+}
+.frame__cap{
+  display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+  padding:11px 16px; border-bottom:1px solid var(--ch-line);
+}
+.frame__name{font-size:13px; font-weight:600; letter-spacing:.01em}
+.frame__desc{font-size:12px; color:var(--ch-dim)}
+[hidden]{display:none !important}
+
+/* ============================================================
+   SHARED MOCK RESET — each direction owns its own tokens
+   ============================================================ */
+.mock{--_r:0}
+.mock a{text-decoration:none; color:inherit}
+.mock ul{list-style:none; margin:0; padding:0}
+.mock h1,.mock h2,.mock h3,.mock p{margin:0}
+.mock h1,.mock h2,.mock h3{text-wrap:balance}
+
+/* ============================================================
+   1 — CHROMATIC
+   ============================================================ */
+.d1{
+  --h:266;
+  --bg:oklch(0.975 0.014 var(--h));
+  --surf:oklch(1 0.006 var(--h));
+  --ink:oklch(0.23 0.032 var(--h));
+  --dim:oklch(0.50 0.035 var(--h));
+  --line:oklch(0.88 0.022 var(--h));
+  --acc:oklch(0.55 0.185 var(--h));
+  --accInk:oklch(0.99 0.01 var(--h));
+  background:var(--bg); color:var(--ink);
+  font-family:Archivo,ui-sans-serif,system-ui,sans-serif;
+  padding:clamp(28px,5vw,64px);
+  transition:background .5s ease,color .5s ease;
+}
+[data-mock="dark"] .d1{
+  --bg:oklch(0.165 0.020 var(--h));
+  --surf:oklch(0.215 0.024 var(--h));
+  --ink:oklch(0.94 0.018 var(--h));
+  --dim:oklch(0.70 0.030 var(--h));
+  --line:oklch(0.31 0.026 var(--h));
+  --acc:oklch(0.79 0.155 var(--h));
+  --accInk:oklch(0.18 0.03 var(--h));
+}
+.d1__top{display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:clamp(40px,8vw,90px)}
+.d1__mark{font-size:14px; font-weight:800; letter-spacing:-.02em}
+.d1__nav{display:flex; gap:22px; font-size:13px; font-weight:500; color:var(--dim)}
+.d1__nav a:hover{color:var(--acc)}
+.d1__name{
+  font-size:clamp(46px,11.5vw,142px); font-weight:900; line-height:.86;
+  letter-spacing:-.045em; margin-bottom:26px;
+}
+.d1__name em{font-style:normal; color:var(--acc); transition:color .5s ease}
+.d1__role{
+  font-size:clamp(16px,2.1vw,22px); font-weight:400; color:var(--dim);
+  max-width:34ch; line-height:1.45; margin-bottom:40px;
+}
+.d1__role b{color:var(--ink); font-weight:600}
+.d1__hue{
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+  padding:20px 22px; border:1px solid var(--line); border-radius:18px;
+  background:var(--surf); max-width:620px; margin-bottom:clamp(40px,7vw,80px);
+}
+.d1__huelabel{font-size:10.5px; letter-spacing:.15em; text-transform:uppercase; font-weight:700; color:var(--dim)}
+.d1__hue input[type=range]{
+  flex:1; min-width:180px; appearance:none; height:9px; border-radius:99px; outline-offset:4px;
+  background:linear-gradient(90deg,
+    oklch(.62 .19 0),oklch(.62 .19 60),oklch(.62 .19 120),
+    oklch(.62 .19 180),oklch(.62 .19 240),oklch(.62 .19 300),oklch(.62 .19 360));
+}
+.d1__hue input[type=range]::-webkit-slider-thumb{
+  appearance:none; width:22px; height:22px; border-radius:50%;
+  background:var(--acc); border:3px solid var(--surf); cursor:grab;
+  box-shadow:0 1px 5px rgba(0,0,0,.28);
+}
+.d1__hue input[type=range]::-moz-range-thumb{
+  width:22px; height:22px; border-radius:50%; background:var(--acc);
+  border:3px solid var(--surf); cursor:grab;
+}
+.d1__huenum{font-variant-numeric:tabular-nums; font-size:13px; font-weight:700; color:var(--acc); min-width:3.6ch}
+.d1__grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:18px; overflow:hidden}
+.d1__cell{background:var(--surf); padding:26px 24px}
+.d1__cellk{font-size:10.5px; letter-spacing:.15em; text-transform:uppercase; font-weight:700; color:var(--acc); margin-bottom:12px}
+.d1__cellt{font-size:17px; font-weight:600; line-height:1.3; margin-bottom:7px; letter-spacing:-.01em}
+.d1__cellm{font-size:13.5px; color:var(--dim); line-height:1.5}
+
+/* ============================================================
+   2 — SPECIMEN
+   ============================================================ */
+.d2{
+  --paper:#fbfbfd; --ink:#101218; --dim:#6a7080; --line:#dcdfe7;
+  --mark:#e0452b; --grid:#eef0f5;
+  background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  padding:clamp(24px,4vw,56px);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px);
+  background-size:100% 30px;
+}
+[data-mock="dark"] .d2{
+  --paper:#0e1015; --ink:#e9ebf1; --dim:#878ea0; --line:#252a35;
+  --mark:#ff6a4d; --grid:#16191f;
+}
+.d2__head{
+  display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  padding-bottom:12px; border-bottom:2px solid var(--ink); margin-bottom:clamp(30px,5vw,58px);
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:.06em;
+}
+.d2__head span{color:var(--dim)}
+.d2__head b{font-weight:500}
+.d2__specimen{position:relative; margin-bottom:clamp(30px,5vw,54px)}
+.d2__huge{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:clamp(38px,10.5vw,124px); font-weight:700; line-height:.94;
+  letter-spacing:-.055em; margin-bottom:6px;
+}
+.d2__huge span{color:var(--mark)}
+.d2__sub{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:clamp(13px,2.3vw,25px); font-weight:300; color:var(--dim);
+  letter-spacing:-.01em; line-height:1.35;
+}
+.d2__anno{
+  display:flex; gap:8px; align-items:center; margin-top:20px;
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10.5px; color:var(--mark);
+}
+.d2__anno::before{content:""; width:26px; height:1px; background:var(--mark)}
+.d2__cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:clamp(22px,3.5vw,46px)}
+.d2__col h3{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:500;
+  color:var(--dim); padding-bottom:7px; border-bottom:1px solid var(--line); margin-bottom:16px;
+}
+.d2__item{padding:11px 0; border-bottom:1px dotted var(--line)}
+.d2__item:last-child{border-bottom:0}
+.d2__it{font-size:15px; font-weight:500; line-height:1.35; margin-bottom:4px; letter-spacing:-.008em}
+.d2__im{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10.5px; color:var(--dim); font-variant-numeric:tabular-nums;
+}
+.d2__item a:hover .d2__it{color:var(--mark)}
+.d2__meta{font-size:14px; line-height:1.65; color:var(--dim); font-weight:300}
+.d2__meta b{color:var(--ink); font-weight:500}
+
+/* ============================================================
+   3 — DEPARTURE
+   ============================================================ */
+.d3{
+  --board:#12100c; --slat:#1b1813; --amber:#f2b23a; --amberdim:#8a6a26;
+  --ink:#f6f1e6; --dim:#a0988a; --line:#2b271f; --live:#4fd67f;
+  background:var(--board); color:var(--ink);
+  font-family:Barlow,ui-sans-serif,system-ui,sans-serif;
+  padding:clamp(22px,4vw,54px);
+}
+[data-mock="light"] .d3{
+  --board:#f4f1ea; --slat:#ffffff; --amber:#9a6a0f; --amberdim:#c9a768;
+  --ink:#1a1712; --dim:#6e675c; --line:#ddd7ca; --live:#1f8a4c;
+}
+.d3__strip{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  font-family:"Barlow Condensed",sans-serif; font-size:13px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--dim); padding-bottom:12px;
+  border-bottom:1px solid var(--line); margin-bottom:clamp(26px,4vw,48px);
+}
+.d3__live{display:inline-flex; align-items:center; gap:7px; color:var(--live)}
+.d3__dot{width:7px; height:7px; border-radius:50%; background:var(--live)}
+@media (prefers-reduced-motion:no-preference){
+  .d3__dot{animation:d3pulse 2.4s ease-in-out infinite}
+  @keyframes d3pulse{0%,100%{opacity:1}50%{opacity:.25}}
+}
+.d3__hero{margin-bottom:clamp(28px,4.5vw,52px)}
+.d3__eyebrow{
+  font-family:"Barlow Condensed",sans-serif; font-size:clamp(13px,1.6vw,16px);
+  letter-spacing:.3em; text-transform:uppercase; color:var(--amber); margin-bottom:12px;
+}
+.d3__name{
+  font-family:"Barlow Condensed",sans-serif; font-weight:700;
+  font-size:clamp(42px,11vw,136px); line-height:.88; letter-spacing:.012em;
+  text-transform:uppercase; margin-bottom:16px;
+}
+.d3__route{
+  display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  font-family:"Barlow Condensed",sans-serif; font-size:clamp(15px,2vw,21px);
+  letter-spacing:.12em; text-transform:uppercase; color:var(--dim);
+}
+.d3__route b{color:var(--ink); font-weight:600}
+.d3__line{flex:1; min-width:40px; height:1px; background:repeating-linear-gradient(90deg,var(--amberdim) 0 7px,transparent 7px 14px)}
+.d3__board{border:1px solid var(--line); border-radius:4px; overflow:hidden; margin-bottom:26px}
+.d3__row{
+  display:grid; grid-template-columns:82px 1fr auto; gap:14px; align-items:center;
+  padding:15px 18px; background:var(--slat); border-bottom:1px solid var(--line);
+  transition:background .18s ease;
+}
+.d3__row:last-child{border-bottom:0}
+.d3__row:hover{background:color-mix(in oklab,var(--slat) 82%,var(--amber))}
+.d3__code{
+  font-family:"Barlow Condensed",sans-serif; font-size:19px; font-weight:600;
+  letter-spacing:.09em; color:var(--amber); font-variant-numeric:tabular-nums;
+}
+.d3__title{font-size:16px; font-weight:500; line-height:1.3}
+.d3__when{
+  font-family:"Barlow Condensed",sans-serif; font-size:14px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--dim); white-space:nowrap;
+}
+.d3__stub{
+  display:flex; gap:clamp(18px,3vw,44px); flex-wrap:wrap;
+  padding-top:22px; border-top:2px dashed var(--line);
+}
+.d3__f{min-width:130px}
+.d3__fk{
+  font-family:"Barlow Condensed",sans-serif; font-size:11.5px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--dim); margin-bottom:5px;
+}
+.d3__fv{font-size:15px; font-weight:500}
+.d3__fv a:hover{color:var(--amber)}
+
+/* ============================================================
+   4 — QUIET
+   ============================================================ */
+.d4{
+  --paper:#f7f8fa; --ink:#20242c; --dim:#6b7280; --line:#e0e3e9; --acc:#3f5a80;
+  background:var(--paper); color:var(--ink);
+  font-family:Karla,ui-sans-serif,system-ui,sans-serif;
+  padding:clamp(34px,6.5vw,92px) clamp(24px,5vw,72px);
+}
+[data-mock="dark"] .d4{
+  --paper:#14171d; --ink:#e6e9ef; --dim:#949bab; --line:#252a34; --acc:#9db6dc;
+}
+.d4__wrap{max-width:62ch; margin:0 auto}
+.d4__top{
+  display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;
+  font-size:13px; color:var(--dim); margin-bottom:clamp(50px,9vw,110px);
+}
+.d4__top nav{display:flex; gap:20px}
+.d4__top a:hover{color:var(--acc); text-decoration:underline; text-underline-offset:4px}
+.d4__name{
+  font-family:Newsreader,Georgia,serif; font-weight:400;
+  font-size:clamp(38px,7.2vw,76px); line-height:1.02; letter-spacing:-.024em;
+  margin-bottom:26px;
+}
+.d4__lede{
+  font-family:Newsreader,Georgia,serif; font-weight:300;
+  font-size:clamp(17px,2.3vw,23px); line-height:1.55; color:var(--dim);
+  margin-bottom:22px;
+}
+.d4__lede em{font-style:italic; color:var(--ink)}
+.d4__body{font-size:15.5px; line-height:1.72; color:var(--dim); margin-bottom:clamp(44px,7vw,84px)}
+.d4__body a{color:var(--acc); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px}
+.d4__rule{
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--dim);
+  font-weight:600; padding-bottom:10px; border-bottom:1px solid var(--line); margin-bottom:8px;
+}
+.d4__post{display:block; padding:19px 0; border-bottom:1px solid var(--line)}
+.d4__pt{
+  font-family:Newsreader,Georgia,serif; font-size:20px; font-weight:400;
+  line-height:1.3; letter-spacing:-.012em; margin-bottom:5px;
+}
+.d4__post:hover .d4__pt{color:var(--acc)}
+.d4__pd{font-size:12.5px; color:var(--dim); font-variant-numeric:tabular-nums}
+.d4__foot{margin-top:clamp(40px,6vw,72px); font-size:13.5px; color:var(--dim); display:flex; gap:18px; flex-wrap:wrap}
+.d4__foot a{color:var(--acc)}
+.d4__foot a:hover{text-decoration:underline; text-underline-offset:3px}
+
+@media (max-width:620px){
+  .d3__row{grid-template-columns:62px 1fr; row-gap:5px}
+  .d3__when{grid-column:2}
+}
+</style>
+
+<div class="bar">
+  <span class="bar__label">Direction</span>
+  <div class="tabs" role="tablist" aria-label="Design directions">
+    <button class="tab" role="tab" aria-selected="true"  data-go="1">Chromatic</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="2">Specimen</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="3">Departure</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="4">Quiet</button>
+  </div>
+  <div class="bar__right">
+    <span class="bar__label">Theme</span>
+    <div class="modeswitch">
+      <button data-mode="light" aria-pressed="true">Light</button>
+      <button data-mode="dark"  aria-pressed="false">Dark</button>
+    </div>
+  </div>
+</div>
+
+<p class="note">
+  Four directions, real content, both themes. <strong>Posts shown are things you actually did</strong> — the Apple Silicon migration, the PR-deploy bug, MealUnits — not placeholder text. Pick one, or tell me which parts of which to combine.
+</p>
+
+<div class="stage">
+
+  <!-- ============ 1 ============ -->
+  <section class="frame" data-panel="1">
+    <div class="frame__cap">
+      <span class="frame__name">Chromatic</span>
+      <span class="frame__desc">Your random accent is the whole identity — drag the slider.</span>
+    </div>
+    <div class="mock d1" id="d1">
+      <header class="d1__top">
+        <span class="d1__mark">MBS</span>
+        <nav class="d1__nav">
+          <a href="#">Writing</a><a href="#">Résumé</a><a href="#">Contact</a>
+        </nav>
+      </header>
+      <h1 class="d1__name">Momin<br>Bin<br><em>Shahid</em></h1>
+      <p class="d1__role">Lead Engineer at <b>Sastaticket.pk</b>. I build things for the web in Karachi, and occasionally for one specific person.</p>
+
+      <div class="d1__hue">
+        <span class="d1__huelabel">Accent</span>
+        <input type="range" min="0" max="359" value="266" id="hue" aria-label="Accent hue">
+        <span class="d1__huenum" id="huev">266°</span>
+      </div>
+
+      <div class="d1__grid">
+        <article class="d1__cell">
+          <div class="d1__cellk">Writing</div>
+          <h3 class="d1__cellt">Getting Gatsby 2 to build on Apple Silicon</h3>
+          <p class="d1__cellm">Three years of dead native modules, and the one override that fixed it.</p>
+        </article>
+        <article class="d1__cell">
+          <div class="d1__cellk">Writing</div>
+          <h3 class="d1__cellt">Your pull request is deploying to production</h3>
+          <p class="d1__cellm">A missing four-word condition, and how I found it in the deploy log.</p>
+        </article>
+        <article class="d1__cell">
+          <div class="d1__cellk">Project</div>
+          <h3 class="d1__cellt">MealUnits</h3>
+          <p class="d1__cellm">An insulin calculator I built for my brother. Offline, private, no accounts.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 ============ -->
+  <section class="frame" data-panel="2" hidden>
+    <div class="frame__cap">
+      <span class="frame__name">Specimen</span>
+      <span class="frame__desc">Type specimen sheet — JetBrains Mono, your existing stack, at scale.</span>
+    </div>
+    <div class="mock d2">
+      <header class="d2__head">
+        <span><b>MOMIN BIN SHAHID</b> — PERSONAL SITE</span>
+        <span>KARACHI <b>24.86°N 67.01°E</b></span>
+        <span>SET IN <b>JETBRAINS MONO</b></span>
+      </header>
+
+      <div class="d2__specimen">
+        <h1 class="d2__huge">Lead<br>Engineer<span>.</span></h1>
+        <p class="d2__sub">Building for the web at Sastaticket.pk —<br>and for one person in particular.</p>
+        <div class="d2__anno">weight 700 / tracking −0.055em / optical size ∞</div>
+      </div>
+
+      <div class="d2__cols">
+        <div class="d2__col">
+          <h3>Recent writing</h3>
+          <div class="d2__item"><a href="#">
+            <div class="d2__it">Getting Gatsby 2 to build on Apple Silicon</div>
+            <div class="d2__im">2026-09-14 · 8 min</div></a>
+          </div>
+          <div class="d2__item"><a href="#">
+            <div class="d2__it">Your pull request is deploying to production</div>
+            <div class="d2__im">2026-09-11 · 5 min</div></a>
+          </div>
+          <div class="d2__item"><a href="#">
+            <div class="d2__it">The service worker that wouldn't die</div>
+            <div class="d2__im">2026-08-30 · 11 min</div></a>
+          </div>
+        </div>
+        <div class="d2__col">
+          <h3>Built</h3>
+          <div class="d2__item"><a href="#">
+            <div class="d2__it">MealUnits</div>
+            <div class="d2__im">Offline insulin calculator · TypeScript</div></a>
+          </div>
+          <div class="d2__item"><a href="#">
+            <div class="d2__it">This site</div>
+            <div class="d2__im">Astro · static · no tracking</div></a>
+          </div>
+        </div>
+        <div class="d2__col">
+          <h3>Elsewhere</h3>
+          <p class="d2__meta">
+            <b>GitHub</b> @MominBinShahid<br>
+            <b>LinkedIn</b> in/mominbinshahid<br>
+            <b>X</b> @MominBinShahid<br><br>
+            Ask me about JavaScript, design patterns, or why your build broke.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 ============ -->
+  <section class="frame" data-panel="3" hidden>
+    <div class="frame__cap">
+      <span class="frame__name">Departure</span>
+      <span class="frame__desc">The visual language of your day job — boards, routes, ticket stubs.</span>
+    </div>
+    <div class="mock d3">
+      <div class="d3__strip">
+        <span class="d3__live"><span class="d3__dot"></span>Live</span>
+        <span>Karachi · UTC+05:00</span>
+        <span style="margin-left:auto">Now boarding</span>
+      </div>
+
+      <div class="d3__hero">
+        <div class="d3__eyebrow">Lead Engineer · Sastaticket.pk</div>
+        <h1 class="d3__name">Momin Bin<br>Shahid</h1>
+        <div class="d3__route">
+          <b>WordPress</b><span class="d3__line"></span><b>Gatsby</b><span class="d3__line"></span><b>Astro</b>
+        </div>
+      </div>
+
+      <div class="d3__board">
+        <a class="d3__row" href="#">
+          <span class="d3__code">M1 · 04</span>
+          <span class="d3__title">Getting Gatsby 2 to build on Apple Silicon</span>
+          <span class="d3__when">14 Sep</span>
+        </a>
+        <a class="d3__row" href="#">
+          <span class="d3__code">CI · 03</span>
+          <span class="d3__title">Your pull request is deploying to production</span>
+          <span class="d3__when">11 Sep</span>
+        </a>
+        <a class="d3__row" href="#">
+          <span class="d3__code">SW · 02</span>
+          <span class="d3__title">The service worker that wouldn't die</span>
+          <span class="d3__when">30 Aug</span>
+        </a>
+        <a class="d3__row" href="#">
+          <span class="d3__code">MU · 01</span>
+          <span class="d3__title">MealUnits — an insulin calculator for my brother</span>
+          <span class="d3__when">02 Aug</span>
+        </a>
+      </div>
+
+      <div class="d3__stub">
+        <div class="d3__f"><div class="d3__fk">Based in</div><div class="d3__fv">Karachi, PK</div></div>
+        <div class="d3__f"><div class="d3__fk">Writing</div><div class="d3__fv"><a href="#">All posts →</a></div></div>
+        <div class="d3__f"><div class="d3__fk">Résumé</div><div class="d3__fv"><a href="#">View →</a></div></div>
+        <div class="d3__f"><div class="d3__fk">Contact</div><div class="d3__fv"><a href="#">Say hello →</a></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4 ============ -->
+  <section class="frame" data-panel="4" hidden>
+    <div class="frame__cap">
+      <span class="frame__name">Quiet</span>
+      <span class="frame__desc">Restrained editorial. Cool-toned, wide margins, colour barely used.</span>
+    </div>
+    <div class="mock d4">
+      <div class="d4__wrap">
+        <header class="d4__top">
+          <span>Momin Bin Shahid</span>
+          <nav><a href="#">Writing</a><a href="#">Résumé</a><a href="#">Contact</a></nav>
+        </header>
+
+        <h1 class="d4__name">I build things for the web, mostly in Karachi.</h1>
+        <p class="d4__lede">Lead Engineer at Sastaticket.pk. Fourteen years of JavaScript, and <em>one small app that matters more than the rest of it.</em></p>
+        <p class="d4__body">
+          Most of what I do is unglamorous — making builds reproducible, making pages load faster, making sure the thing that worked yesterday still works today. Occasionally I write about it. I also built <a href="#">MealUnits</a>, an offline insulin calculator, for my brother.
+        </p>
+
+        <div class="d4__rule">Recent writing</div>
+        <a class="d4__post" href="#">
+          <h3 class="d4__pt">Getting Gatsby 2 to build on Apple Silicon</h3>
+          <div class="d4__pd">14 September 2026</div>
+        </a>
+        <a class="d4__post" href="#">
+          <h3 class="d4__pt">Your pull request is deploying to production</h3>
+          <div class="d4__pd">11 September 2026</div>
+        </a>
+        <a class="d4__post" href="#">
+          <h3 class="d4__pt">The service worker that wouldn't die</h3>
+          <div class="d4__pd">30 August 2026</div>
+        </a>
+
+        <div class="d4__foot">
+          <a href="#">GitHub</a><a href="#">LinkedIn</a><a href="#">X</a><a href="#">Email</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.tab');
+  var panels = document.querySelectorAll('[data-panel]');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.setAttribute('aria-selected', String(x === t)); });
+      panels.forEach(function(p){ p.hidden = p.getAttribute('data-panel') !== t.getAttribute('data-go'); });
+      window.scrollTo({top:0, behavior:'instant'});
+    });
+  });
+
+  var modes = document.querySelectorAll('[data-mode]');
+  modes.forEach(function(b){
+    b.addEventListener('click', function(){
+      var m = b.getAttribute('data-mode');
+      document.documentElement.setAttribute('data-mock', m);
+      modes.forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+    });
+  });
+  document.documentElement.setAttribute('data-mock','light');
+
+  var hue = document.getElementById('hue');
+  var huev = document.getElementById('huev');
+  var d1 = document.getElementById('d1');
+  if (hue) {
+    hue.addEventListener('input', function(){
+      d1.style.setProperty('--h', hue.value);
+      huev.textContent = hue.value + '°';
+    });
+  }
+})();
+</script>

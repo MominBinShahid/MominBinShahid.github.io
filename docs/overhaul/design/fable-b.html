@@ -1,0 +1,1131 @@
+<title>Ultramarine Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&display=swap">
+
+<style>
+/* ============================================================
+   Ultramarine Ledger — mockup fable-b
+   Accent = the hyperlink. One color, spent carefully.
+   Tokens live on body; the mockup theme toggle stamps
+   body[data-scheme] independently of the viewer's theme.
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+body {
+  /* --- light (default) --- */
+  --paper:   #FAFBFC;
+  --surface: #F0F2F6;
+  --ink:     #171A20;
+  --muted:   #5A6270;
+  --hair:    #E3E6EB;
+  --hair2:   #CBD0D8;
+  --dotring: rgba(23, 26, 32, 0.15);
+  --str:     #0E7490;
+
+  /* accent pairs — shuffleable, like the live site */
+  --accent-l: #2A3AD0;
+  --accent-d: #9AA8FF;
+  --accent:   var(--accent-l);
+
+  color-scheme: light;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+body[data-accent="viridian"] { --accent-l: #0A7A55; --accent-d: #5ED0A5; }
+body[data-accent="rose"]     { --accent-l: #B0295A; --accent-d: #FF8FB0; }
+body[data-accent="ochre"]    { --accent-l: #8A5F07; --accent-d: #E0B860; }
+
+@media (prefers-color-scheme: dark) {
+  body:not([data-scheme="light"]) {
+    --paper:   #0F1216;
+    --surface: #161B22;
+    --ink:     #E7E9EE;
+    --muted:   #8F97A6;
+    --hair:    #252C37;
+    --hair2:   #37404E;
+    --dotring: rgba(231, 233, 238, 0.18);
+    --str:     #6FC0D4;
+    --accent:  var(--accent-d);
+    color-scheme: dark;
+  }
+}
+
+body[data-scheme="dark"] {
+  --paper:   #0F1216;
+  --surface: #161B22;
+  --ink:     #E7E9EE;
+  --muted:   #8F97A6;
+  --hair:    #252C37;
+  --hair2:   #37404E;
+  --dotring: rgba(231, 233, 238, 0.18);
+  --str:     #6FC0D4;
+  --accent:  var(--accent-d);
+  color-scheme: dark;
+}
+
+::selection { background: var(--accent); color: var(--paper); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+[tabindex="-1"]:focus { outline: none; }
+
+.mono {
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+/* ---------- mockup chrome (not part of the site) ---------- */
+
+.chrome {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+  height: 48px;
+  padding: 0 24px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--hair);
+}
+.chrome-name {
+  align-self: center;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0 auto;
+}
+.tab {
+  position: relative;
+  border: 0;
+  background: none;
+  padding: 0 0.9rem;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); }
+.tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0.9rem;
+  right: 0.9rem;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+}
+.theme {
+  align-self: center;
+  border: 1px solid var(--hair2);
+  background: none;
+  color: var(--ink);
+  padding: 0.3rem 0.85rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.theme:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- frame: rail + content ---------- */
+
+.frame {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 64px 40px 120px;
+  display: grid;
+  grid-template-columns: 264px minmax(0, 1fr);
+  gap: 88px;
+  align-items: start;
+}
+
+.rail {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 1.75rem;
+}
+.monogram { display: block; width: 56px; height: 56px; margin-bottom: 1.1rem; }
+.rail-name {
+  margin: 0 0 0.35rem;
+  font-size: 1.375rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.rail-roles {
+  margin: 0 0 0.65rem;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rail-job { margin: 0 0 0.3rem; font-size: 0.9375rem; }
+.rail-loc {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.rail-links {
+  display: grid;
+  border-top: 1px solid var(--hair);
+}
+.rail-links a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--hair);
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.8125rem;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.rail-links a span { color: var(--muted); font-size: 0.75rem; transition: color 0.15s ease; }
+.rail-links a:hover, .rail-links a:hover span { color: var(--accent); }
+
+.rail-contact { display: grid; gap: 0.75rem; }
+.email {
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.8125rem;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.email:hover { color: var(--accent); }
+/* scraper-proof: the address exists only as CSS-generated text */
+.em::before { content: "MominBinShahid"; }
+.em::after  { content: "\0040gmail.com"; }
+.cv {
+  display: block;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--hair2);
+  border-radius: 2px;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.cv:hover { border-color: var(--accent); color: var(--accent); }
+
+.shuffle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.shuffle:hover { color: var(--ink); }
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: background 0.15s ease;
+}
+
+/* ---------- shared content patterns ---------- */
+
+.panel h1 { text-wrap: balance; }
+.panel:not([hidden]) { animation: rise 0.28s ease both; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.eyebrow {
+  margin: 0 0 0.9rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.eyebrow.is-accent { color: var(--accent); }
+
+.prose {
+  max-width: 68ch;
+  font-family: "Newsreader", Georgia, "Times New Roman", serif;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+.prose p { margin: 0 0 1.35rem; }
+.prose a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+.prose a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.prose strong { font-weight: 600; }
+
+/* ---------- home ---------- */
+
+.display {
+  margin: 0 0 2rem;
+  max-width: 21ch;
+  font-size: clamp(2.1rem, 4.4vw, 3rem);
+  font-weight: 520;
+  letter-spacing: -0.018em;
+  line-height: 1.14;
+}
+
+.now {
+  margin: 3rem 0;
+  padding: 1.6rem 0;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+  max-width: 68ch;
+}
+.now .eyebrow { margin-bottom: 0.7rem; }
+.now-text {
+  margin: 0 0 0.9rem;
+  font-size: 1.1875rem;
+  font-weight: 480;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  max-width: 52ch;
+  text-wrap: balance;
+}
+.now a {
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.8125rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+.now a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.pull {
+  margin: 2.75rem 0;
+  max-width: 30ch;
+  font-family: "Newsreader", Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  text-indent: -0.45ch; /* hang the opening quote */
+}
+.pull cite {
+  display: block;
+  margin-top: 0.6rem;
+  text-indent: 0;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-style: normal;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.section { margin-top: 4.25rem; }
+
+/* the six tiles, rebuilt as a ranked ledger */
+.ledger { border-top: 1px solid var(--hair); max-width: 68ch; }
+.ledger details { border-bottom: 1px solid var(--hair); }
+.ledger summary {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr) auto;
+  gap: 1.25rem;
+  align-items: baseline;
+  padding: 1.05rem 0;
+  cursor: pointer;
+  list-style: none;
+}
+.ledger summary::-webkit-details-marker { display: none; }
+.led-kick {
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+details.is-first .led-kick { color: var(--accent); }
+.led-head {
+  font-size: 1.1875rem;
+  font-weight: 520;
+  letter-spacing: -0.008em;
+  transition: color 0.15s ease;
+}
+.ledger summary:hover .led-head { color: var(--accent); }
+.led-ind {
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.led-ind::before { content: "+"; }
+details[open] .led-ind::before { content: "\2212"; }
+.led-body {
+  margin: 0;
+  padding: 0 0 1.35rem;
+  max-width: 52ch;
+  font-family: "Newsreader", Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+@supports (margin-left: 1px) {
+  .led-body { margin-left: calc(11rem + 1.25rem); }
+}
+
+/* stack table */
+.stack { border-top: 1px solid var(--hair); max-width: 68ch; }
+.stackrow {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 1.25rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--hair);
+}
+.stackrow dt {
+  margin: 0;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.15rem;
+}
+.stackrow dd {
+  margin: 0;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+/* quotes widget */
+.quotewell { margin: 0; max-width: 68ch; }
+.quotewell blockquote {
+  margin: 0 0 0.9rem;
+  max-width: 44ch;
+  font-family: "Newsreader", Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.375rem;
+  line-height: 1.45;
+  text-indent: -0.45ch;
+  transition: opacity 0.2s ease;
+}
+.quotewell figcaption {
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: opacity 0.2s ease;
+}
+.quote-next {
+  margin-top: 1.1rem;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+.quote-next:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* say hello */
+.hello-lede {
+  margin: 0 0 1.5rem;
+  max-width: 44ch;
+  font-size: 1.375rem;
+  font-weight: 480;
+  line-height: 1.4;
+  letter-spacing: -0.008em;
+  text-wrap: balance;
+}
+.email-big { font-size: 1rem; color: var(--accent); }
+.email-big:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---------- blog index ---------- */
+
+.index-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  margin-bottom: 2.25rem;
+}
+.index-head h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 560;
+  letter-spacing: -0.015em;
+}
+.index-count {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.entries { border-top: 1px solid var(--hair); }
+.entry {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--hair);
+  text-decoration: none;
+  color: inherit;
+}
+.entry-date {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.entry-title {
+  font-size: 1.1875rem;
+  font-weight: 520;
+  letter-spacing: -0.008em;
+  line-height: 1.35;
+  transition: color 0.15s ease;
+}
+a.entry:hover .entry-title { color: var(--accent); }
+.entry-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--tagc, var(--muted));
+  box-shadow: inset 0 0 0 1px var(--dotring);
+}
+.index-note {
+  margin-top: 1.4rem;
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
+/* ---------- post ---------- */
+
+.crumb {
+  display: inline-block;
+  margin-bottom: 2.25rem;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.crumb:hover { color: var(--accent); }
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.1rem;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.post-meta .dot { flex: none; }
+.post-title {
+  margin: 0 0 2.25rem;
+  max-width: 24ch;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 540;
+  letter-spacing: -0.018em;
+  line-height: 1.16;
+}
+
+.wavefig { margin: 0 0 3rem; max-width: 68ch; }
+.wavefig svg { display: block; width: 100%; height: auto; }
+.wave-base { fill: var(--hair2); }
+.wave-flag { fill: var(--accent); }
+.wavefig figcaption {
+  margin-top: 0.8rem;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.article { max-width: 68ch; }
+.article .lede {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+.article h2 {
+  margin: 2.75rem 0 1rem;
+  font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.375rem;
+  font-weight: 560;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
+}
+.article ul {
+  margin: 0 0 1.35rem;
+  padding-left: 1.4rem;
+}
+.article li { margin-bottom: 0.55rem; }
+.article li::marker { color: var(--muted); }
+.article blockquote {
+  margin: 2.25rem 0;
+  padding-left: 1.4rem;
+  border-left: 2px solid var(--accent);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+.article blockquote p { margin: 0; }
+
+/* code — hand-highlighted, no libraries */
+.codeblock { margin: 2rem 0; max-width: 68ch; }
+.codeblock figcaption {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.codeblock pre {
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: 0 0 3px 3px;
+  overflow-x: auto;
+}
+.codeblock code {
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.k { color: var(--accent); }          /* keywords take the accent — the shuffle reaches the code */
+.s { color: var(--str); }
+.c { color: var(--muted); font-style: italic; }
+.f { font-weight: 600; }
+
+.post-end {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  margin-top: 4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--hair);
+  max-width: 68ch;
+}
+.post-end a {
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.8125rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+.post-end a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.post-end .next {
+  font-family: "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 940px) {
+  .frame {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+    padding: 40px 24px 96px;
+  }
+  .rail { position: static; }
+  .chrome { padding: 0 16px; gap: 0.75rem; }
+  .chrome-name { display: none; }
+  .ledger summary { grid-template-columns: minmax(0, 1fr) auto; }
+  .led-kick { grid-column: 1 / -1; }
+  .led-body { margin-left: 0; }
+  .stackrow { grid-template-columns: minmax(0, 1fr); gap: 0.35rem; }
+  .entry { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
+  .entry-date { order: -1; }
+}
+
+/* ---------- motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+
+<!-- ================= mockup chrome ================= -->
+<header class="chrome">
+  <span class="chrome-name mono">fable-b · Ultramarine Ledger</span>
+  <nav class="tabs" role="tablist" aria-label="Mockup views">
+    <button class="tab" role="tab" id="tab-home" aria-selected="true" aria-controls="view-home" type="button">Home</button>
+    <button class="tab" role="tab" id="tab-blog" aria-selected="false" aria-controls="view-blog" type="button">Writing</button>
+    <button class="tab" role="tab" id="tab-post" aria-selected="false" aria-controls="view-post" type="button">Post</button>
+  </nav>
+  <button class="theme mono" id="theme-toggle" type="button" aria-pressed="false">Dark</button>
+</header>
+
+<div class="frame">
+
+  <!-- ================= persistent identity rail ================= -->
+  <aside class="rail" aria-label="Momin Bin Shahid">
+    <div>
+      <span class="monogram" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="56" height="56" role="img" aria-hidden="true">
+          <circle cx="32" cy="32" r="31" fill="var(--ink)"></circle>
+          <text x="29" y="42" text-anchor="middle" font-family="Schibsted Grotesk, Arial, sans-serif" font-size="27" font-weight="650" fill="var(--paper)">M</text>
+          <circle cx="45" cy="40" r="3.4" fill="var(--accent)"></circle>
+        </svg>
+      </span>
+      <p class="rail-name">Momin Bin Shahid</p>
+      <p class="rail-roles">Full-Stack &amp; AI Engineer</p>
+      <p class="rail-job">Lead Engineer · Sastaticket.pk</p>
+      <p class="rail-loc mono">Karachi, Pakistan · <span id="krt">--:--</span> PKT</p>
+    </div>
+
+    <nav class="rail-links" aria-label="Profiles">
+      <a href="https://github.com/MominBinShahid">GitHub <span aria-hidden="true">&#8599;</span></a>
+      <a href="https://linkedin.com/in/mominbinshahid">LinkedIn <span aria-hidden="true">&#8599;</span></a>
+      <a href="https://stackoverflow.com/users/9137804/MominBinShahid">Stack Overflow <span aria-hidden="true">&#8599;</span></a>
+      <a href="https://twitter.com/MominBinShahid">X / Twitter <span aria-hidden="true">&#8599;</span></a>
+    </nav>
+
+    <div class="rail-contact">
+      <a class="email" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;MominBinShahid&#64;gmail&#46;com" aria-label="Email Momin Bin Shahid"><span class="em" aria-hidden="true"></span></a>
+      <a class="cv" href="#" onclick="return false">Download CV</a>
+    </div>
+
+    <button class="shuffle" id="shuffle" type="button" title="Or press A">
+      <span class="swatch" aria-hidden="true"></span>Shuffle accent
+    </button>
+  </aside>
+
+  <main>
+
+    <!-- ================= HOME ================= -->
+    <section class="panel" id="view-home" role="tabpanel" aria-labelledby="tab-home">
+      <p class="eyebrow mono">About</p>
+      <h1 class="display" tabindex="-1">I love building things that live on the web &mdash; and now, things that think.</h1>
+
+      <div class="prose">
+        <p>For eight years I&rsquo;ve been architecting web applications from scratch; lately that has expanded into <strong>AI agents and LLMs</strong>. At Sastaticket.pk I build AI-powered systems, work directly with stakeholders, and lead a team of awesome engineers.</p>
+        <p>I believe in leaving codebases better than I found them &mdash; call it the <strong>Boy Scout Rule</strong> of programming. Most of my professional work has been closed-source, but I&rsquo;m increasingly contributing to and learning from the open-source community.</p>
+      </div>
+
+      <blockquote class="pull">
+        &ldquo;The web taught me everything I know, and I want to give back.&rdquo;
+      </blockquote>
+
+      <div class="now">
+        <p class="eyebrow mono is-accent">Now</p>
+        <p class="now-text">An AI agent that reviews hundreds of customer support calls daily &mdash; doing in one day what would take a team of humans several days, with a consistency humans simply can&rsquo;t match.</p>
+        <a href="#" data-goto="post">Read the write-up &rarr;</a>
+      </div>
+
+      <section class="section" aria-label="In brief">
+        <p class="eyebrow mono">In brief</p>
+        <div class="ledger">
+          <details class="is-first" open>
+            <summary>
+              <span class="led-kick">Forever curious</span>
+              <span class="led-head">Code &amp; Consciousness</span>
+              <span class="led-ind" aria-hidden="true"></span>
+            </summary>
+            <p class="led-body">Equally fascinated by philosophy and esoteric discussions about the nature of reality, consciousness, and what it means to be alive in this strange universe.</p>
+          </details>
+          <details>
+            <summary>
+              <span class="led-kick">8 years building</span>
+              <span class="led-head">Full-Stack to AI Agents</span>
+              <span class="led-ind" aria-hidden="true"></span>
+            </summary>
+            <p class="led-body">Internet privacy &amp; security at Securiti.ai, metadata platforms, ERP, HRMS, EdTech, travel tech &mdash; and now agentic systems. Users across the USA, Europe, the Middle East and South Asia.</p>
+          </details>
+          <details>
+            <summary>
+              <span class="led-kick">JavaScript + Python</span>
+              <span class="led-head">Full-Stack &amp; AI Ecosystems</span>
+              <span class="led-ind" aria-hidden="true"></span>
+            </summary>
+            <p class="led-body">Eight years of JavaScript across React, Vue, Angular and Node; Python for Django and everything agentic. The full stack is itemised below.</p>
+          </details>
+          <details>
+            <summary>
+              <span class="led-kick">Lead engineer</span>
+              <span class="led-head">Mentoring Engineers Daily</span>
+              <span class="led-ind" aria-hidden="true"></span>
+            </summary>
+            <p class="led-body">The satisfaction of mentoring engineers and watching them grow &mdash; and leading a team of awesome engineers at Sastaticket.pk.</p>
+          </details>
+          <details>
+            <summary>
+              <span class="led-kick">Customer focused</span>
+              <span class="led-head">Building What Users Need</span>
+              <span class="led-ind" aria-hidden="true"></span>
+            </summary>
+            <p class="led-body">Service consultancies and product companies both taught me the same thing: great software is about understanding people, not just writing code.</p>
+          </details>
+          <details>
+            <summary>
+              <span class="led-kick">Learn &amp; solve</span>
+              <span class="led-head">The Never-Ending Loop</span>
+              <span class="led-ind" aria-hidden="true"></span>
+            </summary>
+            <p class="led-body">The thrill of solving gnarly problems and the never-ending rabbit hole of learning new technologies. I&rsquo;m that person who reads documentation for fun (well, sometimes &mdash; now I let AI summarize it for me).</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Stack">
+        <p class="eyebrow mono">Stack</p>
+        <dl class="stack">
+          <div class="stackrow"><dt>Frontend</dt><dd>React.js · Vue.js · Angular · JAMstack</dd></div>
+          <div class="stackrow"><dt>Stacks</dt><dd>MERN · MEVN · MEAN</dd></div>
+          <div class="stackrow"><dt>Backend</dt><dd>Node.js · Python · Django</dd></div>
+          <div class="stackrow"><dt>AI</dt><dd>LangChain · Google GenAI · OpenAI · Anthropic Claude · AI Agents · LLMs</dd></div>
+          <div class="stackrow"><dt>Infra</dt><dd>Docker · Kubernetes · AWS · GCP · Azure · On-prem &amp; cloud · CI/CD</dd></div>
+          <div class="stackrow"><dt>Languages</dt><dd>JavaScript · TypeScript · Python</dd></div>
+        </dl>
+      </section>
+
+      <section class="section" aria-label="Quotes">
+        <p class="eyebrow mono">Quotes</p>
+        <figure class="quotewell">
+          <blockquote id="quote-text">&ldquo;We are a way for the cosmos to know itself.&rdquo;</blockquote>
+          <figcaption id="quote-attr">Carl Sagan</figcaption>
+        </figure>
+        <button class="quote-next" id="quote-next" type="button">Another &rarr;</button>
+      </section>
+
+      <section class="section" aria-label="Say hello">
+        <p class="eyebrow mono">Say hello</p>
+        <p class="hello-lede">Want to build something together? Have an interesting AI problem? Or just want to geek out about the latest in LLMs and web tech?</p>
+        <a class="email email-big" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;MominBinShahid&#64;gmail&#46;com" aria-label="Email Momin Bin Shahid"><span class="em" aria-hidden="true"></span></a>
+      </section>
+    </section>
+
+    <!-- ================= BLOG INDEX ================= -->
+    <section class="panel" id="view-blog" role="tabpanel" aria-labelledby="tab-blog" hidden>
+      <div class="index-head">
+        <h1 tabindex="-1">Writing</h1>
+        <span class="index-count mono">6 entries</span>
+      </div>
+
+      <div class="entries">
+        <a class="entry" href="#" data-goto="post">
+          <span class="entry-date mono">2026-08-14</span>
+          <span class="entry-title">Teaching an agent to listen to 400 support calls a day</span>
+          <span class="entry-tag mono"><i class="dot" style="--tagc:#3572A5"></i>python</span>
+        </a>
+        <div class="entry">
+          <span class="entry-date mono">2026-03-02</span>
+          <span class="entry-title">What IndexedDB taught me about the same-origin policy</span>
+          <span class="entry-tag mono"><i class="dot" style="--tagc:#f0da50"></i>javascript</span>
+        </div>
+        <div class="entry">
+          <span class="entry-date mono">2025-11-19</span>
+          <span class="entry-title">Your pull request is deploying to production</span>
+          <span class="entry-tag mono"><i class="dot" style="--tagc:#90c53f"></i>Node.js</span>
+        </div>
+        <div class="entry">
+          <span class="entry-date mono">2024-06-30</span>
+          <span class="entry-title">MealUnits &mdash; an insulin calculator for my brother</span>
+          <span class="entry-tag mono"><i class="dot" style="--tagc:#61dbfa"></i>reactjs</span>
+        </div>
+        <div class="entry">
+          <span class="entry-date mono">2022-09-08</span>
+          <span class="entry-title">The service worker that wouldn&rsquo;t die</span>
+          <span class="entry-tag mono"><i class="dot" style="--tagc:#f0da50"></i>javascript</span>
+        </div>
+        <div class="entry">
+          <span class="entry-date mono">2021-05-23</span>
+          <span class="entry-title">Getting Gatsby 2 to build on Apple Silicon</span>
+          <span class="entry-tag mono"><i class="dot" style="--tagc:#6f309f"></i>Gatsby.js</span>
+        </div>
+      </div>
+
+      <p class="index-note mono">Mockup note: the first entry opens the post view.</p>
+    </section>
+
+    <!-- ================= POST ================= -->
+    <section class="panel" id="view-post" role="tabpanel" aria-labelledby="tab-post" hidden>
+      <a class="crumb" href="#" data-goto="blog">&larr; Writing</a>
+
+      <div class="post-meta">
+        <span>2026-08-14</span><span aria-hidden="true">·</span>
+        <i class="dot" style="--tagc:#3572A5"></i><span>python</span><span aria-hidden="true">·</span>
+        <span>6 min read</span>
+      </div>
+      <h1 class="post-title" tabindex="-1">Teaching an agent to listen to 400 support calls a day</h1>
+
+      <figure class="wavefig">
+        <svg id="wave" viewBox="0 0 840 88" preserveAspectRatio="none" role="img" aria-label="Waveform of a support call with one span highlighted"></svg>
+        <figcaption>Thirty-one seconds of a refund call, as the agent hears it. The highlighted span is where it flagged a skipped verification step.</figcaption>
+      </figure>
+
+      <article class="article prose">
+        <p class="lede">Sastaticket&rsquo;s support floor takes hundreds of calls a day &mdash; refunds, reschedules, a passenger at the wrong counter in the wrong city. Every one of those calls is a promise made on the company&rsquo;s behalf. Until recently, we could check almost none of them.</p>
+
+        <h2>The math never worked</h2>
+        <p>A careful human reviewer gets through maybe thirty calls in a shift, and only a fraction of those with real attention. Reviewing what the floor produces in one day would take a team of people several days &mdash; so QA wasn&rsquo;t a process, it was a lottery. Most calls were simply never heard twice.</p>
+
+        <h2>What the agent actually does</h2>
+        <p>The system I built reviews the whole day&rsquo;s calls, every day, with high accuracy. It is not one clever prompt. It is a pipeline, and every stage is boring on purpose:</p>
+        <ul>
+          <li>Pull the day&rsquo;s recordings, with the order context attached to each one.</li>
+          <li>Transcribe them. Our calls slide between Urdu and English mid-sentence, so this step decides everything downstream.</li>
+          <li>Evaluate each transcript against a rubric &mdash; greeting, identity verification, the accuracy of what the agent promised, tone under pressure.</li>
+          <li>Attach evidence. Every flag carries the exact quote it is based on, so a human can check the machine&rsquo;s work in seconds.</li>
+          <li>Compile the day into one report the QA team reads with their morning tea.</li>
+        </ul>
+
+        <figure class="codeblock">
+          <figcaption><span>review_call.py</span><span>simplified</span></figcaption>
+          <pre><code><span class="k">async def</span> <span class="f">review</span>(call: Call) -&gt; Review:
+    <span class="c">"""One call, one verdict, receipts attached."""</span>
+    transcript = <span class="k">await</span> transcribe(call.audio, langs=(<span class="s">"ur"</span>, <span class="s">"en"</span>))
+
+    findings = []
+    <span class="k">for</span> check <span class="k">in</span> RUBRIC:  <span class="c"># greeting, verification, promises, tone</span>
+        finding = <span class="k">await</span> evaluate(transcript, check)
+        findings.append(finding)
+
+    <span class="k">return</span> Review(
+        call_id=call.id,
+        score=weighted_score(findings),
+        evidence=[f.quote <span class="k">for</span> f <span class="k">in</span> findings <span class="k">if</span> f.flagged],
+    )</code></pre>
+        </figure>
+
+        <p>That&rsquo;s the whole shape of it. The agent does in one day what would take a team of humans several days &mdash; and it never gets tired of call number 400.</p>
+
+        <blockquote>
+          <p>There&rsquo;s something magical about teaching machines to understand context and take action &#10024;</p>
+        </blockquote>
+
+        <h2>Consistency is the feature</h2>
+        <p>Accuracy gets the headlines, but consistency is what changed the floor. A human reviewer on Friday afternoon is not the reviewer they were on Monday morning. The agent applies the same rubric to call 1 and call 400, with a consistency humans simply can&rsquo;t match. An agent flagged twice in one week is now a signal, not an anecdote.</p>
+
+        <h2>If you&rsquo;re building one</h2>
+        <p>Transcription is the foundation &mdash; every rupee spent there pays for itself downstream. Rubric design turned out to be product work, not prompt work; the interesting arguments were with the QA leads about what &ldquo;verified&rdquo; means, not with the model. And keep people in the loop: the agent surfaces, humans decide. That division of labour is why the team trusts it.</p>
+        <p>Building something like this, or want to geek out about agents? <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;MominBinShahid&#64;gmail&#46;com">My inbox is open</a>.</p>
+      </article>
+
+      <nav class="post-end" aria-label="Post navigation">
+        <a href="#" data-goto="blog">&larr; All writing</a>
+        <span class="next">Next: MealUnits &mdash; an insulin calculator for my brother</span>
+      </nav>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- tabs ---------- */
+  var views = ["home", "blog", "post"];
+  function activate(name) {
+    if (views.indexOf(name) === -1) return;
+    views.forEach(function (v) {
+      var panel = document.getElementById("view-" + v);
+      var tab = document.getElementById("tab-" + v);
+      var on = v === name;
+      if (panel) panel.hidden = !on;
+      if (tab) tab.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+  }
+  views.forEach(function (v) {
+    var tab = document.getElementById("tab-" + v);
+    if (tab) tab.addEventListener("click", function () { activate(v); });
+  });
+  document.addEventListener("click", function (e) {
+    var g = e.target.closest ? e.target.closest("[data-goto]") : null;
+    if (!g) return;
+    e.preventDefault();
+    var name = g.getAttribute("data-goto");
+    activate(name);
+    var h = document.querySelector("#view-" + name + " h1");
+    if (h) h.focus({ preventScroll: true });
+  });
+
+  /* ---------- theme toggle (independent of viewer theme) ---------- */
+  var themeBtn = document.getElementById("theme-toggle");
+  function currentScheme() {
+    return document.body.dataset.scheme ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  }
+  function paintThemeBtn() {
+    var dark = currentScheme() === "dark";
+    themeBtn.textContent = dark ? "Light" : "Dark";
+    themeBtn.setAttribute("aria-pressed", dark ? "true" : "false");
+  }
+  themeBtn.addEventListener("click", function () {
+    document.body.dataset.scheme = currentScheme() === "dark" ? "light" : "dark";
+    paintThemeBtn();
+  });
+  paintThemeBtn();
+
+  /* ---------- random accent (kept from the live site) ---------- */
+  var accents = ["", "viridian", "rose", "ochre"];
+  function shuffleAccent() {
+    var now = document.body.dataset.accent || "";
+    var pool = accents.filter(function (a) { return a !== now; });
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    if (pick) { document.body.dataset.accent = pick; }
+    else { delete document.body.dataset.accent; }
+  }
+  var shuffleBtn = document.getElementById("shuffle");
+  if (shuffleBtn) shuffleBtn.addEventListener("click", shuffleAccent);
+
+  /* ---------- keyboard ---------- */
+  document.addEventListener("keydown", function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+    if (e.key === "1") activate("home");
+    else if (e.key === "2") activate("blog");
+    else if (e.key === "3") activate("post");
+    else if (e.key === "a" || e.key === "A") shuffleAccent();
+    else if (e.key === "d" || e.key === "D") themeBtn.click();
+  });
+
+  /* ---------- Karachi clock ---------- */
+  var krt = document.getElementById("krt");
+  function tick() {
+    try {
+      krt.textContent = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Karachi", hour: "2-digit", minute: "2-digit", hour12: false
+      }).format(new Date());
+    } catch (err) { krt.textContent = ""; }
+  }
+  if (krt) { tick(); setInterval(tick, 30000); }
+
+  /* ---------- quotes widget ---------- */
+  var quotes = [
+    { q: "“We are a way for the cosmos to know itself.”", a: "Carl Sagan" },
+    { q: "“The best way to predict the future is to invent it.”", a: "Alan Kay" },
+    { q: "“Simplicity is prerequisite for reliability.”", a: "Edsger W. Dijkstra" },
+    { q: "“The most profound technologies are those that disappear.”", a: "Mark Weiser" }
+  ];
+  var qi = 0;
+  var qText = document.getElementById("quote-text");
+  var qAttr = document.getElementById("quote-attr");
+  var qBtn = document.getElementById("quote-next");
+  function setQuote() {
+    qText.textContent = quotes[qi].q;
+    qAttr.textContent = quotes[qi].a;
+  }
+  if (qBtn) qBtn.addEventListener("click", function () {
+    qi = (qi + 1) % quotes.length;
+    if (reduced) { setQuote(); return; }
+    qText.style.opacity = "0";
+    qAttr.style.opacity = "0";
+    setTimeout(function () {
+      setQuote();
+      qText.style.opacity = "1";
+      qAttr.style.opacity = "1";
+    }, 200);
+  });
+
+  /* ---------- waveform banner (authored, deterministic) ---------- */
+  function mulberry32(seed) {
+    return function () {
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  var wave = document.getElementById("wave");
+  if (wave) {
+    var rnd = mulberry32(1187);
+    var NS = "http://www.w3.org/2000/svg";
+    var n = 140, bw = 4, gap = 2, H = 88;
+    var prev = 0.42;
+    for (var i = 0; i < n; i++) {
+      var v = 0.30 * rnd() + 0.62 * prev + 0.08 * rnd();
+      prev = v;
+      var h = Math.max(5, Math.round(6 + v * 66));
+      var r = document.createElementNS(NS, "rect");
+      r.setAttribute("x", String(i * (bw + gap)));
+      r.setAttribute("y", String(Math.round((H - h) / 2)));
+      r.setAttribute("width", String(bw));
+      r.setAttribute("height", String(h));
+      r.setAttribute("rx", "1.5");
+      r.setAttribute("class", (i >= 96 && i <= 112) ? "wave-flag" : "wave-base");
+      wave.appendChild(r);
+    }
+  }
+
+  /* ---------- console easter egg (kept from the live site) ---------- */
+  try {
+    var acc = getComputedStyle(document.body).getPropertyValue("--accent").trim() || "#2A3AD0";
+    console.log(
+      "%cOh, hello 👋",
+      "font: 600 16px 'Schibsted Grotesk', sans-serif; color:" + acc + ";"
+    );
+    console.log(
+      "Want to build something together? Have an interesting AI problem?\n" +
+      "Or just want to geek out about the latest in LLMs and web tech?\n" +
+      "→ MominBinShahid@gmail.com"
+    );
+    console.log("Try: 1 / 2 / 3 to switch views · D for dark · A to shuffle the accent.");
+  } catch (err) { /* consoles are optional */ }
+})();
+</script>

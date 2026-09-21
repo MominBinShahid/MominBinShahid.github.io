@@ -56,11 +56,18 @@ typings/
 
 # gatsby files
 .cache/
-public
+# Anchored. Unanchored `public` also matched site/public/, which is Astro's
+# SOURCE directory - .nojekyll, robots.txt, sw.js and every icon live there.
+# They were being silently excluded from every commit.
+/public
 
 # Mac files
 .DS_Store
-Icon?
+# macOS writes a custom-folder-icon file literally named `Icon` + CR. `Icon?`
+# matched that - and, with core.ignorecase=true on macOS, also matched any
+# directory named `icons`, which silently excluded site/public/icons entirely.
+# A control-character class matches the real file and nothing a human would name.
+Icon[[:cntrl:]]
 
 # Yarn
 .yarn

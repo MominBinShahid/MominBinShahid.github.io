@@ -1,0 +1,712 @@
+<title>Beyond the Sample (Fable)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+
+<style>
+  /* ============ tokens ============ */
+  html, body { margin: 0; padding: 0; }
+  body { background: #F4F7FA; }
+
+  #site {
+    /* light: crisp, technical */
+    --bg: #F4F7FA;
+    --surface: #FFFFFF;
+    --text: #20262E;
+    --muted: #5B6673;
+    --border: #D8E0E7;
+    --hairline: #E3E9EF;
+    --dot-faint: #C9D4DD;
+    --nav-veil: rgba(244, 247, 250, 0.74);
+    --nav-line: rgba(32, 38, 46, 0.08);
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: clip;
+    transition: background-color .25s ease, color .25s ease;
+  }
+  #site[data-theme="dark"] {
+    /* dark: composed deep marine, not an inversion */
+    --bg: #0A1722;
+    --surface: #0F2130;
+    --text: #D9E4EC;
+    --muted: #8CA1B2;
+    --border: #23394B;
+    --hairline: #182E3F;
+    --dot-faint: #21404F;
+    --nav-veil: rgba(10, 23, 34, 0.66);
+    --nav-line: rgba(217, 228, 236, 0.08);
+  }
+
+  /* accent families: one chosen per visit, shade tuned per theme */
+  #site.accent-cobalt    { --accent: #1C4FD8; --accent-ink: #FFFFFF; }
+  #site.accent-raspberry { --accent: #C11E5F; --accent-ink: #FFFFFF; }
+  #site.accent-teal      { --accent: #0B7A6C; --accent-ink: #FFFFFF; }
+  #site[data-theme="dark"].accent-cobalt    { --accent: #7FA9FF; --accent-ink: #081521; }
+  #site[data-theme="dark"].accent-raspberry { --accent: #FF85AC; --accent-ink: #081521; }
+  #site[data-theme="dark"].accent-teal      { --accent: #45D0BD; --accent-ink: #081521; }
+
+  #site ::selection { background: var(--accent); color: var(--accent-ink); }
+
+  #site a:focus-visible,
+  #site button:focus-visible,
+  #site textarea:focus-visible,
+  #site [tabindex]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .panel:focus { outline: none; }
+
+  .shell { max-width: 1140px; margin: 0 auto; padding-left: clamp(20px, 4vw, 48px); padding-right: clamp(20px, 4vw, 48px); }
+
+  /* ============ skip link ============ */
+  .skip {
+    position: absolute; left: -9999px; top: 0; z-index: 200;
+    background: var(--accent); color: var(--accent-ink);
+    padding: 10px 16px; font: 600 .9rem 'IBM Plex Sans', sans-serif; text-decoration: none;
+  }
+  .skip:focus { left: 12px; top: 12px; }
+
+  /* ============ transparent nav ============ */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--nav-veil);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--nav-line);
+  }
+  .nav-row { display: flex; align-items: center; gap: 26px; min-height: 62px; }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-right: auto; text-decoration: none; color: var(--text);
+    font: 600 .95rem 'IBM Plex Sans', sans-serif; letter-spacing: .01em;
+  }
+  .brand .glyph { font-size: 1.15rem; line-height: 1; }
+  .site-nav { display: flex; align-items: center; gap: 22px; }
+  .site-nav a {
+    text-decoration: none; color: var(--muted);
+    font: 500 .88rem 'IBM Plex Sans', sans-serif; letter-spacing: .02em;
+    padding: 6px 2px; transition: color .15s ease;
+  }
+  .site-nav a:hover { color: var(--text); }
+  .site-nav a[aria-current="page"] { color: var(--text); box-shadow: inset 0 -2px 0 var(--accent); }
+  .theme-toggle {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 6px;
+    background: transparent; color: var(--muted); cursor: pointer;
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-toggle svg { width: 17px; height: 17px; }
+  #site[data-theme="light"] .icon-sun { display: none; }
+  #site[data-theme="dark"] .icon-moon { display: none; }
+
+  /* ============ type ============ */
+  .kicker {
+    display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline;
+    font: 500 .74rem/1.5 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 20px;
+  }
+  .kicker .kn { color: var(--accent); }
+  .sect-h {
+    font: 600 clamp(2rem, 4vw, 3.1rem)/1.02 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+    letter-spacing: .01em; color: var(--text); margin: 0 0 26px;
+  }
+  .copy p { margin: 0 0 18px; max-width: 60ch; }
+  .copy a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .quiet-link { color: var(--muted); font-size: .95rem; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .15s ease; }
+  .quiet-link:hover { color: var(--accent); }
+
+  /* ============ buttons ============ */
+  .btn {
+    display: inline-flex; align-items: center; gap: .5em;
+    padding: .8em 1.3em; border-radius: 6px; border: 1px solid transparent;
+    font: 600 .98rem 'IBM Plex Sans', sans-serif; text-decoration: none; cursor: pointer;
+    transition: filter .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn .arr { display: inline-block; transition: transform .15s ease; }
+  .btn-primary:hover .arr { transform: translateX(3px); }
+  .btn-ghost { color: var(--text); border-color: var(--border); background: transparent; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+
+  /* ============ hero ============ */
+  .hero { padding: clamp(60px, 10vh, 118px) 0 clamp(48px, 8vh, 84px); }
+  .hero-grid {
+    display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(32px, 5vw, 72px); align-items: end;
+  }
+  .hero-h {
+    font: 700 clamp(3.2rem, 8vw, 6.8rem)/0.96 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+    letter-spacing: .004em; color: var(--text); margin: 0 0 26px;
+  }
+  .hero-h .hh-line { display: block; }
+  .hero-h .hl { color: var(--accent); font-style: normal; }
+  .hero-sub { font-size: clamp(1.05rem, 1.5vw, 1.2rem); line-height: 1.6; color: var(--muted); max-width: 54ch; margin: 0 0 30px; }
+  .hero-id {
+    margin-top: 26px;
+    font: 500 .78rem/1.6 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: .09em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* the field: a sample of 7 lit marks against a field of hundreds */
+  .field { position: relative; height: clamp(250px, 30vw, 430px); }
+  .field canvas { display: block; position: absolute; inset: 0; }
+  .field-label {
+    position: absolute; pointer-events: none;
+    font: 500 .7rem/1.5 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: .09em; text-transform: uppercase; color: var(--muted);
+  }
+  .fl-sample { left: 4px; top: 50px; color: var(--accent); }
+  .fl-field { right: 6px; bottom: 2px; }
+  .field-hint { display: none; margin-top: 12px; font: 400 .72rem/1.5 'IBM Plex Mono', 'Courier New', monospace; letter-spacing: .06em; color: var(--muted); }
+  @media (hover: hover) and (pointer: fine) { .field-hint { display: block; } }
+  @media (prefers-reduced-motion: reduce) { .field-hint { display: none !important; } }
+
+  /* ============ sections ============ */
+  .sect { padding: clamp(54px, 9vh, 108px) 0; }
+
+  .p-first { font-size: 1.2rem; line-height: 1.6; }
+  .p-second { max-width: 52ch; }
+  .p-third { max-width: 40ch; font-weight: 600; }
+  .offer { border-top: 1px solid var(--hairline); margin-top: 30px; padding-top: 24px; max-width: 62ch; }
+  .offer strong { color: var(--text); }
+
+  .band { background: var(--surface); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+  .evidence-grid { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: clamp(34px, 5vw, 64px); }
+  .stack-k {
+    font: 500 .74rem/1 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 6px 0 8px;
+  }
+  .stack-list { list-style: none; margin: 0; padding: 0; font: 500 .86rem/1 'IBM Plex Mono', 'Courier New', monospace; letter-spacing: .05em; }
+  .stack-list li { padding: 13px 2px; border-top: 1px solid var(--hairline); color: var(--text); }
+  .stack-list li:last-child { border-bottom: 1px solid var(--hairline); }
+
+  .eng-row { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 28px; padding: 26px 0; border-top: 1px solid var(--hairline); }
+  .eng-row:last-of-type { border-bottom: 1px solid var(--hairline); }
+  .eng-label {
+    font: 500 .76rem/1.7 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-top: 3px;
+  }
+  .eng-row p { margin: 0; max-width: 58ch; }
+  .tease { margin: 26px 0 30px; font-size: 1.08rem; max-width: 56ch; }
+  .tease a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+  .steps { list-style: none; counter-reset: step; margin: 0; padding: 0; }
+  .steps li { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 24px; padding: 32px 0; border-top: 1px solid var(--hairline); }
+  .steps li:last-child { border-bottom: 1px solid var(--hairline); }
+  .step-n { font: 700 3.2rem/0.9 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif; color: var(--accent); }
+  .steps h3 { margin: 0 0 8px; font: 600 1.35rem/1.2 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif; letter-spacing: .015em; }
+  .steps p { margin: 0; max-width: 58ch; color: var(--muted); }
+  .steps p, .steps h3 { align-self: start; }
+  .steps-note { margin-top: 22px; font-size: .9rem; color: var(--muted); max-width: 58ch; }
+
+  .about .aside { border-top: 1px solid var(--hairline); margin-top: 30px; padding-top: 20px; max-width: 54ch; }
+  .aside-k {
+    font: 500 .74rem/1 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px;
+  }
+  .aside p { margin: 0; color: var(--muted); }
+
+  .closing { padding: clamp(64px, 12vh, 140px) 0 clamp(40px, 7vh, 80px); }
+  .closing h2 {
+    font: 700 clamp(2.6rem, 6vw, 4.6rem)/1 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+    margin: 0 0 18px; color: var(--text);
+  }
+  .closing .lede { color: var(--muted); max-width: 52ch; margin: 0 0 30px; font-size: 1.08rem; }
+
+  /* ============ contact ============ */
+  .page-head { padding-top: clamp(52px, 9vh, 100px); margin-bottom: clamp(36px, 6vh, 64px); }
+  .page-h {
+    font: 700 clamp(2.8rem, 6.4vw, 5rem)/0.98 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+    margin: 0 0 20px; color: var(--text);
+  }
+  .lede { color: var(--muted); max-width: 56ch; margin: 0; font-size: 1.08rem; }
+
+  .contact-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .prompts-intro { margin: 0 0 6px; font-weight: 500; }
+  .prompts { list-style: none; margin: 0; padding: 0; }
+  .prompts li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; padding: 20px 0; border-top: 1px solid var(--hairline); }
+  .prompts li:last-child { border-bottom: 1px solid var(--hairline); }
+  .p-num { font: 700 1.5rem/1.1 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif; color: var(--accent); }
+  .prompts strong { display: block; margin-bottom: 3px; }
+  .prompts span span { color: var(--muted); }
+
+  .composer label {
+    display: block; margin-bottom: 10px;
+    font: 500 .74rem/1 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+  }
+  .composer textarea {
+    width: 100%; min-height: 190px; box-sizing: border-box; resize: vertical;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+    padding: 14px 16px; color: var(--text);
+    font: 400 1rem/1.6 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .composer textarea::placeholder { color: var(--muted); opacity: .8; }
+  .composer-actions { margin-top: 16px; }
+  .composer .note { font-size: .85rem; color: var(--muted); margin: 12px 0 0; max-width: 46ch; }
+
+  .direct {
+    margin-top: clamp(40px, 7vh, 72px); padding-top: 24px; border-top: 1px solid var(--hairline);
+    display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: baseline;
+    font-size: .95rem; color: var(--muted);
+  }
+  .email-reveal {
+    font: 500 .92rem/1.4 'IBM Plex Mono', 'Courier New', monospace;
+    color: var(--accent); text-decoration: none;
+    border-bottom: 1px solid currentColor; padding-bottom: 1px;
+  }
+  .email-reveal::after { content: "MominBinShahid" "\0040" "gmail.com"; }
+
+  /* ============ footer ============ */
+  .footer { border-top: 1px solid var(--hairline); margin-top: clamp(48px, 8vh, 96px); }
+  .footer-row {
+    display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: baseline;
+    padding: 26px 0 44px;
+    font: 400 .82rem/1.6 'IBM Plex Mono', 'Courier New', monospace; letter-spacing: .04em; color: var(--muted);
+  }
+  .footer a { color: var(--muted); text-decoration: none; transition: color .15s ease; }
+  .footer a:hover { color: var(--accent); }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+
+  /* ============ responsive ============ */
+  @media (max-width: 960px) {
+    .hero-grid { grid-template-columns: 1fr; align-items: start; }
+    .field { height: clamp(210px, 44vw, 320px); }
+  }
+  @media (max-width: 860px) {
+    .evidence-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .eng-row { grid-template-columns: 1fr; gap: 8px; }
+    .steps li { grid-template-columns: 60px minmax(0, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .nav-row { gap: 14px; }
+    .site-nav { gap: 14px; }
+    .brand .last { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #site, #site * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div id="site" data-theme="light" class="accent-cobalt">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="shell nav-row">
+      <a class="brand" href="#home" data-tab="home">
+        <span class="glyph" aria-hidden="true">👨‍💻</span>
+        <span class="brand-name">Momin <span class="last">Bin Shahid</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="#home" data-tab="home">Home</a>
+        <a href="#contact" data-tab="contact">Contact</a>
+        <a href="/MominBinShahid_Resume.pdf">Résumé</a>
+      </nav>
+      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ================= HOME ================= -->
+    <section id="panel-home" class="panel" tabindex="-1" aria-label="Home">
+
+      <div class="hero">
+        <div class="shell hero-grid">
+          <div>
+            <p class="kicker"><span class="kn">Built and shipped</span><span>Sastaticket.pk</span></p>
+            <h1 class="hero-h">
+              <span class="hh-line">5–8 calls a day to <span class="hl">hundreds daily.</span></span>
+              <span class="hh-line"><span class="hl">92%</span> accuracy.</span>
+            </h1>
+            <p class="hero-sub">I built an AI agent at Sastaticket.pk that scaled customer-support call QA. Have an interesting AI problem? Let’s talk about building an agent into your product.</p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="/MominBinShahid_Resume.pdf">Read the résumé <span class="arr" aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="#contact" data-tab="contact">Discuss your AI problem</a>
+            </div>
+            <p class="hero-id">Momin Bin Shahid · Full-Stack &amp; AI Engineer · Karachi, Pakistan</p>
+          </div>
+          <div>
+            <div class="field" id="fieldWrap" role="img" aria-label="A field of dots representing one day of support calls. A small bracketed cluster of seven lit marks shows the 5 to 8 calls a day that manual review could cover. The surrounding field of hundreds of faint marks is what the agent now reviews daily.">
+              <canvas id="fieldCanvas" aria-hidden="true"></canvas>
+              <span class="field-label fl-sample" aria-hidden="true">manual review · 5–8 a day</span>
+              <span class="field-label fl-field" aria-hidden="true">the agent · hundreds a day</span>
+            </div>
+            <p class="field-hint" aria-hidden="true">sweep your cursor across the field</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sect">
+        <div class="shell copy">
+          <p class="kicker"><span class="kn">01</span><span>The bottleneck</span></p>
+          <h2 class="sect-h">You can’t review everything. So you sample.</h2>
+          <p class="p-first">Support calls, tickets, chat transcripts, claims, submissions — most teams produce far more reviewable material than anyone can actually review. So QA becomes a sample: a handful of items a day, checked by hand, standing in for all the rest. The problems you most need to catch are usually in the pile nobody opened.</p>
+          <p class="p-second">Sometimes the AI part already exists — a model, a prototype, a convincing demo — and the hard part is integration: your data, your permissions, your deployment, your failure modes, your existing application.</p>
+          <p class="p-third">And sometimes what’s missing is a foundation your own engineers can extend.</p>
+          <p class="offer">These are the problems I want to hear about. Plainly, the work: <strong>AI-agent development</strong>, <strong>production integration</strong>, and <strong>an extensible foundation for your team</strong>. If one of these sounds like your week — <a href="#contact" data-tab="contact">Discuss your AI problem</a>.</p>
+        </div>
+      </div>
+
+      <div class="band">
+        <div class="shell sect">
+          <p class="kicker"><span class="kn">02</span><span>Evidence</span><span>Sastaticket.pk</span></p>
+          <h2 class="sect-h">The call-QA agent</h2>
+          <div class="evidence-grid">
+            <div class="copy">
+              <p class="p-first">Sastaticket.pk is Pakistan’s leading online travel agency — thousands of flight bookings a day, and a steady stream of customer-support calls behind them. Manual QA could evaluate 5–8 of those calls in a day. Everything else went unheard.</p>
+              <p>I designed and built an AI agent that evaluates those calls automatically. It now reviews hundreds of calls daily at 92% accuracy — doing in a day what took a team several, with a consistency people can’t sustain call after call.</p>
+              <p>It runs in production, inside the QA team’s actual workflow — not a demo. What it changed for that team’s workload, and the rest of the record, is in <a href="/MominBinShahid_Resume.pdf">the résumé</a>.</p>
+            </div>
+            <div>
+              <p class="stack-k">Built with</p>
+              <ul class="stack-list">
+                <li>Python</li>
+                <li>Google GenAI</li>
+                <li>LangChain</li>
+                <li>Airflow</li>
+                <li>AWS</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sect">
+        <div class="shell">
+          <p class="kicker"><span class="kn">03</span><span>The engineering around it</span></p>
+          <h2 class="sect-h">Agents don’t ship themselves.</h2>
+          <div class="copy">
+            <p>The distance between a promising agent and a dependable one is ordinary production engineering — the part I’ve been doing for eight years. Two more results from the same codebase:</p>
+          </div>
+          <div class="eng-row">
+            <p class="eng-label">React · TypeScript</p>
+            <p>Rebuilt Sastaticket.pk’s customer-facing web app. Page loads that used to take several seconds stopped being something travellers wait through.</p>
+          </div>
+          <div class="eng-row">
+            <p class="eng-label">Django · airline providers</p>
+            <p>Reworked the airline-provider integrations that were quietly failing bookings, across multiple providers, until the failure rate stopped being a topic.</p>
+          </div>
+          <p class="tease">Both of those carry hard numbers — load times, failure rates. I’d rather you read them in <a href="/MominBinShahid_Resume.pdf">the résumé</a> than skim them here.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/MominBinShahid_Resume.pdf">Read the résumé <span class="arr" aria-hidden="true">→</span></a>
+            <a class="btn btn-ghost" href="#contact" data-tab="contact">Discuss your AI problem</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sect">
+        <div class="shell">
+          <p class="kicker"><span class="kn">04</span><span>Prospective</span></p>
+          <h2 class="sect-h">How we could work together</h2>
+          <ol class="steps">
+            <li>
+              <span class="step-n" aria-hidden="true">1</span>
+              <div>
+                <h3>Understand the workflow</h3>
+                <p>What your team reviews, what’s manual, where the hours go — and what success would mean, agreed before anything gets built.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-n" aria-hidden="true">2</span>
+              <div>
+                <h3>Build against real examples</h3>
+                <p>The agent takes shape against representative samples from your actual workload, so “is it good enough?” gets answered by evidence rather than by a demo.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-n" aria-hidden="true">3</span>
+              <div>
+                <h3>Integrate and hand over</h3>
+                <p>It lands in your application — deployment, monitoring, failure handling — on a foundation your engineers can extend without me.</p>
+              </div>
+            </li>
+          </ol>
+          <p class="steps-note">That’s a proposal for a first conversation, not a packaged method. The order matters more than the ceremony.</p>
+        </div>
+      </div>
+
+      <div class="sect about">
+        <div class="shell copy">
+          <p class="kicker"><span class="kn">05</span><span>Briefly, me</span></p>
+          <h2 class="sect-h">The person on the other end</h2>
+          <p>I’m Momin Bin Shahid — Lead Engineer at Sastaticket.pk in Karachi, Pakistan, eight years into shipping production software: first across the JavaScript full stack, now AI agents and LLMs. I love building things that live on the web and now, things that think 🤖.</p>
+          <p>Working both sides of the industry — consultancies and product companies — taught me that great software is about understanding people, not just writing code.</p>
+          <div class="aside">
+            <p class="aside-k">MealUnits</p>
+            <p>The clearest proof of that belief isn’t from any job: an offline insulin calculator I built for my brother. Private, no accounts, nothing leaves his device. Engineering for exactly one person.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="closing">
+        <div class="shell">
+          <h2>Have an interesting AI problem?</h2>
+          <p class="lede">If your team reviews by hand and hopes the sample holds, that’s exactly the conversation I want to have.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#contact" data-tab="contact">Discuss your AI problem <span class="arr" aria-hidden="true">→</span></a>
+            <a class="quiet-link" href="/MominBinShahid_Resume.pdf">or read the résumé first</a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="panel-contact" class="panel" tabindex="-1" aria-label="Contact" hidden>
+      <div class="shell">
+
+        <div class="page-head">
+          <p class="kicker"><span class="kn">Contact</span><span>Karachi, Pakistan</span></p>
+          <h1 class="page-h">Discuss your AI problem</h1>
+          <p class="lede">Same proposition as the front page, one step further: describe the workflow, and let’s find out whether an agent belongs in it. No form pipeline, no calendar — this writes an email.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div>
+            <p class="prompts-intro">You don’t need a spec. Three things tell me most of what I need:</p>
+            <ol class="prompts">
+              <li>
+                <span class="p-num" aria-hidden="true">1</span>
+                <span><strong>The workflow.</strong> <span>What your team produces or reviews, and roughly how much of it shows up each day.</span></span>
+              </li>
+              <li>
+                <span class="p-num" aria-hidden="true">2</span>
+                <span><strong>What’s manual today.</strong> <span>Where the hours actually go — the part everyone quietly dreads.</span></span>
+              </li>
+              <li>
+                <span class="p-num" aria-hidden="true">3</span>
+                <span><strong>What useful would look like.</strong> <span>The change you’d notice a month after it shipped.</span></span>
+              </li>
+            </ol>
+          </div>
+          <div class="composer">
+            <label for="msgBox">Your message</label>
+            <textarea id="msgBox" placeholder="What does your team review by hand today?"></textarea>
+            <div class="composer-actions">
+              <button id="sendBtn" type="button" class="btn btn-primary">Discuss your AI problem <span class="arr" aria-hidden="true">→</span></button>
+            </div>
+            <p class="note">Opens your email app with a draft addressed to me, carrying whatever you’ve written here. Nothing is sent from this page.</p>
+          </div>
+        </div>
+
+        <div class="direct">
+          <span>Or write directly:</span>
+          <a class="email-reveal" aria-label="Email Momin Bin Shahid" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#111;&#109;&#105;&#110;&#66;&#105;&#110;&#83;&#104;&#97;&#104;&#105;&#100;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;"></a>
+          <span>Karachi, Pakistan</span>
+          <a class="quiet-link" href="/MominBinShahid_Resume.pdf">Prefer to read first? The résumé →</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-row">
+      <span>© Momin Bin Shahid · Karachi, Pakistan</span>
+      <span class="footer-links">
+        <a href="https://github.com/MominBinShahid" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/mominbinshahid" rel="noopener">LinkedIn</a>
+        <a href="https://stackoverflow.com/users/9137804/MominBinShahid" rel="noopener">Stack Overflow</a>
+        <a href="https://twitter.com/MominBinShahid" rel="noopener">X</a>
+      </span>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var site = document.getElementById('site');
+  var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* ---- accent family: chosen once per visit, stable across tabs and theme changes ---- */
+  var families = ['cobalt', 'raspberry', 'teal'];
+  site.classList.remove('accent-cobalt');
+  site.classList.add('accent-' + families[Math.floor(Math.random() * families.length)]);
+
+  /* ---- theme: starts from the visitor's preference, then the toggle owns it ---- */
+  var prefersDark = !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  site.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+  var toggle = document.getElementById('themeToggle');
+  function syncToggle() {
+    var d = site.getAttribute('data-theme') === 'dark';
+    var label = d ? 'Switch to light mode' : 'Switch to dark mode';
+    toggle.setAttribute('aria-label', label);
+    toggle.setAttribute('title', label);
+  }
+  syncToggle();
+  toggle.addEventListener('click', function () {
+    site.setAttribute('data-theme', site.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    syncToggle();
+    refreshField();
+  });
+
+  /* ---- tabs, hash-routed ---- */
+  var panels = {
+    home: document.getElementById('panel-home'),
+    contact: document.getElementById('panel-contact')
+  };
+  var navTabs = document.querySelectorAll('.site-nav a[data-tab]');
+  function currentTab() { return location.hash === '#contact' ? 'contact' : 'home'; }
+  function show(tab, focus) {
+    Object.keys(panels).forEach(function (k) { panels[k].hidden = (k !== tab); });
+    navTabs.forEach(function (a) {
+      if (a.getAttribute('data-tab') === tab) { a.setAttribute('aria-current', 'page'); }
+      else { a.removeAttribute('aria-current'); }
+    });
+    window.scrollTo(0, 0);
+    if (focus) { panels[tab].focus({ preventScroll: true }); }
+  }
+  window.addEventListener('hashchange', function () { show(currentTab(), true); });
+  show(currentTab(), false);
+
+  /* ---- the field: attention expanding from a small sample toward the whole day ---- */
+  var wrap = document.getElementById('fieldWrap');
+  var canvas = document.getElementById('fieldCanvas');
+  var fctx = (canvas && canvas.getContext) ? canvas.getContext('2d') : null;
+  var dots = [], W = 0, H = 0, raf = null, pointer = null;
+  var GAP = 17, PAD = 14, R = 2.1, RADIUS = 110;
+  var COL = { faint: [201, 212, 221], accent: [28, 79, 216] };
+
+  function readHex(name, fallback) {
+    var v = getComputedStyle(site).getPropertyValue(name).trim();
+    if (v && v.charAt(0) === '#') {
+      if (v.length === 4) { v = '#' + v[1] + v[1] + v[2] + v[2] + v[3] + v[3]; }
+      return [parseInt(v.slice(1, 3), 16), parseInt(v.slice(3, 5), 16), parseInt(v.slice(5, 7), 16)];
+    }
+    return fallback;
+  }
+  function mix(a, b, t) {
+    return 'rgb(' + Math.round(a[0] + (b[0] - a[0]) * t) + ',' +
+      Math.round(a[1] + (b[1] - a[1]) * t) + ',' +
+      Math.round(a[2] + (b[2] - a[2]) * t) + ')';
+  }
+  function refreshField() {
+    if (!fctx) { return; }
+    COL.faint = readHex('--dot-faint', COL.faint);
+    COL.accent = readHex('--accent', COL.accent);
+    draw();
+  }
+  function build() {
+    if (!fctx) { return; }
+    var rect = wrap.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) { return; }
+    W = rect.width; H = rect.height;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    fctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dots = [];
+    var cols = Math.max(1, Math.floor((W - PAD * 2) / GAP) + 1);
+    var rows = Math.max(1, Math.floor((H - PAD * 2) / GAP) + 1);
+    for (var r0 = 0; r0 < rows; r0++) {
+      for (var c0 = 0; c0 < cols; c0++) {
+        /* seven lit marks in the top-left corner: one reviewer's day */
+        var s = (r0 < 2 && c0 < 4) && !(r0 === 1 && c0 === 3);
+        dots.push({ x: PAD + c0 * GAP, y: PAD + r0 * GAP, e: s ? 1 : 0, s: s });
+      }
+    }
+    if (reduce) {
+      /* motionless version: attention already spreading outward from the sample */
+      var cx = PAD + 1.5 * GAP, cy = PAD + 0.5 * GAP;
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i];
+        if (!d.s) {
+          var dist = Math.hypot(d.x - cx, d.y - cy);
+          d.e = Math.max(0, 0.5 - dist / (W * 1.25));
+        }
+      }
+    }
+    refreshField();
+  }
+  function draw() {
+    if (!fctx || !W) { return; }
+    fctx.clearRect(0, 0, W, H);
+    fctx.strokeStyle = mix(COL.faint, COL.accent, 0.35);
+    fctx.lineWidth = 1;
+    fctx.strokeRect(PAD - 9.5, PAD - 9.5, 3 * GAP + 19, GAP + 19);
+    for (var i = 0; i < dots.length; i++) {
+      var d = dots[i];
+      var t = d.s ? 1 : Math.min(d.e, 1) * 0.95;
+      fctx.fillStyle = mix(COL.faint, COL.accent, t);
+      var rad = d.s ? R + 0.9 : R + d.e * 1.3;
+      fctx.beginPath();
+      fctx.arc(d.x, d.y, rad, 0, 6.2832);
+      fctx.fill();
+    }
+  }
+  function frame() {
+    raf = null;
+    var live = false;
+    for (var i = 0; i < dots.length; i++) {
+      var d = dots[i];
+      if (d.s) { continue; }
+      if (pointer) {
+        var dist = Math.hypot(d.x - pointer.x, d.y - pointer.y);
+        if (dist < RADIUS) {
+          var b = Math.pow(1 - dist / RADIUS, 1.5);
+          if (b > d.e) { d.e = b; }
+        }
+      }
+      d.e *= 0.945;
+      if (d.e < 0.012) { d.e = 0; } else { live = true; }
+    }
+    draw();
+    if (live || pointer) { raf = requestAnimationFrame(frame); }
+  }
+  function poke() { if (!raf && !reduce) { raf = requestAnimationFrame(frame); } }
+  if (fctx && !reduce) {
+    wrap.addEventListener('pointermove', function (e) {
+      var rect = wrap.getBoundingClientRect();
+      pointer = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      poke();
+    });
+    wrap.addEventListener('pointerleave', function () { pointer = null; poke(); });
+  }
+  if (fctx) {
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(function () { build(); }).observe(wrap);
+    } else {
+      window.addEventListener('resize', build);
+      build();
+    }
+  }
+
+  /* ---- composer: builds a mailto draft, never a fake "sent" state ---- */
+  var addr = 'MominBinShahid' + String.fromCharCode(64) + ['gmail', 'com'].join('.');
+  var send = document.getElementById('sendBtn');
+  var msg = document.getElementById('msgBox');
+  send.addEventListener('click', function () {
+    var body = msg.value.trim();
+    var url = 'mailto:' + addr +
+      '?subject=' + encodeURIComponent('An interesting AI problem') +
+      (body ? '&body=' + encodeURIComponent(body) : '');
+    window.location.href = url;
+  });
+
+  /* ---- console easter egg: brief, nonvisual ---- */
+  try {
+    console.log('%c5–8 a day → hundreds. Beyond the sample.', 'font: 600 18px "Barlow Condensed", "Arial Narrow", sans-serif;');
+    console.log('Reading consoles for fun? Same here. Interesting AI problem → ' + addr);
+  } catch (err) { /* consoles are optional */ }
+})();
+</script>

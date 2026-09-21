@@ -1,0 +1,41 @@
+{
+  "name": "mominbinshahid.github.io",
+  "type": "module",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Personal site and blog of Momin Bin Shahid.",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=10.0.0"
+  },
+  "volta": {
+    "node": "24.21.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "build:only": "astro build",
+    "preview": "astro preview --port 4321",
+    "check": "astro check",
+    "sync": "astro sync",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/rss": "4.0.19",
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.3.3",
+    "astro-expressive-code": "0.44.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "typescript": "~6.0.3"
+  },
+  "optionalDependencies": {
+    "sharp": "0.35.4"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "sharp": true
+  }
+}

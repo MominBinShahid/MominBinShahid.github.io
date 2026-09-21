@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400"
+     role="img" aria-label="Diagram of one origin containing two apps, with a service worker registered at the root whose scope covers both.">
+  <style>
+    :root { color-scheme: light dark; }
+    .bg    { fill: #ffffff; }
+    .card  { fill: #f6f6f7; stroke: #e2e2e6; }
+    .ink   { fill: #18181b; }
+    .dim   { fill: #5c5c66; }
+    .rule  { stroke: #e2e2e6; }
+    .scope { stroke: #b0303a; fill: none; }
+    .scopeink { fill: #b0303a; }
+    .arrow { stroke: #b0303a; fill: none; }
+    text   { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    .mono  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    @media (prefers-color-scheme: dark) {
+      .bg    { fill: #111111; }
+      .card  { fill: #1a1a1c; stroke: #2c2c30; }
+      .ink   { fill: #e8e8ea; }
+      .dim   { fill: #a0a0aa; }
+      .rule  { stroke: #2c2c30; }
+      .scope { stroke: #ff8a90; }
+      .scopeink { fill: #ff8a90; }
+      .arrow { stroke: #ff8a90; }
+    }
+  </style>
+  <defs>
+    <marker id="head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path class="scopeink" d="M0 0 L10 5 L0 10 z"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="760" height="400"/>
+
+  <text class="ink" x="24" y="34" font-size="16" font-weight="600">One origin, two apps, one worker that sees both</text>
+
+  <!-- the origin -->
+  <rect class="card" x="24" y="58" width="712" height="248" rx="10" stroke-width="1"/>
+  <text class="mono dim" x="44" y="84" font-size="12">origin: https://mominbinshahid.github.io</text>
+
+  <!-- scope boundary -->
+  <rect class="scope" x="40" y="98" width="680" height="192" rx="8" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text class="scopeink mono" x="52" y="118" font-size="11.5">service worker registered at "/"  →  scope covers everything below</text>
+
+  <!-- app A -->
+  <rect class="card" x="64" y="134" width="300" height="134" rx="8" stroke-width="1"/>
+  <text class="mono ink" x="84" y="162" font-size="13">/</text>
+  <text class="ink" x="84" y="188" font-size="13" font-weight="600">the personal site</text>
+  <text class="dim" x="84" y="210" font-size="12">the thing being migrated</text>
+  <text class="dim mono" x="84" y="238" font-size="11.5">caches: gatsby-plugin-offline-*</text>
+  <text class="dim mono" x="84" y="256" font-size="11.5">        workbox-*</text>
+
+  <!-- app B -->
+  <rect class="card" x="396" y="134" width="300" height="134" rx="8" stroke-width="1"/>
+  <text class="mono ink" x="416" y="162" font-size="13">/MealUnits/</text>
+  <text class="ink" x="416" y="188" font-size="13" font-weight="600">an insulin calculator</text>
+  <text class="dim" x="416" y="210" font-size="12">nothing to do with the migration</text>
+  <text class="dim mono" x="416" y="238" font-size="11.5">caches: its own</text>
+  <text class="dim mono" x="416" y="256" font-size="11.5">IndexedDB: do not touch</text>
+
+  <!-- the reach -->
+  <path class="arrow" d="M120 330 H680" stroke-width="1.5" marker-start="url(#head)" marker-end="url(#head)"/>
+  <text class="scopeink mono" x="24" y="334" font-size="11.5">caches.keys()</text>
+  <text class="dim" x="120" y="360" font-size="12">returns every cache on the origin, not just this app's. Which is why the cleanup deletes by</text>
+  <text class="dim" x="120" y="378" font-size="12">an explicit prefix allowlist, and never by "everything I did not recognise".</text>
+</svg>

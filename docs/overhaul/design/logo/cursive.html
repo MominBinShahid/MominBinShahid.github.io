@@ -1,0 +1,268 @@
+<title>Momin, In Hand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;800&family=Mr+De+Haviland&family=Caveat:wght@400;500;600;700&family=Yellowtail&family=Great+Vibes&family=Norican&family=Qwitcher+Grypen:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Gulzar&display=swap">
+
+<style>
+:root{
+  --bg:#f3f4f7; --panel:#fff; --ink:#14171d; --dim:#5f6775;
+  --line:#dee1e8; --acc:#1f5fd6; --sw:#14171d;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0d11; --panel:#13161c; --ink:#e6e9ef; --dim:#8a92a1;
+    --line:#232831; --acc:#7fa4ff; --sw:#e6e9ef;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0d11; --panel:#13161c; --ink:#e6e9ef; --dim:#8a92a1;
+  --line:#232831; --acc:#7fa4ff; --sw:#e6e9ef;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.5}
+:focus-visible{outline:2px solid var(--acc); outline-offset:3px; border-radius:3px}
+.wrap{max-width:1160px; margin:0 auto; padding:clamp(22px,4vw,46px) clamp(16px,3vw,30px) 76px}
+h1{font-size:clamp(23px,3.2vw,32px); font-weight:800; letter-spacing:-.028em; margin:0 0 9px}
+.sub{font-size:14.5px; color:var(--dim); max-width:70ch; margin:0}
+.sub b{color:var(--ink); font-weight:600}
+.controls{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:18px 0 0}
+.ctl{font:inherit; font-size:13px; font-weight:500; cursor:pointer; padding:7px 14px;
+  border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--dim)}
+.ctl:hover{color:var(--ink)}
+.ctl[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.lbl{font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); font-weight:700}
+.sec{margin-top:36px}
+.sec__h{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim);
+  font-weight:700; padding-bottom:8px; border-bottom:1px solid var(--line); margin-bottom:8px}
+.sec__n{font-size:13px; color:var(--dim); margin:0 0 18px; max-width:72ch}
+
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(316px,1fr)); gap:16px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px;
+  display:flex; flex-direction:column; gap:14px}
+.cid{display:flex; gap:8px; align-items:baseline; font-family:"Spline Sans Mono",monospace;
+  font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--dim)}
+.cid b{color:var(--acc); font-weight:600}
+.stage{display:grid; place-items:center; min-height:128px; border:1px dashed var(--line);
+  border-radius:10px; padding:18px 16px; overflow:hidden; color:var(--sw)}
+.onacc .stage{color:var(--acc)}
+.small{display:flex; gap:20px; align-items:baseline; color:var(--dim); padding-left:2px}
+.small span{white-space:nowrap}
+.nm{font-size:14px; font-weight:600}
+.nt{font-size:12.5px; color:var(--dim); line-height:1.5; margin:4px 0 0}
+
+/* ---------- cursive faces ---------- */
+.f-hav{font-family:"Mr De Haviland",cursive; font-size:68px; line-height:1.15}
+.f-cav{font-family:Caveat,cursive; font-size:56px; font-weight:600; line-height:1.15}
+.f-yel{font-family:Yellowtail,cursive; font-size:52px; line-height:1.2}
+.f-viv{font-family:"Great Vibes",cursive; font-size:56px; line-height:1.25}
+.f-nor{font-family:Norican,cursive; font-size:50px; line-height:1.2}
+.f-qwi{font-family:"Qwitcher Grypen",cursive; font-size:74px; font-weight:700; line-height:1.05}
+
+/* ---------- urdu ---------- */
+.u-nast{font-family:"Noto Nastaliq Urdu",serif; direction:rtl; line-height:2.0}
+.u-gulz{font-family:Gulzar,serif; direction:rtl; line-height:2.0}
+
+/* ---------- hybrid 1 · vertical split ---------- */
+.h-split{position:relative; display:inline-block; height:96px; width:270px}
+.h-split > span{position:absolute; inset:0; display:grid; place-items:center}
+.h-split .lat{font-family:"Mr De Haviland",cursive; font-size:74px;
+  clip-path:polygon(0 0,50% 0,50% 100%,0 100%)}
+.h-split .urd{font-family:"Noto Nastaliq Urdu",serif; direction:rtl; font-size:40px;
+  clip-path:polygon(50% 0,100% 0,100% 100%,50% 100%)}
+.h-split::after{content:""; position:absolute; left:50%; top:6%; bottom:6%; width:1px;
+  background:currentColor; opacity:.28}
+
+/* ---------- hybrid 2 · stacked bilingual ---------- */
+.h-stack{display:flex; flex-direction:column; align-items:center; gap:2px}
+.h-stack .lat{font-family:Norican,cursive; font-size:44px; line-height:1}
+.h-stack .rule{width:100%; height:1px; background:currentColor; opacity:.3; margin:6px 0 2px}
+.h-stack .urd{font-family:Gulzar,serif; direction:rtl; font-size:30px; line-height:1.7}
+
+/* ---------- hybrid 3 · tail as swash ---------- */
+.h-tail{position:relative; display:inline-block; padding-bottom:46px}
+.h-tail .lat{font-family:Yellowtail,cursive; font-size:56px; line-height:1}
+.h-tail .urd{position:absolute; right:2px; bottom:2px;
+  font-family:"Noto Nastaliq Urdu",serif; direction:rtl; font-size:26px; opacity:.92}
+.h-tail svg{position:absolute; left:0; right:0; bottom:30px; width:100%; height:26px}
+
+/* ---------- hybrid 4 · meem initial ---------- */
+.h-meem{display:flex; align-items:center; gap:.02em}
+.h-meem svg{width:64px; height:64px; display:block; flex:none}
+.h-meem .rest{font-family:"Great Vibes",cursive; font-size:58px; line-height:1;
+  margin-left:-.06em}
+
+/* ---------- hybrid 5 · diagonal cut ---------- */
+.h-diag{position:relative; display:inline-block; height:104px; width:280px}
+.h-diag > span{position:absolute; inset:0; display:grid; place-items:center}
+.h-diag .lat{font-family:Caveat,cursive; font-weight:700; font-size:62px;
+  clip-path:polygon(0 0,100% 0,100% 30%,0 84%)}
+.h-diag .urd{font-family:Gulzar,serif; direction:rtl; font-size:34px;
+  clip-path:polygon(0 86%,100% 32%,100% 100%,0 100%)}
+.h-diag::after{content:""; position:absolute; left:0; right:0; top:0; bottom:0;
+  background:linear-gradient(to bottom right,transparent calc(50% - .5px),currentColor calc(50% - .5px),currentColor calc(50% + .5px),transparent calc(50% + .5px));
+  opacity:.22; pointer-events:none}
+
+.foot{margin-top:32px; padding-top:18px; border-top:1px solid var(--line);
+  font-size:13px; color:var(--dim); max-width:74ch}
+.foot strong{color:var(--ink); font-weight:600}
+</style>
+
+<div class="wrap">
+  <h1>Momin, in hand</h1>
+  <p class="sub">
+    Five cursive treatments of <b>Momin</b>, then five ways of fusing the Latin with the Urdu.
+    Nastaliq and Latin script are both calligraphic hands, so they pair naturally — that is the
+    idea the hybrids are testing. Script as shape only; nothing religious.
+  </p>
+  <div class="controls">
+    <span class="lbl">Theme</span>
+    <button class="ctl" data-theme-set="light" aria-pressed="true">Light</button>
+    <button class="ctl" data-theme-set="dark" aria-pressed="false">Dark</button>
+    <span class="lbl" style="margin-left:8px">Colour</span>
+    <button class="ctl" data-col="ink" aria-pressed="true">Mono</button>
+    <button class="ctl" data-col="acc" aria-pressed="false">Accent</button>
+  </div>
+
+<div id="all">
+
+  <section class="sec">
+    <h2 class="sec__h">Five hands</h2>
+    <p class="sec__n">Same word, five completely different personalities.</p>
+    <div class="grid">
+
+      <article class="card">
+        <div class="cid"><b>C1</b><span>Signature</span></div>
+        <div class="stage"><span class="f-hav">Momin</span></div>
+        <div class="small"><span class="f-hav" style="font-size:34px">Momin</span><span class="f-hav" style="font-size:22px">Momin</span></div>
+        <div><div class="nm">Signature</div><p class="nt">Fine-nib formal script. Reads as an actual autograph — the most "signed by a person" of the five. Very thin strokes, so it needs size and contrast.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>C2</b><span>Felt tip</span></div>
+        <div class="stage"><span class="f-cav">Momin</span></div>
+        <div class="small"><span class="f-cav" style="font-size:30px">Momin</span><span class="f-cav" style="font-size:20px">Momin</span></div>
+        <div><div class="nm">Felt tip</div><p class="nt">Modern casual hand — the one that feels like you actually wrote it on a whiteboard. Warmest, least formal, holds up smallest.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>C3</b><span>Brush</span></div>
+        <div class="stage"><span class="f-yel">Momin</span></div>
+        <div class="small"><span class="f-yel" style="font-size:30px">Momin</span><span class="f-yel" style="font-size:20px">Momin</span></div>
+        <div><div class="nm">Brush</div><p class="nt">Thick-to-thin brush stroke with a confident sweep. The most commercial of the five — good presence, slightly 1950s sign-painter.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>C4</b><span>Copperplate</span></div>
+        <div class="stage"><span class="f-viv">Momin</span></div>
+        <div class="small"><span class="f-viv" style="font-size:30px">Momin</span><span class="f-viv" style="font-size:20px">Momin</span></div>
+        <div><div class="nm">Copperplate</div><p class="nt">Classical calligraphy, high stroke contrast, generous swashes. Elegant — arguably too formal for an engineer's site, but the closest in spirit to Nastaliq.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>C5</b><span>Monoline</span></div>
+        <div class="stage"><span class="f-nor">Momin</span></div>
+        <div class="small"><span class="f-nor" style="font-size:30px">Momin</span><span class="f-nor" style="font-size:20px">Momin</span></div>
+        <div><div class="nm">Monoline</div><p class="nt">Even stroke weight throughout — script without calligraphic contrast. The most usable at small sizes and the easiest to sit beside a geometric sans.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>C6</b><span>Sharp nib</span></div>
+        <div class="stage"><span class="f-qwi">Momin</span></div>
+        <div class="small"><span class="f-qwi" style="font-size:40px">Momin</span><span class="f-qwi" style="font-size:26px">Momin</span></div>
+        <div><div class="nm">Sharp nib</div><p class="nt">Bonus sixth. Fast, angular, scratchy — a signature dashed off rather than composed. Most personality, least legibility.</p></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec__h">Five fusions</h2>
+    <p class="sec__n">Latin and Urdu in one mark. Each takes a different approach to the join.</p>
+    <div class="grid">
+
+      <article class="card">
+        <div class="cid"><b>H1</b><span>Split</span></div>
+        <div class="stage">
+          <span class="h-split"><span class="lat">Momin</span><span class="urd">مومن</span></span>
+        </div>
+        <div><div class="nm">Vertical split</div><p class="nt">One mark, cut down the middle — Latin signature on the left, Nastaliq on the right, a hairline where they meet. The most literal reading of "half one, half the other".</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>H2</b><span>Stacked</span></div>
+        <div class="stage">
+          <span class="h-stack"><span class="lat">Momin</span><span class="rule"></span><span class="urd">مومن</span></span>
+        </div>
+        <div><div class="nm">Stacked bilingual</div><p class="nt">Monoline Latin over Nastaliq, width-matched, a rule between. The calmest and most usable — this is the one that could actually sit in a site header.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>H3</b><span>Swash</span></div>
+        <div class="stage">
+          <span class="h-tail">
+            <span class="lat">Momin</span>
+            <svg viewBox="0 0 200 26" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M2 4 C40 26 120 26 198 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+            </svg>
+            <span class="urd">مومن</span>
+          </span>
+        </div>
+        <div><div class="nm">Urdu as the swash</div><p class="nt">The brush script's descending flourish becomes a line that carries the Urdu beneath it. Reads as a signature with its own translation tucked under the tail.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>H4</b><span>Meem initial</span></div>
+        <div class="stage">
+          <span class="h-meem">
+            <svg viewBox="0 0 100 100" aria-label="meem">
+              <circle cx="44" cy="40" r="21" fill="none" stroke="currentColor" stroke-width="9"/>
+              <path d="M59 55 Q66 74 57 92" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+            </svg>
+            <span class="rest">omin</span>
+          </span>
+        </div>
+        <div><div class="nm">Meem initial</div><p class="nt">The Urdu م stands in for the capital M and the rest of the name continues in Latin cursive. Reads as "Momin" to everyone; only you see where the M came from.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>H5</b><span>Diagonal</span></div>
+        <div class="stage">
+          <span class="h-diag"><span class="lat">Momin</span><span class="urd">مومن</span></span>
+        </div>
+        <div><div class="nm">Diagonal cut</div><p class="nt">A slanted slice through the mark, Latin above, Urdu below. The slope echoes the way Nastaliq itself descends left — the most dynamic of the five and the hardest to use small.</p></div>
+      </article>
+
+    </div>
+  </section>
+
+</div>
+
+  <p class="foot">
+    <strong>My picks:</strong> <b>H2 Stacked</b> is the one that would genuinely work in a header —
+    calm, legible both ways, no tricks. <b>H4 Meem initial</b> is the cleverest: the mark carries the
+    idea without announcing it. <b>H3 Swash</b> is the most beautiful and the least practical.
+    <br><br>
+    <strong>Of the five hands,</strong> <b>C5 Monoline</b> survives small sizes best and pairs with a
+    geometric sans; <b>C1 Signature</b> has the most authority but needs room; <b>C2 Felt tip</b> is
+    the most personal and the least formal.
+    <br><br>
+    All of these are typeset for comparison. Whichever you pick would be redrawn as outlines for
+    production, so the mark stops depending on a webfont loading.
+  </p>
+</div>
+
+<script>
+(function(){
+  var t=document.querySelectorAll('[data-theme-set]');
+  t.forEach(function(b){b.addEventListener('click',function(){
+    document.documentElement.setAttribute('data-theme',b.getAttribute('data-theme-set'));
+    t.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});});});
+  var c=document.querySelectorAll('[data-col]'), all=document.getElementById('all');
+  c.forEach(function(b){b.addEventListener('click',function(){
+    all.classList.toggle('onacc',b.getAttribute('data-col')==='acc');
+    c.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});});});
+  document.documentElement.setAttribute('data-theme','light');
+})();
+</script>

@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, UI } from '../consts';
+import { href } from '../lib/href';
+import { getPosts, postPath } from '../lib/posts';
+
+const posts = (await getPosts()).slice(0, 5);
+---
+
+<Base title="Home" path="/">
+  {/*
+    Structure only. No hero, no layout, no visual identity - that waits on
+    Momin's reference sites and design hints. What this page proves today is
+    that content, routing and metadata all work.
+  */}
+  <h1>{SITE.title}</h1>
+  <p>{SITE.description}</p>
+
+  <h2>{UI.blogIndexTitle}</h2>
+  {
+    posts.length === 0 ? (
+      <p class="muted">{UI.blogEmpty}</p>
+    ) : (
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <a href={href(postPath(post))}>{post.data.title}</a>
+            {!post.data.published && <span class="muted"> — {UI.draftBadge}</span>}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <p><a href={href('/blog/')}>{UI.backToBlog}</a></p>
+</Base>

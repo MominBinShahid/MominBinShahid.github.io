@@ -1,0 +1,260 @@
+<title>Momin, Thirteen Ways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;800&family=Spline+Sans+Mono:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Gulzar&family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Lateef:wght@400;700&family=Reem+Kufi:wght@400;600;700&family=Noto+Kufi+Arabic:wght@400;700&family=Cairo:wght@400;600;800&family=Tajawal:wght@400;700;900&family=Almarai:wght@400;700;800&family=Changa:wght@400;600;800&family=Aref+Ruqaa:wght@400;700&family=Rakkas&display=swap">
+
+<style>
+:root{
+  --bg:#f3f4f7; --panel:#fff; --ink:#14171d; --dim:#5f6775;
+  --line:#dee1e8; --acc:#1f5fd6; --sw:#14171d; --knock:#fff;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0d11; --panel:#13161c; --ink:#e6e9ef; --dim:#8a92a1;
+    --line:#232831; --acc:#7fa4ff; --sw:#e6e9ef; --knock:#13161c;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0d11; --panel:#13161c; --ink:#e6e9ef; --dim:#8a92a1;
+  --line:#232831; --acc:#7fa4ff; --sw:#e6e9ef; --knock:#13161c;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.5}
+:focus-visible{outline:2px solid var(--acc); outline-offset:3px; border-radius:3px}
+.wrap{max-width:1200px; margin:0 auto; padding:clamp(22px,4vw,46px) clamp(16px,3vw,30px) 76px}
+h1{font-size:clamp(23px,3.2vw,32px); font-weight:800; letter-spacing:-.028em; margin:0 0 9px; text-wrap:balance}
+.sub{font-size:14.5px; color:var(--dim); max-width:72ch; margin:0}
+.sub b{color:var(--ink); font-weight:600}
+.controls{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:18px 0 0}
+.ctl{font:inherit; font-size:13px; font-weight:500; cursor:pointer; padding:7px 14px;
+  border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--dim); transition:.15s}
+.ctl:hover{color:var(--ink)}
+.ctl[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.lbl{font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); font-weight:700}
+.sec{margin-top:36px}
+.sec__h{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim);
+  font-weight:700; padding-bottom:8px; border-bottom:1px solid var(--line); margin-bottom:8px}
+.sec__n{font-size:13px; color:var(--dim); margin:0 0 18px; max-width:70ch}
+
+/* Urdu specimen rows */
+.spec{display:grid; gap:10px}
+.row{display:grid; grid-template-columns:150px 1fr auto; gap:18px; align-items:center;
+  background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 20px}
+.row__meta{min-width:0}
+.row__face{font-size:13.5px; font-weight:600; letter-spacing:-.01em}
+.row__cls{font-family:"Spline Sans Mono",monospace; font-size:10px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--dim); margin-top:3px}
+.row__word{direction:rtl; text-align:center; color:var(--sw); overflow:hidden; line-height:1.9}
+.onacc .row__word{color:var(--acc)}
+.row__sm{direction:rtl; color:var(--dim); font-size:15px; white-space:nowrap; line-height:2.4}
+.u-nastaliq{font-family:"Noto Nastaliq Urdu",serif; font-size:40px}
+.u-gulzar{font-family:Gulzar,serif; font-size:40px}
+.u-amiri{font-family:Amiri,serif; font-size:52px}
+.u-scheh{font-family:"Scheherazade New",serif; font-size:52px}
+.u-lateef{font-family:Lateef,serif; font-size:54px}
+.u-reem{font-family:"Reem Kufi",sans-serif; font-size:46px}
+.u-kufi{font-family:"Noto Kufi Arabic",sans-serif; font-size:42px}
+.u-cairo{font-family:Cairo,sans-serif; font-size:46px}
+.u-tajawal{font-family:Tajawal,sans-serif; font-size:46px}
+.u-almarai{font-family:Almarai,sans-serif; font-size:44px}
+.u-changa{font-family:Changa,sans-serif; font-size:46px}
+.u-aref{font-family:"Aref Ruqaa",serif; font-size:48px}
+.u-rakkas{font-family:Rakkas,serif; font-size:50px}
+
+/* icon cards */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(246px,1fr)); gap:16px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:19px;
+  display:flex; flex-direction:column; gap:14px}
+.cid{display:flex; gap:8px; align-items:baseline; font-family:"Spline Sans Mono",monospace;
+  font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--dim)}
+.cid b{color:var(--acc); font-weight:600}
+.stage{display:grid; place-items:center; min-height:120px; border:1px dashed var(--line);
+  border-radius:10px; padding:14px; overflow:hidden}
+.stage svg{width:86px; height:86px; display:block}
+.sizes{display:flex; align-items:flex-end; gap:14px}
+.sizes figure{margin:0; display:flex; flex-direction:column; align-items:center; gap:5px}
+.sizes figcaption{font-family:"Spline Sans Mono",monospace; font-size:9px; color:var(--dim)}
+.s32 svg{width:32px;height:32px} .s16 svg{width:16px;height:16px}
+.nm{font-size:14px; font-weight:600}
+.nt{font-size:12.5px; color:var(--dim); line-height:1.5; margin:4px 0 0}
+.mk{fill:none; stroke:var(--sw); stroke-width:8}
+.mk--f{fill:var(--sw); stroke:none}
+.onacc .mk{stroke:var(--acc)} .onacc .mk--f{fill:var(--acc)}
+
+/* latin wordmarks */
+.wm{background:var(--panel); border:1px solid var(--line); border-radius:12px;
+  padding:26px 22px; display:flex; flex-direction:column; gap:14px; align-items:flex-start}
+.wm__art{color:var(--sw); width:100%}
+.onacc .wm__art{color:var(--acc)}
+.wm-mono{font-family:"Spline Sans Mono",monospace; font-size:clamp(20px,3.6vw,34px);
+  font-weight:500; letter-spacing:.42em; text-indent:.42em}
+.wm-tight{font-family:"Schibsted Grotesk",sans-serif; font-size:clamp(28px,5vw,50px);
+  font-weight:800; letter-spacing:-.05em}
+.wm-stack{font-family:"Schibsted Grotesk",sans-serif; font-weight:800; font-size:clamp(24px,4vw,40px);
+  line-height:.9; letter-spacing:-.04em}
+.wm-out{font-family:"Schibsted Grotesk",sans-serif; font-size:clamp(28px,5vw,50px); font-weight:800;
+  letter-spacing:-.03em; color:transparent; -webkit-text-stroke:1.6px var(--sw)}
+.onacc .wm-out{-webkit-text-stroke-color:var(--acc)}
+.wm-hybrid{display:flex; align-items:center; gap:.04em; font-family:"Schibsted Grotesk",sans-serif;
+  font-size:clamp(26px,4.6vw,46px); font-weight:800; letter-spacing:-.04em}
+.wm-hybrid svg{width:.72em; height:.72em; display:block}
+.foot{margin-top:32px; padding-top:18px; border-top:1px solid var(--line);
+  font-size:13px; color:var(--dim); max-width:74ch}
+.foot strong{color:var(--ink); font-weight:600}
+@media (max-width:640px){
+  .row{grid-template-columns:1fr; gap:10px; text-align:center}
+  .row__sm{display:none}
+}
+</style>
+
+<div class="wrap">
+  <h1>Momin, thirteen ways</h1>
+  <p class="sub">
+    Round three. <b>مومن</b> set in every Urdu and Arabic face worth considering — Nastaliq, Naskh,
+    Kufi, and modern sans — so you can see how differently the same word reads. Plus more one-line
+    M studies and Latin wordmarks. Purely typographic and geometric; no religious content.
+  </p>
+  <div class="controls">
+    <span class="lbl">Theme</span>
+    <button class="ctl" data-theme-set="light" aria-pressed="true">Light</button>
+    <button class="ctl" data-theme-set="dark" aria-pressed="false">Dark</button>
+    <span class="lbl" style="margin-left:8px">Colour</span>
+    <button class="ctl" data-col="ink" aria-pressed="true">Mono</button>
+    <button class="ctl" data-col="acc" aria-pressed="false">Accent</button>
+  </div>
+
+<div id="all">
+
+  <section class="sec">
+    <h2 class="sec__h">مومن — thirteen faces</h2>
+    <p class="sec__n">Large column is the wordmark candidate. Right column shows it at UI size, where most of these stop working.</p>
+    <div class="spec">
+      <div class="row"><div class="row__meta"><div class="row__face">Noto Nastaliq Urdu</div><div class="row__cls">Nastaliq · the Urdu hand</div></div><div class="row__word u-nastaliq">مومن</div><div class="row__sm u-nastaliq" style="font-size:17px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Gulzar</div><div class="row__cls">Nastaliq · newer, tighter</div></div><div class="row__word u-gulzar">مومن</div><div class="row__sm u-gulzar" style="font-size:17px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Amiri</div><div class="row__cls">Naskh · classical book</div></div><div class="row__word u-amiri">مومن</div><div class="row__sm u-amiri" style="font-size:21px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Scheherazade New</div><div class="row__cls">Naskh · open, readable</div></div><div class="row__word u-scheh">مومن</div><div class="row__sm u-scheh" style="font-size:21px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Lateef</div><div class="row__cls">Naskh · low contrast</div></div><div class="row__word u-lateef">مومن</div><div class="row__sm u-lateef" style="font-size:22px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Reem Kufi</div><div class="row__cls">Kufi · geometric</div></div><div class="row__word u-reem">مومن</div><div class="row__sm u-reem" style="font-size:19px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Noto Kufi Arabic</div><div class="row__cls">Kufi · squared</div></div><div class="row__word u-kufi">مومن</div><div class="row__sm u-kufi" style="font-size:18px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Cairo</div><div class="row__cls">Sans · contemporary</div></div><div class="row__word u-cairo">مومن</div><div class="row__sm u-cairo" style="font-size:19px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Tajawal</div><div class="row__cls">Sans · neutral</div></div><div class="row__word u-tajawal">مومن</div><div class="row__sm u-tajawal" style="font-size:19px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Almarai</div><div class="row__cls">Sans · rounded</div></div><div class="row__word u-almarai">مومن</div><div class="row__sm u-almarai" style="font-size:18px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Changa</div><div class="row__cls">Sans · condensed, punchy</div></div><div class="row__word u-changa">مومن</div><div class="row__sm u-changa" style="font-size:19px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Aref Ruqaa</div><div class="row__cls">Ruqaa · calligraphic</div></div><div class="row__word u-aref">مومن</div><div class="row__sm u-aref" style="font-size:20px">مومن</div></div>
+      <div class="row"><div class="row__meta"><div class="row__face">Rakkas</div><div class="row__cls">Display · heavy, poster</div></div><div class="row__word u-rakkas">مومن</div><div class="row__sm u-rakkas" style="font-size:20px">مومن</div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec__h">One line, five ways</h2>
+    <p class="sec__n">Every mark below is a single unbroken stroke — each can draw itself on load.</p>
+    <div class="grid">
+
+      <article class="card">
+        <div class="cid"><b>19</b><span>Cursive</span></div>
+        <div class="stage"><svg viewBox="0 0 100 100" aria-label="Flowing one-line M"><path class="mk" d="M14 82 C14 30 26 20 38 30 C48 39 44 70 54 70 C66 70 62 28 74 24 C84 21 86 42 86 82" stroke-width="8" stroke-linecap="round" fill="none"/></svg></div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M14 82 C14 30 26 20 38 30 C48 39 44 70 54 70 C66 70 62 28 74 24 C84 21 86 42 86 82" stroke-linecap="round"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M14 82 C14 30 26 20 38 30 C48 39 44 70 54 70 C66 70 62 28 74 24 C84 21 86 42 86 82" stroke-linecap="round"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Cursive</div><p class="nt">Handwritten feel. Soft, warm, a signature rather than a logo.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>20</b><span>Angular</span></div>
+        <div class="stage"><svg viewBox="0 0 100 100" aria-label="Sharp one-line M"><path class="mk" d="M12 84 L12 22 L34 52 L50 22 L66 52 L88 22 L88 84" stroke-width="8" stroke-linejoin="miter" stroke-linecap="butt" fill="none"/></svg></div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M12 84 L12 22 L34 52 L50 22 L66 52 L88 22 L88 84"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M12 84 L12 22 L34 52 L50 22 L66 52 L88 22 L88 84"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Angular</div><p class="nt">A zigzag with two peaks — reads as M and as a signal trace at once. Sharpest of the five.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>21</b><span>Looped</span></div>
+        <div class="stage"><svg viewBox="0 0 100 100" aria-label="One-line M with a loop"><path class="mk" d="M14 84 V30 C14 18 32 18 32 32 C32 46 20 48 34 60 L50 46 L66 60 C80 48 68 46 68 32 C68 18 86 18 86 30 V84" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M14 84 V30 C14 18 32 18 32 32 C32 46 20 48 34 60 L50 46 L66 60 C80 48 68 46 68 32 C68 18 86 18 86 30 V84" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M14 84 V30 C14 18 32 18 32 32 C32 46 20 48 34 60 L50 46 L66 60 C80 48 68 46 68 32 C68 18 86 18 86 30 V84" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Looped</div><p class="nt">Two curls at the shoulders. Ornamental — best large, muddy small.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>22</b><span>Crossed</span></div>
+        <div class="stage"><svg viewBox="0 0 100 100" aria-label="One-line M that crosses itself"><path class="mk" d="M16 82 L34 24 L58 66 L44 24 L66 76 L84 28" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M16 82 L34 24 L58 66 L44 24 L66 76 L84 28" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M16 82 L34 24 L58 66 L44 24 L66 76 L84 28" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Crossed</div><p class="nt">The stroke crosses itself once. Energetic, slightly unstable — the most "drawn in one motion" of the set.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>23</b><span>Meem line</span></div>
+        <div class="stage"><svg viewBox="0 0 100 100" aria-label="One line forming M then the meem bowl"><path class="mk" d="M12 78 V30 L32 52 L52 30 V62 C52 74 38 74 38 62 C38 50 56 48 70 48 C84 48 88 58 88 78" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div class="sizes">
+          <figure class="s32"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M12 78 V30 L32 52 L52 30 V62 C52 74 38 74 38 62 C38 50 56 48 70 48 C84 48 88 58 88 78" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/></svg><figcaption>32</figcaption></figure>
+          <figure class="s16"><svg viewBox="0 0 100 100" aria-hidden="true"><path class="mk" d="M12 78 V30 L32 52 L52 30 V62 C52 74 38 74 38 62 C38 50 56 48 70 48 C84 48 88 58 88 78" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/></svg><figcaption>16</figcaption></figure>
+        </div>
+        <div><div class="nm">Meem line</div><p class="nt">One stroke that starts as a Latin M and resolves into the meem's bowl and tail. Bilingual, unbroken.</p></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec__h">MOMIN — Latin wordmarks</h2>
+    <p class="sec__n">The name set as the mark, no icon needed.</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(290px,1fr))">
+
+      <div class="wm"><div class="wm__art wm-mono">MOMIN</div>
+        <div><div class="nm">Tracked mono</div><p class="nt">Wide letterspacing, monospaced. Technical and calm — works as a footer signature.</p></div></div>
+
+      <div class="wm"><div class="wm__art wm-tight">Momin</div>
+        <div><div class="nm">Tight grotesk</div><p class="nt">Heavy, negative tracking. Confident and modern; the default good answer.</p></div></div>
+
+      <div class="wm"><div class="wm__art wm-stack">MO<br>MIN</div>
+        <div><div class="nm">Stacked</div><p class="nt">Two lines, tight leading. Becomes a square block — sits well in a corner.</p></div></div>
+
+      <div class="wm"><div class="wm__art wm-out">MOMIN</div>
+        <div><div class="nm">Outline</div><p class="nt">Stroke only, no fill. Quiet over imagery, and it can fill in on hover.</p></div></div>
+
+      <div class="wm">
+        <div class="wm__art wm-hybrid"><span>M</span><svg viewBox="0 0 100 100" aria-label="meem"><circle class="mk" cx="50" cy="42" r="26" stroke-width="11"/><path class="mk" d="M68 60 Q74 78 66 92" stroke-width="11" stroke-linecap="round" fill="none"/></svg><span>MIN</span></div>
+        <div><div class="nm">Meem for O</div><p class="nt">The meem replaces the first O — its bowl is already a circle. Both alphabets in one word, and it still reads MOMIN to everyone.</p></div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+  <p class="foot">
+    <strong>On the Urdu faces:</strong> Nastaliq is the traditional Urdu hand and the most beautiful,
+    but it slopes and needs vertical room — a header or footer mark, never a favicon.
+    <b>Reem Kufi</b> is the one built like a logo: geometric, upright, holds at small sizes.
+    <b>Changa</b> and <b>Cairo</b> read as contemporary rather than traditional.
+    <b>Rakkas</b> has the most personality if you want it loud.
+    <br><br>
+    <strong>My pick from this round:</strong> <b>23 Meem line</b> — one unbroken stroke that begins
+    as a Latin M and resolves into a meem. It animates, it is bilingual, and nobody else has it.
+    <b>Meem for O</b> is the wordmark version of the same idea.
+  </p>
+</div>
+
+<script>
+(function(){
+  var t=document.querySelectorAll('[data-theme-set]');
+  t.forEach(function(b){b.addEventListener('click',function(){
+    document.documentElement.setAttribute('data-theme', b.getAttribute('data-theme-set'));
+    t.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});});});
+  var c=document.querySelectorAll('[data-col]'), all=document.getElementById('all');
+  c.forEach(function(b){b.addEventListener('click',function(){
+    all.classList.toggle('onacc', b.getAttribute('data-col')==='acc');
+    c.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});});});
+  document.documentElement.setAttribute('data-theme','light');
+})();
+</script>

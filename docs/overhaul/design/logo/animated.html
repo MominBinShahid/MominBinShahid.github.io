@@ -1,0 +1,311 @@
+<title>Written In Two Hands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;800&family=Reenie+Beanie&family=Shadows+Into+Light&family=Rock+Salt&family=Homemade+Apple&family=Indie+Flower&family=Just+Another+Hand&family=Caveat:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Gulzar&display=swap">
+
+<style>
+:root{
+  --bg:#f3f4f7; --panel:#fff; --ink:#14171d; --dim:#5f6775;
+  --line:#dee1e8; --acc:#1f5fd6; --sw:#14171d;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0d11; --panel:#13161c; --ink:#e6e9ef; --dim:#8a92a1;
+    --line:#232831; --acc:#7fa4ff; --sw:#e6e9ef;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0d11; --panel:#13161c; --ink:#e6e9ef; --dim:#8a92a1;
+  --line:#232831; --acc:#7fa4ff; --sw:#e6e9ef;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.5}
+:focus-visible{outline:2px solid var(--acc); outline-offset:3px; border-radius:3px}
+.wrap{max-width:1160px; margin:0 auto; padding:clamp(22px,4vw,46px) clamp(16px,3vw,30px) 76px}
+h1{font-size:clamp(23px,3.2vw,32px); font-weight:800; letter-spacing:-.028em; margin:0 0 9px}
+.sub{font-size:14.5px; color:var(--dim); max-width:72ch; margin:0}
+.sub b{color:var(--ink); font-weight:600}
+.controls{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:18px 0 0}
+.ctl{font:inherit; font-size:13px; font-weight:500; cursor:pointer; padding:7px 14px;
+  border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--dim)}
+.ctl:hover{color:var(--ink)}
+.ctl[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.lbl{font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); font-weight:700}
+.sec{margin-top:36px}
+.sec__h{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim);
+  font-weight:700; padding-bottom:8px; border-bottom:1px solid var(--line); margin-bottom:8px}
+.sec__n{font-size:13px; color:var(--dim); margin:0 0 18px; max-width:72ch}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(322px,1fr)); gap:16px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px;
+  display:flex; flex-direction:column; gap:13px}
+.cid{display:flex; gap:8px; align-items:baseline; font-family:"Spline Sans Mono",monospace;
+  font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--dim)}
+.cid b{color:var(--acc); font-weight:600}
+.stage{position:relative; display:grid; place-items:center; min-height:132px;
+  border:1px dashed var(--line); border-radius:10px; padding:16px; overflow:hidden; color:var(--sw)}
+.onacc .stage{color:var(--acc)}
+.nm{font-size:14px; font-weight:600}
+.nt{font-size:12.5px; color:var(--dim); line-height:1.5; margin:4px 0 0}
+.replay{align-self:flex-start; font:inherit; font-size:12px; font-weight:500; cursor:pointer;
+  padding:5px 12px; border-radius:999px; border:1px solid var(--line);
+  background:transparent; color:var(--dim)}
+.replay:hover{color:var(--ink); border-color:var(--dim)}
+
+/* ---------- hands ---------- */
+.h-reenie{font-family:"Reenie Beanie",cursive; font-size:64px}
+.h-shadow{font-family:"Shadows Into Light",cursive; font-size:52px}
+.h-rock{font-family:"Rock Salt",cursive; font-size:34px}
+.h-apple{font-family:"Homemade Apple",cursive; font-size:42px}
+.h-indie{font-family:"Indie Flower",cursive; font-size:52px}
+.h-jah{font-family:"Just Another Hand",cursive; font-size:74px}
+.hands-small{display:flex; gap:18px; align-items:baseline; color:var(--dim); padding-left:2px}
+
+/* ---------- shared morph rig ---------- */
+.rig{position:relative; width:100%; height:96px; display:grid; place-items:center}
+.rig > span{position:absolute; inset:0; display:grid; place-items:center; white-space:nowrap}
+.lat{font-family:Caveat,cursive; font-weight:700; font-size:58px; letter-spacing:.01em}
+.lat-raw{font-family:"Reenie Beanie",cursive; font-size:70px}
+.urd{font-family:"Noto Nastaliq Urdu",serif; direction:rtl; font-size:38px; line-height:2.1}
+.urd-g{font-family:Gulzar,serif; direction:rtl; font-size:40px; line-height:2}
+
+/* 1 — write & rewrite */
+.m1 .lat{clip-path:inset(0 100% 0 0)}
+.m1 .urd{clip-path:inset(0 0 0 100%)}
+.m1.go .lat{animation:latIn 1.1s ease-out forwards, latOut .55s ease-in 2.1s forwards}
+.m1.go .urd{animation:urdIn 1.3s ease-out 2.75s forwards}
+@keyframes latIn{to{clip-path:inset(0 0 0 0)}}
+@keyframes latOut{to{clip-path:inset(0 0 0 100%)}}
+@keyframes urdIn{from{clip-path:inset(0 0 0 100%)} to{clip-path:inset(0 0 0 0)}}
+
+/* 2 — diagonal cut */
+.m2 .lat{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+.m2 .urd{clip-path:polygon(0 0,0 0,0 100%,0 100%)}
+.m2.go .lat{animation:diagOut 1.15s cubic-bezier(.7,0,.3,1) .35s forwards}
+.m2.go .urd{animation:diagIn 1.15s cubic-bezier(.7,0,.3,1) .35s forwards}
+@keyframes diagOut{to{clip-path:polygon(-30% 0,-30% 0,-60% 100%,-60% 100%)}}
+@keyframes diagIn{from{clip-path:polygon(130% 0,130% 0,100% 100%,100% 100%)}
+                  to{clip-path:polygon(-30% 0,130% 0,130% 100%,-60% 100%)}}
+
+/* 3 — ink draw on real glyphs */
+.m3 svg{width:100%; height:96px; overflow:visible}
+.m3 text{fill:none; stroke:currentColor; stroke-width:1.1;
+  stroke-dasharray:1800; stroke-dashoffset:1800}
+.m3.go text.a{animation:draw 1.5s ease-in-out forwards, inkfill .5s ease 1.5s forwards}
+.m3.go text.b{animation:draw 1.7s ease-in-out 2.4s forwards, inkfill .5s ease 4.1s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes inkfill{to{fill:currentColor; stroke-width:0}}
+
+/* 4 — hover swap */
+.m4 .lat{opacity:1; transform:translateY(0) scale(1); transition:opacity .38s ease, transform .5s cubic-bezier(.34,1.3,.5,1)}
+.m4 .urd{opacity:0; transform:translateY(14px) scale(.94); transition:opacity .38s ease, transform .5s cubic-bezier(.34,1.3,.5,1)}
+.m4:hover .lat, .m4:focus-within .lat{opacity:0; transform:translateY(-14px) scale(.94)}
+.m4:hover .urd, .m4:focus-within .urd{opacity:1; transform:translateY(0) scale(1)}
+.m4hint{position:absolute; bottom:6px; right:10px; font-family:"Spline Sans Mono",monospace;
+  font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); opacity:.7}
+
+/* 5 — cursor ink */
+.m5 .lat{transition:transform .18s ease-out}
+.m5 .urd{opacity:0; transition:opacity .3s ease}
+.m5 .track{position:absolute; inset:0}
+
+.note{margin-top:32px; padding-top:18px; border-top:1px solid var(--line);
+  font-size:13px; color:var(--dim); max-width:76ch}
+.note strong{color:var(--ink); font-weight:600}
+.note code{font-family:"Spline Sans Mono",monospace; font-size:12px;
+  background:var(--bg); border:1px solid var(--line); border-radius:4px; padding:1px 5px}
+
+@media (prefers-reduced-motion:reduce){
+  .m1 .lat,.m1 .urd,.m2 .lat,.m2 .urd{clip-path:none !important; animation:none !important}
+  .m1 .urd,.m2 .urd{opacity:.45}
+  .m3 text{stroke-dashoffset:0 !important; fill:currentColor; stroke-width:0; animation:none !important}
+  .m4 .urd{opacity:.45; transform:none}
+}
+</style>
+
+<div class="wrap">
+  <h1>Written in two hands</h1>
+  <p class="sub">
+    Raw handwriting for the Latin, Nastaliq for the Urdu, and five ways of getting from one to the other.
+    One detail throughout: the Latin is revealed <b>left to right</b> and the Urdu <b>right to left</b>,
+    because that is the direction each is actually written.
+  </p>
+  <div class="controls">
+    <span class="lbl">Theme</span>
+    <button class="ctl" data-theme-set="light" aria-pressed="true">Light</button>
+    <button class="ctl" data-theme-set="dark" aria-pressed="false">Dark</button>
+    <span class="lbl" style="margin-left:8px">Colour</span>
+    <button class="ctl" data-col="ink" aria-pressed="true">Mono</button>
+    <button class="ctl" data-col="acc" aria-pressed="false">Accent</button>
+    <button class="ctl" id="playall" style="margin-left:8px">Replay all</button>
+  </div>
+
+<div id="all">
+
+  <section class="sec">
+    <h2 class="sec__h">Raw hands — pick the feel first</h2>
+    <p class="sec__n">Before animating anything, decide how rough you want it. These run from "scrawled" to "neat child".</p>
+    <div class="grid">
+      <article class="card">
+        <div class="cid"><b>R1</b><span>Scrawl</span></div>
+        <div class="stage"><span class="h-reenie">Momin</span></div>
+        <div class="hands-small"><span class="h-reenie" style="font-size:36px">Momin</span><span class="h-reenie" style="font-size:24px">Momin</span></div>
+        <div><div class="nm">Scrawl</div><p class="nt">Thin ballpoint, fast and careless. The most "note left on a desk" of the six.</p></div>
+      </article>
+      <article class="card">
+        <div class="cid"><b>R2</b><span>Marker</span></div>
+        <div class="stage"><span class="h-shadow">Momin</span></div>
+        <div class="hands-small"><span class="h-shadow" style="font-size:30px">Momin</span><span class="h-shadow" style="font-size:20px">Momin</span></div>
+        <div><div class="nm">Marker</div><p class="nt">Even weight, slight wobble, friendly. The safest raw hand — legible small, still clearly handwritten.</p></div>
+      </article>
+      <article class="card">
+        <div class="cid"><b>R3</b><span>Crayon</span></div>
+        <div class="stage"><span class="h-rock">Momin</span></div>
+        <div class="hands-small"><span class="h-rock" style="font-size:20px">Momin</span><span class="h-rock" style="font-size:14px">Momin</span></div>
+        <div><div class="nm">Crayon</div><p class="nt">Genuinely rough and uneven — the closest to a child's hand. Loud personality, poor legibility, needs space.</p></div>
+      </article>
+      <article class="card">
+        <div class="cid"><b>R4</b><span>Pencil</span></div>
+        <div class="stage"><span class="h-apple">Momin</span></div>
+        <div class="hands-small"><span class="h-apple" style="font-size:26px">Momin</span><span class="h-apple" style="font-size:18px">Momin</span></div>
+        <div><div class="nm">Pencil</div><p class="nt">Slanted, looping, like a note written quickly on lined paper. Warm without being cartoonish.</p></div>
+      </article>
+      <article class="card">
+        <div class="cid"><b>R5</b><span>Rounded</span></div>
+        <div class="stage"><span class="h-indie">Momin</span></div>
+        <div class="hands-small"><span class="h-indie" style="font-size:30px">Momin</span><span class="h-indie" style="font-size:20px">Momin</span></div>
+        <div><div class="nm">Rounded</div><p class="nt">Soft, bubbly, deliberately unserious. The funkiest — and the one that risks reading as a craft blog.</p></div>
+      </article>
+      <article class="card">
+        <div class="cid"><b>R6</b><span>Tall</span></div>
+        <div class="stage"><span class="h-jah">Momin</span></div>
+        <div class="hands-small"><span class="h-jah" style="font-size:42px">Momin</span><span class="h-jah" style="font-size:28px">Momin</span></div>
+        <div><div class="nm">Tall</div><p class="nt">Condensed and vertical, like handwriting squeezed into a narrow margin. Distinctive and it packs into small widths.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec__h">Five ways to become Urdu</h2>
+    <p class="sec__n">Press replay on each. All are pure CSS or SVG — no libraries, no GIF, so they stay crisp at any size and cost nothing.</p>
+    <div class="grid">
+
+      <article class="card">
+        <div class="cid"><b>A1</b><span>Write &amp; rewrite</span></div>
+        <div class="stage"><span class="rig m1" data-anim>
+          <span class="lat-raw lat">Momin</span><span class="urd">مومن</span>
+        </span></div>
+        <button class="replay" data-replay>Replay</button>
+        <div><div class="nm">Write &amp; rewrite</div><p class="nt">The Latin writes itself in, holds, wipes away, then the Urdu writes itself in from the right. The most legible sequence — each name gets its own moment.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>A2</b><span>Diagonal</span></div>
+        <div class="stage"><span class="rig m2" data-anim>
+          <span class="lat-raw lat">Momin</span><span class="urd-g urd">مومن</span>
+        </span></div>
+        <button class="replay" data-replay>Replay</button>
+        <div><div class="nm">Diagonal cut</div><p class="nt">Your idea. A slanted blade sweeps across and swaps them mid-stroke. The slope matches the way Nastaliq descends. Fastest and most graphic.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>A3</b><span>Ink draw</span></div>
+        <div class="stage m3" data-anim>
+          <svg viewBox="0 0 400 96" aria-label="Momin written, then مومن">
+            <text class="a" x="200" y="60" text-anchor="middle"
+                  font-family="Caveat, cursive" font-size="62" font-weight="700">Momin</text>
+            <text class="b" x="200" y="62" text-anchor="middle" direction="rtl"
+                  font-family="Noto Nastaliq Urdu, serif" font-size="40">مومن</text>
+          </svg>
+        </div>
+        <button class="replay" data-replay>Replay</button>
+        <div><div class="nm">Ink draw</div><p class="nt">Outline first, then it fills with ink — on both scripts. Actually traces the letterforms rather than wiping them. The most "being written" of the five.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>A4</b><span>Hover</span></div>
+        <div class="stage"><span class="rig m4" tabindex="0">
+          <span class="lat-raw lat">Momin</span><span class="urd">مومن</span>
+          <span class="m4hint">hover me</span>
+        </span></div>
+        <div><div class="nm">Hover swap</div><p class="nt">No loop, no autoplay — it only changes when someone reaches for it. In a header this is the version that never gets annoying, and it doubles as your cursor interaction.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="cid"><b>A5</b><span>Cursor ink</span></div>
+        <div class="stage"><span class="rig m5" id="m5">
+          <span class="lat-raw lat" id="m5lat">Momin</span><span class="urd" id="m5urd">مومن</span>
+        </span></div>
+        <div><div class="nm">Cursor ink</div><p class="nt">Move your cursor across this box. The mark leans with you, and as you cross the midpoint the Latin gives way to the Urdu. You control the morph by hand — it is not a playback.</p></div>
+      </article>
+
+    </div>
+  </section>
+
+</div>
+
+  <p class="note">
+    <strong>On the Urdu:</strong> Google Fonts carries 24 Arabic-script faces but only <b>two</b> real
+    Nastaliq — Noto Nastaliq Urdu and Gulzar. Nastaliq is punishing to digitise because letters cascade
+    diagonally and every glyph changes shape by context, so almost nobody builds one. That is a reason to
+    <em>draw</em> the final mark as outlines rather than set it in a font: you stop being limited to two
+    options and the animation stops depending on a webfont loading.
+    <br><br>
+    <strong>Not a GIF.</strong> All five are CSS or SVG — crisp at any size, a couple of kilobytes,
+    theme-aware, and they respect <code>prefers-reduced-motion</code> (reduced motion shows both scripts
+    at rest instead of animating). A GIF would be fixed-resolution, fixed-colour and heavier.
+    <br><br>
+    <strong>My picks:</strong> <b>A4 Hover</b> for the site header — it never loops, never nags, and
+    rewards the one person who reaches for it. <b>A3 Ink draw</b> for a one-time page-load moment.
+    <b>A5</b> is the interesting one for what you asked about cursor interaction: the visitor drives the
+    morph themselves.
+  </p>
+</div>
+
+<script>
+(function(){
+  var t=document.querySelectorAll('[data-theme-set]');
+  t.forEach(function(b){b.addEventListener('click',function(){
+    document.documentElement.setAttribute('data-theme',b.getAttribute('data-theme-set'));
+    t.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});});});
+  var c=document.querySelectorAll('[data-col]'), all=document.getElementById('all');
+  c.forEach(function(b){b.addEventListener('click',function(){
+    all.classList.toggle('onacc',b.getAttribute('data-col')==='acc');
+    c.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});});});
+  document.documentElement.setAttribute('data-theme','light');
+
+  function play(el){ el.classList.remove('go'); void el.offsetWidth; el.classList.add('go'); }
+  document.querySelectorAll('[data-replay]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var card = btn.closest('.card');
+      var rig = card.querySelector('[data-anim]');
+      if (rig) play(rig);
+    });
+  });
+  function playAll(){ document.querySelectorAll('[data-anim]').forEach(play); }
+  document.getElementById('playall').addEventListener('click', playAll);
+  setTimeout(playAll, 350);
+
+  // A5 — cursor drives the morph
+  var box = document.getElementById('m5');
+  if (box) {
+    var lat = document.getElementById('m5lat'), urd = document.getElementById('m5urd');
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    box.addEventListener('pointermove', function(e){
+      if (reduce) return;
+      var r = box.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width;          // 0 → 1
+      var y = (e.clientY - r.top) / r.height - 0.5;    // −0.5 → 0.5
+      lat.style.opacity = String(Math.max(0, 1 - x * 1.6));
+      urd.style.opacity = String(Math.max(0, (x - 0.35) * 1.8));
+      lat.style.transform = 'rotate(' + (y * -5).toFixed(2) + 'deg) translateX(' + (x * -14).toFixed(1) + 'px)';
+      urd.style.transform = 'rotate(' + (y * -5).toFixed(2) + 'deg) translateX(' + ((1 - x) * 14).toFixed(1) + 'px)';
+    });
+    box.addEventListener('pointerleave', function(){
+      lat.style.opacity = '1'; urd.style.opacity = '0';
+      lat.style.transform = ''; urd.style.transform = '';
+    });
+  }
+})();
+</script>

@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import { UI } from '../../consts';
+import { href } from '../../lib/href';
+import { getPosts, postPath } from '../../lib/posts';
+
+const posts = await getPosts();
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base title={UI.blogIndexTitle} path="/blog/" description={UI.blogIndexIntro}>
+  <h1>{UI.blogIndexTitle}</h1>
+  <p>{UI.blogIndexIntro}</p>
+
+  {
+    posts.length === 0 ? (
+      <p class="muted">{UI.blogEmpty}</p>
+    ) : (
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <a href={href(postPath(post))}>{post.data.title}</a>
+            {!post.data.published && <span class="muted"> — {UI.draftBadge}</span>}
+            <br />
+            <span class="muted">
+              <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
+            </span>
+            <br />
+            <span>{post.data.description}</span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Base>

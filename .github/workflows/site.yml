@@ -1,0 +1,108 @@
+# Build and deploy the Astro site.
+#
+# This lives alongside the Gatsby workflow (deployment.yml) for as long as both
+# exist. It CI-builds on every branch so the overhaul work is verified, and
+# deploys only from main - because main is what ends up on Pages, which is why
+# the merge is the gate and the commits are not.
+name: Site
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - 'site/**'
+      - '.github/workflows/site.yml'
+  pull_request:
+    paths:
+      - 'site/**'
+      - '.github/workflows/site.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: site
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: site/.nvmrc
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - run: npm ci
+
+      # astro check is most of this site's test suite. TypeScript strict plus the
+      # Zod schemas on the content collection mean a malformed post fails here
+      # rather than rendering wrong.
+      - run: npm run check
+
+      - run: npm run build:only
+
+      # The failure this guards against is invisible: without .nojekyll, Pages
+      # runs the output through Jekyll, Jekyll drops /_astro/, and the site
+      # serves unstyled HTML that still returns 200. A smoke test would pass.
+      - name: Assert .nojekyll survived the build
+        run: test -f dist/.nojekyll || { echo "::error::dist/.nojekyll missing"; exit 1; }
+
+      - name: Assert the ported static files are present
+        run: |
+          missing=0
+          for f in robots.txt sw.js favicon.ico favicon-32x32.png rss.xml sitemap.xml; do
+            [ -f "dist/$f" ] || { echo "::error::dist/$f missing"; missing=1; }
+          done
+          for s in 48 72 96 144 192 256 384 512; do
+            [ -f "dist/icons/icon-${s}x${s}.png" ] || { echo "::error::icon ${s} missing"; missing=1; }
+          done
+          grep -q 'MealUnits/sitemap.xml' dist/robots.txt \
+            || { echo "::error::robots.txt lost MealUnits' only crawl entry"; missing=1; }
+          exit $missing
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: site/dist
+          retention-days: 7
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Interlock. Both workflows publish to gh-pages, so if the Gatsby one is
+      # still here they would race and whichever finished last would win. Failing
+      # loudly beats deploying the wrong site. Deleting deployment.yml at cutover
+      # is what switches this off, permanently.
+      - name: Refuse to deploy while the Gatsby workflow still exists
+        working-directory: .
+        run: |
+          if [ -f .github/workflows/deployment.yml ]; then
+            echo "::error::deployment.yml is still present - two workflows would both publish to gh-pages. Remove it as part of the cutover."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: site/.nvmrc
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - run: npm ci
+      - run: npm run build:only
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site/dist
+          user_name: github-actions-bot
+          user_email: support+actions@github.com

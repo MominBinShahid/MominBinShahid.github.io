@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import { UI } from '../consts';
+import { href } from '../lib/href';
+---
+
+<Base title={UI.notFoundTitle} path="/404/" noindex>
+  <script>
+    import { canonicalProjectPath } from '../lib/canonical-project-path';
+
+    // /mealunits/ cannot reach the MealUnits project site - Pages only serves it
+    // at the repository's exact case - so it falls through to here. Correct the
+    // casing instead of showing a 404 for what is only a typing difference.
+    const target = canonicalProjectPath(window.location.pathname);
+    if (target !== null) {
+      // replace(), not assign(): the broken URL should not sit in history for
+      // the Back button to return to.
+      window.location.replace(target + window.location.search + window.location.hash);
+    }
+  </script>
+
+  <h1>{UI.notFoundTitle}</h1>
+  <p>{UI.notFoundBody}</p>
+  <p><a href={href('/')}>{UI.notFoundAction}</a></p>
+  {/*
+    The 404 is one of the places the better easter eggs are supposed to land -
+    see tasks.md. Nothing here yet on purpose; it needs the design pass.
+  */}
+</Base>

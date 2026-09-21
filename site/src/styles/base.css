@@ -1,0 +1,139 @@
+/*
+  Base document styles. Semantic single-column flow, nothing more.
+
+  Everything here uses *logical* properties - margin-inline, padding-block,
+  border-inline-start. Urdu is RTL and retrofitting physical left/right later is
+  the one i18n preparation that genuinely hurts to skip.
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--f-body);
+  font-size: var(--t-base);
+  line-height: var(--lh-body);
+}
+
+.shell {
+  max-inline-size: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--s-4);
+  padding-block: var(--s-8);
+}
+
+h1,
+h2,
+h3 {
+  line-height: var(--lh-tight);
+  text-wrap: balance;
+  margin-block: var(--s-8) var(--s-3);
+}
+
+h1 {
+  font-size: var(--t-2xl);
+}
+h2 {
+  font-size: var(--t-xl);
+}
+h3 {
+  font-size: var(--t-lg);
+}
+
+p,
+ul,
+ol,
+blockquote,
+pre,
+table {
+  margin-block: 0 var(--s-4);
+}
+
+a {
+  color: var(--c-accent);
+}
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+img {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+code {
+  font-family: var(--f-mono);
+  font-size: 0.9em;
+}
+
+blockquote {
+  margin-inline: 0;
+  padding-inline-start: var(--s-4);
+  border-inline-start: 3px solid var(--c-line);
+  color: var(--c-muted);
+}
+
+/* Wide content scrolls inside its own box. The page body never scrolls sideways. */
+.scroll-x {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  inline-size: 100%;
+}
+
+th,
+td {
+  border-block-end: 1px solid var(--c-line);
+  padding-block: var(--s-2);
+  padding-inline: 0 var(--s-4);
+  text-align: start;
+}
+
+hr {
+  border: 0;
+  border-block-start: 1px solid var(--c-line);
+  margin-block: var(--s-8);
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: -9999px;
+}
+.skip-link:focus {
+  position: static;
+  display: inline-block;
+  margin-block-end: var(--s-4);
+}
+
+.muted {
+  color: var(--c-muted);
+  font-size: var(--t-sm);
+}

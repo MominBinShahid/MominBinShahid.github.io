@@ -1,0 +1,961 @@
+<title>Full Volume</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Gulzar&display=swap">
+
+<style>
+/* ============================================================
+   FULL VOLUME — one committed decision, repeated down the page.
+   ============================================================ */
+
+#fv, #fv * , #fv *::before, #fv *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+#fv {
+  /* faces */
+  --disp: 'Bricolage Grotesque', 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  --urdu: 'Gulzar', 'Noto Nastaliq Urdu', 'Urdu Typesetting', serif;
+
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  color: var(--fg);
+  background: var(--g0);
+  overflow-x: clip;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+}
+
+/* ---- the ink deck: six inks, each a light/dark pair ---- */
+#fv[data-ink="cobalt"]    { --ink-l:#1D3FBF; --ink-d:#8FA6FF; --field-d:#131C3D; }
+#fv[data-ink="verdigris"] { --ink-l:#0B6A58; --ink-d:#46D6B3; --field-d:#0B241F; }
+#fv[data-ink="oxblood"]   { --ink-l:#8C1D2F; --ink-d:#FF8A96; --field-d:#2E1116; }
+#fv[data-ink="brass"]     { --ink-l:#8A6200; --ink-d:#E8B33B; --field-d:#271D08; }
+#fv[data-ink="iris"]      { --ink-l:#5530B0; --ink-d:#B9A5FF; --field-d:#1D1440; }
+#fv[data-ink="beetroot"]  { --ink-l:#A11458; --ink-d:#FF7CB8; --field-d:#330D20; }
+
+/* ---- light: paper ground, loud ink ---- */
+#fv[data-theme="light"] {
+  --g0:#F2F1EB; --g1:#E9E7DE; --g2:#F8F7F1;
+  --fg:#1B1914; --mut:#6E6A5E; --hair:#D8D5C8;
+  --ink: var(--ink-l);
+  --field: var(--ink-l); --field-fg:#F6F4EE; --field-hd:#F6F4EE; --field-mut:rgba(246,244,238,.62);
+  --foot-bg:#1C1A14; --foot-fg:#E8E5DA; --foot-mut:#98937f;
+  --code-bg:#E9E6DA;
+  --tok-s:#58691E; --tok-n:#A05516;
+}
+/* ---- dark: designed, not inverted — deep tinted ground, luminous ink ---- */
+#fv[data-theme="dark"] {
+  --g0:#14171C; --g1:#191D23; --g2:#101317;
+  --fg:#E4E3DD; --mut:#8B8F98; --hair:#272C34;
+  --ink: var(--ink-d);
+  --field: var(--field-d); --field-fg:#D9D8D2; --field-hd:var(--ink-d); --field-mut:rgba(217,216,210,.55);
+  --foot-bg:#0B0D10; --foot-fg:#D6D5CE; --foot-mut:#7c8089;
+  --code-bg:#0E1116;
+  --tok-s:#B5CC72; --tok-n:#E8A46B;
+}
+
+#fv ::selection { background: var(--ink); color: var(--g0); }
+
+#fv a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+#fv a:hover { text-decoration-thickness: 2px; }
+#fv :focus { outline: none; }
+#fv :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 1px; }
+#fv button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+#fv [hidden] { display: none !important; }
+
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
+.skip { position:absolute; left:1rem; top:-4rem; z-index:99; background:var(--ink); color:var(--g0); font-family:var(--mono); font-size:.78rem; padding:.5em 1em; transition: top .15s; }
+.skip:focus { top: .6rem; }
+
+/* ============ nav — a thin persistent strip, nothing more ============ */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap;
+  padding: .6rem clamp(1.1rem, 4vw, 4rem);
+  font-family: var(--mono); font-size: .78rem; letter-spacing: .02em;
+  background: color-mix(in srgb, var(--g0) 88%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.nav-brand { display:flex; align-items:center; gap:.55rem; font-family:var(--mono); font-size:.78rem; }
+.nav-emoji { font-size:1rem; line-height:1; }
+.nav-name { letter-spacing:.04em; }
+.nav-links { display:flex; gap:1.1rem; margin-left:auto; }
+.nav-link { color: var(--mut); padding:.2em 0; }
+.nav-link:hover { color: var(--ink); }
+.nav-link[aria-current="page"] { color: var(--fg); text-decoration: underline; text-decoration-color: var(--ink); text-decoration-thickness:2px; text-underline-offset:.35em; }
+.nav-tools { display:flex; align-items:center; gap:.9rem; }
+.ink-chip { display:flex; align-items:center; gap:.45rem; color:var(--mut); }
+.ink-chip:hover { color:var(--fg); }
+.ink-dot { width:.72rem; height:.72rem; border-radius:50%; background:var(--ink); display:inline-block; }
+.theme-btn { display:flex; align-items:center; color:var(--mut); }
+.theme-btn:hover { color:var(--ink); }
+.theme-btn svg { width:1.05rem; height:1.05rem; display:block; }
+
+/* ============ acts ============ */
+.act { padding: clamp(4.5rem, 11vh, 8.5rem) clamp(1.1rem, 4vw, 4rem); }
+.t-base  { background: var(--g0); }
+.t-shade { background: var(--g1); }
+.t-lift  { background: var(--g2); }
+
+.kicker {
+  font-family: var(--mono); font-size: .72rem; font-weight: 500;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--mut);
+  margin-bottom: 2.2rem;
+}
+.kicker b { color: var(--ink); font-weight: 600; }
+
+/* --- act 1 · masthead --- */
+.masthead { min-height: 88svh; display:flex; flex-direction:column; justify-content:flex-end; padding-bottom: clamp(3rem, 8vh, 6rem); }
+.mast-name { font-family: var(--disp); text-transform: uppercase; }
+.mast-name .m1 {
+  display:block; font-size: clamp(4.2rem, 20.5vw, 21rem); font-weight: 800;
+  line-height: .84; letter-spacing: -.02em; color: var(--ink);
+}
+.mast-name .m2 {
+  display:block; font-size: clamp(2.05rem, 10.2vw, 10.4rem); font-weight: 300;
+  line-height: .98; letter-spacing: .005em; color: var(--fg); margin-top:.06em;
+}
+.mast-set {
+  margin-top: 2.6rem; font-family: var(--disp); font-weight: 600;
+  font-size: clamp(.95rem, 2vw, 1.35rem); letter-spacing: .01em;
+}
+.mast-set .dot { color: var(--ink); }
+.mast-desc {
+  margin-top: 1.1rem; font-family: var(--mono); font-size: .78rem; color: var(--mut); max-width: 62ch;
+}
+
+/* --- act 2 · the agent --- */
+.claim {
+  font-family: var(--disp); font-weight: 800; text-transform: uppercase;
+  font-size: clamp(2.5rem, 7.8vw, 7.6rem); line-height: .95; letter-spacing: -.018em;
+  color: var(--ink); max-width: 14em;
+}
+.claim .quiet { color: var(--fg); }
+.mechanism { margin-top: 3rem; max-width: 52ch; font-size: clamp(1.02rem, 1.4vw, 1.22rem); }
+.mechanism p + p { margin-top: 1em; }
+.mechanism em { font-style: italic; }
+.mech-magic { color: var(--mut); font-style: italic; }
+#w-consistency { text-decoration: underline; text-decoration-color: var(--ink); text-decoration-thickness: 2px; text-underline-offset: .16em; }
+
+.qa-log {
+  margin-top: 3.4rem; height: 9.6em; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+  font-family: var(--mono); font-size: .78rem; line-height: 1.75; color: var(--mut);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 38%);
+  mask-image: linear-gradient(to bottom, transparent, black 38%);
+  max-width: 60ch;
+}
+.qa-line { animation: qaIn .28s ease-out; }
+.qa-t { color: var(--ink); font-weight: 500; margin-right: .7em; }
+.qa-static { color: var(--mut); }
+@keyframes qaIn { from { opacity: 0; transform: translateY(.35em); } to { opacity: 1; transform: none; } }
+
+/* --- act 3 · the arc --- */
+.arc-lede {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.35rem, 2.6vw, 2.1rem); line-height: 1.3; max-width: 30ch; margin-bottom: 4rem;
+}
+.arc-row { margin: 0 0 3.4rem; max-width: 60rem; }
+.arc-when { font-family: var(--mono); font-size: .72rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color: var(--ink); display:block; margin-bottom:.6rem; }
+.arc-line {
+  font-family: var(--disp); font-weight: 700; letter-spacing: -.012em;
+  font-size: clamp(1.55rem, 3.9vw, 3.6rem); line-height: 1.04;
+}
+.arc-line .soft { font-weight: 300; }
+.arc-note { margin-top: 1rem; max-width: 54ch; font-size: clamp(1rem, 1.35vw, 1.15rem); }
+.arc-note.quote { font-style: italic; }
+.arc-mono-note { margin-top: .9rem; font-family: var(--mono); font-size: .78rem; color: var(--mut); }
+.arc-drives {
+  margin: 4.2rem 0 0; max-width: 46ch;
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.2rem, 2.1vw, 1.7rem); line-height: 1.42;
+}
+.arc-drives-kick { font-family: var(--mono); font-style: normal; font-size:.72rem; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:var(--mut); display:block; margin-bottom:.9rem; }
+.arc-give { margin-top: 3rem; max-width: 56ch; font-size: clamp(1rem, 1.35vw, 1.15rem); }
+.arc-give b { font-weight: 600; color: var(--ink); }
+
+/* the stack — one designed strip, never percentage bars */
+.stack-strip {
+  margin: 5rem calc(-1 * clamp(1.1rem, 4vw, 4rem)) calc(-1 * clamp(4.5rem, 11vh, 8.5rem));
+  padding: 1.35rem clamp(1.1rem, 4vw, 4rem);
+  background: var(--g1); overflow-x: auto; white-space: nowrap;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; color: var(--mut);
+  scrollbar-width: thin;
+}
+.t-shade .stack-strip { background: var(--g0); }
+.stack-strip b { color: var(--ink); font-weight: 600; letter-spacing: .2em; margin-right: .6em; }
+.stack-strip .sep { margin: 0 1.4em; color: var(--hair); }
+
+/* --- act 4 · mealunits (quiet) --- */
+.meal { padding-top: clamp(6rem, 15vh, 11rem); padding-bottom: clamp(6rem, 15vh, 11rem); }
+.meal-name { font-family: var(--disp); font-weight: 500; font-size: clamp(1.6rem, 3.4vw, 2.9rem); letter-spacing: -.01em; }
+.meal-copy { margin-top: 1.6rem; max-width: 44ch; font-size: clamp(1.02rem, 1.4vw, 1.2rem); }
+.meal-facts { margin-top: 1.4rem; font-family: var(--mono); font-size: .78rem; color: var(--mut); }
+.meal-facts span + span::before { content: "·"; margin: 0 .8em; color: var(--hair); }
+.meal-scale { margin-top: 3rem; max-width: 30rem; }
+.meal-scale svg { display:block; width:100%; height:auto; }
+.meal-scale .rule { stroke: var(--hair); }
+.meal-scale .tick { stroke: var(--mut); }
+.meal-scale .dose { fill: var(--ink); }
+.meal-scale-cap { margin-top: .7rem; font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mut); }
+
+/* --- act 5 · code & consciousness (the ink field) --- */
+.mind { position: relative; background: var(--field); color: var(--field-fg); overflow: hidden;
+  padding-top: clamp(6rem, 16vh, 12rem); padding-bottom: clamp(6rem, 16vh, 12rem); }
+.mind .kicker { color: var(--field-mut); }
+.mind ::selection { background: var(--field-fg); color: var(--field); }
+.mind-urdu {
+  position: absolute; right: -0.08em; top: 44%; transform: translateY(-50%);
+  font-family: var(--urdu); font-size: clamp(11rem, 34vw, 30rem); line-height: 1.6;
+  color: var(--field-hd); opacity: .13; pointer-events: none; user-select: none; white-space: nowrap;
+}
+.mind-q { position: relative; max-width: 24em; font-size: clamp(1.5rem, 3.6vw, 3.3rem); line-height: 1.18; }
+.mind-q .s { font-family: var(--serif); font-style: italic; font-weight: 400; display: block; }
+.mind-q .d { font-family: var(--disp); font-weight: 800; text-transform: uppercase; letter-spacing: -.015em;
+  display: block; font-size: 1.42em; line-height: .96; color: var(--field-hd); margin: .12em 0; }
+.mind-foot { position: relative; margin-top: 3.4rem; font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; color: var(--field-mut); }
+.mind-foot .u { font-family: var(--urdu); font-size: 1.5em; letter-spacing: 0; }
+
+/* --- act 6 · the invitation --- */
+.invite-q { font-family: var(--disp); font-weight: 700; letter-spacing: -.014em;
+  font-size: clamp(1.7rem, 4.6vw, 4.3rem); line-height: 1.06; max-width: 18em; }
+.invite-q .alt { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.invite-go { margin-top: 3rem; }
+.invite-go a { font-family: var(--disp); font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.5rem); text-decoration-thickness: 2px; }
+.invite-links { margin-top: 2.6rem; display: flex; flex-wrap: wrap; gap: .4rem 2rem; font-family: var(--mono); font-size: .82rem; }
+.invite-links a { color: var(--fg); }
+.invite-links a:hover { color: var(--ink); }
+
+/* ============ footer / colophon ============ */
+.colophon {
+  background: var(--foot-bg); color: var(--foot-fg);
+  padding: 3rem clamp(1.1rem, 4vw, 4rem) 3.4rem;
+  display: flex; flex-wrap: wrap; gap: 2rem 4rem; justify-content: space-between;
+  font-family: var(--mono); font-size: .75rem; line-height: 2;
+}
+.colophon ::selection { background: var(--foot-fg); color: var(--foot-bg); }
+.colo-name { font-family: var(--disp); font-weight: 700; font-size: 1rem; letter-spacing: .04em; }
+.colo-urdu { font-family: var(--urdu); font-weight: 400; font-size: 1.35em; margin-left: .6em; }
+.colo-line { color: var(--foot-mut); }
+.colo-line .colo-ink { color: var(--foot-fg); font-weight: 600; }
+
+/* ============ blog index ============ */
+.blog-head .big {
+  font-family: var(--disp); font-weight: 800; text-transform: uppercase; letter-spacing: -.02em;
+  font-size: clamp(3.4rem, 13vw, 12.5rem); line-height: .86; color: var(--ink);
+}
+.blog-tag { margin-top: 2rem; font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.1rem, 1.9vw, 1.5rem); max-width: 44ch; }
+.blog-meta { margin-top: 1.4rem; font-family: var(--mono); font-size: .75rem; color: var(--mut); display:flex; flex-wrap:wrap; gap:.3rem 1.2rem; align-items:baseline; }
+.blog-meta button { color: var(--ink); text-decoration: underline; text-underline-offset: .18em; }
+.blog-note { font-family: var(--mono); font-size: .72rem; color: var(--mut); margin-top: .4rem; }
+
+.post-index { padding-top: 0; }
+.post-row {
+  display: block; width: 100%; text-align: left;
+  padding: 1.9rem 0; border-top: 1px solid var(--hair);
+}
+.post-row:last-child { border-bottom: 1px solid var(--hair); }
+.post-row .row-inner { display: flex; gap: 1.6rem; align-items: baseline; }
+.post-num { font-family: var(--mono); font-size: .75rem; color: var(--mut); min-width: 2.2em; }
+.post-title-line { flex: 1; }
+.post-title {
+  font-family: var(--disp); font-weight: 700; letter-spacing: -.012em;
+  font-size: clamp(1.35rem, 3.6vw, 3rem); line-height: 1.05; transition: color .14s ease;
+}
+.post-meta { margin-top: .55rem; font-family: var(--mono); font-size: .73rem; color: var(--mut); }
+.post-meta .tag { color: var(--ink); margin-left: .9em; }
+.post-meta .built { color: var(--fg); font-weight: 600; margin-left: .9em; }
+.post-row.is-live:hover .post-title, .post-row.is-live:focus-visible .post-title { color: var(--ink); }
+.post-row.is-live { cursor: pointer; }
+.post-row.is-mock { cursor: default; }
+.post-row.is-mock:hover .post-title { color: var(--mut); transition: color .3s; }
+
+.blog-empty-big {
+  font-family: var(--disp); font-weight: 800; text-transform: uppercase; letter-spacing: -.02em;
+  font-size: clamp(2.6rem, 9vw, 8rem); line-height: .9; color: var(--ink);
+}
+.blog-empty-copy { margin-top: 2rem; max-width: 40ch; font-size: clamp(1.05rem, 1.5vw, 1.25rem); }
+.blog-empty-tags { margin-top: 2.4rem; font-family: var(--mono); font-size: .78rem; color: var(--mut); line-height: 2.1; max-width: 60ch; }
+.blog-empty-tags .tag { color: var(--ink); margin-right: 1.1em; }
+
+/* ============ post page ============ */
+.post-hero { padding-bottom: clamp(2.5rem, 6vh, 4rem); }
+.backlink { font-family: var(--mono); font-size: .78rem; }
+.post-h1 {
+  margin-top: 2.6rem; font-family: var(--disp); font-weight: 800; letter-spacing: -.02em;
+  font-size: clamp(2.3rem, 7vw, 6.6rem); line-height: .94; color: var(--ink); max-width: 13em;
+}
+.post-hero-meta { margin-top: 2rem; font-family: var(--mono); font-size: .78rem; color: var(--mut); }
+.post-hero-meta .tag { color: var(--ink); margin-left: 1em; }
+
+.prose { padding-top: clamp(3rem, 7vh, 5rem); }
+.prose-inner { max-width: 68ch; margin-inline: auto; font-size: clamp(1.05rem, 1.35vw, 1.19rem); line-height: 1.72; }
+.prose-inner > p + p { margin-top: 1.15em; }
+.prose-inner .lede { font-size: 1.16em; line-height: 1.6; }
+.prose-inner h2 {
+  font-family: var(--disp); font-weight: 700; letter-spacing: -.012em;
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem); line-height: 1.1; margin: 2.2em 0 .75em;
+}
+.prose-inner ul { margin: 1.15em 0 1.15em 0; list-style: none; }
+.prose-inner li { padding-left: 1.6em; position: relative; margin-top: .55em; }
+.prose-inner li::before { content: "—"; position: absolute; left: 0; color: var(--ink); font-family: var(--mono); }
+.prose-inner blockquote {
+  margin: 2em 0; font-family: var(--serif); font-style: italic;
+  font-size: 1.34em; line-height: 1.42; color: var(--ink); max-width: 30ch;
+}
+.prose-inner blockquote::before { content: "“"; display: block; font-family: var(--disp); font-weight: 800;
+  font-size: 2.2em; line-height: .6; color: var(--mut); margin-bottom: .18em; }
+.prose-inner .bq-src { margin-top: .8em; font-family: var(--mono); font-style: normal; font-size: .62em; color: var(--mut); }
+.prose-inner code:not(.block) { font-family: var(--mono); font-size: .88em; background: var(--code-bg); padding: .1em .35em; }
+.code {
+  margin: 1.6em 0; background: var(--code-bg); overflow-x: auto;
+  padding: 1.25em 1.4em; scrollbar-width: thin;
+}
+.code code { font-family: var(--mono); font-size: .82em; line-height: 1.7; display: block; white-space: pre; }
+.code .c { color: var(--mut); font-style: italic; }
+.code .k { color: var(--ink); font-weight: 500; }
+.code .s { color: var(--tok-s); }
+.code .n { color: var(--tok-n); }
+.code .f { font-weight: 600; }
+.post-end { margin-top: 3.4rem; padding-top: 1.6rem; border-top: 1px solid var(--hair);
+  font-family: var(--mono); font-size: .78rem; display: flex; flex-wrap: wrap; gap: 1rem 2.4rem; }
+.post-end button { color: var(--ink); text-decoration: underline; text-underline-offset: .18em; }
+
+/* ============ toast ============ */
+#toast {
+  position: fixed; left: clamp(1.1rem, 4vw, 4rem); bottom: 1.4rem; z-index: 90;
+  font-family: var(--mono); font-size: .75rem;
+  background: var(--fg); color: var(--g0); padding: .7em 1.1em;
+  opacity: 0; transform: translateY(.5rem); pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+#toast.show { opacity: 1; transform: none; }
+
+/* ============ responsive & motion ============ */
+@media (max-width: 640px) {
+  .nav { gap: .9rem; }
+  .nav-name { display: none; }
+  .post-row .row-inner { gap: .9rem; }
+  .mind-urdu { top: 30%; opacity: .1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #fv *, #fv *::before, #fv *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div id="fv" data-theme="light" data-ink="verdigris">
+<a class="skip" href="#main">skip to content</a>
+
+<header class="nav">
+  <button class="nav-brand" data-view="home" aria-label="Home — Momin Bin Shahid">
+    <span class="nav-emoji" aria-hidden="true">👨‍💻</span>
+    <span class="nav-name">momin bin shahid</span>
+  </button>
+  <nav class="nav-links" aria-label="Site">
+    <button class="nav-link" data-view="home" aria-current="page">home</button>
+    <button class="nav-link" data-view="blog">blog</button>
+    <button class="nav-link contact-stub">contact</button>
+  </nav>
+  <div class="nav-tools">
+    <button class="ink-chip" id="ink-chip" title="Re-deal the accent ink">
+      <span class="ink-dot" aria-hidden="true"></span>
+      <span class="ink-name" id="ink-name">—</span>
+      <span class="sr-only">Re-deal the accent ink for this visit</span>
+    </button>
+    <button class="theme-btn" id="theme-btn" aria-label="Switch theme">
+      <svg viewBox="0 0 16 16" aria-hidden="true" fill="none">
+        <circle cx="8" cy="8" r="6.4" stroke="currentColor" stroke-width="1.3"></circle>
+        <path d="M8 1.6 A6.4 6.4 0 0 1 8 14.4 Z" fill="currentColor"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================================================================
+     PAGE ONE · HOME — six acts, in order
+     ================================================================ -->
+<div class="view" id="view-home">
+
+  <!-- act 1 · masthead -->
+  <section class="act t-base masthead" aria-label="Masthead">
+    <h1 class="mast-name">
+      <span class="m1">Momin</span>
+      <span class="m2">Bin Shahid</span>
+    </h1>
+    <p class="mast-set">Full-Stack Engineer &amp; AI Engineer <span class="dot">·</span> Lead Engineer at Sastaticket.pk <span class="dot">·</span> Karachi, Pakistan.</p>
+    <p class="mast-desc">Momin Bin Shahid's home on web. Momin Bin Shahid is a curious software engineer 👨‍💻, let's connect 🤙 @MominBinShahid</p>
+  </section>
+
+  <!-- act 2 · the agent -->
+  <section class="act t-shade" id="act-agent" aria-label="The QA agent">
+    <p class="kicker">At Sastaticket.pk — <b>the QA agent</b></p>
+    <h2 class="claim">Hundreds of customer support calls, <span class="quiet">reviewed daily.</span></h2>
+    <div class="mechanism">
+      <p>One day of the agent's work replaces several days of a human team's — and with a <span id="w-consistency">consistency</span> humans simply can't match.</p>
+      <p class="mech-magic">"There's something magical about teaching machines to understand context and take action ✨"</p>
+    </div>
+    <p class="sr-only">Below is a decorative transcript in which the page quietly notes how you are reading this section — scroll, hover and text selection only. No microphone, no network.</p>
+    <div class="qa-log" aria-hidden="true">
+      <div id="qa-lines"></div>
+      <div class="qa-line qa-static" id="qa-rm" hidden>transcript paused — your system asked for less motion. the agent heard that, too.</div>
+    </div>
+  </section>
+
+  <!-- act 3 · the arc -->
+  <section class="act t-base" aria-label="The arc — eight years">
+    <p class="kicker">The arc — <b>eight years shipping production software</b></p>
+    <p class="arc-lede">"I love building things that live on the web and now, things that think 🤖"</p>
+
+    <div class="arc-row">
+      <span class="arc-when">Then</span>
+      <p class="arc-line">Full-stack JavaScript, <span class="soft">architecting web applications from scratch.</span></p>
+      <p class="arc-note quote">Service consultancies and product companies, both: "Both have taught me that great software is about understanding people, not just writing code 💡"</p>
+    </div>
+
+    <div class="arc-row">
+      <span class="arc-when">Across</span>
+      <p class="arc-line">Internet privacy &amp; security at Securiti.ai <span class="soft">(a unicorn)</span> — metadata platforms, ERP, HRMS, EdTech, travel tech.</p>
+      <p class="arc-mono-note">users across the USA · Europe · the Middle East · South Asia — building what users need</p>
+    </div>
+
+    <div class="arc-row">
+      <span class="arc-when">Now</span>
+      <p class="arc-line">Lead Engineer at Sastaticket.pk. <span class="soft">AI-powered systems, a team of awesome engineers, mentoring engineers daily.</span></p>
+      <p class="arc-note">Works directly with stakeholders; recently expanded into AI agents and LLMs. Bachelor's in Computer Science.</p>
+    </div>
+
+    <p class="arc-drives"><span class="arc-drives-kick">What keeps it going</span>"the thrill of solving gnarly problems ⚡️, the satisfaction of mentoring engineers and watching them grow 🌱, and the never-ending rabbit hole of learning new technologies 📈"</p>
+
+    <p class="arc-give">"While most of my professional work has been closed-source 🔒, I'm increasingly contributing to and learning from the open-source community 🍀. <b>The web taught me everything I know, and I want to give back.</b>"</p>
+
+    <div class="stack-strip" tabindex="0" aria-label="Stack, fine print"><b>Front</b> React · Vue · Angular · JAMstack<span class="sep">▪</span><b>Stacks</b> MERN · MEVN · MEAN<span class="sep">▪</span><b>Back</b> Node.js · Python · Django<span class="sep">▪</span><b>AI</b> LangChain · Google GenAI · OpenAI · Anthropic Claude · Agents · LLMs<span class="sep">▪</span><b>Infra</b> Docker · Kubernetes · AWS · GCP · Azure · CI/CD<span class="sep">▪</span><b>Lang</b> JavaScript · TypeScript · Python</div>
+  </section>
+
+  <!-- act 4 · mealunits (quiet) -->
+  <section class="act t-lift meal" aria-label="MealUnits">
+    <p class="kicker">MealUnits</p>
+    <h2 class="meal-name">An offline insulin calculator, built for my brother.</h2>
+    <p class="meal-copy">Private. No accounts. Works offline. Engineering in service of one person.</p>
+    <p class="meal-facts"><span>no sign-up</span><span>no server</span><span>no one watching</span></p>
+    <div class="meal-scale" aria-hidden="true">
+      <svg viewBox="0 0 480 40">
+        <line class="rule" x1="0" y1="20" x2="480" y2="20" stroke-width="1"></line>
+        <line class="tick" x1="40"  y1="12" x2="40"  y2="28" stroke-width="1"></line>
+        <line class="tick" x1="120" y1="12" x2="120" y2="28" stroke-width="1"></line>
+        <line class="tick" x1="200" y1="12" x2="200" y2="28" stroke-width="1"></line>
+        <line class="tick" x1="280" y1="12" x2="280" y2="28" stroke-width="1"></line>
+        <line class="tick" x1="360" y1="12" x2="360" y2="28" stroke-width="1"></line>
+        <line class="tick" x1="440" y1="12" x2="440" y2="28" stroke-width="1"></line>
+        <circle class="dose" cx="280" cy="20" r="6"></circle>
+      </svg>
+      <p class="meal-scale-cap">one meal · one dose · measured</p>
+    </div>
+  </section>
+
+  <!-- act 5 · code & consciousness (the ink field) -->
+  <section class="act mind" aria-label="Code and consciousness">
+    <span class="mind-urdu" lang="ur" dir="rtl" aria-hidden="true">کراچی</span>
+    <p class="kicker">Forever curious — <b>code &amp; consciousness</b></p>
+    <blockquote class="mind-q">
+      <span class="s">equally fascinated by philosophy and esoteric discussions</span>
+      <span class="d">about the nature of reality,</span>
+      <span class="d">consciousness,</span>
+      <span class="s">and what it means to be alive</span>
+      <span class="d">in this strange universe.</span>
+    </blockquote>
+    <p class="mind-foot"><span class="u" lang="ur" dir="rtl">کراچی</span> — Karachi, set in Gulzar. Design material, nothing more.</p>
+  </section>
+
+  <!-- act 6 · the invitation -->
+  <section class="act t-base" aria-label="The invitation">
+    <p class="kicker">The invitation</p>
+    <h2 class="invite-q">Want to build something together? <span class="alt">Have an interesting AI problem?</span> Or just want to geek out about the latest in LLMs and web tech?</h2>
+    <p class="invite-go"><a href="#" class="contact-stub">say hello — the contact page →</a></p>
+    <div class="invite-links">
+      <a href="https://github.com/MominBinShahid" target="_blank" rel="noopener noreferrer">github ↗</a>
+      <a href="https://linkedin.com/in/mominbinshahid" target="_blank" rel="noopener noreferrer">linkedin ↗</a>
+      <a href="https://stackoverflow.com/users/9137804/MominBinShahid" target="_blank" rel="noopener noreferrer">stack overflow ↗</a>
+      <a href="https://twitter.com/MominBinShahid" target="_blank" rel="noopener noreferrer">x ↗</a>
+    </div>
+  </section>
+
+</div>
+
+<!-- ================================================================
+     PAGE TWO · BLOG INDEX — intentional at six posts and at zero
+     ================================================================ -->
+<div class="view" id="view-blog" hidden>
+
+  <section class="act t-base blog-head" aria-label="Blog">
+    <p class="kicker">Momin Bin Shahid — <b>writing</b></p>
+    <h1 class="big">The Blog</h1>
+    <p class="blog-tag">"I'm that person who reads documentation for fun (well, sometimes... now I let AI summarize it for me)"</p>
+    <div class="blog-meta">
+      <span id="blog-count">6 posts</span>
+      <button id="blog-state">show the launch state (0 posts) →</button>
+    </div>
+    <p class="blog-note">mockup note — nº 01 is written end-to-end; the rest are index entries.</p>
+  </section>
+
+  <section class="act t-base post-index" aria-label="Post index">
+    <div id="blog-populated">
+
+      <button class="post-row is-live" data-goto-post="1">
+        <span class="row-inner">
+          <span class="post-num">01</span>
+          <span class="post-title-line">
+            <span class="post-title">Your pull request is deploying to production</span>
+            <span class="post-meta">12 sep 2026 · 6 min read <span class="tag">#Node.js</span><span class="tag">#javascript</span><span class="built">● built in this mockup — read it</span></span>
+          </span>
+        </span>
+      </button>
+
+      <div class="post-row is-mock" title="Not written in this mockup">
+        <span class="row-inner">
+          <span class="post-num">02</span>
+          <span class="post-title-line">
+            <span class="post-title">Teaching an agent to listen to 400 support calls a day</span>
+            <span class="post-meta">21 jul 2026 · 9 min read <span class="tag">#python</span></span>
+          </span>
+        </span>
+      </div>
+
+      <div class="post-row is-mock" title="Not written in this mockup">
+        <span class="row-inner">
+          <span class="post-num">03</span>
+          <span class="post-title-line">
+            <span class="post-title">MealUnits — an insulin calculator for my brother</span>
+            <span class="post-meta">08 mar 2026 · 5 min read <span class="tag">#reactjs</span><span class="tag">#javascript</span></span>
+          </span>
+        </span>
+      </div>
+
+      <div class="post-row is-mock" title="Not written in this mockup">
+        <span class="row-inner">
+          <span class="post-num">04</span>
+          <span class="post-title-line">
+            <span class="post-title">The service worker that wouldn't die</span>
+            <span class="post-meta">14 nov 2025 · 7 min read <span class="tag">#javascript</span><span class="tag">#html</span></span>
+          </span>
+        </span>
+      </div>
+
+      <div class="post-row is-mock" title="Not written in this mockup">
+        <span class="row-inner">
+          <span class="post-num">05</span>
+          <span class="post-title-line">
+            <span class="post-title">What IndexedDB taught me about the same-origin policy</span>
+            <span class="post-meta">02 jun 2025 · 8 min read <span class="tag">#javascript</span></span>
+          </span>
+        </span>
+      </div>
+
+      <div class="post-row is-mock" title="Not written in this mockup">
+        <span class="row-inner">
+          <span class="post-num">06</span>
+          <span class="post-title-line">
+            <span class="post-title">Getting Gatsby 2 to build on Apple Silicon</span>
+            <span class="post-meta">17 jan 2022 · 6 min read <span class="tag">#Gatsby.js</span><span class="tag">#javascript</span></span>
+          </span>
+        </span>
+      </div>
+
+    </div>
+
+    <div id="blog-empty" hidden>
+      <h2 class="blog-empty-big">Zero posts.</h2>
+      <p class="blog-empty-copy">Launched empty, on purpose. The archive starts when it starts — nothing here is placeholder, because there is no here yet.</p>
+      <p class="blog-empty-tags">tags standing by:
+        <span class="tag">#javascript</span><span class="tag">#typescript</span><span class="tag">#Node.js</span><span class="tag">#reactjs</span><span class="tag">#Gatsby.js</span><span class="tag">#python</span><span class="tag">#html</span><span class="tag">#css</span>
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<!-- ================================================================
+     PAGE THREE · A FULL POST
+     ================================================================ -->
+<div class="view" id="view-post" hidden>
+
+  <section class="act t-base post-hero" aria-label="Post header">
+    <p class="backlink"><button data-view="blog">← all posts</button></p>
+    <h1 class="post-h1">Your pull request is deploying to production</h1>
+    <p class="post-hero-meta">12 sep 2026 · 6 min read <span class="tag">#Node.js</span><span class="tag">#javascript</span></p>
+  </section>
+
+  <section class="act t-lift prose" aria-label="Post body">
+    <div class="prose-inner">
+
+      <p class="lede">There's a moment, on every team that switches to continuous deployment, when the phrase <em>pull request</em> quietly changes meaning. It used to be a request: please look at this, tell me what you think, we'll ship it later — together, carefully. Then the pipeline gets good enough, and one Tuesday you realise the truthful name would be <em>deploy request</em>. Approve this, and it is in production in eleven minutes.</p>
+
+      <p>Nobody announces the shift. The YAML doesn't care what you call it. But everything about how you write, review, and split your work should change the day <em>merge</em> stops meaning "saved for later" and starts meaning "live".</p>
+
+      <h2>Review for blast radius, not style</h2>
+
+      <p>Code review used to carry two jobs at once: catch the things that would embarrass us, and negotiate the things we disagree about. The first job now belongs to machines — the linter, the formatter, and the type checker are faster than you and never get tired of arguing about semicolons. What's left for humans is the part machines are still bad at: <em>consequences</em>.</p>
+
+      <p>Here is what I actually read in a PR now, in order:</p>
+
+      <ul>
+        <li>The migration, before any code that touches it. Is it expand-only? Can yesterday's code run against tomorrow's schema, because for four minutes it will?</li>
+        <li>The flag. What default does it ship with, who can flip it, and what does <em>off</em> look like?</li>
+        <li>Timeouts and retries on anything that crosses a network. An approved PR with an unbounded retry is an incident with a green tick on it.</li>
+        <li>The rollback story. If we revert this commit in a hurry, does the revert deploy clean?</li>
+        <li>And last — genuinely last — the code itself.</li>
+      </ul>
+
+      <p>Style comments still happen, but as suggestions, never blockers. A nit has never paged anyone at 3 a.m. An unbounded retry has.</p>
+
+      <h2>The pipeline is short on purpose</h2>
+
+      <p>Ours fits on one screen, and that's a feature. Every stage you add to a pipeline is a stage somebody will want to skip during an incident, so each one has to pay rent:</p>
+
+      <pre class="code" tabindex="0"><code><span class="c"># deploy.yml — runs on every merge to main</span>
+<span class="k">name:</span> <span class="s">deploy</span>
+<span class="k">on:</span>
+  <span class="k">push:</span>
+    <span class="k">branches:</span> [<span class="s">main</span>]
+
+<span class="k">concurrency:</span>
+  <span class="k">group:</span> <span class="s">production</span>
+  <span class="k">cancel-in-progress:</span> <span class="n">false</span>   <span class="c"># never kill a deploy midway</span>
+
+<span class="k">jobs:</span>
+  <span class="k">ship:</span>
+    <span class="k">runs-on:</span> <span class="s">ubuntu-latest</span>
+    <span class="k">steps:</span>
+      - <span class="k">uses:</span> <span class="s">actions/checkout@v4</span>
+      - <span class="k">run:</span> <span class="s">npm ci &amp;&amp; npm test</span>
+      - <span class="k">run:</span> <span class="s">npm run build</span>
+      - <span class="k">run:</span> <span class="s">./scripts/deploy.sh</span>   <span class="c"># blue/green, ~4 minutes</span>
+      - <span class="k">run:</span> <span class="s">./scripts/smoke.sh</span>    <span class="c"># the five endpoints that pay rent</span></code></pre>
+
+      <p>Blue/green swap, then a smoke test that hits the five endpoints that actually earn the company money. Not five hundred assertions — five requests. If search, booking, payment, confirmation, and login answer correctly, the deploy is probably fine. If they don't, nothing else matters anyway.</p>
+
+      <h2>Ship changes that can land alone</h2>
+
+      <p>The pipeline is the easy half. The real discipline lives in the changes themselves, because a change that deploys the moment it merges has to be safe <em>on its own</em> — not safe once the other three PRs land. That means expand-and-contract for anything touching data (add the new column, write to both, read from new, drop the old — four boring PRs instead of one exciting one), and it means flags for anything touching behaviour:</p>
+
+      <pre class="code" tabindex="0"><code><span class="c">// the feature is merged; the launch is a config change</span>
+<span class="k">if</span> (<span class="f">flags</span>.<span class="f">isEnabled</span>(<span class="s">'new-fare-cache'</span>, { user })) {
+  <span class="k">return</span> <span class="f">fareCache</span>.<span class="f">lookup</span>(query);   <span class="c">// new path, 2% of traffic</span>
+}
+<span class="k">return</span> <span class="f">legacySearch</span>(query);          <span class="c">// old path stays warm</span></code></pre>
+
+      <p>The feature is merged; the launch is a config change. Keeping those two sentences decoupled is most of the craft. Merging becomes routine, launching becomes deliberate, and neither one has to be scary.</p>
+
+      <p>The rule underneath all of this isn't technical. I've written it elsewhere and it keeps being true:</p>
+
+      <blockquote>Both have taught me that great software is about understanding people, not just writing code 💡
+        <span class="bq-src">— the thing every pipeline is actually made of</span>
+      </blockquote>
+
+      <h2>When it goes wrong — and it will</h2>
+
+      <p>Continuous deployment doesn't mean fewer mistakes. It means cheaper ones. A bad deploy on a weekly release train is a crisis; a bad deploy on a pipeline like this is a revert that's live before the incident channel finishes arguing about who owns it. Two habits make that true in practice, not just in the slide deck:</p>
+
+      <ul>
+        <li>Revert first, understand later. The broken commit is not a crime scene that needs preserving — production is.</li>
+        <li>A deploy isn't done when the pipeline goes green. It's done when the dashboards have been boring for ten minutes.</li>
+      </ul>
+
+      <p>We ship a travel product, which means our rush hour is other people's Friday evening. The pipeline doesn't know that. The team does — and that's the correct place for that knowledge to live: in people who can decide <em>this one can wait until the morning</em>, on top of a system that never requires them to.</p>
+
+      <h2>The part that actually took months</h2>
+
+      <p>Building the pipeline took two weeks. Trusting it took the better part of a year, and that work was entirely human: convincing careful engineers that small-and-continuous is safer than big-and-ceremonial, sitting with someone through their first same-day merge, resisting the committee that wants to add a manual approval step back "just for now". The YAML was never the hard part.</p>
+
+      <p>But watch an engineer merge their first Tuesday-afternoon change, see it live before their tea goes cold, and go home on time — that's the payoff. Your pull request is deploying to production. Write it like you mean it.</p>
+
+      <div class="post-end">
+        <button data-view="blog">← all posts</button>
+        <button data-view="home">home</button>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+</main>
+
+<!-- shared footer / colophon -->
+<footer class="colophon">
+  <div class="colo-left">
+    <p class="colo-name">MOMIN BIN SHAHID <span class="colo-urdu" lang="ur" dir="rtl">مومن بن شاہد</span></p>
+    <p class="colo-line">© 2026 · Karachi, Pakistan · 👨‍💻</p>
+  </div>
+  <div class="colo-right">
+    <p class="colo-line">Set in Bricolage Grotesque, Newsreader, IBM Plex Mono &amp; Gulzar.</p>
+    <p class="colo-line">This visit was dealt <span class="colo-ink">—</span>. Reload — or click the dot up top — to draw again.</p>
+    <p class="colo-line">Dark mode is designed, not inverted.</p>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, el) { return (el || document).querySelector(s); };
+  var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
+  var fv = $('#fv');
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ============ the ink deck — random accent per visit ============ */
+  var DECK = [
+    ['cobalt', 'Cobalt'], ['verdigris', 'Verdigris'], ['oxblood', 'Oxblood'],
+    ['brass', 'Brass'], ['iris', 'Iris'], ['beetroot', 'Beetroot']
+  ];
+  var inkIdx = Math.floor(Math.random() * DECK.length);
+  function applyInk() {
+    fv.setAttribute('data-ink', DECK[inkIdx][0]);
+    $('#ink-name').textContent = DECK[inkIdx][0];
+    $$('.colo-ink').forEach(function (el) { el.textContent = DECK[inkIdx][1]; });
+    if (window.momin) window.momin.ink = DECK[inkIdx][1];
+  }
+  function redeal() {
+    var n;
+    do { n = Math.floor(Math.random() * DECK.length); } while (n === inkIdx);
+    inkIdx = n;
+    applyInk();
+    log('accent re-dealt: ' + DECK[inkIdx][0] + '.');
+    return DECK[inkIdx][1];
+  }
+  $('#ink-chip').addEventListener('click', redeal);
+
+  /* ============ theme — mockup toggle, independent of the viewer ============ */
+  var theme = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  function applyTheme() {
+    fv.setAttribute('data-theme', theme);
+    $('#theme-btn').setAttribute('aria-label',
+      theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+    try { document.body.style.background = getComputedStyle(fv).backgroundColor; } catch (e) {}
+  }
+  $('#theme-btn').addEventListener('click', function () {
+    theme = theme === 'light' ? 'dark' : 'light';
+    applyTheme();
+    log(theme === 'dark' ? 'lights went dark. adjusting monitors.' : 'lights back on. still listening.');
+  });
+
+  /* ============ views — home / blog / post ============ */
+  var views = { home: $('#view-home'), blog: $('#view-blog'), post: $('#view-post') };
+  function show(v) {
+    Object.keys(views).forEach(function (k) { views[k].hidden = (k !== v); });
+    $$('.nav-link[data-view]').forEach(function (b) {
+      var active = b.getAttribute('data-view') === v ||
+        (b.getAttribute('data-view') === 'blog' && v === 'post');
+      if (active) b.setAttribute('aria-current', 'page');
+      else b.removeAttribute('aria-current');
+    });
+    window.scrollTo(0, 0);
+  }
+  $$('[data-view]').forEach(function (b) {
+    b.addEventListener('click', function () { show(b.getAttribute('data-view')); });
+  });
+  $$('[data-goto-post]').forEach(function (b) {
+    b.addEventListener('click', function () { show('post'); });
+  });
+
+  /* ============ contact is a destination, not a block ============ */
+  var toastT;
+  function toast(msg) {
+    var t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(function () { t.classList.remove('show'); }, 2800);
+  }
+  $$('.contact-stub').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      toast('contact is its own page — not built in this mockup');
+      log('tried contact — it’s a destination, not a block.');
+    });
+  });
+
+  /* ============ blog: populated vs launch state ============ */
+  var empty = false;
+  $('#blog-state').addEventListener('click', function () {
+    empty = !empty;
+    $('#blog-populated').hidden = empty;
+    $('#blog-empty').hidden = !empty;
+    $('#blog-count').textContent = empty ? '0 posts' : '6 posts';
+    this.textContent = empty ? 'show the populated index →' : 'show the launch state (0 posts) →';
+  });
+
+  /* ==================================================================
+     THE SIGNATURE INTERACTION — the section about a machine that
+     listens keeps a QA transcript of how you read it.
+     Scroll, hover, selection, focus. No microphone. No network.
+     ================================================================== */
+  var logBox = $('#qa-lines');
+  var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+  var lineCount = 0, lastLineAt = 0;
+
+  function stamp() {
+    var ms = ((window.performance && performance.now) ? performance.now() : Date.now()) - t0;
+    var s = Math.floor(ms / 1000);
+    var m = String(Math.floor(s / 60));
+    if (m.length < 2) m = '0' + m;
+    var ss = String(s % 60);
+    if (ss.length < 2) ss = '0' + ss;
+    return m + ':' + ss;
+  }
+
+  function log(msg) {
+    if (RM || lineCount >= 40) return;
+    var push = function () {
+      var div = document.createElement('div');
+      div.className = 'qa-line';
+      var t = document.createElement('span');
+      t.className = 'qa-t';
+      t.textContent = stamp();
+      div.appendChild(t);
+      div.appendChild(document.createTextNode(msg));
+      logBox.appendChild(div);
+      lineCount++;
+      while (logBox.children.length > 7) logBox.removeChild(logBox.firstChild);
+    };
+    var now = Date.now();
+    var wait = lastLineAt + 1700 - now;
+    if (wait > 0) { lastLineAt = now + wait; setTimeout(push, wait); }
+    else { lastLineAt = now; push(); }
+  }
+
+  if (RM) {
+    $('#qa-rm').hidden = false;
+  } else {
+    log('session opened. monitoring quality.');
+
+    var act = $('#act-agent');
+    var visits = 0, inView = false, leftAt = 0, enteredAt = 0;
+    var dwellLogged = false, idleLogs = 0, selLogs = 0, skimLogged = false, hovLogged = false;
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !inView) {
+            inView = true;
+            enteredAt = Date.now();
+            if (visits === 0) {
+              log('visitor reached the claim. reading…');
+            } else if (Date.now() - leftAt > 1500) {
+              if (visits === 1) log('back again. re-reading is a good sign.');
+              else if (visits === 2) log('third pass. it’s just scroll listeners, I promise.');
+              else log('still here. verdict: thorough.');
+            }
+            visits++;
+            if (!dwellLogged) {
+              setTimeout(function () {
+                if (inView && Date.now() - enteredAt > 6800) {
+                  dwellLogged = true;
+                  log('held the section 7s. above average.');
+                }
+              }, 7000);
+            }
+          } else if (!e.isIntersecting && inView) {
+            inView = false;
+            leftAt = Date.now();
+            if (visits === 1 && leftAt - enteredAt > 1200) log('scrolled on. noted.');
+          }
+        });
+      }, { threshold: 0.35 }).observe(act);
+    }
+
+    /* text selection — quote verified */
+    document.addEventListener('pointerup', function () {
+      setTimeout(function () {
+        if (selLogs >= 2) return;
+        var sel = document.getSelection && document.getSelection();
+        var txt = sel ? String(sel).replace(/\s+/g, ' ').trim() : '';
+        if (txt.length > 11) {
+          selLogs++;
+          var q = txt.slice(0, 38) + (txt.length > 38 ? '…' : '');
+          log('visitor selected “' + q + '”. quote verified.');
+        }
+      }, 60);
+    });
+
+    /* idle — still on the line */
+    var idleT;
+    var resetIdle = function () {
+      clearTimeout(idleT);
+      idleT = setTimeout(function () {
+        if (inView && idleLogs < 2) {
+          idleLogs++;
+          log('quiet for 14s. still on the line.');
+          resetIdle();
+        }
+      }, 14000);
+    };
+    ['scroll', 'pointermove', 'keydown'].forEach(function (ev) {
+      window.addEventListener(ev, resetIdle, { passive: true });
+    });
+    resetIdle();
+
+    /* tab away — call on hold */
+    var hidAt = 0;
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { hidAt = Date.now(); }
+      else if (hidAt) {
+        var g = Math.round((Date.now() - hidAt) / 1000);
+        if (g >= 5) log('you were gone ' + g + 's. call resumed.');
+      }
+    });
+
+    /* skim — fast scroll */
+    var lastY = window.scrollY || 0, lastT = Date.now();
+    window.addEventListener('scroll', function () {
+      var now = Date.now();
+      var dt = Math.max(16, now - lastT);
+      var v = Math.abs((window.scrollY || 0) - lastY) / dt * 1000;
+      lastY = window.scrollY || 0;
+      lastT = now;
+      if (!skimLogged && v > 3800) {
+        skimLogged = true;
+        log('skimming detected. zero flags raised.');
+      }
+    }, { passive: true });
+
+    /* the word that matters */
+    var w = $('#w-consistency');
+    if (w) {
+      w.addEventListener('pointerenter', function () {
+        if (!hovLogged) {
+          hovLogged = true;
+          log('hovered “consistency”. that’s the point.');
+        }
+      });
+    }
+  }
+
+  /* ============ console easter egg ============ */
+  try {
+    console.log(
+      '%cمومن بن شاہد %c— oh good, a developer. 👨‍💻',
+      'font-size:22px;font-weight:700;',
+      'font-size:12px;color:#888;'
+    );
+    console.log('Boy Scout Rule in effect 🏕️ — I believe in leaving codebases better than I found them.');
+    console.log('The QA-agent section keeps a transcript of how you read it: scroll, hover, selection, nothing else. No microphone, no network — view source, it’s all right here.');
+    console.log('This visit was dealt ' + DECK[inkIdx][1] + '. Try momin.redeal()');
+  } catch (e) {}
+  window.momin = {
+    ink: DECK[inkIdx][1],
+    deck: DECK.map(function (d) { return d[1]; }),
+    redeal: redeal
+  };
+
+  /* ============ init ============ */
+  applyInk();
+  applyTheme();
+  show('home');
+})();
+</script>

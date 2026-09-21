@@ -1,0 +1,1323 @@
+<title>Two Registers</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&amp;family=Martian+Mono:wght@300..800&amp;family=Noto+Nastaliq+Urdu:wght@400..600&amp;display=swap">
+
+<style>
+/* ============================================================
+   TWO REGISTERS — a design direction for mominbinshahid.github.io
+
+   The site speaks in two voices:
+     · the human register  — Newsreader, a warm text serif
+     · the machine register — Martian Mono, sturdy and wide
+   There is no neutral sans-serif anywhere on the page.
+   A third voice — Noto Nastaliq Urdu — signs the work.
+
+   Neutrals are green-biased (Karachi, and the flag, at 3% volume).
+   The accent is dealt from a deck of four on every load — his
+   current site's random-accent feature, kept and curated.
+   ============================================================ */
+
+/* ---------- outer chrome (mockup workbench) — follows viewer theme ---------- */
+:root {
+  --c-bg: #e7e9e2;
+  --c-fg: #2a332d;
+  --c-dim: #7a857c;
+  --c-line: #cdd2c8;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-bg: #060907;
+    --c-fg: #c8cfc6;
+    --c-dim: #66716a;
+    --c-line: #1c231f;
+  }
+}
+:root[data-theme="dark"] {
+  --c-bg: #060907;
+  --c-fg: #c8cfc6;
+  --c-dim: #66716a;
+  --c-line: #1c231f;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-fg);
+  font-family: "Martian Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+.chrome {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.55rem 1.1rem;
+  background: var(--c-bg);
+  border-bottom: 1px solid var(--c-line);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+}
+.chrome__id { color: var(--c-dim); white-space: nowrap; }
+.chrome__id b { color: var(--c-fg); font-weight: 600; }
+.chrome__tabs { display: flex; gap: 0.25rem; margin-inline: auto; }
+.chrome__tab {
+  appearance: none;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--c-dim);
+  font: inherit;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.chrome__tab[aria-selected="true"] {
+  color: var(--c-fg);
+  border-color: var(--c-line);
+  background: color-mix(in srgb, var(--c-fg) 6%, transparent);
+}
+.chrome__tab:hover { color: var(--c-fg); }
+.chrome__theme {
+  appearance: none;
+  border: 1px solid var(--c-line);
+  background: none;
+  color: var(--c-fg);
+  font: inherit;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.chrome__theme:hover { background: color-mix(in srgb, var(--c-fg) 6%, transparent); }
+
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--accent, #4cc8b4);
+  outline-offset: 2px;
+}
+
+/* ---------- the site itself — its own two modes, toggled independently ---------- */
+.site {
+  /* accent deck defaults; JS re-deals on load */
+  --accent-l: #0b7e6e;
+  --accent-d: #4cc8b4;
+  --serif: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --mono: "Martian Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --urdu: "Noto Nastaliq Urdu", "Times New Roman", serif;
+  min-height: 100vh;
+}
+.site[data-mode="dark"] {
+  --bg: #0c1210;
+  --bg2: #101713;
+  --ink: #e7ebe2;
+  --ink2: #9daa9f;
+  --ink3: #5f6d64;
+  --line: #212c25;
+  --accent: var(--accent-d);
+  --on-accent: #0c1210;
+  --code-bg: #090e0c;
+  --tok: #d3dacf;
+  --tok-c: #5e6f64;
+  --tok-k: #93bfe4;
+  --tok-s: #d4ba7e;
+  --tok-f: #a9d3a2;
+  --tok-n: #d8a4a4;
+}
+.site[data-mode="light"] {
+  --bg: #f2f4ee;
+  --bg2: #fafbf7;
+  --ink: #17201b;
+  --ink2: #4e5a52;
+  --ink3: #7f897f;
+  --line: #d7dccf;
+  --accent: var(--accent-l);
+  --on-accent: #f8faf5;
+  --code-bg: #e9ede2;
+  --tok: #232e27;
+  --tok-c: #78847a;
+  --tok-k: #24587f;
+  --tok-s: #7d5c1c;
+  --tok-f: #34693c;
+  --tok-n: #99413e;
+}
+.site {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.11rem;
+  line-height: 1.62;
+}
+.site ::selection { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+
+.shell {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 3vw, 2rem) 4rem;
+}
+
+/* ---------- machine-register primitives ---------- */
+.m { font-family: var(--mono); }
+.kicker {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--ink3);
+  margin: 0 0 1rem;
+}
+.kicker .tilde { color: var(--accent); }
+
+/* ---------- rail (the dossier) ---------- */
+.rail { min-width: 0; }
+.rail__stick { position: sticky; top: 4rem; display: grid; gap: 1.35rem; }
+
+.who { display: grid; gap: 0.85rem; }
+.avatar {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  background:
+    radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 62%),
+    var(--bg2);
+  display: grid;
+  place-items: center;
+  font-family: var(--urdu);
+  font-size: 1.9rem;
+  line-height: 1;
+  padding-bottom: 0.5rem; /* nastaliq sits low */
+  color: var(--ink);
+}
+.who h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.7rem;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+.who .urdu-name {
+  font-family: var(--urdu);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--ink3);
+  margin: -0.35rem 0 0;
+}
+.who .role {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  line-height: 1.8;
+  color: var(--ink2);
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+.who .role b { color: var(--ink); font-weight: 600; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--ink2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 0.28rem 0.5rem;
+  white-space: nowrap;
+}
+.chip--live { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); color: var(--accent); }
+
+.rail hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+.links { display: grid; gap: 0.45rem; font-family: var(--mono); font-size: 0.66rem; }
+.links a {
+  color: var(--ink2);
+  text-decoration: none;
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.1rem 0;
+}
+.links a .k { color: var(--ink3); width: 1.6rem; flex: none; }
+.links a:hover { color: var(--accent); }
+.links a:hover .k { color: var(--accent); }
+
+.contact { display: grid; gap: 0.55rem; font-family: var(--mono); font-size: 0.66rem; color: var(--ink2); }
+.contact .email {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--ink3);
+  width: fit-content;
+  cursor: pointer;
+}
+/* scraper-proof: the address exists only as CSS-generated text + a click-time assembly */
+.contact .email::after { content: attr(data-u) "\0040" attr(data-d) "." attr(data-t); }
+.contact .email:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.contact .note { color: var(--ink3); }
+
+.cv {
+  appearance: none;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  text-transform: lowercase;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--ink3);
+  border-radius: 2px;
+  padding: 0.68rem 0.9rem;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.cv:hover { border-color: var(--accent); color: var(--accent); }
+
+.deal { font-family: var(--mono); font-size: 0.6rem; color: var(--ink3); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.deal .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
+.deal button {
+  appearance: none;
+  font: inherit;
+  letter-spacing: 0.06em;
+  color: var(--ink2);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+.deal button:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- content column ---------- */
+.col { min-width: 0; display: grid; gap: clamp(3rem, 6vw, 4.5rem); align-content: start; }
+section > :last-child { margin-bottom: 0; }
+
+/* home: the lead — the one loud moment on the page */
+.lead {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2.1rem, 5.2vw, 3.7rem);
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+.lead em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.lead .quiet { color: var(--ink2); }
+
+.prose { max-width: 64ch; }
+.prose p { margin: 0 0 1.35rem; color: var(--ink); }
+.prose p.dim { color: var(--ink2); }
+.prose .aside {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--ink3);
+  letter-spacing: 0.04em;
+}
+
+/* currently: the agent that listens */
+.now {
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--bg2);
+  overflow: hidden;
+}
+.now__body { padding: 1.6rem 1.7rem 1.4rem; display: grid; gap: 0.9rem; }
+.now__body h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.2;
+  margin: 0;
+  text-wrap: balance;
+}
+.now__body h2 em { font-style: italic; color: var(--accent); }
+.now__body p { margin: 0; color: var(--ink2); max-width: 58ch; }
+.now__wavewrap { position: relative; border-top: 1px solid var(--line); background: var(--code-bg); }
+.now__wave { display: block; width: 100%; height: 76px; }
+.now__readout {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--ink3);
+}
+.now__readout b { color: var(--accent); font-weight: 600; }
+
+/* the ledger (six tiles, re-ranked) */
+.ledger { border-top: 1px solid var(--line); }
+.ledger__row {
+  display: grid;
+  grid-template-columns: 172px minmax(0, 1fr);
+  gap: 1.2rem;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+.ledger__k {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+.ledger__h {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0;
+}
+.ledger__row--lead { padding: 1.4rem 0 1.5rem; }
+.ledger__row--lead .ledger__k { color: var(--accent); }
+.ledger__row--lead .ledger__h { font-size: clamp(1.6rem, 3vw, 2.05rem); }
+.ledger__row--lead .ledger__more {
+  grid-column: 2;
+  margin: 0.55rem 0 0;
+  color: var(--ink2);
+  font-size: 1rem;
+  max-width: 52ch;
+}
+
+.domains {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  line-height: 2.1;
+  letter-spacing: 0.03em;
+  color: var(--ink2);
+  max-width: 70ch;
+}
+.domains b { color: var(--ink); font-weight: 600; }
+.domains .sep { color: var(--accent); padding: 0 0.35rem; }
+
+/* stack manifest */
+.manifest {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 2.15;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--bg2);
+  padding: 1.2rem 1.4rem;
+  overflow-x: auto;
+}
+.manifest table { border-collapse: collapse; white-space: nowrap; }
+.manifest td { padding: 0 0; vertical-align: baseline; }
+.manifest td.k { color: var(--accent); padding-right: 1.6rem; }
+.manifest td.v { color: var(--ink2); }
+.manifest td.v b { color: var(--ink); font-weight: 600; }
+
+/* quotes widget */
+.quotes { border: 1px solid var(--line); border-radius: 3px; background: var(--bg2); padding: 1.5rem 1.7rem 1.1rem; }
+.quotes__stage { min-height: 12.5rem; display: grid; align-items: center; }
+.quote[hidden] { display: none; }
+.quote blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.45rem;
+  line-height: 1.4;
+  text-wrap: balance;
+  max-width: 30ch;
+}
+.quote blockquote.ur {
+  font-family: var(--urdu);
+  font-style: normal;
+  font-size: 1.5rem;
+  line-height: 2.35;
+  direction: rtl;
+  text-align: right;
+  max-width: none;
+}
+.quote .who-said {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.09em;
+  color: var(--ink3);
+  margin-top: 0.9rem;
+}
+.quote .trans {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink2);
+  margin-top: 0.7rem;
+  max-width: 48ch;
+}
+.quotes__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--ink3);
+}
+.quotes__nav button {
+  appearance: none;
+  font: inherit;
+  color: var(--ink2);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  width: 1.9rem;
+  height: 1.7rem;
+  cursor: pointer;
+}
+.quotes__nav button:hover { color: var(--accent); border-color: var(--accent); }
+.quotes__nav .idx { margin-left: auto; letter-spacing: 0.12em; }
+
+/* invitation */
+.invite h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+  line-height: 1.25;
+  margin: 0 0 1rem;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+.invite p { color: var(--ink2); max-width: 54ch; margin: 0 0 1.4rem; }
+.invite .row { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+.btn {
+  appearance: none;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
+  padding: 0.75rem 1.1rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn--solid { background: var(--accent); color: var(--on-accent); border: 1px solid var(--accent); }
+.btn--solid:hover { filter: brightness(1.08); }
+.btn--ghost { background: none; color: var(--ink); border: 1px solid var(--ink3); }
+.btn--ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+/* site footer */
+.foot {
+  border-top: 1px solid var(--line);
+  padding-top: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.foot .sig { font-family: var(--urdu); font-size: 1.35rem; line-height: 2; color: var(--ink3); }
+.foot .small { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.06em; color: var(--ink3); line-height: 2; text-align: right; }
+
+/* ---------- blog index ---------- */
+.bloghead h2 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  margin: 0 0 0.6rem;
+}
+.bloghead .meta { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--ink3); }
+
+.postlist { border-top: 1px solid var(--line); margin-top: 2rem; }
+.entry {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 1.4rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.entry__date {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: var(--ink3);
+  padding-top: 0.5rem;
+  white-space: nowrap;
+}
+.entry__title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 2.6vw, 1.8rem);
+  line-height: 1.22;
+  margin: 0 0 0.45rem;
+  text-wrap: balance;
+}
+.entry__title a { color: inherit; text-decoration: none; }
+.entry__title a:hover { color: var(--accent); }
+.entry__title a .go { font-family: var(--mono); font-size: 0.62em; color: var(--accent); }
+.entry__deck { margin: 0 0 0.7rem; color: var(--ink2); font-size: 0.98rem; max-width: 56ch; }
+.tags { display: flex; gap: 0.9rem; flex-wrap: wrap; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em; color: var(--ink2); }
+.tag { display: inline-flex; align-items: center; gap: 0.4rem; }
+.tag i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+
+/* ---------- post page ---------- */
+.crumb {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--ink3);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.crumb:hover { color: var(--accent); }
+
+.banner {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 31px, var(--line) 31px 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, var(--line) 31px 32px),
+    var(--code-bg);
+  height: clamp(170px, 26vw, 240px);
+  overflow: hidden;
+  margin: 1.4rem 0 2rem;
+}
+.banner .big {
+  position: absolute;
+  bottom: -0.28em;
+  left: 0.02em;
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: clamp(5.2rem, 15vw, 9.5rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--accent);
+  user-select: none;
+}
+.banner .no {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  color: var(--ink3);
+  text-decoration: line-through;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1.5px;
+}
+.banner .lbl {
+  position: absolute;
+  top: 1rem;
+  left: 1.2rem;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  color: var(--ink3);
+}
+
+.post h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.6vw, 3.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin: 0.5rem 0 0.9rem;
+  text-wrap: balance;
+  max-width: 22ch;
+}
+.post .meta {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
+  color: var(--ink3);
+}
+
+.article { max-width: 64ch; margin-top: 2.2rem; }
+.article > p { margin: 0 0 1.4rem; }
+.article > p.opener::first-letter {
+  font-size: 3.1em;
+  line-height: 0.82;
+  float: left;
+  padding: 0.08em 0.12em 0 0;
+  font-weight: 500;
+  color: var(--accent);
+}
+.article h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.55rem;
+  line-height: 1.25;
+  margin: 2.6rem 0 1rem;
+  text-wrap: balance;
+}
+.article h2 .m { font-size: 0.5em; color: var(--ink3); letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem; font-weight: 500; }
+.article ol { margin: 0 0 1.4rem; padding-left: 1.3rem; }
+.article ol li { margin-bottom: 0.6rem; }
+.article ol li::marker { font-family: var(--mono); font-size: 0.75em; color: var(--accent); }
+.article blockquote {
+  margin: 2rem 0;
+  padding: 0 0 0 1.5rem;
+  border-left: 2px solid var(--accent);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 40ch;
+}
+.article blockquote .attr {
+  display: block;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 0.5em;
+  letter-spacing: 0.09em;
+  color: var(--ink3);
+  margin-top: 0.8rem;
+}
+.article code:not(pre code) {
+  font-family: var(--mono);
+  font-size: 0.72em;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 0.12em 0.35em;
+  white-space: nowrap;
+}
+.codeblock {
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  margin: 1.8rem 0;
+  overflow: hidden;
+}
+.codeblock__bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  color: var(--ink3);
+}
+.codeblock pre {
+  margin: 0;
+  padding: 1.1rem 1.2rem;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.9;
+  color: var(--tok);
+}
+.codeblock code { font-family: inherit; }
+.t-c { color: var(--tok-c); font-style: italic; }
+.t-k { color: var(--tok-k); }
+.t-s { color: var(--tok-s); }
+.t-f { color: var(--tok-f); }
+.t-n { color: var(--tok-n); }
+.t-p { color: var(--tok-c); user-select: none; }
+.t-o { color: var(--tok-c); }
+.t-hi { color: var(--accent); font-weight: 600; }
+
+.endmark { font-family: var(--mono); color: var(--accent); font-size: 0.8rem; }
+.postfoot {
+  margin-top: 3rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
+  color: var(--ink3);
+  max-width: 64ch;
+}
+.postfoot button { background: none; border: 0; padding: 0; font: inherit; letter-spacing: inherit; color: var(--ink2); cursor: pointer; }
+.postfoot button:hover { color: var(--accent); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 920px) {
+  .shell { grid-template-columns: 1fr; gap: 2.2rem; }
+  .rail__stick { position: static; }
+  .rail { border-bottom: 1px solid var(--line); padding-bottom: 1.8rem; }
+  .who { grid-template-columns: auto 1fr; align-items: center; column-gap: 1.1rem; }
+  .who .avatar { grid-row: span 3; width: 64px; height: 64px; font-size: 1.6rem; }
+  .who .chips { grid-column: 1 / -1; }
+  .rail__stick { gap: 1.1rem; }
+  .ledger__row { grid-template-columns: 1fr; gap: 0.3rem; }
+  .ledger__row--lead .ledger__more { grid-column: 1; }
+  .entry { grid-template-columns: 1fr; gap: 0.4rem; }
+  .entry__date { padding-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+
+<!-- ══════════════ mockup chrome ══════════════ -->
+<header class="chrome">
+  <span class="chrome__id"><b>two registers</b> · fable-a · 3 views</span>
+  <nav class="chrome__tabs" role="tablist" aria-label="Mockup views">
+    <button class="chrome__tab" role="tab" id="tab-home" aria-selected="true" aria-controls="view-home" data-view="home">home</button>
+    <button class="chrome__tab" role="tab" id="tab-blog" aria-selected="false" aria-controls="view-blog" data-view="blog" tabindex="-1">writing</button>
+    <button class="chrome__tab" role="tab" id="tab-post" aria-selected="false" aria-controls="view-post" data-view="post" tabindex="-1">post</button>
+  </nav>
+  <button class="chrome__theme" id="themeBtn" aria-pressed="true">site: dark ●</button>
+</header>
+
+<!-- ══════════════ the site ══════════════ -->
+<div class="site" id="site" data-mode="dark">
+  <div class="shell">
+
+    <!-- ── persistent rail: the dossier, in the machine register ── -->
+    <aside class="rail">
+      <div class="rail__stick">
+        <div class="who">
+          <div class="avatar" aria-hidden="true">م</div>
+          <h1>Momin Bin Shahid</h1>
+          <p class="urdu-name" lang="ur" dir="rtl">مومن بن شاہد</p>
+          <p class="role"><b>Lead Engineer</b> · Sastaticket.pk<br>Karachi, Pakistan · GMT+5<br>BS Computer Science · 8 yrs shipping</p>
+          <div class="chips">
+            <span class="chip">full-stack engineer</span>
+            <span class="chip">ai engineer</span>
+            <span class="chip chip--live">building agents</span>
+          </div>
+        </div>
+
+        <hr>
+
+        <nav class="links" aria-label="Profiles">
+          <a href="https://github.com/MominBinShahid"><span class="k">gh</span>github.com/MominBinShahid</a>
+          <a href="https://linkedin.com/in/mominbinshahid"><span class="k">in</span>linkedin.com/in/mominbinshahid</a>
+          <a href="https://stackoverflow.com/users/9137804"><span class="k">so</span>stackoverflow/9137804</a>
+          <a href="https://twitter.com/MominBinShahid"><span class="k">x</span>@MominBinShahid</a>
+        </nav>
+
+        <hr>
+
+        <div class="contact">
+          <span class="note">let's connect 🤙</span>
+          <a class="email" href="#" id="emailLink" data-u="MominBinShahid" data-d="gmail" data-t="com" aria-label="Email address, assembled on click to defeat scrapers"></a>
+          <span class="note">address assembled on click — scrapers get nothing</span>
+        </div>
+
+        <button class="cv" type="button"><span>download cv</span><span aria-hidden="true">↓</span></button>
+
+        <div class="deal">
+          <span class="dot" aria-hidden="true"></span>
+          <span>accent/&nbsp;<b id="accentName">sea</b></span>
+          <button type="button" id="dealBtn" title="This site deals a new accent every visit">deal again ↻</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── content column: three swappable panels ── -->
+    <div class="col-wrap" style="min-width: 0;">
+
+      <!-- ════════ HOME ════════ -->
+      <main class="col" id="view-home" role="tabpanel" aria-labelledby="tab-home">
+
+        <section>
+          <p class="kicker"><span class="tilde">~/</span>about</p>
+          <h2 class="lead"><span class="quiet">I love building things that live on the web</span> and now, things that <em>think</em>.</h2>
+        </section>
+
+        <section class="prose">
+          <p>Eight years of architecting web applications from scratch — and recently, an expansion into AI&nbsp;Agents and LLMs. At Sastaticket.pk I build AI-powered systems, work directly with stakeholders, and lead a team of awesome engineers. There's something magical about teaching machines to understand context and take action.</p>
+          <p class="dim">I've shipped for service consultancies and for product companies. Both have taught me that great software is about understanding people, not just writing code.</p>
+          <p class="dim">What drives me: the thrill of solving gnarly problems, the satisfaction of mentoring engineers and watching them grow, and the never-ending rabbit hole of learning new technologies. I'm that person who reads documentation for fun <span class="aside">(well, sometimes… now I let AI summarize it for me)</span>.</p>
+          <p class="dim">I believe in leaving codebases better than I found them — call it the <strong>Boy Scout Rule</strong> of programming. While most of my professional work has been closed-source, I'm increasingly contributing to and learning from the open-source community. <strong>The web taught me everything I know, and I want to give back.</strong></p>
+        </section>
+
+        <section>
+          <p class="kicker"><span class="tilde">~/</span>currently</p>
+          <div class="now">
+            <div class="now__body">
+              <h2>An agent that <em>listens</em>.</h2>
+              <p>An AI agent that reviews hundreds of customer support calls daily with high accuracy — doing in one day what would take a team of humans several days, and with a consistency humans simply can't match.</p>
+            </div>
+            <div class="now__wavewrap">
+              <canvas class="now__wave" id="wave" aria-label="Stylised audio waveform representing reviewed support calls" role="img"></canvas>
+              <span class="now__readout">support_calls.stream · <b>≈400/day</b> reviewed</span>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <p class="kicker"><span class="tilde">~/</span>facets</p>
+          <div class="ledger">
+            <div class="ledger__row ledger__row--lead">
+              <span class="ledger__k">Forever Curious</span>
+              <h3 class="ledger__h">Code &amp; Consciousness</h3>
+              <p class="ledger__more">Equally fascinated by philosophy and esoteric discussions about the nature of reality, consciousness, and what it means to be alive in this strange universe.</p>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__k">8 Years Building</span>
+              <h3 class="ledger__h">Full-Stack to AI Agents</h3>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__k">Lead Engineer</span>
+              <h3 class="ledger__h">Mentoring Engineers Daily</h3>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__k">JavaScript + Python</span>
+              <h3 class="ledger__h">Full-Stack &amp; AI Ecosystems</h3>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__k">Learn &amp; Solve</span>
+              <h3 class="ledger__h">The Never-Ending Loop</h3>
+            </div>
+            <div class="ledger__row">
+              <span class="ledger__k">Customer Focused</span>
+              <h3 class="ledger__h">Building What Users Need</h3>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <p class="kicker"><span class="tilde">~/</span>domains</p>
+          <p class="domains"><b>Internet Privacy &amp; Security</b> at Securiti.ai, a unicorn<span class="sep">·</span><b>Metadata Platforms</b><span class="sep">·</span><b>ERP</b><span class="sep">·</span><b>HRMS</b><span class="sep">·</span><b>EdTech</b><span class="sep">·</span><b>Travel Tech</b><span class="sep">·</span>now <b>AI &amp; Agentic systems</b> — users across the USA, Europe, Middle East and South Asia.</p>
+        </section>
+
+        <section>
+          <p class="kicker"><span class="tilde">~/</span>stack</p>
+          <div class="manifest">
+            <table>
+              <tbody>
+                <tr><td class="k">frontend:</td><td class="v"><b>React.js</b> · Vue.js · Angular · JAMstack</td></tr>
+                <tr><td class="k">stacks:</td><td class="v">MERN · MEVN · MEAN</td></tr>
+                <tr><td class="k">backend:</td><td class="v"><b>Node.js</b> · Python · Django</td></tr>
+                <tr><td class="k">ai:</td><td class="v">LangChain · Google GenAI · OpenAI · <b>Anthropic Claude</b> · AI Agents · LLMs</td></tr>
+                <tr><td class="k">infra:</td><td class="v">Docker · Kubernetes · AWS · GCP · Azure · CI/CD</td></tr>
+                <tr><td class="k">languages:</td><td class="v"><b>JavaScript</b> · <b>TypeScript</b> · <b>Python</b></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <p class="kicker"><span class="tilde">~/</span>quotes</p>
+          <div class="quotes" id="quotes">
+            <div class="quotes__stage">
+              <figure class="quote">
+                <blockquote>“A year spent in artificial intelligence is enough to make one believe in God.”</blockquote>
+                <figcaption class="who-said">— alan j. perlis, epigrams on programming</figcaption>
+              </figure>
+              <figure class="quote" hidden>
+                <blockquote class="ur" lang="ur" dir="rtl">خودی کو کر بلند اتنا کہ ہر تقدیر سے پہلے<br>خدا بندے سے خود پوچھے بتا تیری رضا کیا ہے</blockquote>
+                <figcaption class="trans">Raise your selfhood so high that before every decree, God Himself asks: tell me, what is your will?</figcaption>
+                <figcaption class="who-said">— allama muhammad iqbal</figcaption>
+              </figure>
+              <figure class="quote" hidden>
+                <blockquote>“The best way to predict the future is to invent it.”</blockquote>
+                <figcaption class="who-said">— alan kay</figcaption>
+              </figure>
+              <figure class="quote" hidden>
+                <blockquote>“Simplicity is prerequisite for reliability.”</blockquote>
+                <figcaption class="who-said">— edsger w. dijkstra</figcaption>
+              </figure>
+            </div>
+            <div class="quotes__nav">
+              <button type="button" id="qPrev" aria-label="Previous quote">‹</button>
+              <button type="button" id="qNext" aria-label="Next quote">›</button>
+              <span class="idx" id="qIdx">1 / 4</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="invite">
+          <h2>Want to build something together? Have an interesting AI problem?</h2>
+          <p>Or just want to geek out about the latest in LLMs and web tech? The inbox is open.</p>
+          <div class="row">
+            <a class="btn btn--solid" href="#" id="emailBtn">say salaam →</a>
+            <a class="btn btn--ghost" href="https://github.com/MominBinShahid">github.com/MominBinShahid</a>
+          </div>
+        </section>
+
+        <footer class="foot">
+          <span class="sig" lang="ur" dir="rtl" title="Momin Bin Shahid">مومن بن شاہد</span>
+          <span class="small">karachi, pakistan · est. 8 years into the craft<br>psst — open the console.</span>
+        </footer>
+      </main>
+
+      <!-- ════════ BLOG INDEX ════════ -->
+      <main class="col" id="view-blog" role="tabpanel" aria-labelledby="tab-blog" hidden>
+        <section class="bloghead">
+          <p class="kicker"><span class="tilde">~/</span>writing</p>
+          <h2>Field notes.</h2>
+          <p class="meta">6 entries · things actually shipped, broken, and fixed</p>
+
+          <div class="postlist">
+            <article class="entry">
+              <span class="entry__date">aug 2025</span>
+              <div>
+                <h3 class="entry__title">Teaching an agent to listen to 400 support calls a day</h3>
+                <p class="entry__deck">What it takes to review a full day of customer calls before lunch — and with a consistency humans simply can't match.</p>
+                <div class="tags">
+                  <span class="tag"><i style="background:#f0da50;"></i>python</span>
+                  <span class="tag"><i style="background:#90c53f;"></i>llms</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="entry">
+              <span class="entry__date">jun 2024</span>
+              <div>
+                <h3 class="entry__title">MealUnits — an insulin calculator for my brother</h3>
+                <p class="entry__deck">Offline-first, private, no accounts. Engineering in service of exactly one user.</p>
+                <div class="tags">
+                  <span class="tag"><i style="background:#61dbfa;"></i>reactjs</span>
+                  <span class="tag"><i style="background:#f0da50;"></i>javascript</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="entry">
+              <span class="entry__date">feb 2023</span>
+              <div>
+                <h3 class="entry__title">Your pull request is deploying to production</h3>
+                <p class="entry__deck">Continuous deployment changes how you write, how you review, and how you sleep.</p>
+                <div class="tags">
+                  <span class="tag"><i style="background:#90c53f;"></i>node.js</span>
+                  <span class="tag"><i style="background:#f0da50;"></i>javascript</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="entry">
+              <span class="entry__date">oct 2022</span>
+              <div>
+                <h3 class="entry__title">The service worker that wouldn't die</h3>
+                <p class="entry__deck">A debugging story about a cache that quietly outlived three deploys.</p>
+                <div class="tags">
+                  <span class="tag"><i style="background:#f0da50;"></i>javascript</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="entry">
+              <span class="entry__date">may 2022</span>
+              <div>
+                <h3 class="entry__title">What IndexedDB taught me about the same-origin policy</h3>
+                <p class="entry__deck">Browser storage, origins, and the walls the web builds between them.</p>
+                <div class="tags">
+                  <span class="tag"><i style="background:#257acc;"></i>typescript</span>
+                  <span class="tag"><i style="background:#f0da50;"></i>javascript</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="entry">
+              <span class="entry__date">mar 2021</span>
+              <div>
+                <h3 class="entry__title"><a href="#" data-goto="post">Getting Gatsby 2 to build on Apple Silicon <span class="go">→ shown in this mockup</span></a></h3>
+                <p class="entry__deck">node-sass, node-gyp, and the case for refusing Rosetta.</p>
+                <div class="tags">
+                  <span class="tag"><i style="background:#6f309f;"></i>gatsby.js</span>
+                  <span class="tag"><i style="background:#90c53f;"></i>node.js</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <footer class="foot">
+          <span class="sig" lang="ur" dir="rtl" title="Momin Bin Shahid">مومن بن شاہد</span>
+          <span class="small">karachi, pakistan<br>psst — open the console.</span>
+        </footer>
+      </main>
+
+      <!-- ════════ POST ════════ -->
+      <main class="col" id="view-post" role="tabpanel" aria-labelledby="tab-post" hidden>
+        <article class="post">
+          <button class="crumb" type="button" data-goto="blog">← ~/writing</button>
+
+          <div class="banner" role="img" aria-label="Banner: the word arm64 set large, with the word rosetta struck through">
+            <span class="lbl">~/writing/gatsby-apple-silicon</span>
+            <span class="no">rosetta 2</span>
+            <span class="big" aria-hidden="true">arm64</span>
+          </div>
+
+          <h1>Getting Gatsby 2 to build on Apple Silicon</h1>
+          <div class="meta">
+            <span>mar 2021</span>
+            <span>·</span>
+            <span>6 min read</span>
+            <span>·</span>
+            <span class="tags">
+              <span class="tag"><i style="background:#6f309f;"></i>gatsby.js</span>
+              <span class="tag"><i style="background:#90c53f;"></i>node.js</span>
+            </span>
+          </div>
+
+          <div class="article">
+            <p class="opener">New machine, old site. I cloned this blog onto an M1 MacBook, ran <code>yarn install</code>, and watched node-gyp produce a scroll of C++ errors longer than the site's entire source. The culprit was three levels deep in the dependency tree: <code>node-sass</code>, a package that compiles native LibSass bindings at install time, pinned to a version that predates Apple Silicon and has never heard of <code>arm64</code>.</p>
+
+            <p>Gatsby 2 doesn't depend on node-sass directly. It arrives through <code>gatsby-plugin-sass</code>, which for this generation of the framework assumes the native implementation. On an Intel Mac that assumption costs you a slow install. On an M1 it costs you the build.</p>
+
+            <h2><span class="m">01 —</span> The advice I refused</h2>
+
+            <p>Every GitHub thread about this ends the same way, usually within four comments:</p>
+
+            <blockquote>
+              “Just install Rosetta 2 and run the x64 build of Node. Works fine.”
+              <span class="attr">— every thread, eventually</span>
+            </blockquote>
+
+            <p>And it does work fine — that's the problem. Rosetta doesn't fix your toolchain, it hides it. From that day forward, every native module you compile is quietly built for the wrong architecture, every benchmark lies to you by thirty percent, and you will not find out until something segfaults in a way no search result has ever seen. The first thing I did on this machine was verify Node itself was native, and I wasn't about to break that seal for a Sass compiler:</p>
+
+            <div class="codeblock">
+              <div class="codeblock__bar"><span>terminal</span><span>zsh</span></div>
+              <pre><code><span class="t-p">$</span> file <span class="t-s">"$(command -v node)"</span>
+<span class="t-o">/opt/homebrew/bin/node: Mach-O 64-bit executable</span> <span class="t-hi">arm64</span>
+
+<span class="t-p">$</span> node -e <span class="t-s">'console.log(process.arch)'</span>
+<span class="t-hi">arm64</span></code></pre>
+            </div>
+
+            <p><code>file(1)</code> is the tool I trust here, not the package manager's word. If the binary doesn't say <code>arm64</code>, nothing downstream of it counts.</p>
+
+            <h2><span class="m">02 —</span> Three ways out</h2>
+
+            <p>In ascending order of self-respect:</p>
+
+            <ol>
+              <li><strong>Install Rosetta</strong> and run an x64 Node. Fast, popular, and it plants a translation layer under every build you'll do for years. No.</li>
+              <li><strong>Upgrade to Gatsby 3.</strong> Correct in the long run, but this is a personal site and that migration is a weekend I didn't have — and it still wouldn't remove node-sass from the tree on its own.</li>
+              <li><strong>Evict node-sass entirely</strong> and hand the plugin Dart Sass, which is pure JavaScript. Nothing native, nothing for node-gyp to compile, nothing that cares what your CPU is called.</li>
+            </ol>
+
+            <h2><span class="m">03 —</span> The fix</h2>
+
+            <p>Dart Sass ships as the <code>sass</code> package with a node-sass-compatible API, and <code>gatsby-plugin-sass</code> accepts an <code>implementation</code> option. Two lines of config, and the native dependency's entire reason to exist disappears:</p>
+
+            <div class="codeblock">
+              <div class="codeblock__bar"><span>gatsby-config.js</span><span>javascript</span></div>
+              <pre><code><span class="t-c">// Dart Sass instead of node-sass: pure JS, no native</span>
+<span class="t-c">// bindings, nothing for node-gyp to compile.</span>
+{
+  <span class="t-f">resolve</span>: <span class="t-s">"gatsby-plugin-sass"</span>,
+  <span class="t-f">options</span>: {
+    <span class="t-f">implementation</span>: <span class="t-k">require</span>(<span class="t-s">"sass"</span>),
+  },
+},</code></pre>
+            </div>
+
+            <p>Then remove the old package, add the new one, and make sure nothing transitive drags node-sass back in:</p>
+
+            <div class="codeblock">
+              <div class="codeblock__bar"><span>terminal</span><span>zsh</span></div>
+              <pre><code><span class="t-p">$</span> yarn remove node-sass <span class="t-k">&amp;&amp;</span> yarn add -D sass
+<span class="t-p">$</span> yarn why node-sass
+<span class="t-o">=&gt; This package doesn't seem to be present in your lockfile</span>
+
+<span class="t-p">$</span> yarn develop
+<span class="t-o">success Building development bundle -</span> <span class="t-n">14.227</span><span class="t-o">s</span></code></pre>
+            </div>
+
+            <p>Fourteen seconds, native, no translation layer. The styles compiled byte-identical — LibSass and Dart Sass disagree on a few edge cases, but none of them live in this stylesheet.</p>
+
+            <h2><span class="m">04 —</span> Leave the campsite cleaner</h2>
+
+            <p>I could have stopped there, but the Boy Scout Rule applies to dependency trees too. Before closing the terminal I pinned the Node version in <code>.nvmrc</code>, noted the <code>implementation</code> trick in the README for whoever clones this on the next unfamiliar CPU, and filed the Gatsby 3 migration as an issue instead of a guilt. The build is native, the tree is one native module lighter, and <code>file(1)</code> agrees with me on every binary in the chain. <span class="endmark">■</span></p>
+          </div>
+
+          <footer class="postfoot">
+            <button type="button" data-goto="blog">← more field notes</button>
+            <span>found a mistake? tell me — @MominBinShahid</span>
+          </footer>
+        </article>
+      </main>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var site = document.getElementById("site");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- accent deck (his random-accent feature, curated) ---------- */
+  var deck = [
+    { name: "sea",      light: "#0b7e6e", dark: "#4cc8b4" },
+    { name: "rickshaw", light: "#b02a6b", dark: "#f07eb4" },
+    { name: "marigold", light: "#8a5a00", dark: "#e8b44e" },
+    { name: "monsoon",  light: "#245ea6", dark: "#7eaee8" }
+  ];
+  var accentIdx = Math.floor(Math.random() * deck.length);
+
+  function applyAccent() {
+    var a = deck[accentIdx];
+    site.style.setProperty("--accent-l", a.light);
+    site.style.setProperty("--accent-d", a.dark);
+    document.getElementById("accentName").textContent = a.name;
+    drawWave();
+  }
+  document.getElementById("dealBtn").addEventListener("click", function () {
+    accentIdx = (accentIdx + 1 + Math.floor(Math.random() * (deck.length - 1))) % deck.length;
+    applyAccent();
+  });
+
+  /* ---------- theme toggle (mockup-independent of viewer theme) ---------- */
+  var themeBtn = document.getElementById("themeBtn");
+  themeBtn.addEventListener("click", function () {
+    var dark = site.getAttribute("data-mode") === "dark";
+    site.setAttribute("data-mode", dark ? "light" : "dark");
+    themeBtn.textContent = dark ? "site: light ○" : "site: dark ●";
+    themeBtn.setAttribute("aria-pressed", String(!dark));
+    drawWave();
+  });
+
+  /* ---------- tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".chrome__tab"));
+  var views = { home: "view-home", blog: "view-blog", post: "view-post" };
+
+  function show(view) {
+    tabs.forEach(function (t) {
+      var on = t.getAttribute("data-view") === view;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    Object.keys(views).forEach(function (k) {
+      document.getElementById(views[k]).hidden = k !== view;
+    });
+    window.scrollTo(0, 0);
+    if (view === "home") drawWave();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { show(t.getAttribute("data-view")); });
+    t.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      var n = tabs[(i + d + tabs.length) % tabs.length];
+      n.focus();
+      show(n.getAttribute("data-view"));
+    });
+  });
+  Array.prototype.slice.call(document.querySelectorAll("[data-goto]")).forEach(function (el) {
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      show(el.getAttribute("data-goto"));
+    });
+  });
+
+  /* ---------- scraper-proof email ---------- */
+  function mail(e) {
+    e.preventDefault();
+    var a = document.getElementById("emailLink");
+    window.location.href = "mailto:" + a.getAttribute("data-u") + "@" +
+      a.getAttribute("data-d") + "." + a.getAttribute("data-t");
+  }
+  document.getElementById("emailLink").addEventListener("click", mail);
+  document.getElementById("emailBtn").addEventListener("click", mail);
+
+  /* ---------- quotes widget ---------- */
+  var quotes = Array.prototype.slice.call(document.querySelectorAll(".quote"));
+  var qIdx = 0, qTimer = null;
+  function showQuote(i) {
+    qIdx = (i + quotes.length) % quotes.length;
+    quotes.forEach(function (q, j) { q.hidden = j !== qIdx; });
+    document.getElementById("qIdx").textContent = (qIdx + 1) + " / " + quotes.length;
+  }
+  document.getElementById("qPrev").addEventListener("click", function () { showQuote(qIdx - 1); restartQ(); });
+  document.getElementById("qNext").addEventListener("click", function () { showQuote(qIdx + 1); restartQ(); });
+  function restartQ() {
+    if (qTimer) clearInterval(qTimer);
+    if (!reduceMotion) qTimer = setInterval(function () { showQuote(qIdx + 1); }, 9000);
+  }
+  var qBox = document.getElementById("quotes");
+  qBox.addEventListener("mouseenter", function () { if (qTimer) clearInterval(qTimer); });
+  qBox.addEventListener("mouseleave", restartQ);
+  restartQ();
+
+  /* ---------- the waveform: hundreds of calls, one canvas ---------- */
+  var wave = document.getElementById("wave");
+  var waveOffset = 0, waveRaf = null;
+
+  function bar(i) {
+    // deterministic pseudo-noise: speech-like envelope
+    var t = i * 0.37;
+    return Math.abs(Math.sin(t) * 0.5 + Math.sin(t * 2.7) * 0.3 + Math.sin(t * 0.31) * 0.45);
+  }
+
+  function drawWave() {
+    if (!wave || wave.offsetParent === null) return;
+    var dpr = window.devicePixelRatio || 1;
+    var w = wave.clientWidth, h = wave.clientHeight;
+    if (!w || !h) return;
+    wave.width = w * dpr;
+    wave.height = h * dpr;
+    var ctx = wave.getContext("2d");
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, w, h);
+    var cs = getComputedStyle(site);
+    var accent = cs.getPropertyValue("--accent").trim();
+    var faint = cs.getPropertyValue("--ink3").trim();
+    var step = 5, mid = h / 2;
+    for (var x = 0, i = Math.floor(waveOffset); x < w; x += step, i++) {
+      var v = bar(i) * (h * 0.72);
+      var recent = x > w - 90; // the "playhead" end burns brighter
+      ctx.fillStyle = recent ? accent : faint;
+      ctx.globalAlpha = recent ? 0.95 : 0.45;
+      ctx.fillRect(x, mid - v / 2, 2, Math.max(v, 2));
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function tick() {
+    waveOffset += 0.12;
+    drawWave();
+    waveRaf = requestAnimationFrame(tick);
+  }
+  if (reduceMotion) { drawWave(); }
+  else { waveRaf = requestAnimationFrame(tick); }
+  window.addEventListener("resize", drawWave);
+  document.addEventListener("visibilitychange", function () {
+    if (reduceMotion) return;
+    if (document.hidden) { cancelAnimationFrame(waveRaf); waveRaf = null; }
+    else if (!waveRaf) { waveRaf = requestAnimationFrame(tick); }
+  });
+
+  applyAccent();
+
+  /* ---------- console easter egg (kept, per the man's own spec) ---------- */
+  try {
+    console.log(
+      "%cمومن بن شاہد%c\n\nAssalam o alaikum, fellow console-opener.\n" +
+      "This site speaks in two registers — a serif for the human, a mono for the machine.\n" +
+      "You clearly prefer the machine one. Let's connect: https://github.com/MominBinShahid\n\n" +
+      "accent dealt this visit: %c" + deck[accentIdx].name,
+      "font-size: 28px; font-family: 'Noto Nastaliq Urdu', serif;",
+      "font-size: 12px; font-family: monospace;",
+      "font-size: 12px; font-family: monospace; color: " + deck[accentIdx].dark + ";"
+    );
+  } catch (e) { /* consoles differ; the site does not care */ }
+})();
+</script>

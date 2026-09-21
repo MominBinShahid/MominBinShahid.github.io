@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none" stroke="currentColor">
+  <title>Momin Bin Shahid — Ascent</title>
+  <path d="M14 80 V34 L44 62 L74 34 V80" stroke-width="8" stroke-linecap="square"/>
+  <path d="M20 24 Q52 4 88 22" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="88" cy="22" r="7" fill="currentColor" stroke="none"/>
+</svg>

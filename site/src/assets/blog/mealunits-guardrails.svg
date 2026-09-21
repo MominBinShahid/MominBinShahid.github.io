@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 466" width="760" height="466"
+     role="img" aria-label="A ladder of what the app does as an input moves further from normal: accept, confirm once, refuse. Plus a separate case that stops and explains.">
+  <style>
+    :root { color-scheme: light dark; }
+    .bg    { fill: #ffffff; }
+    .card  { fill: #f6f6f7; stroke: #e2e2e6; }
+    .ink   { fill: #18181b; }
+    .dim   { fill: #5c5c66; }
+    .ok    { fill: #1c7c4a; }  .okf   { fill: #1c7c4a; }
+    .warn  { fill: #9a6408; }  .warnf { fill: #9a6408; }
+    .stop  { fill: #b0303a; }  .stopf { fill: #b0303a; }
+    .axis  { stroke: #5c5c66; fill: none; opacity: .45; }
+    .dash  { stroke: #e2e2e6; fill: none; }
+    text   { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    @media (prefers-color-scheme: dark) {
+      .bg   { fill: #111111; }
+      .card { fill: #1a1a1c; stroke: #2c2c30; }
+      .ink  { fill: #e8e8ea; }
+      .dim  { fill: #a0a0aa; }
+      .ok   { fill: #5fd08a; }  .okf   { fill: #5fd08a; }
+      .warn { fill: #e0a63a; }  .warnf { fill: #e0a63a; }
+      .stop { fill: #ff8a90; }  .stopf { fill: #ff8a90; }
+      .axis { stroke: #a0a0aa; }
+      .dash { stroke: #2c2c30; }
+    }
+  </style>
+
+  <rect class="bg" width="760" height="466"/>
+  <text class="ink" x="28" y="34" font-size="16" font-weight="600">What happens as an input gets further from normal</text>
+  <text class="dim" x="28" y="56" font-size="12.5">The default is never "calculate anyway". Refusing is a feature.</text>
+
+  <text class="dim" x="28" y="92" font-size="10" font-weight="700" letter-spacing="1.3">FURTHER FROM NORMAL</text>
+  <path class="axis" d="M14 116 V 312" stroke-width="1.5"/>
+
+  <rect class="card" x="28" y="112" width="704" height="62" rx="9" stroke-width="1"/>
+  <rect class="okf" x="28" y="112" width="5" height="62" rx="2.5"/>
+  <text class="dim"  x="50" y="137" font-size="10" font-weight="700" letter-spacing="1.3">IN RANGE</text>
+  <text class="ok" x="50" y="159" font-size="14.5" font-weight="600">accept</text>
+  <text class="dim"  x="250" y="154" font-size="12.5">calculate, and show the number</text>
+  <rect class="card" x="28" y="186" width="704" height="62" rx="9" stroke-width="1"/>
+  <rect class="warnf" x="28" y="186" width="5" height="62" rx="2.5"/>
+  <text class="dim"  x="50" y="211" font-size="10" font-weight="700" letter-spacing="1.3">UNUSUAL BUT POSSIBLE</text>
+  <text class="warn" x="50" y="233" font-size="14.5" font-weight="600">confirm once</text>
+  <text class="dim"  x="250" y="228" font-size="12.5">ask before calculating, then proceed</text>
+  <rect class="card" x="28" y="260" width="704" height="62" rx="9" stroke-width="1"/>
+  <rect class="stopf" x="28" y="260" width="5" height="62" rx="2.5"/>
+  <text class="dim"  x="50" y="285" font-size="10" font-weight="700" letter-spacing="1.3">OUTSIDE HARD BOUNDS</text>
+  <text class="stop" x="50" y="307" font-size="14.5" font-weight="600">refuse</text>
+  <text class="dim"  x="250" y="302" font-size="12.5">do not calculate at all</text>
+
+  <path class="dash" d="M28 352 H732" stroke-width="1" stroke-dasharray="4 4"/>
+  <text class="dim"  x="50" y="386" font-size="10" font-weight="700" letter-spacing="1.3">NOT DESCRIBED BY THE ARITHMETIC</text>
+  <text class="stop" x="50" y="408" font-size="14.5" font-weight="600">stop and explain</text>
+  <text class="dim"  x="250" y="403" font-size="12.5">say so plainly instead of returning a number that looks right</text>
+  <text class="dim"  x="28" y="450" font-size="11.5">Not a medical device. No regulatory clearance. Not clinically validated.</text>
+</svg>
