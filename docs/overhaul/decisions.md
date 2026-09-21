@@ -1048,6 +1048,11 @@ Momin sets them by hand on `legacy-site`. This is not a permissions gap to work 
 ### One file was salvaged rather than discarded
 
 `git rm` refused to delete `content/2020-21-20-code-splitting-in-react/index.md` because it
-had an uncommitted change — correctly. That one-line edit existed nowhere else. It is saved
-as `docs/overhaul/legacy/uncommitted-gatsby-edit.patch` with instructions, rather than
-force-removed and lost.
+had an uncommitted change — correctly. That one-line edit existed nowhere else.
+
+**Resolved 2026-09-21:** it is now a real commit, `7664b1d`, built on top of `cb33432`, and
+`gatsby-final` points at that instead. Nothing was rewritten — commits are immutable, so a
+new one was made on top rather than `cb33432` being edited, using a `git worktree` checked
+out at that commit to get the Gatsby files back without disturbing this branch. `main` still
+points at `cb33432`, so what is deployed and what is archived differ by one deliberate
+commit. The patch is kept in `docs/overhaul/legacy/` as a second copy.
