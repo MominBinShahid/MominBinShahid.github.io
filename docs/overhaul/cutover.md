@@ -167,6 +167,24 @@ an archive site has no need for offline support.
 
 ---
 
+## `legacy-site` — the three env vars, and the one that was never set
+
+Enumerated 2026-09-21 from `.example.env` at the `gatsby-final` tag.
+
+| Variable | A repo secret? | Passed by the workflow? | Verdict |
+|---|---|---|---|
+| `CONTACT_FORM_ENDPOINT` | yes, since 2022-01-02 | yes | Momin must set it on `legacy-site` by hand |
+| `GA_TRACKING_ID` | yes, since 2022-01-02 | yes | same |
+| `DISQUS_SCRIPT` | **no** | **no** | read by `config.js:30` and wired into `src/components/Comment/index.jsx`, but never supplied — so **Disqus comments have never worked on the deployed site.** Either set it on `legacy-site` or accept that comments stay dead there. |
+
+**The secret values cannot be copied.** GitHub's API returns secret names and creation
+dates and never values, by design. Momin re-enters both by hand.
+
+`DISQUS_SCRIPT` is the same shape of finding as `/rss.xml`: a feature the config promises
+and the deployment never delivered, invisible until someone enumerated instead of assuming.
+
+---
+
 ## `legacy-site` — what it needs to actually work
 
 It becomes a **project site** at `mominbinshahid.github.io/legacy-site/`, so:
