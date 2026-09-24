@@ -1056,3 +1056,62 @@ new one was made on top rather than `cb33432` being edited, using a `git worktre
 out at that commit to get the Gatsby files back without disturbing this branch. `main` still
 points at `cb33432`, so what is deployed and what is archived differ by one deliberate
 commit. The patch is kept in `docs/overhaul/legacy/` as a second copy.
+
+## Merge strategy: this repo merges, MealUnits squashes — Momin's call, 2026-09-25
+
+**This repo uses merge commits. Every PR into `main`, including the overhaul cutover.
+MealUnits keeps squash. The two repos deliberately differ.**
+
+Momin's reason, and it is the deciding one: a merge commit is the only option that puts the
+branch's actual commits on `main`, where `git log`, `git blame` and `git bisect` can reach
+them. Squash keeps the *messages* in the commit body and the *commits* only on the branch or
+a tag. For a repo he works on alone and returns to months later, being able to read the steps
+is worth more than a tidy log.
+
+Checked against the real branch before agreeing, because the generic advice says squash:
+
+- `18441e9 chore: remove the Gatsby site and move Astro to the repo root` is 186 files and
+  −62,066 lines. It is the most significant commit in this repo's history and squashing would
+  dissolve it into a commit about *building* the new site. That landmark is worth keeping
+  findable.
+- The usual argument that squash costs you `git blame` precision barely applies here. Two
+  commits carry 274 of the branch's 293 file-changes, so blame lands on an 88- or 186-file
+  commit either way. Squashed it would be 211. Near-zero difference.
+- The cost of merge is real but small at this scale: 18 PRs in the repo's lifetime, one
+  author. Four of the branch's nine commits touch nothing but `docs/overhaul/`, and those
+  will sit on `main` forever. Momin accepted that knowingly.
+
+`git log --first-parent main` collapses the history to one line per PR whenever the clean
+view is wanted. That is the escape hatch that makes merge affordable here.
+
+### The five existing squashes are not a precedent
+
+PRs #13, #14, #15, #16 and #17 landed squashed. **That was Claude's unilateral choice, not
+Momin's.** He authorised merging #13 ("after you merge and deploy this tag thing…"); the
+`--squash` flag was never raised with him and never approved. `gh pr merge` runs under his
+token, so `mergedBy` reads `MominBinShahid` on all five and looks like a human decision. It
+is not evidence of his preference. Do not cite those commits as established practice.
+
+### Workflow
+
+Ordinary work is plain commits on the working branch — granular is fine, a one-line fix does
+not need to be folded into anything. **Nothing merges *into* the branch.** The only merge is
+the branch going into `main` through a PR, and that one is a merge commit.
+
+Momin declined curate-before-merge (squashing the docs-only commits together first). The noise
+is accepted, not overlooked.
+
+### Facts about the cutover merge
+
+`overhaul` is a clean descendant of `origin/main`: merge-base is `cb33432`, which *is*
+`origin/main`'s tip. Zero commits behind, nine ahead. So the cutover merges without conflicts,
+and GitHub will still create a merge commit rather than fast-forwarding.
+
+### Do not
+
+- Do not propose disabling `allow_merge_commit` on this repo. An earlier draft of this
+  recommendation did exactly that; it is now wrong.
+- Do not rewrite the existing history to make it consistent. It would change the SHA that is
+  currently deployed and invalidate `gatsby-final` and the four v1.x tags. The 18 old merge
+  commits and the 5 squashes coexist without any mechanical problem.
+- Do not squash anything on this repo without asking, whatever the general best practice says.

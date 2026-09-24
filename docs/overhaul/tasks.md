@@ -277,6 +277,34 @@ Low stakes either way — he edits it maybe twice a year. Not yet decided.
 
 ---
 
+## AGENTS.md — rewrite at the end, not now — Momin's call, 2026-09-25
+
+`AGENTS.md` exists (76 lines, committed in `18441e9`) and `CLAUDE.md` is a symlink to it,
+so there is one real file with two names and no way for them to drift.
+
+**Momin's call: do not grow it while the build is in flight.** Write the real version once
+everything is done and the context is complete, rather than accreting notes that go stale.
+Reasonable — the design layer has not happened yet, so the tokens and layout invariants in
+there will need rewriting anyway.
+
+When that rewrite happens, the things this session established that belong in it:
+
+- [ ] **This repo merges, never squashes.** Full reasoning in `decisions.md`. The five
+      existing squashes on `main` were Claude's unilateral call and are not a precedent.
+- [ ] Re-check every invariant already in the file against the finished site — the tokens
+      and layout sections were written before the design existed.
+- [ ] The `--first-parent` tip for reading `main` as one line per PR.
+- [ ] Whatever the design round turns into rules.
+
+**One open disagreement, recorded rather than resolved:** the cutover merge happens *before*
+"everything is done", and a session that has lost this conversation's context could reach for
+`gh pr merge --squash` because general practice says so. Claude's view is that one line in
+`AGENTS.md` now would be cheap insurance and would not need rewriting later. Momin's view is
+that notes should wait. Not settled, and recorded here only — `decisions.md` covers the
+merge strategy itself, not this.
+
+---
+
 ## Elsewhere
 
 - [ ] **GitHub profile bio** currently reads "Lead Engineer @SastaTicket" — out of date.
