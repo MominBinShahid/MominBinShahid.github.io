@@ -43,7 +43,21 @@ it is a landing page being built properly, with an empty blog waiting behind it.
 4. ~~Bump workflow actions off deprecated Node 20~~ — done, PR #17
 5. **Move MealUnits to its own origin** — `mealunits.github.io`, free org. Blocks nothing but should happen early (see decisions.md).
 6. **Freeze the old site** → `legacy-site` repo, one final Gatsby 2 build with `pathPrefix`.
-7. **Design round** — multiple mockups as artifacts, Momin picks, then build.
+7. **Design round** — decided 2026-10-12, after two whole-site rounds (15 builds) were
+   rejected. Whole-site mockups differ in ten things at once, so nothing can be picked
+   from them and all of them inherit the same skeleton. Instead, one decision per round,
+   never more than four options, each option differing in that one thing only, Momin
+   picks, the next round builds on the pick. The process that produced the profile README.
+   1. **Skeleton.** Greybox wireframes, real content, no colour or type. Built from the
+      layout pattern each of Momin's references maps to (vocabulary in
+      `design/references.md`). Before drawing anything: one message naming the shape of
+      each reference, so the mapping gets corrected before the work, not after.
+   2. **Type and colour** on the chosen skeleton. Two or three. The profile README fixed
+      most of this already.
+   3. **The home page**, fully designed, in the real Astro components on `overhaul`.
+      One build, iterated with Momin.
+   4. **The other pages** inherit that system — blog index, post, about, résumé.
+   Rounds 1–2 are throwaway HTML viewed as artifacts. Round 3 onward is the real site.
 8. ~~**Build the Astro site**~~ — **structure done 2026-09-21**, on the `overhaul` branch,
    in ``. Astro 7.3.3 on Node 24.21.0, content collections with a typed schema and the
    draft field, RSS, sitemap, every ported static file, CI that asserts them, and both blog
@@ -64,8 +78,11 @@ it is a landing page being built properly, with an empty blog waiting behind it.
 ## Still open
 
 - Momin's decision on moving MealUnits (recommendation: yes, see decisions.md)
-- **Design direction — the only thing now blocking the site.** Needs Momin's reference
-  sites and hints, then the mockup round.
+- **Design direction — the only thing now blocking the site.** Needs from Momin: 3–5
+  reference sites plus one that looks dated to him; the specific sections he likes and
+  what works in each; and the Urdu typeface pick. The six candidates are rendered side by
+  side in `readme-preview/fonts/README.md` — this repo has never had a `fonts/` folder.
+  Then the skeleton round (step 7).
 - Whether to flatten `` to the repo root before cutover (see `tasks.md`)
 - Whether to buy a personal domain (~$10/yr) — optional, see decisions.md
 - `post-deploy-checklist.md` — every URL and `<head>` item the current build emits,
